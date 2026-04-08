@@ -7,7 +7,59 @@
     <link rel="stylesheet" href="../styles/color.css" />
     <link rel="stylesheet" href="../styles/standard.css" />
     <link rel="stylesheet" href="../styles/contacts.css" />
-    <title>Document</title>
+    <title>Contacts</title>
   </head>
-  <body></body>
+  <body onload="init()">
+    <header>
+      <p>hello</p>
+    </header>
+    <main>
+      <div class="test-bg"><button id="add">add</button> <button id="edit">edit</button></div>
+      <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi qui alias quasi necessitatibus ut, sed voluptatibus quidem harum consectetur perferendis dolorum. Magnam nisi placeat iusto deserunt nihil quas accusantium. Enim?</div>
+
+      <dialog class="add-contact" id="add_contact">
+        <header>
+          <img src="../assets/img/logo-join.svg" alt="logo-join" />
+          <section>
+            <h2>Add contact</h2>
+            <p>Tasks are better with a team!</p>
+          </section>
+        </header>
+        <main>
+          <button>close x</button>
+          <article>
+            <img src="" alt="person icon" />
+            <form id="add_form">
+              <input type="text" name="name" placeholder="Name" required />
+              <input type="email" name="email" placeholder="Email" required />
+              <input type="tel" name="phone" placeholder="Phone" />
+              <button>cancel</button>
+              <button>creat</button>
+            </form>
+          </article>
+        </main>
+      </dialog>
+      <dialog class="edit-contact" id="edit_contact">
+        <header></header>
+        <main>
+          <button>close x</button>
+          <article>
+            <img src="" alt="initialen" />
+            <form id="edit_form">
+              <input type="text" name="name" placeholder="Name" required />
+              <input type="email" name="email" placeholder="Email" required />
+              <input type="tel" name="phone" placeholder="Phone" />
+              <button>Delete</button>
+              <button>Save</button>
+            </form>
+          </article>
+        </main>
+      </dialog>
+    </main>
+    <footer>
+      <p>hello</p>
+    </footer>
+
+    <script src="../scripts/contacts.js"></script>
+  </body>
 </html>

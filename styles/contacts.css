@@ -1,0 +1,27 @@
+body {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+}
+
+.test-bg {
+  background-color: var(--primary-color);
+}
+
+.add-contact,
+.edit-contact {
+  width: 1212px;
+  height: 592px;
+  background-color: aqua;
+  margin: auto;
+}
+
+dialog::backdrop {
+  opacity: 0.1;
+  background-color: black;
+}
