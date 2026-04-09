@@ -2,24 +2,71 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css">
-  <title>Join</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <title>Login</title>
+    <link rel="stylesheet" href="page1.css">
+    <link rel="stylesheet" href="login.css">
 </head>
 
-<body>
-  
- 
+<body class="body-login">
 
-  <div class="sidebar">
-    <div class="logo">Logo</div>
-    <a href="#">Summary</a>
-    <a href="#">Add Task</a>
-    <a href="#">Board</a>
-    <a href="#">Contacts</a>
-  </div>
+    <header class="header-login">
 
+        <nav class="nav-login">
+            <span class="span-nav-login">Not a Join user?</span>
+            <button class="nav-button-signup" type="button"><img src="./login-img/Join Version 1/Button wo icon.png"
+                    alt="Sign up Botton">
+            </button>
+        </nav>
+    </header>
+
+    <main class="main-login">
+
+        <div class="main-login-content">
+            <img class="logo-img-page1" src="./login-img/Capa 2.png" alt="page-1Logo">
+
+
+            <form class="form-Login">
+
+
+                <h1 class="h1-login">Log in</h1>
+
+                <label class="label-email">
+                    <input class="login-email-input" type="email" name="email" placeholder="Email" required>
+                    <span class="icon-mail">✉️</span>
+                </label>
+
+                <label class="label-password">
+                    <input class="login-password-input" type="password" name="pwd" id="pwd" placeholder="Password"
+                        required>
+                        <span class="icon-mail">✉️</span>
+                </label>
+
+
+                <div class="login-buttons">
+                    <button type="submit" class="login-button"><img src="./login-img/log-in.png"
+                            alt="login Button"></button>
+                    <button type="submit" class="login-guest-button"><img src="./login-img/guest-log-in.png"
+                            alt="Guest login Button"></button>
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </main>
+<footer class="footer-login">
+<div class="footer-content">
+
+    <span class="span-footer">Privacy Policy</span> 
+    <span class="span-footer">Legal notice</span>
+
+</div>
+
+</footer>
 
 </body>
 
