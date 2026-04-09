@@ -2,26 +2,27 @@ body {
   display: grid;
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
-}
-
-main {
-  display: grid;
-  grid-template-columns: 200px 1fr;
+  overflow: hidden;
 }
 
 .test-bg {
   background-color: var(--primary-color);
 }
 
-.add-contact,
-.edit-contact {
-  width: 1212px;
+dialog {
+  position: fixed;
+  max-width: 1200px;
   height: 592px;
-  background-color: aqua;
   margin: auto;
 }
 
+.dialog-content {
+}
+
+.dialog-header {
+  background-color: var(--primary-color);
+}
+
 dialog::backdrop {
-  opacity: 0.1;
-  background-color: black;
+  background: rgba(0, 0, 0, 0.5);
 }

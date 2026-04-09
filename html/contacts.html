@@ -15,31 +15,36 @@
     </header>
     <main>
       <div class="test-bg"><button id="add">add</button> <button id="edit">edit</button></div>
-      <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi qui alias quasi necessitatibus ut, sed voluptatibus quidem harum consectetur perferendis dolorum. Magnam nisi placeat iusto deserunt nihil quas accusantium. Enim?</div>
-
-      <dialog class="add-contact" id="add_contact">
-        <header>
-          <img src="../assets/img/logo-join.svg" alt="logo-join" />
-          <section>
-            <h2>Add contact</h2>
-            <p>Tasks are better with a team!</p>
-          </section>
-        </header>
-        <main>
-          <button>close x</button>
-          <article>
-            <img src="" alt="person icon" />
-            <form id="add_form">
-              <input type="text" name="name" placeholder="Name" required />
-              <input type="email" name="email" placeholder="Email" required />
-              <input type="tel" name="phone" placeholder="Phone" />
-              <button>cancel</button>
-              <button>creat</button>
-            </form>
-          </article>
-        </main>
-      </dialog>
-      <dialog class="edit-contact" id="edit_contact">
+      <!-- add dialog -->
+    </main>
+    <footer>
+      <p>hello</p>
+    </footer>
+    <dialog class="add-contact" id="add_contact">
+      <header class="dialog-header">
+        <img src="../assets/img/logo-join.svg" alt="logo-join" />
+        <section>
+          <h2>Add contact</h2>
+          <p>Tasks are better with a team!</p>
+        </section>
+      </header>
+      <main>
+        <button>close x</button>
+        <article>
+          <img src="" alt="person icon" />
+          <form id="add_form">
+            <input type="text" name="name" placeholder="Name" required />
+            <input type="email" name="email" placeholder="Email" required />
+            <input type="tel" name="phone" placeholder="Phone" />
+            <button>cancel</button>
+            <button>creat</button>
+          </form>
+        </article>
+      </main>
+    </dialog>
+    <!-- adit dialog -->
+    <dialog class="edit-contact" id="edit_contact">
+      <article class="dialog-content">
         <header></header>
         <main>
           <button>close x</button>
@@ -54,12 +59,8 @@
             </form>
           </article>
         </main>
-      </dialog>
-    </main>
-    <footer>
-      <p>hello</p>
-    </footer>
-
+      </article>
+    </dialog>
     <script src="../scripts/contacts.js"></script>
   </body>
 </html>
