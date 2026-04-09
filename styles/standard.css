@@ -9,19 +9,6 @@
   --max-dp-width: 1440px;
 }
 
-* {
-  margin: 0;
-  margin-block-start: 0;
-  margin-block-end: 0;
-  padding: 0;
-  box-sizing: border-box;
-  text-wrap: auto;
-  text-decoration: none;
-  word-break: normal;
-  scroll-behavior: smooth;
-  font-family: Inter-Regular;
-}
-
 body {
   display: flex;
   justify-content: flex-start;
