@@ -23,6 +23,11 @@
 
   &:hover {
     background-color: var(--secondary-color);
+    box-shadow: var(--btn-shadow-hover);
+  }
+  &:active {
+    background-color: var(--btn-click-color);
+    box-shadow: var(--btn-shadow-main);
   }
 }
 
