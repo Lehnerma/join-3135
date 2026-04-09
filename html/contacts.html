@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../assets/img/favicon/favicon-join.svg" type="image/x-icon" />
+    <link rel="stylesheet" href="../styles/color.css" />
+    <link rel="stylesheet" href="../styles/standard.css" />
+    <link rel="stylesheet" href="../styles/contacts.css" />
+    <title>Contacts</title>
+  </head>
+  <body onload="init()">
+    <header>
+      <p>hello</p>
+    </header>
+    <main>
+      <div class="test-bg"><button id="add">add</button> <button id="edit">edit</button></div>
+      <!-- add dialog -->
+    </main>
+    <footer>
+      <p>hello</p>
+    </footer>
+    <dialog class="add-contact" id="add_contact">
+      <header class="dialog-header">
+        <img src="../assets/img/logo-join.svg" alt="logo-join" />
+        <section>
+          <h2>Add contact</h2>
+          <p>Tasks are better with a team!</p>
+        </section>
+      </header>
+      <main>
+        <button>close x</button>
+        <article>
+          <img src="" alt="person icon" />
+          <form id="add_form">
+            <input type="text" name="name" placeholder="Name" required />
+            <input type="email" name="email" placeholder="Email" required />
+            <input type="tel" name="phone" placeholder="Phone" />
+            <button>cancel</button>
+            <button>creat</button>
+          </form>
+        </article>
+      </main>
+    </dialog>
+    <!-- adit dialog -->
+    <dialog class="edit-contact" id="edit_contact">
+      <article class="dialog-content">
+        <header></header>
+        <main>
+          <button>close x</button>
+          <article>
+            <img src="" alt="initialen" />
+            <form id="edit_form">
+              <input type="text" name="name" placeholder="Name" required />
+              <input type="email" name="email" placeholder="Email" required />
+              <input type="tel" name="phone" placeholder="Phone" />
+              <button>Delete</button>
+              <button>Save</button>
+            </form>
+          </article>
+        </main>
+      </article>
+    </dialog>
+    <script src="../scripts/contacts.js"></script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+body {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.test-bg {
+  background-color: var(--primary-color);
+}
+
+dialog {
+  position: fixed;
+  max-width: 1200px;
+  height: 592px;
+  margin: auto;
+}
+
+.dialog-content {
+}
+
+.dialog-header {
+  background-color: var(--primary-color);
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
