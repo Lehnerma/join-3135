@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="mainField">
+
+
+        <div class="sidebar">
+            <div class="logo">Logo</div>
+            <a href="#">Summary</a>
+            <a href="#">Add Task</a>
+            <a href="#">Board</a>
+            <a href="#">Contacts</a>
+        </div>
+
+
+        <div class="mainAddTaskField">
+            <h1>Add Task</h1>
+            <div class="addTaskField">
+
+                <div action="/addTask" method="post">
+                    <div>
+                        <!-- <label for="taskName">Title:</label> -->
+
+                        <p>Title:</p>
+                        <input type="text" id="taskName" name="taskName" required><br><br>
+                    </div>
+
+                    <div>
+                        <!-- <label for="taskDescription">Description:</label> -->
+                        <p>Description:</p>
+                        <textarea id="taskDescription" name="   " required></textarea><br><br>
+
+                    </div>
+
+
+                    <label for="Date">Date:</label>
+                    <input type="date" id="Date" name="Date" required><br><br>
+
+
+
+
+                </div>
+
+                <div action="">
+
+                    <p>Priority:</p>
+
+                    <button onclick="urgent()">Urgent</button>
+                    <button onclick="medium()">Medium</button>
+                    <button onclick="low()">Low</button>
+
+
+                    <p>Assigned to:</p>
+                    <select id="assigned" name="assigned" required>
+                        <option value="">--Select a person--</option>
+                        <option value="alice">Alice</option>
+                        <option value="bob">Bob</option>
+                        <option value="carol">Carol</option>
+                        <option value="dave">Dave</option>
+                    </select><br><br>
+
+                    <p>Category:</p>
+                    <select id="category" name="category" required>
+                        <option value="">--Select task category--</option>
+                        <option value="Technical_Task">Technical Task</option>
+                        <option value="User_Story">User Story</option>
+                    </select><br><br>
+
+
+                    <p> </p>
+                    <input type="text" id="subtask1" name="subtask1" placeholder="Subtask 1"><br><br>
+
+
+
+
+
+                    <div>
+                        <button onclick="clearTask()">Clear Task</button>
+                        <button onclick="addTask()">Create Task</button>
+
+                    </div>
+
+                </div>
+
+
+
+
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
