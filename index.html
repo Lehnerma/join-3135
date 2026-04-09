@@ -12,35 +12,31 @@
 
   <body class="body-login">
     <header class="header-login">
+      <img class="join-logo" src="./assets/img/logo-join-dark.svg" alt="page-1Logo" />
       <nav class="nav-login">
         <p class="span-nav-login">Not a Join user?</p>
-        <button class="btn btn--primary">Sign up</button>
+        <button class="btn btn--primary" id="sign_up">Sign up</button>
       </nav>
     </header>
 
     <main class="main-login">
-      <div class="main-login-content">
-        <img class="logo-img-page1" src="./login-img/Capa 2.png" alt="page-1Logo" />
-
-        <form class="form-Login">
+      <article class="login-content">
+        <form class="form-login" id="form_login">
           <h1 class="h1-login">Log in</h1>
-
-          <label class="label-email">
+          <section>
             <input class="login-email-input" type="email" name="email" placeholder="Email" required />
-            <span class="icon-mail">✉️</span>
-          </label>
+            <img src="./assets/img/icons/input/mail.svg" alt="letter icon" class="input input--icon" />
+          </section>
 
-          <label class="label-password">
-            <input class="login-password-input" type="password" name="pwd" id="pwd" placeholder="Password" required />
-            <span class="icon-mail">✉️</span>
-          </label>
+          <section>
+            <input class="login-email-input" type="email" name="email" placeholder="Password" required />
+            <img src="./assets/img/icons/input/lock.svg" alt="lock icon" class="input input--icon" />
+          </section>
 
-          <div class="login-buttons">
-            <button type="submit" class="login-button"><img src="./login-img/log-in.png" alt="login Button" /></button>
-            <button type="submit" class="login-guest-button"><img src="./login-img/guest-log-in.png" alt="Guest login Button" /></button>
-          </div>
+          <button type="submit" class="btn btn--primary">Log in</button>
+          <button type="submit" class="btn btn--secondary">Guest Log in</button>
         </form>
-      </div>
+      </article>
     </main>
     <footer class="footer-login">
       <div class="footer-content">

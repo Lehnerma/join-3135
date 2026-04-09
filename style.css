@@ -31,6 +31,35 @@
   }
 }
 
+.btn--secondary {
+  background-color: white;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+
+  &:hover {
+    border-color: var(--secondary-color);
+    box-shadow: var(--btn-shadow-hover);
+    color: var(--secondary-color);
+  }
+  &:active {
+    background-color: white;
+    box-shadow: var(--btn-shadow-main);
+  }
+}
+
+.input {
+  width: 422px;
+  height: 48px;
+  border: 1px solid var(--input-default-main);
+  &::placeholder {
+    color: var(--input-default-main);
+  }
+}
+.input--icon {
+  width: 24px;
+  height: 24px;
+}
+
 .mainField {
   display: flex;
   gap: 200px;

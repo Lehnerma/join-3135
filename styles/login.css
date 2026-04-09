@@ -40,24 +40,24 @@
   align-items: center;
 }
 
-.main-login-content {
+.login-content {
   width: 100%;
   max-width: 1440px;
   height: 75dvh;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: blue; */
+  background-color: rgba(0, 0, 255, 0.167);
   position: sticky;
 }
 
-.logo-img-page1 {
+.join-logo {
   position: absolute;
   margin-top: 30px;
-  padding-left: 77px;
-  padding-top: 80px;
+  width: 100px;
+  height: 120px;
   transition: all 1s ease;
-  animation: slide-diagonal 1.5s forwards;
+  animation: slide-diagonal 1000ms forwards;
   z-index: 2;
 }
 
