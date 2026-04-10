@@ -11,7 +11,7 @@
 
 .nav-logo {
   width: 100px;
-  height: auto;
+  height: 120px;
   padding-top: 64px;
 }
 
@@ -25,8 +25,7 @@ nav ul {
 
 nav ul li {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 12px;
   height: 46px;
   width: 100%;
