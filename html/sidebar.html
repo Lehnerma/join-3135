@@ -1,39 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
 
-    <link rel="stylesheet" href="/styles/standard.css">
-    <link rel="stylesheet" href="/styles/fonts.css">
-    <link rel="stylesheet" href="/styles/color.css">
+    <link rel="stylesheet" href="../style.css" />
+    <!-- <link rel="stylesheet" href="../styles/standard.css" /> -->
 
-</head>
-<body>
-    <nav>
-        <img class="nav_logo" src="./assets/img/logo-join.svg" alt="join_logo">
-        <ul>
-            <li class="active"><img class="nav_category_img" src="./assets/img/icons/general/summary.svg" alt=""><a class="nav_category"  href="#">Summary</a></li>
-            <li><img class="nav_category_img" src="./assets/img/icons/general/add-task.svg" alt=""><a class="nav_category"  href="#">Add Task</a></li>
-            <li><img class="nav_category_img" src="./assets/img/icons/general/board.svg" alt=""><a class="nav_category"   href="#">Board</a></li>
-            <li><img class="nav_category_img" src="./assets/img/icons/general/contacts.svg" alt=""><a class="nav_category"  href="#">Contacts</a></li>
-        </ul>
+    <link rel="stylesheet" href="../styles/sidebar.css" />
 
-        <div class="legal_section">
-            <a class="legal_section_link"  href="#">Privacy Policy</a>
-            <a class="legal_section_link"  href="#">Legal Notice</a>
-        </div>
-    </nav>
-
-
-    <header>
-        <p>Kanban Project Management Tool</p>
+    <link rel="stylesheet" href="../styles/fonts.css" />
+    <link rel="stylesheet" href="../styles/colors.css" />
+  </head>
+  <body class="app">
+    <header class="app--title">
+      <h1 class="app--title-headline"></h1>
+      <div>
+        <img src="" alt="?" />
+        <img src="" alt="M L" />
+      </div>
     </header>
+    <nav class="sidebar">
+      <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
+      <ul>
+        <li class="active"><img class="nav_category_img" src="./assets/img/icons/general/summary.svg" alt="" /><a class="nav_category" href="#">Summary</a></li>
+        <li><img class="nav_category_img" src="./assets/img/icons/general/add-task.svg" alt="" /><a class="nav_category" href="#">Add Task</a></li>
+        <li><img class="nav_category_img" src="./assets/img/icons/general/board.svg" alt="" /><a class="nav_category" href="#">Board</a></li>
+        <li><img class="nav_category_img" src="./assets/img/icons/general/contacts.svg" alt="" /><a class="nav_category" href="#">Contacts</a></li>
+      </ul>
 
-<main>
-
-</main>
-
-</body>
+      <div class="legal_section">
+        <a class="legal_section_link" href="#">Privacy Policy</a>
+        <a class="legal_section_link" href="#">Legal Notice</a>
+      </div>
+    </nav>
+    <main class="app--content">
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non asperiores et illo quasi. Quis eaque nulla, unde amet magni consectetur perferendis reiciendis maiores illo ullam nam odio vero enim nesciunt?</p>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non asperiores et illo quasi. Quis eaque nulla, unde amet magni consectetur perferendis reiciendis maiores illo ullam nam odio vero enim nesciunt?</p>
+    </main>
+  </body>
 </html>

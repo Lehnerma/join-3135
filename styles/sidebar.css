@@ -1,0 +1,43 @@
+.app {
+  display: grid;
+  grid-template-areas:
+    "sidebar title"
+    "sidebar content";
+  grid-template-columns: 232px 1fr;
+  grid-template-rows: 96px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  background-color: var(--primary-color);
+}
+
+.app--title {
+  grid-area: title;
+}
+/* only for testing */
+.app--content {
+  grid-area: content;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 64px;
+  width: 100%;
+}
+
+.sidebarul li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  height: 46px;
+  width: 100%;
+}
+
+.sidebar ul li:hover {
+  background-color: var(--sixth-color);
+}
