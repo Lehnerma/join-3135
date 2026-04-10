@@ -6,6 +6,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/styles/addTaskPage.css">
+
+    <style>
+        .mainAddTaskField {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .addTaskField {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .addTaskField>div:last-child {
+            border-left: 2px solid #ccc;
+            padding-left: 40px;
+        }
+
+        .frame29 {
+            width: 400px;
+            height: 376px;
+        }
+
+        .titleAddTask {
+            width: 100%;
+            height: 30px;
+            border-radius: 12px;
+        }
+
+        .descriptionAddTask {
+            width: 100%;
+            height: 100px;
+            border-radius: 12px;
+        }
+
+        .Frame211 {
+            width: 100%;
+            height: 30px;
+            border-radius: 12px;
+        }
+
+        .frame39 {
+            width: 400px;
+            height: 376px;
+        }
+
+        .frame28 {
+            width: 400px;
+            height: 40px;
+            background-color: royalblue;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
+            
+        }
+
+
+        .priorityBtn {
+            width: 80px;
+            height: 30px;
+            margin: 0 10px;
+            border-radius: 12px;
+            background-color: rgb(198, 196, 192);
+            border: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
@@ -26,37 +96,42 @@
             <h1>Add Task</h1>
             <div class="addTaskField">
 
-                <div action="/addTask" method="post">
+                <div action="/addTask" method="post" class="frame29">
                     <div>
                         <!-- <label for="taskName">Title:</label> -->
 
                         <p>Title:</p>
-                        <input type="text" id="taskName" name="taskName" required><br><br>
+                        <input type="text" id="taskName" name="taskName" required class="titleAddTask"
+                            placeholder="Enter a title"><br><br>
                     </div>
 
                     <div>
                         <!-- <label for="taskDescription">Description:</label> -->
                         <p>Description:</p>
-                        <textarea id="taskDescription" name="   " required></textarea><br><br>
+                        <textarea id="taskDescription" name="   " required class="descriptionAddTask"
+                            placeholder="Enter a description"></textarea><br><br>
 
                     </div>
 
 
                     <label for="Date">Date:</label>
-                    <input type="date" id="Date" name="Date" required><br><br>
+                    <input type="date" id="Date" name="Date" required class="Frame211"><br><br>
 
 
 
 
                 </div>
 
-                <div action="">
+                <div action="" class="frame39">
 
                     <p>Priority:</p>
+                    <div class="frame28">
+                        <button class="priorityBtn" onclick="urgent()">Urgent</button>
+                        <button class="priorityBtn" onclick="medium()">Medium</button>
+                        <button class="priorityBtn" onclick="low()">Low</button>
 
-                    <button onclick="urgent()">Urgent</button>
-                    <button onclick="medium()">Medium</button>
-                    <button onclick="low()">Low</button>
+                    </div>
+
 
 
                     <p>Assigned to:</p>
