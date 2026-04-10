@@ -98,14 +98,4 @@
   margin-bottom: 10px;
 }
 
-.mainAddTaskField {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
-.addTaskField {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-}
