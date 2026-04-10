@@ -1,13 +1,4 @@
-:root {
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-ml: 1.5rem;
-  --spacing-lg: 2rem;
-  --spacing-xl: 2.5rem;
-  --spacing-xxl: 3rem;
-  --max-dp-width: 1440px;
-}
+
 
 body {
   display: flex;
