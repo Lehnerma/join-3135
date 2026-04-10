@@ -1,115 +1,116 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-wrap: auto;
-    text-decoration: none;
-    word-break: normal;
-    scroll-behavior: smooth;
-    font-family: Inter-Regular;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-wrap: auto;
+  text-decoration: none;
+  word-break: normal;
+  scroll-behavior: smooth;
+  font-family: "Inter-Regular", sans-serif;
 }
 
 .btn {
-    font-size: 21px;
-    font-weight: 700;
-    padding: 16px 24px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
+  font-size: 21px;
+  font-weight: 700;
+  padding: 16px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
 }
 
 .btn--primary {
-    background-color: var(--primary-color);
-    color: white;
+  background-color: var(--primary-color);
+  color: white;
 
-    &:hover {
-        background-color: var(--secondary-color);
-        box-shadow: var(--btn-shadow-hover);
-    }
+  &:hover {
+    background-color: var(--secondary-color);
+    box-shadow: var(--btn-shadow-hover);
+  }
 
-    &:active {
-        background-color: var(--btn-click-color);
-        box-shadow: var(--btn-shadow-main);
-    }
+  &:active {
+    background-color: var(--btn-click-color);
+    box-shadow: var(--btn-shadow-main);
+  }
 }
 
 .btn--secondary {
+  background-color: white;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+
+  &:hover {
+    border-color: var(--secondary-color);
+    box-shadow: var(--btn-shadow-hover);
+    color: var(--secondary-color);
+  }
+
+  &:active {
     background-color: white;
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color);
-
-    &:hover {
-        border-color: var(--secondary-color);
-        box-shadow: var(--btn-shadow-hover);
-        color: var(--secondary-color);
-    }
-
-    &:active {
-        background-color: white;
-        box-shadow: var(--btn-shadow-main);
-    }
+    box-shadow: var(--btn-shadow-main);
+  }
 }
 
 .input {
-    font-size: 20px;
-    padding: 16px 24px;
-    border: 1px solid var(--input-default-main);
-    border-radius: 12px;
+  font-size: 20px;
+  padding: 16px 24px;
+  border: 1px solid var(--input-default-main);
+  border-radius: 12px;
 
-    &::placeholder {
-        color: var(--input-default-main);
-        font-size: 20px;
-    }
+  &::placeholder {
+    color: var(--input-default-main);
+    font-size: 20px;
+  }
 }
 
 .input--section {
-    position: relative;
-    /* important for the icon in the input */
-
+  position: relative;
+  /* important for the icon in the input */
 }
 
 .input--icon {
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    right: 16px;
-    top: 34%;
-    transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  right: 16px;
+  top: 34%;
+  transform: translateY(-50%);
 }
 
 .mainField {
-    display: flex;
-    gap: 200px;
+  display: flex;
+  gap: 200px;
 }
 
-.sidebar {
-    width: 180px;
-    height: 100vh;
-    background: #333;
-    color: white;
-    padding: 20px;
+/* .sidebar {
+  width: 180px;
+  height: 100vh;
+  background: #333;
+  color: white;
+  padding: 20px;
 }
 
 .sidebar .logo {
-    font-weight: bold;
-    margin-bottom: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .sidebar a {
-    display: block;
-    color: white;
-    text-decoration: none;
-    margin-bottom: 10px;
-}
+  display: block;
+  color: white;
+  text-decoration: none;
+  margin-bottom: 10px;
+} */
 
 .mainAddTaskField {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .addTaskField {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
 }
+
+/* sidebar styling for flexebility */
