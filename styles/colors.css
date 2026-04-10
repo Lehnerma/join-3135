@@ -1,0 +1,45 @@
+:root {
+  --primary-color: rgba(42, 54, 71, 1); /*btn main,*/
+  --secondary-color: rgba(41, 171, 226, 1); /*btn secondary, input activ*/
+
+  --fourth-color: rgba(0, 56, 255, 1);
+  --fifth-color: rgba(31, 215, 193, 1);
+  --sixth-color: rgba(42, 61, 89, 1);
+  --background-color: rgba(240, 240, 240, 1);
+  --rate-color-urgent: rgba(255, 61, 0, 1);
+  --rate-color-medium: rgba(255, 168, 0, 1);
+  --rate-color-low: rgba(122, 226, 41, 1);
+  --primary-text-color: rgba(0, 0, 0, 1);
+  --secondary-text-color: rgba(42, 54, 71, 1);
+
+  --fourth-text-color: rgba(168, 168, 168, 1);
+  --fifth-text-color: rgba(205, 205, 205, 1);
+  --faulty-entry-color: rgba(230, 0, 38, 1); /*input faulty entry*/
+  --contact-color-1: rgba(255, 122, 0, 1);
+  --contact-color-2: rgba(147, 39, 255, 1);
+  --contact-color-3: rgba(110, 82, 255, 1);
+  --contact-color-4: rgba(252, 113, 255, 1);
+  --contact-color-5: rgba(255, 187, 43, 1);
+  --contact-color-6: rgba(31, 215, 193, 1);
+  --contact-color-7: rgba(70, 47, 138, 1);
+  --contact-color-8: rgba(255, 70, 70, 1);
+  --contact-color-9: rgba(0, 190, 232, 1);
+  --contact-color-10: rgba(42, 61, 89, 1);
+  --contact-color-11: rgba(255, 94, 179, 1);
+  --contact-color-12: rgba(255, 116, 94, 1);
+  --contact-color-13: rgba(255, 163, 94, 1);
+  --contact-color-14: rgba(255, 199, 1, 1);
+  --contact-color-15: rgba(0, 56, 255, 1);
+  --contact-color-16: rgba(195, 255, 43, 1);
+  --contact-color-17: rgba(255, 230, 43, 1);
+
+  /* buttons */
+  --btn-click-color: rgba(9, 25, 49, 1);
+  --btn-shadow-main: 0px 4px 4px 0px #00000040;
+
+  /* input */
+  --input-text-color: rgba(255, 255, 255, 1); /*input text color*/
+  --input-default-main: rgba(209, 209, 209, 1);
+
+  --max-dp-width: 1440px;
+}
