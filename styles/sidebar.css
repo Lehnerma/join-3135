@@ -15,10 +15,35 @@
 
 .app--title {
   grid-area: title;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app--title-headline {
+  font-size: 20px;
+  color: var(--primary-text-color);
 }
 /* only for testing */
 .app--content {
   grid-area: content;
+}
+
+.app--icons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-right: 16px;
+}
+.app--icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* checken wie dynamisch die initalen eingefugt werden */
+.app--initials {
+  width: 56px;
+  height: 56px;
 }
 
 .sidebar ul {

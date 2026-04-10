@@ -6,7 +6,7 @@
   text-decoration: none;
   word-break: normal;
   scroll-behavior: smooth;
-  font-family: Inter-Regular;
+  font-family: "Inter-Regular", sans-serif;
 }
 
 .btn {
