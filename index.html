@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="./styles/login.css" />
   </head>
 
-  <body class="body-login">
-    <header class="header-login">
+  <body>
+    <header class="header">
       <img class="join-logo" src="./assets/img/logo-join-dark.svg" alt="page-1Logo" />
       <nav class="nav-login">
         <p class="span-nav-login">Not a Join user?</p>
@@ -22,26 +22,27 @@
     <main class="main-login">
       <article class="login-content">
         <form class="form-login" id="form_login">
-          <h1 class="h1-login">Log in</h1>
-          <section>
-            <input class="login-email-input" type="email" name="email" placeholder="Email" required />
-            <img src="./assets/img/icons/input/mail.svg" alt="letter icon" class="input input--icon" />
+          <div class="form--title"><h1 class="h1-login">Log in</h1></div>
+          <section class="input--section">
+            <input class="input" type="email" name="email" placeholder="Email" required />
+            <img src="./assets/img/icons/input/mail.svg" alt="letter icon" class="input--icon" />
           </section>
 
-          <section>
-            <input class="login-email-input" type="email" name="email" placeholder="Password" required />
-            <img src="./assets/img/icons/input/lock.svg" alt="lock icon" class="input input--icon" />
+          <section class="input--section">
+            <input class="input" type="password" name="password" placeholder="Password" required />
+            <img src="./assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
           </section>
-
-          <button type="submit" class="btn btn--primary">Log in</button>
-          <button type="submit" class="btn btn--secondary">Guest Log in</button>
+          <section>
+            <button type="submit" class="btn btn--primary">Log in</button>
+            <button type="submit" class="btn btn--secondary">Guest Log in</button>
+          </section>
         </form>
       </article>
     </main>
     <footer class="footer-login">
       <div class="footer-content">
-        <span class="span-footer">Privacy Policy</span>
-        <span class="span-footer">Legal notice</span>
+        <p class="span-footer">Privacy Policy</p>
+        <p class="span-footer">Legal notice</p>
       </div>
     </footer>
   </body>
