@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join - Add Task</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../styles/sidebar.css" />
+
+    <link rel="stylesheet" href="../styles/fonts.css" />
+    <link rel="stylesheet" href="../styles/colors.css" />
+
 
     <style>
         :root {
@@ -23,40 +28,9 @@
             background-color: var(--light-grey);
         }
 
-        /* Sidebar */
-        .sidebar {
-            width: 230px;
-            background-color: var(--dark-blue);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            padding: 40px 0;
-        }
+        
 
-        .logo {
-            font-size: 40px;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        nav a {
-            color: #CDCDCD;
-            text-decoration: none;
-            padding: 15px 40px;
-            display: block;
-        }
-
-        nav a.active {
-            background-color: #091931;
-            color: white;
-        }
-
-        .legal {
-            margin-top: auto;
-            padding: 20px 40px;
-            font-size: 12px;
-        }
+       
 
         /* Main Content */
         .main-content {
@@ -226,28 +200,42 @@
     </style>
 </head>
 
-<body>
-
-    <aside class="sidebar">
-        <div class="logo">JOIN</div>
-        <nav>
-            <a href="summary.html" class="active">Summary</a>
-            <a href="addTaskPage.html">Add Task</a> <!-- Link zur anderen Datei -->
-            <a href="#">Board</a>
-            <a href="#">Contacts</a>
-        </nav>
-        <div class="legal">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Legal notice</a>
+<body class="app">
+    <header class="app--title">
+        <h1 class="app--title-headline">Kanban Project Management Tool</h1>
+        <div class="app--icons">
+            <a href="#"><img src="../assets/img/icons/general/help.svg" alt="?" class="app--icon" /></a>
+            <img src="../assets/img/user_initials.svg" alt="M L" class="app--initials" />
         </div>
-    </aside>
+    </header>
+    <nav class="sidebar">
+        <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
+        <ul>
+            <li class="active">
+                <a class="nav-category" href="#"><img class="nav-category-img"
+                        src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
+            </li>
+            <li class="">
+                <a class="nav-category" href="#"><img class="nav-category-img"
+                        src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
+            </li>
+            <li class="">
+                <a class="nav-category" href="#"><img class="nav-category-img"
+                        src="../assets/img/icons/general/board.svg" alt="" />Board</a>
+            </li>
+            <li class="">
+                <a class="nav-category" href="#"><img class="nav-category-img"
+                        src="../assets/img/icons/general/contacts.svg" alt="" />Contacts</a>
+            </li>
+        </ul>
 
-    <main class="main-content">
-        <header class="top-header">
-            <span>Kanban Project Management Tool</span>
-            <div class="user-profile">SM</div>
-        </header>
-
+        <div class="legal-section">
+            <a class="legal-section-link" href="#">Privacy Policy</a>
+            <a class="legal-section-link" href="#">Legal Notice</a>
+        </div>
+    </nav>
+    <main class="app--content">
+        <!-- Teil der Seite dann nur noch hiereinfugen - sonst fehlferhalten vom rendern -->
         <section class="form-container">
             <h1>Add Task</h1>
 
@@ -310,16 +298,27 @@
         </section>
     </main>
 
+
+
+
+
+
+
+
+
+
+
+
     <script>
         function selectPriority(prio) {
-            // 1. Alle aktiven Klassen bei allen Buttons entfernen
-            document.getElementById('btn-urgent').classList.remove('urgent-active');
-            document.getElementById('btn-medium').classList.remove('medium-active');
-            document.getElementById('btn-low').classList.remove('low-active');
+            // // 1. Alle aktiven Klassen bei allen Buttons entfernen
+            // document.getElementById('btn-urgent').classList.remove('urgent-active');
+            // document.getElementById('btn-medium').classList.remove('medium-active');
+            // document.getElementById('btn-low').classList.remove('low-active');
 
-            // 2. Die passende Klasse zum geklickten Button hinzufügen
-            const activeBtn = document.getElementById('btn-' + prio);
-            activeBtn.classList.add(prio + '-active');
+            // // 2. Die passende Klasse zum geklickten Button hinzufügen
+            // const activeBtn = document.getElementById('btn-' + prio);
+            // activeBtn.classList.add(prio + '-active');
         }
 
     </script>
