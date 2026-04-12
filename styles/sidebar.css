@@ -97,6 +97,7 @@
 .app--content {
   grid-area: content;
   overflow: scroll;
+  padding: 0;
 }
 
 .app--icons {
