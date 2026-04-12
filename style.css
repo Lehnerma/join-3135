@@ -1,7 +1,79 @@
-body {
-  font-family: Arial, sans-serif;
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  text-wrap: auto;
+  text-decoration: none;
+  word-break: normal;
+  scroll-behavior: smooth;
+  font-family: "Inter-Regular", sans-serif;
+}
+
+.btn {
+  font-size: 21px;
+  font-weight: 700;
+  padding: 16px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn--primary {
+  background-color: var(--primary-color);
+  color: white;
+
+  &:hover {
+    background-color: var(--secondary-color);
+    box-shadow: var(--btn-shadow-hover);
+  }
+
+  &:active {
+    background-color: var(--btn-click-color);
+    box-shadow: var(--btn-shadow-main);
+  }
+}
+
+.btn--secondary {
+  background-color: white;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+
+  &:hover {
+    border-color: var(--secondary-color);
+    box-shadow: var(--btn-shadow-hover);
+    color: var(--secondary-color);
+  }
+
+  &:active {
+    background-color: white;
+    box-shadow: var(--btn-shadow-main);
+  }
+}
+
+.input {
+  font-size: 20px;
+  padding: 16px 24px;
+  border: 1px solid var(--input-default-main);
+  border-radius: 12px;
+
+  &::placeholder {
+    color: var(--input-default-main);
+    font-size: 20px;
+  }
+}
+
+.input--section {
+  position: relative;
+  /* important for the icon in the input */
+}
+
+.input--icon {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  right: 16px;
+  top: 34%;
+  transform: translateY(-50%);
 }
 
 .mainField {
@@ -9,7 +81,7 @@ body {
   gap: 200px;
 }
 
-.sidebar {
+/* .sidebar {
   width: 180px;
   height: 100vh;
   background: #333;
@@ -27,7 +99,7 @@ body {
   color: white;
   text-decoration: none;
   margin-bottom: 10px;
-}
+} */
 
 .mainAddTaskField {
   display: flex;
@@ -40,3 +112,5 @@ body {
   justify-content: center;
   gap: 40px;
 }
+
+/* sidebar styling for flexebility */
