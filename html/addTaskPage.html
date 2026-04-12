@@ -192,6 +192,37 @@
             font-weight: bold;
             cursor: pointer;
         }
+
+        /* Standard-Button (weiß) */
+        .prio-btn {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #D1D1D1;
+            border-radius: 10px;
+            background-color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        /* Die aktiven Zustände */
+        .prio-btn.urgent-active {
+            background-color: #FF3D00;
+            color: white;
+            border-color: #FF3D00;
+        }
+
+        .prio-btn.medium-active {
+            background-color: #FFA800;
+            color: white;
+            border-color: #FFA800;
+        }
+
+        .prio-btn.low-active {
+            background-color: #7AE229;
+            color: white;
+            border-color: #7AE229;
+        }
     </style>
 </head>
 
@@ -200,8 +231,8 @@
     <aside class="sidebar">
         <div class="logo">JOIN</div>
         <nav>
-            <a href="#">Summary</a>
-            <a href="#" class="active">Add Task</a>
+            <a href="summary.html" class="active">Summary</a>
+            <a href="addTaskPage.html">Add Task</a> <!-- Link zur anderen Datei -->
             <a href="#">Board</a>
             <a href="#">Contacts</a>
         </nav>
@@ -240,10 +271,14 @@
                     <div class="column">
                         <label>Priority</label>
                         <div class="priority-group">
-                            <button type="button" class="prio-btn urgent">Urgent</button>
-                            <button type="button" class="prio-btn medium">Medium</button>
-                            <button type="button" class="prio-btn low">Low</button>
+                            <button type="button" id="btn-urgent" class="prio-btn"
+                                onclick="selectPriority('urgent')">Urgent</button>
+                            <button type="button" id="btn-medium" class="prio-btn"
+                                onclick="selectPriority('medium')">Medium</button>
+                            <button type="button" id="btn-low" class="prio-btn"
+                                onclick="selectPriority('low')">Low</button>
                         </div>
+
 
                         <label>Assigned to</label>
                         <select>
@@ -274,6 +309,20 @@
             </form>
         </section>
     </main>
+
+    <script>
+        function selectPriority(prio) {
+            // 1. Alle aktiven Klassen bei allen Buttons entfernen
+            document.getElementById('btn-urgent').classList.remove('urgent-active');
+            document.getElementById('btn-medium').classList.remove('medium-active');
+            document.getElementById('btn-low').classList.remove('low-active');
+
+            // 2. Die passende Klasse zum geklickten Button hinzufügen
+            const activeBtn = document.getElementById('btn-' + prio);
+            activeBtn.classList.add(prio + '-active');
+        }
+
+    </script>
 
 </body>
 
