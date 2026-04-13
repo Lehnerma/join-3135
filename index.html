@@ -1,66 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon-join.svg" />
+    <title>Join</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../styles/fonts.css" />
+    <link rel="stylesheet" href="../styles/colors.css" />
+    <link rel="stylesheet" href="../styles/login.css" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon-join.svg" />
-  <title>Login</title>
-  <link rel="stylesheet" href="../style.css" />
-  <link rel="stylesheet" href="../styles/fonts.css">
-  <link rel="stylesheet" href="../styles/colors.css" />
-  <link rel="stylesheet" href="../styles/login.css" />
- 
- <script defer src="./scripts/script.js"></script>  
-</head>
+    <script defer src="./scripts/script.js"></script>
+  </head>
 
-<body>
-  <header class="header">
-    <img class="join-logo" src="./assets/img/logo-join-dark.svg" alt="page-1Logo" />
-    <nav class="nav-login">
-      <p class="span-nav-login">Not a Join user?</p>
-      <a href="./html/signUp.html" class="btn btn--primary">Sign up</a>
-    </nav>
-  </header>
+  <body>
+    <header class="header">
+      <img class="join-logo" src="./assets/img/logo-join-dark.svg" alt="page-1Logo" />
+      <nav class="nav-login">
+        <p class="span-nav-login">Not a Join user?</p>
+        <a href="./html/signUp.html" class="btn btn--primary">Sign up</a>
+      </nav>
+    </header>
 
-  <main class="main-login">
-    <article class="login-content">
-       <form id="" onsubmit="" return false; class="form-login" id="form_login"> 
-        <div class="form--title">
-          <h1 class="h1-login">Log in</h1>
-        </div>
-        <section class="input--section">
-          <input class="input" id="email" type="email" name="Email" placeholder="Email" autocomplete="email"
-            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-            title="Bitte gib eine gültige E-Mail-Adresse ein (z.B. max@mustermann.de)" required />
-          <img src="./assets/img/icons/input/mail.svg" alt="letter icon" class="input--icon" />
-        </section>
+    <main class="main-login">
+      <article class="login-content">
+        <form id="" onsubmit="" return false; class="form-login" id="form_login">
+          <div class="form--title">
+            <h1 class="h1-login">Log in</h1>
+          </div>
+          <section class="input--section">
+            <input class="input" id="email" type="email" name="Email" placeholder="Email" autocomplete="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Bitte gib eine gültige E-Mail-Adresse ein (z.B. max@mustermann.de)" required />
+            <img src="./assets/img/icons/input/mail.svg" alt="letter icon" class="input--icon" />
+          </section>
 
-        <section class="input--section">
-          <input class="input" type="password" name="Password" placeholder="Password"
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-            title="Muss mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten und mindestens 8 Zeichen lang sein"
-            required />
-          <img src="./assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
-        </section>
+          <section class="input--section">
+            <input class="input" type="password" name="Password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Muss mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten und mindestens 8 Zeichen lang sein" required />
+            <img src="./assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
+          </section>
 
-        <section class="login-buttons">
-          <button type="submit" class="btn btn--primary">Log in</button>
-          <button onclick="" type="submit" class="btn btn--secondary">Guest Log in</button>
-        </section>
-      </form>
-    </article>
-  </main>
-  <footer class="footer-login">
-    <div class="footer-content">
-      <a href="privacyPolicy.html" target="_blank">
-        <p>Privacy Policy</p>
-      </a>
-      <a href="legalNotice.html" target="_blank">
-        <p>Legal notice</p>
-      </a>
-    </div>
-  </footer>
-</body>
-
+          <section class="login-buttons">
+            <button type="submit" class="btn btn--primary">Log in</button>
+            <button onclick="" type="submit" class="btn btn--secondary">Guest Log in</button>
+          </section>
+        </form>
+      </article>
+    </main>
+    <footer class="footer-login">
+      <div class="footer-content">
+        <a href="privacyPolicy.html" target="_blank">
+          <p>Privacy Policy</p>
+        </a>
+        <a href="legalNotice.html" target="_blank">
+          <p>Legal notice</p>
+        </a>
+      </div>
+    </footer>
+  </body>
 </html>
