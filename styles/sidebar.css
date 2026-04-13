@@ -1,0 +1,118 @@
+.app {
+  display: grid;
+  grid-template-areas:
+    "sidebar title"
+    "sidebar content";
+  grid-template-columns: 232px 1fr;
+  grid-template-rows: 96px 1fr;
+  height: 100vh;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  background-color: var(--primary-color);
+  box-shadow: var(--shadow-app-sidebar);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  /* justify-content: center; */
+  gap: 64px;
+}
+
+.nav-logo {
+  width: 100px;
+  height: auto;
+  padding-top: 64px;
+  justify-self: center;
+}
+.nav-category-img {
+  width: 25px;
+  height: auto;
+}
+
+.sidebar ul {
+  list-style-type: none;
+}
+
+.sidebar ul li {
+  display: flex;
+  align-items: center;
+  height: 46px;
+  width: 100%;
+  padding: 8px;
+  padding-left: 56px;
+}
+
+.sidebar ul li a {
+  color: var(--input-text-color);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sidebar ul li:hover {
+  background-color: var(--sixth-color);
+}
+
+.active {
+  background-color: var(--btn-click-color);
+}
+
+.legal-section {
+  justify-self: center;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 64px;
+  transition: all 0.7s ease-in-out;
+}
+
+.legal-section-link {
+  font-size: 16px;
+  color: var(--fifth-text-color);
+  text-align: start;
+
+  &:hover {
+    color: var(--secondary-color);
+    transform: scale(1.05);
+  }
+}
+
+.app--title {
+  grid-area: title;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 40px;
+  background-color: var(--input-text-color);
+  box-shadow: var(--shadow-app-title);
+}
+
+.app--title-headline {
+  font-size: 20px;
+  color: var(--primary-text-color);
+}
+/* only for testing */
+.app--content {
+  grid-area: content;
+  overflow: scroll;
+  padding: 0;
+}
+
+.app--icons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-right: 16px;
+}
+.app--icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* checken wie dynamisch die initalen eingefugt werden */
+.app--initials {
+  width: 56px;
+  height: 56px;
+}

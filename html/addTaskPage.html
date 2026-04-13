@@ -1,222 +1,56 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join - Add Task</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../styles/sidebar.css" />
+    <link rel="stylesheet" href="../styles/fonts.css" />
+    <link rel="stylesheet" href="../styles/colors.css" />
+    <link rel="stylesheet" href="../styles/addTaskPage.css" />
 
-    <style>
-        :root {
-            --dark-blue: #2A3647;
-            --light-grey: #F6F7F8;
-            --border-color: #D1D1D1;
-            --accent-red: #FF3D00;
-        }
 
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            margin: 0;
-            height: 100vh;
-            background-color: var(--light-grey);
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 230px;
-            background-color: var(--dark-blue);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            padding: 40px 0;
-        }
-
-        .logo {
-            font-size: 40px;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        nav a {
-            color: #CDCDCD;
-            text-decoration: none;
-            padding: 15px 40px;
-            display: block;
-        }
-
-        nav a.active {
-            background-color: #091931;
-            color: white;
-        }
-
-        .legal {
-            margin-top: auto;
-            padding: 20px 40px;
-            font-size: 12px;
-        }
-
-        /* Main Content */
-        .main-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .top-header {
-            background: white;
-            padding: 20px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .user-profile {
-            border: 2px solid var(--dark-blue);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Form */
-        .form-container {
-            padding: 10px 50px;
-        }
-
-        h1 {
-            font-size: 48px;
-            margin-bottom: 40px;
-        }
-
-        .form-columns {
-            display: flex;
-            gap: 40px;
-        }
-
-        .column {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .divider {
-            width: 1px;
-            background: var(--border-color);
-            margin: 0 20px;
-        }
-
-        label {
-            font-weight: bold;
-            margin: 5px 0 8px;
-        }
-
-        label span {
-            color: var(--accent-red);
-        }
-
-        input,
-        textarea,
-        select {
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            font-size: 16px;
-            background: white;
-        }
-
-        textarea {
-            height: 100px;
-            resize: none;
-        }
-
-        /* Buttons & Priority */
-        .priority-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .prio-btn {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            background: white;
-            cursor: pointer;
-        }
-
-        .urgent {
-            background: var(--accent-red);
-            color: white;
-            border: none;
-        }
-
-        .subtask-input {
-            position: relative;
-        }
-
-        .subtask-icons {
-            position: absolute;
-            right: 15px;
-            top: 12px;
-            color: #666;
-        }
-
-        .form-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 50px;
-        }
-
-        .btn-clear {
-            background: none;
-            border: 1px solid var(--dark-blue);
-            padding: 12px 25px;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-
-        .btn-create {
-            background: var(--dark-blue);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 10px;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-        }
-    </style>
+  
 </head>
 
-<body>
-
-    <aside class="sidebar">
-        <div class="logo">JOIN</div>
-        <nav>
-            <a href="#">Summary</a>
-            <a href="#" class="active">Add Task</a>
-            <a href="#">Board</a>
-            <a href="#">Contacts</a>
-        </nav>
-        <div class="legal">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Legal notice</a>
+<body class="app">
+    <header class="app--title">
+        <h1 class="app--title-headline">Kanban Project Management Tool</h1>
+        <div class="app--icons">
+            <a href="#"><img src="../assets/img/icons/general/help.svg" alt="?" class="app--icon" /></a>
+            <img src="../assets/img/user_initials.svg" alt="M L" class="app--initials" />
         </div>
-    </aside>
+    </header>
+    <nav class="sidebar">
+        <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
+        <ul>
+            <li class="active">
+                <a class="nav-category" href="#"><img class="nav-category-img"
+                        src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
+            </li>
+            <li class="">
+                <a class="nav-category" href="#"><img class="nav-category-img"
+                        src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
+            </li>
+            <li class="">
+                <a class="nav-category" href="#"><img class="nav-category-img"
+                        src="../assets/img/icons/general/board.svg" alt="" />Board</a>
+            </li>
+            <li class="">
+                <a class="nav-category" href="#"><img class="nav-category-img"
+                        src="../assets/img/icons/general/contacts.svg" alt="" />Contacts</a>
+            </li>
+        </ul>
 
-    <main class="main-content">
-        <header class="top-header">
-            <span>Kanban Project Management Tool</span>
-            <div class="user-profile">SM</div>
-        </header>
-
+        <div class="legal-section">
+            <a class="legal-section-link" href="#">Privacy Policy</a>
+            <a class="legal-section-link" href="#">Legal Notice</a>
+        </div>
+    </nav>
+    <main class="app--content">
+        <!-- Teil der Seite dann nur noch hiereinfugen - sonst fehlferhalten vom rendern -->
         <section class="form-container">
             <h1>Add Task</h1>
 
@@ -240,10 +74,14 @@
                     <div class="column">
                         <label>Priority</label>
                         <div class="priority-group">
-                            <button type="button" class="prio-btn urgent">Urgent</button>
-                            <button type="button" class="prio-btn medium">Medium</button>
-                            <button type="button" class="prio-btn low">Low</button>
+                            <button type="button" id="btn-urgent" class="prio-btn"
+                                onclick="selectPriority('urgent')">Urgent</button>
+                            <button type="button" id="btn-medium" class="prio-btn"
+                                onclick="selectPriority('medium')">Medium</button>
+                            <button type="button" id="btn-low" class="prio-btn"
+                                onclick="selectPriority('low')">Low</button>
                         </div>
+
 
                         <label>Assigned to</label>
                         <select>
@@ -274,6 +112,31 @@
             </form>
         </section>
     </main>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        function selectPriority(prio) {
+            // 1. Alle aktiven Klassen bei allen Buttons entfernen
+            document.getElementById('btn-urgent').classList.remove('urgent-active');
+            document.getElementById('btn-medium').classList.remove('medium-active');
+            document.getElementById('btn-low').classList.remove('low-active');
+
+            // 2. Die passende Klasse zum geklickten Button hinzufügen
+            const activeBtn = document.getElementById('btn-' + prio);
+            activeBtn.classList.add(prio + '-active');
+        }
+
+    </script>
 
 </body>
 
