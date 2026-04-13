@@ -53,6 +53,13 @@ body {
     bottom: -16px;
 }
 
+.arrowBackToLogin{
+     
+    margin-right:50px;
+
+
+}
+
 .signUp-content {
     width: 652px;
     height: 630px;
