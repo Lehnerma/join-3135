@@ -26,7 +26,6 @@ body {
     height: 120px;
 }
 
-
 .form--title {
     display: grid;
     grid-template-columns: auto 1fr auto;
@@ -37,14 +36,14 @@ body {
 }
 
 .h1-signUp {
-
     justify-self: center;
     align-items: center;
     font-size: 60px;
     position: relative;
     font-family: Inter-Bold;
-    right: 50px;;
-   }
+    right: 50px;
+
+}
 
 .h1-signUp::after {
     align-items: center;
@@ -58,8 +57,9 @@ body {
 }
 
 .arrowBackToLogin {
-
-    margin-left: 80px
+    margin-left: 80px;
+    cursor: pointer;
+    
 }
 
 .signUp-content {
