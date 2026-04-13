@@ -26,38 +26,40 @@ body {
     height: 120px;
 }
 
+
 .form--title {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 16px;
+    position: relative;
+    margin-top: 16px;
+    width: 100%;
 }
 
 .h1-signUp {
-    display: flex;
-    justify-content: center;
+
+    justify-self: center;
     align-items: center;
     font-size: 60px;
     position: relative;
     font-family: Inter-Bold;
-    margin-top: 16px;
-}
+    right: 50px;;
+   }
 
 .h1-signUp::after {
+    align-items: center;
     content: "";
     position: absolute;
-    width: 55%;
+    width: 65%;
     height: 3px;
     background-color: var(--secondary-color);
     bottom: -16px;
+    right: 50px;
 }
 
-.arrowBackToLogin{
-     
-    margin-right:50px;
+.arrowBackToLogin {
 
-
+    margin-left: 80px
 }
 
 .signUp-content {
@@ -73,14 +75,14 @@ body {
     height: 48px;
 }
 
-.acceptPrivacyPolicy{
+.acceptPrivacyPolicy {
 
     color: var(--secondary-color);
 }
 
 .form-signUp {
     display: grid;
-    grid-template-rows: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 0.2fr; 
+    grid-template-rows: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 0.2fr;
     justify-items: center;
     align-items: center;
     height: 100%;
@@ -110,6 +112,6 @@ a {
 }
 
 a:hover {
-     color: var(--secondary-color);
+    color: var(--secondary-color);
     transform: scale(1.05);
 }
