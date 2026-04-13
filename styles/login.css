@@ -16,13 +16,13 @@ body {
 }
 
 .nav-login {
-   width: 100%;
-   position: relative;
-   display: flex;
-   align-items: center;
-   justify-content: flex-end;
-   gap: 35px;
-   margin-right: 77px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 35px;
+  padding-right: 77px;
 }
 
 .join-logo {
@@ -44,25 +44,25 @@ body {
   }
 
   100% {
-    top: 53px;
-    left: 10%;
+    top: clamp(20px, 5vh, 60px);
+    left: 12.5vw;
     transform: translate(0, 0) scale(1);
   }
 }
 
 .join-logo.no-animation {
-   animation: none;
-   top: 53px;
-   left: calc(50vw - 620px);
-   transform: translate(0, 0) scale(1);
+  animation: none;
+  top: clamp(20px, 5vh, 60px);
+  left: 12.5vw;
+  transform: translate(0, 0) scale(1);
 }
 
 .login-content {
-   width: 652px;
-   height: 450px;
-   border-radius: 30px;
-   box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.11);
-   background-color: var(--input-text-color);
+  width: 652px;
+  height: 450px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.11);
+  background-color: var(--input-text-color);
 }
 
 .input {
@@ -97,36 +97,36 @@ body {
 }
 
 .form-login {
-   display: grid;
-   grid-template-rows: 4.5fr 1fr 2fr 4fr 0.1fr;
-   justify-items: center;
-   align-items: center;
-   height: 100%;
+  display: grid;
+  grid-template-rows: 4.5fr 1fr 2fr 4fr 0.1fr;
+  justify-items: center;
+  align-items: center;
+  height: 100%;
 }
 
 .login-buttons {
-   height: 70px;
-   display: flex;
-   align-items: center;
-   gap: 35px;
-   
+  height: 70px;
+  display: flex;
+  align-items: center;
+  gap: 35px;
+
 }
 
 .nav-login,
 .login-content,
 .form-login {
-   opacity: 0;
-   animation: fadeInLoginContent 0.7s ease-in forwards;
-   animation-delay: 0.8s;
+  opacity: 0;
+  animation: fadeInLoginContent 0.7s ease-in forwards;
+  animation-delay: 0.8s;
 }
 
 .nav-login.no-animation,
 .login-content.no-animation,
 .form-login.no-animation {
   opacity: 1;
-  
-   animation: fadeInLoginContent 0.7s ease-in forwards;
-   animation-delay: 0.8s;
+
+  animation: fadeInLoginContent 0.7s ease-in forwards;
+  animation-delay: 0.8s;
 }
 
 
@@ -161,10 +161,10 @@ a {
   color: var(--fourth-text-color);
   text-decoration: none;
   cursor: pointer;
-  
+
 }
 
- a:hover {
+a:hover {
   color: var(--secondary-color);
-    transform: scale(1.05);
-} 
+  transform: scale(1.05);
+}

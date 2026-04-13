@@ -13,12 +13,13 @@ body {
     position: relative;
     width: 100%;
     max-width: var(--max-dp-width);
+    margin: 12.5vw;
 }
 
 .nav-signUp {
-    width: 100%;
-    margin-left: 5.2vw;
-    margin-top: 10.9vh;
+    width: 100vw;
+    margin-top: 9.8vh;
+    margin-left: 0vw;
 }
 
 .join-logo {
@@ -40,9 +41,7 @@ body {
     align-items: center;
     font-size: 60px;
     position: relative;
-    font-family: Inter-Bold;
     right: 50px;
-
 }
 
 .h1-signUp::after {
@@ -59,10 +58,10 @@ body {
 .arrowBackToLogin {
     margin-left: 80px;
     cursor: pointer;
-    
 }
 
 .signUp-content {
+    margin-top: 30px;
     width: 652px;
     height: 630px;
     border-radius: 30px;
@@ -86,6 +85,7 @@ body {
     justify-items: center;
     align-items: center;
     height: 100%;
+   
 }
 
 .footer-login {
