@@ -1,7 +1,7 @@
 body {
   display: grid;
   min-height: 100vh;
-  grid-template-rows: 126px 1fr 126px;
+  grid-template-rows: auto 1fr auto;
   place-items: center;
   background-color: var(--background-color);
 }
@@ -13,6 +13,7 @@ body {
   position: relative;
   width: 100%;
   max-width: var(--max-dp-width);
+  padding-top: 67px;
 }
 
 .nav-login {
@@ -22,31 +23,42 @@ body {
   align-items: center;
   justify-content: flex-end;
   gap: 35px;
-  padding-right: 77px;
+  margin-right: 77px;
+  opacity: 0;
+  animation: fadeInLoginContent 0.7s ease-in forwards;
+  animation-delay: 0.3s;
 }
 
 .join-logo {
-  position: fixed;
+  position: absolute;
   z-index: 2;
-  width: 100px;
-  height: 120px;
   top: 50vh;
-  left: 50vw;
-  transform: translate(-50%, -50%) scale(2);
-  animation: slide-diagonal 1200ms ease-in-out 0.3s forwards;
+  left: 50%;
+  translate: -50% -50%;
+  width: 274px;
+  height: 345px;
+  animation: slide-diagonal 0.7s ease-in-out 0.3s forwards;
 }
 
 @keyframes slide-diagonal {
   0% {
     top: 50vh;
-    left: 50vw;
-    transform: translate(-50%, -50%) scale(2);
+    left: 50%;
+    translate: -50% -50%;
+  }
+  10%,
+  20% {
+    top: 50vh;
+    left: 50%;
+    translate: -50% -50%;
   }
 
   100% {
-    top: clamp(20px, 5vh, 60px);
-    left: 12.5vw;
-    transform: translate(0, 0) scale(1);
+    top: 80px;
+    left: 77px;
+    width: 100px;
+    height: 120px;
+    translate: 0 0;
   }
 }
 
@@ -63,11 +75,26 @@ body {
   border-radius: 30px;
   box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.11);
   background-color: var(--input-text-color);
+  opacity: 0;
+  animation: fadeInLoginContent 0.7s ease-in forwards;
+  animation-delay: 0.3s;
 }
 
-.input {
-  width: 422px;
-  height: 48px;
+.form-login {
+  display: grid;
+  grid-template-rows: 1fr 152px 1fr;
+  justify-items: center;
+  align-items: center;
+  height: 100%;
+  opacity: 0;
+  animation: fadeInLoginContent 0.7s ease-in forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeInLoginContent {
+  to {
+    opacity: 1;
+  }
 }
 
 .form--title {
@@ -90,18 +117,22 @@ body {
 .h1-login::after {
   content: "";
   position: absolute;
-  width: 70%;
+  width: 150px;
   height: 3px;
   background-color: var(--secondary-color);
   bottom: -16px;
 }
 
-.form-login {
-  display: grid;
-  grid-template-rows: 4.5fr 1fr 2fr 4fr 0.1fr;
-  justify-items: center;
+.input--container {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  height: 100%;
+  gap: 32px;
+}
+
+.input {
+  width: 422px;
+  height: 48px;
 }
 
 .login-buttons {
@@ -109,32 +140,6 @@ body {
   display: flex;
   align-items: center;
   gap: 35px;
-
-}
-
-.nav-login,
-.login-content,
-.form-login {
-  opacity: 0;
-  animation: fadeInLoginContent 0.7s ease-in forwards;
-  animation-delay: 0.8s;
-}
-
-.nav-login.no-animation,
-.login-content.no-animation,
-.form-login.no-animation {
-  opacity: 1;
-
-  animation: fadeInLoginContent 0.7s ease-in forwards;
-  animation-delay: 0.8s;
-}
-
-
-
-@keyframes fadeInLoginContent {
-  to {
-    opacity: 1;
-  }
 }
 
 .footer-login {
@@ -143,28 +148,28 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: var(--max-dp-width);
+  opacity: 0;
+  animation: fadeInLoginContent 0.7s ease-in forwards;
+  animation-delay: 0.3s;
 }
 
 .footer-content {
   width: 100%;
-  max-width: 1440px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 16px;
-  opacity: 0;
-  animation: fadeInLoginContent 0.7s ease-in forwards;
-  animation-delay: 1s;
 }
 
-a {
-  color: var(--fourth-text-color);
+.footer-content a {
   text-decoration: none;
-  cursor: pointer;
-
+  color: var(--fourth-text-color);
+  font-weight: 400;
 }
 
-a:hover {
+.footer-content a:hover {
   color: var(--secondary-color);
+  font-weight: 700;
   transform: scale(1.05);
 }

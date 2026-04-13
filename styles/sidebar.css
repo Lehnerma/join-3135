@@ -72,10 +72,12 @@
   font-size: 16px;
   color: var(--fifth-text-color);
   text-align: start;
+  font-weight: 400;
 
   &:hover {
     color: var(--secondary-color);
     transform: scale(1.05);
+    font-weight: 700;
   }
 }
 
