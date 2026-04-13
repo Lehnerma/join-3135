@@ -103,5 +103,6 @@ a {
 }
 
 a:hover {
-    color: var(--secondary-color);
+     color: var(--secondary-color);
+    transform: scale(1.05);
 }
