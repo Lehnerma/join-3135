@@ -16,8 +16,8 @@ dialog {
   margin: auto;
 }
 
-.dialog-content {
-}
+/* .dialog-content {
+} */
 
 .dialog-header {
   background-color: var(--primary-color);

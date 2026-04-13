@@ -1,19 +1,18 @@
 body {
-   display: grid;
-   min-height: 100vh;
-   grid-template-rows: 126px 1fr 126px;
-   place-items: center;
-   background-color: var(--background-color);
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: 126px 1fr 126px;
+  place-items: center;
+  background-color: var(--background-color);
 }
 
 .header {
-   display: flex;
-   justify-content: flex-end;
-   align-items: center;
-   position: relative;
-   width: 100%;
-   max-width: var(--max-dp-width);
-
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  max-width: var(--max-dp-width);
 }
 
 .nav-login {
@@ -27,28 +26,28 @@ body {
 }
 
 .join-logo {
-   position: fixed;
-   z-index: 2;
-   width: 100px;
-   height: 120px;
-   top: 50vh;
-   left: 50vw;
-   transform: translate(-50%, -50%) scale(2);
-   animation: slide-diagonal 1200ms ease-in-out 0.3s forwards;
+  position: fixed;
+  z-index: 2;
+  width: 100px;
+  height: 120px;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%) scale(2);
+  animation: slide-diagonal 1200ms ease-in-out 0.3s forwards;
 }
 
 @keyframes slide-diagonal {
-   0% {
-      top: 50vh;
-      left: 50vw;
-      transform: translate(-50%, -50%) scale(2);
-   }
+  0% {
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%) scale(2);
+  }
 
-   100% {
-      top: 53px;
-      left: calc(50vw - 620px);
-      transform: translate(0, 0) scale(1);
-   }
+  100% {
+    top: 53px;
+    left: 10%;
+    transform: translate(0, 0) scale(1);
+  }
 }
 
 .join-logo.no-animation {
@@ -67,34 +66,34 @@ body {
 }
 
 .input {
-   width: 422px;
-   height: 48px;
+  width: 422px;
+  height: 48px;
 }
 
 .form--title {
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .h1-login {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   font-size: 60px;
-   font-family: Inter-Bold;
-   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 60px;
+  font-family: Inter-Bold;
+  position: relative;
 }
 
 .h1-login::after {
-   content: "";
-   position: absolute;
-   width: 100%;
-   height: 3px;
-   background-color: var(--secondary-color);
-   bottom: -16px;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background-color: var(--secondary-color);
+  bottom: -16px;
 }
 
 .form-login {
@@ -133,37 +132,37 @@ body {
 
 
 @keyframes fadeInLoginContent {
-   to {
-      opacity: 1;
-   }
+  to {
+    opacity: 1;
+  }
 }
 
 .footer-login {
-   width: 100%;
-   height: 126px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
+  width: 100%;
+  height: 126px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .footer-content {
-   width: 100%;
-   max-width: 1440px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   gap: 16px;
-   opacity: 0;
-   animation: fadeInLoginContent 0.7s ease-in forwards;
-   animation-delay: 1s;
+  width: 100%;
+  max-width: 1440px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  opacity: 0;
+  animation: fadeInLoginContent 0.7s ease-in forwards;
+  animation-delay: 1s;
 }
 
 a {
-   color: var(--fourth-text-color);
-   text-decoration: none;
-   cursor: pointer;
+  color: var(--fourth-text-color);
+  text-decoration: none;
+  cursor: pointer;
 }
 
-a:hover {
+/* a:hover {
    color: var(--secondary-color);
-}
+} */
