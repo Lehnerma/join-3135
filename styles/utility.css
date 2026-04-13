@@ -1,0 +1,82 @@
+.utility-h1 {
+  padding-bottom: 20px;
+  font-family: Inter-Bold;
+  font-size: 62px;
+}
+
+.utility-h2 {
+  padding: 20px 0 10px 0;
+  font-family: Inter-Bold;
+  font-size: 28px;
+}
+
+.utility-h3 {
+  padding: 10px 0;
+}
+
+.utility-h4 {
+  padding: 10px 0;
+}
+
+.utility-highlighted {
+  color: var(--secondary-color);
+}
+
+.utility-section {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 64px;
+}
+
+.utility-section-link {
+  font-size: 16px;
+  color: var(--fifth-text-color);
+}
+
+.utility-section-link:hover {
+  color: var(--third-text-color);
+}
+
+.utility-content {
+  padding-top: 120px;
+  padding-left: 100px;
+  padding-right: calc((100% - 1208px) / 2);
+  margin-right: 24px;
+}
+
+.utility-ol {
+  list-style: none;
+  counter-reset: my-counter;
+  padding-left: 0;
+  margin-top: 12px;
+}
+
+
+.utility-ol li {
+  counter-increment: my-counter;
+  position: relative;
+  padding-left: 2.5em;
+  margin-bottom: 10px;
+}
+
+
+.utility-ol li h3 {
+  padding: 0;
+  padding-top: 10px;
+}
+
+ol li::before {
+  content: counter(my-counter) ".";
+  /* Zahl anzeigen */
+  position: absolute;
+  top: 10px;
+  left: 0;
+  /* Die Zahl klebt ganz links (bündig zum Text) */
+  width: 2em;
+  /* Platz für die Zahl */
+  font-family: Inter-Bold;
+  font-size: 24px;
+  /* Optional: Zahl hervorheben */
+}
