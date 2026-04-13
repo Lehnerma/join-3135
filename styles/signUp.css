@@ -8,23 +8,19 @@ body {
 
 .header {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
   position: relative;
   width: 100%;
   max-width: var(--max-dp-width);
   padding-top: 67px;
 }
 
-.nav-signUp {
-  width: 100%;
-  margin-left: 5.2vw;
-  margin-top: 10.9vh;
-}
-
 .join-logo {
+  position: absolute;
   width: 100px;
   height: 120px;
+  top: 80px;
+  left: 77px;
 }
 
 .form--title {
