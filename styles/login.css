@@ -90,7 +90,7 @@ body {
 .h1-login::after {
   content: "";
   position: absolute;
-  width: 100%;
+  width: 70%;
   height: 3px;
   background-color: var(--secondary-color);
   bottom: -16px;
@@ -109,7 +109,7 @@ body {
    display: flex;
    align-items: center;
    gap: 35px;
-
+   
 }
 
 .nav-login,
@@ -161,8 +161,10 @@ a {
   color: var(--fourth-text-color);
   text-decoration: none;
   cursor: pointer;
+  
 }
 
-/* a:hover {
-   color: var(--secondary-color);
-} */
+ a:hover {
+  color: var(--secondary-color);
+    transform: scale(1.05);
+} 

@@ -47,7 +47,7 @@ body {
 .h1-signUp::after {
     content: "";
     position: absolute;
-    width: 100%;
+    width: 55%;
     height: 3px;
     background-color: var(--secondary-color);
     bottom: -16px;
