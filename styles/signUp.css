@@ -1,7 +1,7 @@
 body {
   display: grid;
   min-height: 100vh;
-  grid-template-rows: 126px 1fr 126px;
+  grid-template-rows: auto 1fr auto;
   place-items: center;
   background-color: var(--background-color);
 }
@@ -13,6 +13,7 @@ body {
   position: relative;
   width: 100%;
   max-width: var(--max-dp-width);
+  padding-top: 67px;
 }
 
 .nav-signUp {
@@ -99,8 +100,4 @@ a {
   color: var(--fourth-text-color);
   text-decoration: none;
   cursor: pointer;
-}
-
-a:hover {
-  color: var(--secondary-color);
 }
