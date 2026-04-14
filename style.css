@@ -68,22 +68,12 @@
 }
 
 .input--icon {
-<<<<<<< Updated upstream
   width: 24px;
   height: 24px;
   position: absolute;
   right: 16px;
-  top: 34%;
+  top: 50%;
   transform: translateY(-50%);
-=======
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%); 
-    
->>>>>>> Stashed changes
 }
 
 .mainField {
