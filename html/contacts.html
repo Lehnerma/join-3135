@@ -1,92 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../assets/img/favicon/favicon-join.svg" type="image/x-icon" />
-    <title>Document</title>
 
-    <link rel="stylesheet" href="../style.css" />
-    <link rel="stylesheet" href="../styles/sidebar.css" />
-    <link rel="stylesheet" href="../styles/contacts.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="../assets/img/favicon/favicon-join.svg" type="image/x-icon" />
+  <title>Contacts</title>
 
-    <link rel="stylesheet" href="../styles/fonts.css" />
-    <link rel="stylesheet" href="../styles/colors.css" />
-    <script src="../scripts/contacts.js"></script>
-  </head>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../styles/sidebar.css" />
+  <link rel="stylesheet" href="../styles/contacts.css" />
 
-  <body class="app" onload="init()">
-    <header class="app--title">
-      <h1 class="app--title-headline">Kanban Project Management Tool</h1>
-      <div class="app--icons">
-        <a href="#"><img src="../assets/img/icons/general/help.svg" alt="?" class="app--icon" /></a>
-        <img src="../assets/img/user_initials.svg" alt="M L" class="app--initials" />
+  <link rel="stylesheet" href="../styles/fonts.css" />
+  <link rel="stylesheet" href="../styles/colors.css" />
+  <script src="../scripts/contacts.js"></script>
+</head>
+
+<body class="app" onload="init()">
+  <header class="app--title">
+    <h1 class="app--title-headline">Kanban Project Management Tool</h1>
+    <div class="app--icons">
+      <a href="#"><img src="../assets/img/icons/general/help.svg" alt="?" class="app--icon" /></a>
+      <img src="../assets/img/user_initials.svg" alt="M L" class="app--initials" />
+    </div>
+  </header>
+
+  <nav class="sidebar">
+    <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
+    <ul>
+      <li class="">
+        <a class="nav-category" href="#"><img class="nav-category-img" src="../assets/img/icons/general/summary.svg"
+            alt="" />Summary</a>
+      </li>
+      <li class="">
+        <a class="nav-category" href="#"><img class="nav-category-img" src="../assets/img/icons/general/add-task.svg"
+            alt="" />Add Task</a>
+      </li>
+      <li class="">
+        <a class="nav-category" href="#"><img class="nav-category-img" src="../assets/img/icons/general/board.svg"
+            alt="" />Board</a>
+      </li>
+      <li class="active">
+        <a class="nav-category" href="#"><img class="nav-category-img" src="../assets/img/icons/general/contacts.svg"
+            alt="" />Contacts</a>
+      </li>
+    </ul>
+
+    <div class="legal-section">
+      <a class="legal-section-link" href="#">Privacy Policy</a>
+      <a class="legal-section-link" href="#">Legal Notice</a>
+    </div>
+  </nav>
+
+  <main class="main-content">
+
+    <div class="left-content">
+
+      <button type="button" class="btn btn--primary add-button-size" id="add">Add new contact <img
+          class="add-contact-icon." src="../assets/img/icons/general/person_add.svg" alt="add contact button"></button>
+      <div class="contact-list">
+        <div class="letter-divider">A</div>
+        <div class="contact-details">Radek</div>
       </div>
+    </div>
+
+    <div class="right-content">
+      <div class="headline">
+        <h1 class="contacts-title">Contacts</h1>
+        <div class="vertical-divider"></div>
+        <span class="contacts-subtitle">Better with a team</span>
+      </div>
+
+
+
+  </main>
+  <dialog class="add-contact" id="add_contact">
+    <header class="dialog-header">
+      <img src="../assets/img/logo-join.svg" alt="logo-join" />
+      <section>
+        <h2>Add contact</h2>
+        <p>Tasks are better with a team!</p>
+      </section>
     </header>
-    <nav class="sidebar">
-      <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
-      <ul>
-        <li class="">
-          <a class="nav-category" href="#"><img class="nav-category-img" src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
-        </li>
-        <li class="">
-          <a class="nav-category" href="#"><img class="nav-category-img" src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
-        </li>
-        <li class="">
-          <a class="nav-category" href="#"><img class="nav-category-img" src="../assets/img/icons/general/board.svg" alt="" />Board</a>
-        </li>
-        <li class="active">
-          <a class="nav-category" href="#"><img class="nav-category-img" src="../assets/img/icons/general/contacts.svg" alt="" />Contacts</a>
-        </li>
-      </ul>
-
-      <div class="legal-section">
-        <a class="legal-section-link" href="#">Privacy Policy</a>
-        <a class="legal-section-link" href="#">Legal Notice</a>
-      </div>
-    </nav>
-    <main class="app--content">
-      <div class="test-bg">
-        <button id="add">add</button>
-        <button id="edit">edit</button>
-      </div>
-    </main>
-    <dialog class="add-contact" id="add_contact">
-      <header class="dialog-header">
-        <img src="../assets/img/logo-join.svg" alt="logo-join" />
-        <section>
-          <h2>Add contact</h2>
-          <p>Tasks are better with a team!</p>
-        </section>
-      </header>
-      <main>
-        <button>close x</button>
-        <article>
-          <img src="" alt="person icon" />
-          <form id="add_form">
-            <input type="text" name="name" placeholder="Name" required />
-            <input type="email" name="email" placeholder="Email" required />
-            <input type="tel" name="phone" placeholder="Phone" />
-            <button>Cancel</button>
-            <button>Creat</button>
-          </form>
-        </article>
-      </main>
-    </dialog>
-    <dialog class="edit-contact" id="edit_contact">
-      <article class="dialog-content">
-        <button>close x</button>
-        <article>
-          <img src="" alt="initialen" />
-          <form id="edit_form">
-            <input type="text" name="name" placeholder="Name" required />
-            <input type="email" name="email" placeholder="Email" required />
-            <input type="tel" name="phone" placeholder="Phone" />
-            <button>Delete</button>
-            <button>Save</button>
-          </form>
-        </article>
+    <main>
+      <button>close x</button>
+      <article>
+        <img src="" alt="person icon" />
+        <form id="add_form">
+          <input type="text" name="name" placeholder="Name" required />
+          <input type="email" name="email" placeholder="Email" required />
+          <input type="tel" name="phone" placeholder="Phone" />
+          <button>Cancel</button>
+          <button>Creat</button>
+        </form>
       </article>
-    </dialog>
-  </body>
+    </main>
+  </dialog>
+  <dialog class="edit-contact" id="edit_contact">
+    <article class="dialog-content">
+      <button>close x</button>
+      <article>
+        <img src="" alt="initialen" />
+        <form id="edit_form">
+          <input type="text" name="name" placeholder="Name" required />
+          <input type="email" name="email" placeholder="Email" required />
+          <input type="tel" name="phone" placeholder="Phone" />
+          <button>Delete</button>
+          <button>Save</button>
+        </form>
+      </article>
+    </article>
+  </dialog>
+</body>
+
 </html>
