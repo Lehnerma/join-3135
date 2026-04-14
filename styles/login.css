@@ -109,7 +109,6 @@ body {
   display: flex;
   align-items: center;
   gap: 35px;
-
 }
 
 .nav-login,
@@ -122,9 +121,9 @@ body {
 
 .nav-login.no-animation,
 .login-content.no-animation,
-.form-login.no-animation {
+.form-login.no-animation,
+.footer-content.no-animation {
   opacity: 1;
-
   animation: fadeInLoginContent 0.7s ease-in forwards;
   animation-delay: 0.8s;
 }
