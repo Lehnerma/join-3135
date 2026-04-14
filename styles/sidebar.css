@@ -58,6 +58,10 @@
   background-color: var(--btn-click-color);
 }
 
+/* .active {
+  background-color: var(--third-color);
+} */
+
 .legal-section {
   justify-self: center;
   display: flex;
