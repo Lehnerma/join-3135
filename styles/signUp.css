@@ -1,99 +1,117 @@
 body {
-  display: grid;
-  min-height: 100vh;
-  grid-template-rows: auto 1fr auto;
-  place-items: center;
-  background-color: var(--background-color);
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: 126px 1fr 126px;
+    place-items: center;
+    background-color: var(--background-color);
 }
 
 .header {
-  display: flex;
-  justify-content: flex-start;
-  position: relative;
-  width: 100%;
-  max-width: var(--max-dp-width);
-  padding-top: 67px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    max-width: var(--max-dp-width);
+    margin: 12.5vw;
+}
+
+.nav-signUp {
+    width: 100vw;
+    margin-top: 9.8vh;
+    margin-left: 0vw;
 }
 
 .join-logo {
-  position: absolute;
-  width: 100px;
-  height: 120px;
-  top: 80px;
-  left: 77px;
+    width: 100px;
+    height: 120px;
 }
 
 .form--title {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    position: relative;
+    margin-top: 16px;
+    width: 100%;
 }
 
 .h1-signUp {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 60px;
-  position: relative;
-  font-family: Inter-Bold;
-  margin-top: 16px;
+    justify-self: center;
+    align-items: center;
+    font-size: 60px;
+    position: relative;
+    right: 50px;
 }
 
 .h1-signUp::after {
-  content: "";
-  position: absolute;
-  width: 150px;
-  height: 3px;
-  background-color: var(--secondary-color);
-  bottom: -16px;
+    align-items: center;
+    content: "";
+    position: absolute;
+    width: 65%;
+    height: 3px;
+    background-color: var(--secondary-color);
+    bottom: -16px;
+    right: 50px;
+}
+
+.arrowBackToLogin {
+    margin-left: 80px;
+    cursor: pointer;
 }
 
 .signUp-content {
-  width: 652px;
-  height: 630px;
-  border-radius: 30px;
-  box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.11);
-  background-color: var(--input-text-color);
+    margin-top: 30px;
+    width: 652px;
+    height: 630px;
+    border-radius: 30px;
+    box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.11);
+    background-color: var(--input-text-color);
 }
 
 .input {
-  width: 422px;
-  height: 48px;
+    width: 422px;
+    height: 48px;
 }
 
 .acceptPrivacyPolicy {
-  color: var(--secondary-color);
+
+    color: var(--secondary-color);
 }
 
 .form-signUp {
-  display: grid;
-  grid-template-rows: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 0.2fr;
-  justify-items: center;
-  align-items: center;
-  height: 100%;
+    display: grid;
+    grid-template-rows: 2fr 1fr 1fr 1fr 1fr 1fr 1fr 0.2fr;
+    justify-items: center;
+    align-items: center;
+    height: 100%;
+   
 }
 
 .footer-login {
-  width: 100%;
-  height: 126px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    width: 100%;
+    height: 126px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .footer-content {
-  width: 100%;
-  max-width: 1440px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
+    width: 100%;
+    max-width: 1440px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
 }
 
 a {
-  color: var(--fourth-text-color);
-  text-decoration: none;
-  cursor: pointer;
+    color: var(--fourth-text-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    color: var(--secondary-color);
+    transform: scale(1.05);
 }

@@ -9,12 +9,17 @@
   font-family: "Inter-Regular", sans-serif;
 }
 
+.dnone{
+  display: none !important; 
+}
+
 .btn {
   border-radius: 8px;
   border: none;
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .btn--primary {
@@ -55,12 +60,25 @@
   padding: 16px 24px;
   height: 48px;
   font-size: 21px;
+  font-weight: 700;
 }
 
 .btn--signup {
   height: 48px;
+  width: 112px;
   font-size: 16px;
   padding: 16px;
+}
+
+.btn--arrow{
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+
+  &:hover {
+    background-color: var(--btn-arrow-hover);
+    border-radius: 50%;
+  }
 }
 
 .input {
@@ -77,7 +95,6 @@
 
 .input--section {
   position: relative;
-  /* important for the icon in the input */
 }
 
 .input--icon {

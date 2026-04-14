@@ -1,7 +1,7 @@
 body {
   display: grid;
   min-height: 100vh;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr 80px;
   place-items: center;
   background-color: var(--background-color);
 }
@@ -25,8 +25,6 @@ body {
   gap: 35px;
   margin-right: 77px;
   opacity: 0;
-  animation: fadeInLoginContent 0.7s ease-in forwards;
-  animation-delay: 0.3s;
 }
 
 .join-logo {
@@ -37,6 +35,9 @@ body {
   translate: -50% -50%;
   width: 274px;
   height: 345px;
+}
+
+.logo-animation {
   animation: slide-diagonal 0.7s ease-in-out 0.3s forwards;
 }
 
@@ -62,50 +63,54 @@ body {
   }
 }
 
-.join-logo.no-animation {
-  animation: none;
-  top: clamp(20px, 5vh, 60px);
-  left: 12.5vw;
-  transform: translate(0, 0) scale(1);
-}
-
-.login-content {
-  width: 652px;
-  height: 450px;
-  border-radius: 30px;
-  box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.11);
-  background-color: var(--input-text-color);
-  opacity: 0;
+.fade-in {
   animation: fadeInLoginContent 0.7s ease-in forwards;
   animation-delay: 0.3s;
 }
-
-.form-login {
-  display: grid;
-  grid-template-rows: 1fr 152px 1fr;
-  justify-items: center;
-  align-items: center;
-  height: 100%;
-  opacity: 0;
-  animation: fadeInLoginContent 0.7s ease-in forwards;
-  animation-delay: 0.3s;
-}
-
 @keyframes fadeInLoginContent {
   to {
     opacity: 1;
   }
 }
 
-.form--title {
-  display: flex;
-  flex-direction: column;
+.form--container {
+  border-radius: 30px;
+  box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.11);
+  background-color: white;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 32px;
+  padding: 48px 0;
+  justify-items: center;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
+  opacity: 0;
 }
 
-.h1-login {
+.login {
+  width: 652px;
+  height: 450px;
+}
+
+.signup {
+  width: 652px;
+  height: 600px;
+  opacity: 1;
+}
+
+.form--title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  position: relative;
+}
+
+.form--title .btn {
+  position: absolute;
+  left: 0;
+}
+
+.form--title h1 {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,7 +119,7 @@ body {
   position: relative;
 }
 
-.h1-login::after {
+.form--title h1::after {
   content: "";
   position: absolute;
   width: 150px;
@@ -123,11 +128,18 @@ body {
   bottom: -16px;
 }
 
+.input--container-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 16px;
+}
+
 .input--container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  gap: 24px;
 }
 
 .input {
@@ -136,26 +148,72 @@ body {
 }
 
 .login-buttons {
-  height: 70px;
+  height: 48px;
   display: flex;
   align-items: center;
   gap: 35px;
 }
 
+.form--container .btn--signup {
+  font-size: 21px;
+  font-weight: 700;
+  padding: 16px 24px;
+  height: 55px;
+  width: 126px;
+}
+
+.privacy-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.privacy-content input[type="checkbox"] {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  background-image: url("../assets/img/icons/general/checkbox_default.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
+
+.privacy-content input[type="checkbox"]:hover:not(:checked) {
+  background-image: url("../assets/img/icons/general/checkbox_default_hover.svg");
+}
+
+.privacy-content input[type="checkbox"]:checked {
+  background-image: url("../assets/img/icons/general/checkbox_checked.svg");
+}
+
+.privacy-content input[type="checkbox"]:checked:hover {
+  background-image: url("../assets/img/icons/general/checkbox_checked_hover.svg");
+}
+
+.privacy-content span {
+  font-size: 16px;
+  color: var(--fourth-text-color);
+  padding: 0 4px;
+}
+
+.privacy-content a {
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
 .footer-login {
   width: 100%;
-  height: 126px;
   display: flex;
   justify-content: center;
   align-items: center;
   max-width: var(--max-dp-width);
   opacity: 0;
-  animation: fadeInLoginContent 0.7s ease-in forwards;
-  animation-delay: 0.3s;
 }
 
 .footer-content {
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
