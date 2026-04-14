@@ -10,7 +10,7 @@
 }
 
 .dnone{
-  display: none;
+  display: none !important; 
 }
 
 .btn {
@@ -58,10 +58,12 @@
   padding: 16px 24px;
   height: 48px;
   font-size: 21px;
+  font-weight: 700;
 }
 
 .btn--signup {
   height: 48px;
+  width: 112px;
   font-size: 16px;
   padding: 16px;
 }
@@ -91,7 +93,6 @@
 
 .input--section {
   position: relative;
-  /* important for the icon in the input */
 }
 
 .input--icon {
