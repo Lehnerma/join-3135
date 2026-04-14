@@ -5,17 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join - Add Task</title>
+
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../styles/sidebar.css" />
     <link rel="stylesheet" href="../styles/fonts.css" />
     <link rel="stylesheet" href="../styles/colors.css" />
     <link rel="stylesheet" href="../styles/addTaskPage.css" />
-
-
-  
 </head>
 
 <body class="app">
+
     <header class="app--title">
         <h1 class="app--title-headline">Kanban Project Management Tool</h1>
         <div class="app--icons">
@@ -23,49 +22,37 @@
             <img src="../assets/img/user_initials.svg" alt="M L" class="app--initials" />
         </div>
     </header>
+
     <nav class="sidebar">
         <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
         <ul>
-            <li class="active">
-                <a class="nav-category" href="#"><img class="nav-category-img"
-                        src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
-            </li>
-            <li class="">
-                <a class="nav-category" href="#"><img class="nav-category-img"
-                        src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
-            </li>
-            <li class="">
-                <a class="nav-category" href="#"><img class="nav-category-img"
-                        src="../assets/img/icons/general/board.svg" alt="" />Board</a>
-            </li>
-            <li class="">
-                <a class="nav-category" href="#"><img class="nav-category-img"
-                        src="../assets/img/icons/general/contacts.svg" alt="" />Contacts</a>
-            </li>
+            <li class="active"><a class="nav-category" href="#">Summary</a></li>
+            <li><a class="nav-category" href="#">Add Task</a></li>
+            <li><a class="nav-category" href="#">Board</a></li>
+            <li><a class="nav-category" href="#">Contacts</a></li>
         </ul>
-
-        <div class="legal-section">
-            <a class="legal-section-link" href="#">Privacy Policy</a>
-            <a class="legal-section-link" href="#">Legal Notice</a>
-        </div>
     </nav>
+
     <main class="app--content">
-        <!-- Teil der Seite dann nur noch hiereinfugen - sonst fehlferhalten vom rendern -->
+
         <section class="form-container">
             <h1 class="utility-h1">Add Task</h1>
 
-            <form class="task-form">
+
+            <form class="task-form" onsubmit="createTask(event)">
+
                 <div class="form-columns">
+
                     <!-- Linke Spalte -->
                     <div class="column">
                         <label>Title<span>*</span></label>
-                        <input type="text" placeholder="Enter a title">
+                        <input id="title" type="text" placeholder="Enter a title">
 
                         <label>Description</label>
-                        <textarea placeholder="Enter a Description"></textarea>
+                        <textarea id="description" placeholder="Enter a Description"></textarea>
 
                         <label>Due date<span>*</span></label>
-                        <input type="date" value="2022-10-06">
+                        <input id="dueDate" type="date">
                     </div>
 
                     <div class="divider"></div>
@@ -73,69 +60,99 @@
                     <!-- Rechte Spalte -->
                     <div class="column">
                         <label>Priority</label>
+
                         <div class="priority-group">
                             <button type="button" id="btn-urgent" class="prio-btn"
                                 onclick="selectPriority('urgent')">Urgent</button>
+
                             <button type="button" id="btn-medium" class="prio-btn"
                                 onclick="selectPriority('medium')">Medium</button>
+
                             <button type="button" id="btn-low" class="prio-btn"
                                 onclick="selectPriority('low')">Low</button>
                         </div>
 
-
                         <label>Assigned to</label>
-                        <select>
-                            <option>Select contacts to assign</option>
+                        <select id="assignedTo">
+                            <option value="">Select contacts to assign</option>
                         </select>
 
                         <label>Category<span>*</span></label>
-                        <select>
-                            <option>Technical Task</option>
-                            <option>User Story</option>
+                        <select id="category">
+                            <option value="Technical Task">Technical Task</option>
+                            <option value="User Story">User Story</option>
                         </select>
 
                         <label>Subtasks</label>
                         <div class="subtask-input">
-                            <input type="text" value="Contact Form">
+                            <input type="text" placeholder="Add subtask">
                             <span class="subtask-icons">✕ | ✓</span>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="form-footer">
                     <p><span>*</span>This field is required</p>
+
                     <div class="action-buttons">
                         <button type="reset" class="btn-clear">Clear ✕</button>
                         <button type="submit" class="btn-create">Create Task ✓</button>
                     </div>
                 </div>
+
             </form>
         </section>
+
     </main>
 
-
-
-
-
-
-
-
-
-
-
-
     <script>
+        let selectedPriority = "medium";
+
         function selectPriority(prio) {
-            // 1. Alle aktiven Klassen bei allen Buttons entfernen
+            selectedPriority = prio;
+
             document.getElementById('btn-urgent').classList.remove('urgent-active');
             document.getElementById('btn-medium').classList.remove('medium-active');
             document.getElementById('btn-low').classList.remove('low-active');
 
-            // 2. Die passende Klasse zum geklickten Button hinzufügen
             const activeBtn = document.getElementById('btn-' + prio);
             activeBtn.classList.add(prio + '-active');
         }
 
+        function createTask(event) {
+            event.preventDefault();
+
+        
+            let title = document.getElementById("title").value;
+            let dueDate = document.getElementById("dueDate").value;
+
+            if (!title || !dueDate) {
+                alert("Title and Due Date are required!");
+                return;
+            }
+
+            let task = {
+                title: title,
+                description: document.getElementById("description").value,
+                dueDate: dueDate,
+                category: document.getElementById("category").value,
+                assignedTo: document.getElementById("assignedTo").value,
+                priority: selectedPriority,
+                status: "todo",
+                subtasks: []
+            };
+
+            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            tasks.push(task);
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+
+            window.location.href = "board.html";
+        }
+
+        window.onload = function () {
+            selectPriority("medium");
+        };
     </script>
 
 </body>
