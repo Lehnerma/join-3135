@@ -24,6 +24,7 @@
   padding-top: 64px;
   justify-self: center;
 }
+
 .nav-category-img {
   width: 25px;
   height: auto;
@@ -58,10 +59,6 @@
   background-color: var(--btn-click-color);
 }
 
-/* .active {
-  background-color: var(--third-color);
-} */
-
 .legal-section {
   justify-self: center;
   display: flex;
@@ -70,16 +67,23 @@
   gap: 16px;
   padding-bottom: 64px;
   transition: all 0.7s ease-in-out;
+  width: 100%;
 }
 
 .legal-section-link {
   font-size: 16px;
   color: var(--fifth-text-color);
-  text-align: start;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  width: 100%;
+  height: 35px;
+  
   &:hover {
     color: var(--secondary-color);
     transform: scale(1.05);
+    font-weight: 700;
   }
 }
 
@@ -97,7 +101,9 @@
   font-size: 20px;
   color: var(--primary-text-color);
 }
+
 /* only for testing */
+
 .app--content {
   grid-area: content;
   overflow: scroll;
@@ -110,6 +116,7 @@
   gap: 16px;
   padding-right: 16px;
 }
+
 .app--icon {
   width: 24px;
   height: 24px;

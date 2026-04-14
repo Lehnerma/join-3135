@@ -4,22 +4,53 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../assets/img/favicon/favicon-join.svg" type="image/x-icon" />
-    <link rel="stylesheet" href="../styles/color.css" />
-    <link rel="stylesheet" href="../styles/standard.css" />
+    <title>Document</title>
+
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../styles/sidebar.css" />
     <link rel="stylesheet" href="../styles/contacts.css" />
-    <title>Contacts</title>
+
+    <link rel="stylesheet" href="../styles/fonts.css" />
+    <link rel="stylesheet" href="../styles/colors.css" />
+    <script src="../scripts/contacts.js"></script>
   </head>
-  <body onload="init()">
-    <header>
-      <p>hello</p>
+
+  <body class="app" onload="init()">
+    <header class="app--title">
+      <h1 class="app--title-headline">Kanban Project Management Tool</h1>
+      <div class="app--icons">
+        <a href="#"><img src="../assets/img/icons/general/help.svg" alt="?" class="app--icon" /></a>
+        <img src="../assets/img/user_initials.svg" alt="M L" class="app--initials" />
+      </div>
     </header>
-    <main>
-      <div class="test-bg"><button id="add">add</button> <button id="edit">edit</button></div>
-      <!-- add dialog -->
+    <nav class="sidebar">
+      <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
+      <ul>
+        <li class="">
+          <a class="nav-category" href="#"><img class="nav-category-img" src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
+        </li>
+        <li class="">
+          <a class="nav-category" href="#"><img class="nav-category-img" src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
+        </li>
+        <li class="">
+          <a class="nav-category" href="#"><img class="nav-category-img" src="../assets/img/icons/general/board.svg" alt="" />Board</a>
+        </li>
+        <li class="active">
+          <a class="nav-category" href="#"><img class="nav-category-img" src="../assets/img/icons/general/contacts.svg" alt="" />Contacts</a>
+        </li>
+      </ul>
+
+      <div class="legal-section">
+        <a class="legal-section-link" href="#">Privacy Policy</a>
+        <a class="legal-section-link" href="#">Legal Notice</a>
+      </div>
+    </nav>
+    <main class="app--content">
+      <div class="test-bg">
+        <button id="add">add</button>
+        <button id="edit">edit</button>
+      </div>
     </main>
-    <footer>
-      <p>hello</p>
-    </footer>
     <dialog class="add-contact" id="add_contact">
       <header class="dialog-header">
         <img src="../assets/img/logo-join.svg" alt="logo-join" />
@@ -36,31 +67,26 @@
             <input type="text" name="name" placeholder="Name" required />
             <input type="email" name="email" placeholder="Email" required />
             <input type="tel" name="phone" placeholder="Phone" />
-            <button>cancel</button>
-            <button>creat</button>
+            <button>Cancel</button>
+            <button>Creat</button>
           </form>
         </article>
       </main>
     </dialog>
-    <!-- adit dialog -->
     <dialog class="edit-contact" id="edit_contact">
       <article class="dialog-content">
-        <header></header>
-        <main>
-          <button>close x</button>
-          <article>
-            <img src="" alt="initialen" />
-            <form id="edit_form">
-              <input type="text" name="name" placeholder="Name" required />
-              <input type="email" name="email" placeholder="Email" required />
-              <input type="tel" name="phone" placeholder="Phone" />
-              <button>Delete</button>
-              <button>Save</button>
-            </form>
-          </article>
-        </main>
+        <button>close x</button>
+        <article>
+          <img src="" alt="initialen" />
+          <form id="edit_form">
+            <input type="text" name="name" placeholder="Name" required />
+            <input type="email" name="email" placeholder="Email" required />
+            <input type="tel" name="phone" placeholder="Phone" />
+            <button>Delete</button>
+            <button>Save</button>
+          </form>
+        </article>
       </article>
     </dialog>
-    <script src="../scripts/contacts.js"></script>
   </body>
 </html>

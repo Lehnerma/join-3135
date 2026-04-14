@@ -10,12 +10,11 @@
 }
 
 .btn {
-  font-size: 21px;
-  font-weight: 700;
-  padding: 16px 24px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .btn--primary {
@@ -25,11 +24,13 @@
   &:hover {
     background-color: var(--secondary-color);
     box-shadow: var(--btn-shadow-hover);
+    color: white;
   }
 
   &:active {
     background-color: var(--btn-click-color);
     box-shadow: var(--btn-shadow-main);
+    
   }
 }
 
@@ -48,6 +49,18 @@
     background-color: white;
     box-shadow: var(--btn-shadow-main);
   }
+}
+
+.btn--login {
+  padding: 16px 24px;
+  height: 48px;
+  font-size: 21px;
+}
+
+.btn--signup {
+  height: 48px;
+  font-size: 16px;
+  padding: 16px;
 }
 
 .input {
@@ -112,5 +125,3 @@
   justify-content: center;
   gap: 40px;
 }
-
-/* sidebar styling for flexebility */

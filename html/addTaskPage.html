@@ -1,268 +1,75 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Join - Add Task</title>
-    <link rel="stylesheet" href="style.css">
 
-    <style>
-        :root {
-            --dark-blue: #2A3647;
-            --light-grey: #F6F7F8;
-            --border-color: #D1D1D1;
-            --accent-red: #FF3D00;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            margin: 0;
-            height: 100vh;
-            background-color: var(--light-grey);
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 230px;
-            background-color: var(--dark-blue);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            padding: 40px 0;
-        }
-
-        .logo {
-            font-size: 40px;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        nav a {
-            color: #CDCDCD;
-            text-decoration: none;
-            padding: 15px 40px;
-            display: block;
-        }
-
-        nav a.active {
-            background-color: #091931;
-            color: white;
-        }
-
-        .legal {
-            margin-top: auto;
-            padding: 20px 40px;
-            font-size: 12px;
-        }
-
-        /* Main Content */
-        .main-content {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .top-header {
-            background: white;
-            padding: 20px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .user-profile {
-            border: 2px solid var(--dark-blue);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Form */
-        .form-container {
-            padding: 10px 50px;
-        }
-
-        h1 {
-            font-size: 48px;
-            margin-bottom: 40px;
-        }
-
-        .form-columns {
-            display: flex;
-            gap: 40px;
-        }
-
-        .column {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .divider {
-            width: 1px;
-            background: var(--border-color);
-            margin: 0 20px;
-        }
-
-        label {
-            font-weight: bold;
-            margin: 5px 0 8px;
-        }
-
-        label span {
-            color: var(--accent-red);
-        }
-
-        input,
-        textarea,
-        select {
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            font-size: 16px;
-            background: white;
-        }
-
-        textarea {
-            height: 100px;
-            resize: none;
-        }
-
-        /* Buttons & Priority */
-        .priority-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .prio-btn {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            background: white;
-            cursor: pointer;
-        }
-
-        .urgent {
-            background: var(--accent-red);
-            color: white;
-            border: none;
-        }
-
-        .subtask-input {
-            position: relative;
-        }
-
-        .subtask-icons {
-            position: absolute;
-            right: 15px;
-            top: 12px;
-            color: #666;
-        }
-
-        .form-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 50px;
-        }
-
-        .btn-clear {
-            background: none;
-            border: 1px solid var(--dark-blue);
-            padding: 12px 25px;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-
-        .btn-create {
-            background: var(--dark-blue);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 10px;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* Standard-Button (weiß) */
-        .prio-btn {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #D1D1D1;
-            border-radius: 10px;
-            background-color: white;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.2s;
-        }
-
-        /* Die aktiven Zustände */
-        .prio-btn.urgent-active {
-            background-color: #FF3D00;
-            color: white;
-            border-color: #FF3D00;
-        }
-
-        .prio-btn.medium-active {
-            background-color: #FFA800;
-            color: white;
-            border-color: #FFA800;
-        }
-
-        .prio-btn.low-active {
-            background-color: #7AE229;
-            color: white;
-            border-color: #7AE229;
-        }
-    </style>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../styles/sidebar.css" />
+    <link rel="stylesheet" href="../styles/fonts.css" />
+    <link rel="stylesheet" href="../styles/colors.css" />
+    <link rel="stylesheet" href="../styles/addTaskPage.css" />
 </head>
 
-<body>
+<body class="app">
 
-    <aside class="sidebar">
-        <div class="logo">JOIN</div>
-        <nav>
-            <a href="summary.html" class="active">Summary</a>
-            <a href="addTaskPage.html">Add Task</a> <!-- Link zur anderen Datei -->
-            <a href="#">Board</a>
-            <a href="#">Contacts</a>
-        </nav>
-        <div class="legal">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Legal notice</a>
+    <header class="app--title">
+        <h1 class="app--title-headline">Kanban Project Management Tool</h1>
+        <div class="app--icons">
+            <a href="#"><img src="../assets/img/icons/general/help.svg" alt="?" class="app--icon" /></a>
+            <img src="../assets/img/user_initials.svg" alt="M L" class="app--initials" />
         </div>
-    </aside>
+    </header>
 
-    <main class="main-content">
-        <header class="top-header">
-            <span>Kanban Project Management Tool</span>
-            <div class="user-profile">SM</div>
-        </header>
+    <nav class="sidebar">
+        <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
+        <ul>
+            <li class="">
+                <a class="nav-category" href="summary.html"><img class="nav-category-img"
+                        src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
+            </li>
+            <li class="">
+                <a class="nav-category" href="addTaskPage.html"><img class="nav-category-img"
+                        src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
+            </li>
+            <li class="">
+                <a class="nav-category" href="board.html"><img class="nav-category-img"
+                        src="../assets/img/icons/general/board.svg" alt="" />Board</a>
+            </li>
+            <li class="">
+                <a class="nav-category" href="contacts.html"><img class="nav-category-img"
+                        src="../assets/img/icons/general/contacts.svg" alt="" />Contacts</a>
+            </li>
+        </ul>
 
-        <section class="form-container">
-            <h1 class="utility-h1">Add Task</h1>
+        <div class="legal-section">
+            <a class="legal-section-link" href="#">Privacy Policy</a>
+            <a class="legal-section-link" href="#">Legal Notice</a>
+        </div>
+    </nav>
 
-            <form class="task-form">
+    <main class="app--content">
+
+        <div class="board-title-container">
+            <h1>Add Task</h1>
+
+
+            <form class="task-form" onsubmit="createTask(event)">
+
                 <div class="form-columns">
+
                     <!-- Linke Spalte -->
                     <div class="column">
                         <label>Title<span>*</span></label>
-                        <input type="text" placeholder="Enter a title">
+                        <input id="title" type="text" placeholder="Enter a title">
 
                         <label>Description</label>
-                        <textarea placeholder="Enter a Description"></textarea>
+                        <textarea id="description" placeholder="Enter a Description"></textarea>
 
                         <label>Due date<span>*</span></label>
-                        <input type="date" value="2022-10-06">
+                        <input id="dueDate" type="date">
                     </div>
 
                     <div class="divider"></div>
@@ -270,58 +77,116 @@
                     <!-- Rechte Spalte -->
                     <div class="column">
                         <label>Priority</label>
+
                         <div class="priority-group">
                             <button type="button" id="btn-urgent" class="prio-btn"
                                 onclick="selectPriority('urgent')">Urgent</button>
+
                             <button type="button" id="btn-medium" class="prio-btn"
                                 onclick="selectPriority('medium')">Medium</button>
+
                             <button type="button" id="btn-low" class="prio-btn"
                                 onclick="selectPriority('low')">Low</button>
                         </div>
 
-
                         <label>Assigned to</label>
-                        <select>
-                            <option>Select contacts to assign</option>
+                        <select id="assignedTo">
+                            <option value="">Select contacts to assign</option>
                         </select>
 
                         <label>Category<span>*</span></label>
-                        <select>
-                            <option>Technical Task</option>
-                            <option>User Story</option>
+                        <select id="category">
+                            <option value="Technical Task">Technical Task</option>
+                            <option value="User Story">User Story</option>
                         </select>
 
                         <label>Subtasks</label>
                         <div class="subtask-input">
-                            <input type="text" value="Contact Form">
+                            <input type="text" placeholder="Add subtask">
                             <span class="subtask-icons">✕ | ✓</span>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="form-footer">
                     <p><span>*</span>This field is required</p>
+
                     <div class="action-buttons">
                         <button type="reset" class="btn-clear">Clear ✕</button>
                         <button type="submit" class="btn-create">Create Task ✓</button>
                     </div>
                 </div>
+
             </form>
-        </section>
+            </section>
+
     </main>
 
+    <div id="toast" class="toast">Task added to board ✅</div>
+
     <script>
+
+        let selectedPriority = "medium";
+
         function selectPriority(prio) {
-            // 1. Alle aktiven Klassen bei allen Buttons entfernen
+            selectedPriority = prio;
+
             document.getElementById('btn-urgent').classList.remove('urgent-active');
             document.getElementById('btn-medium').classList.remove('medium-active');
             document.getElementById('btn-low').classList.remove('low-active');
 
-            // 2. Die passende Klasse zum geklickten Button hinzufügen
             const activeBtn = document.getElementById('btn-' + prio);
             activeBtn.classList.add(prio + '-active');
         }
 
+        function createTask(event) {
+            event.preventDefault();
+
+
+            let title = document.getElementById("title").value;
+            let dueDate = document.getElementById("dueDate").value;
+
+            if (!title || !dueDate) {
+                alert("Title and Due Date are required!");
+                return;
+            }
+
+            let task = {
+                title: title,
+                description: document.getElementById("description").value,
+                dueDate: dueDate,
+                category: document.getElementById("category").value,
+                assignedTo: document.getElementById("assignedTo").value,
+                priority: selectedPriority,
+                status: "todo",
+                subtasks: []
+            };
+
+            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            tasks.push(task);
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+
+            showToast("Task added to board ✅");
+
+            setTimeout(() => {
+                window.location.href = "board.html";
+            }, 1000);
+        }
+
+        window.onload = function () {
+            selectPriority("medium");
+        };
+
+        function showToast(message) {
+            let toast = document.getElementById("toast");
+            toast.innerText = message;
+            toast.classList.add("show");
+
+            setTimeout(() => {
+                toast.classList.remove("show");
+            }, 2000);
+        }
     </script>
 
 </body>
