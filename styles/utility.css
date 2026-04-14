@@ -1,7 +1,7 @@
 .utility-h1 {
   padding-bottom: 20px;
   font-family: Inter-Bold;
-  font-size: 62px;
+  font-size: clamp(46px, calc(41.429px + 1.429vw), 62px);
 }
 
 .utility-h2 {
@@ -27,7 +27,7 @@
   justify-content: flex-start;
   flex-direction: column;
   gap: 12px;
-  padding-bottom: 64px;
+  padding-bottom: clamp(46px, calc(41.429px + 1.429vw), 62px);
 }
 
 .utility-section-link {
@@ -69,14 +69,27 @@
 
 ol li::before {
   content: counter(my-counter) ".";
-  /* Zahl anzeigen */
   position: absolute;
-  top: 10px;
+  top: 8px;
   left: 0;
-  /* Die Zahl klebt ganz links (bündig zum Text) */
   width: 2em;
-  /* Platz für die Zahl */
   font-family: Inter-Bold;
   font-size: 24px;
-  /* Optional: Zahl hervorheben */
+}
+
+.d-none {
+  display: none;
+}
+
+.return {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+}
+
+.btn-return {
+  background: none;
+  border: none;
 }
