@@ -79,7 +79,6 @@ async function getContacts() {
 
 
 function contactList() {
-
   
 
   

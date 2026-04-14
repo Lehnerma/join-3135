@@ -19,7 +19,7 @@
 .add-button-size {
   font-family: Inter-Bold;
   font-weight: 700;
-  font-size: clamp(16px, 1.5vw, 21px);
+  font-size:clamp(16px, 1.5vw, 21px);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
