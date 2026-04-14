@@ -36,6 +36,7 @@
   /* buttons */
   --btn-click-color: rgba(9, 25, 49, 1);
   --btn-shadow-main: 0px 4px 4px 0px #00000040;
+  --btn-arrow-hover: rgba(238, 238, 238, 1);
 
   /* input */
   --input-text-color: rgba(255, 255, 255, 1); /*input text color*/

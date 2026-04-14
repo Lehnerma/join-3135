@@ -19,6 +19,7 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .btn--primary {
@@ -63,6 +64,17 @@
   height: 48px;
   font-size: 16px;
   padding: 16px;
+}
+
+.btn--arrow{
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+
+  &:hover {
+    background-color: var(--btn-arrow-hover);
+    border-radius: 50%;
+  }
 }
 
 .input {

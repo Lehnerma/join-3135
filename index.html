@@ -12,7 +12,7 @@
   </head>
 
   <body>
-    <header class="header fade-in">
+    <header class="header">
       <img class="join-logo" src="./assets/img/logo-join-dark.svg" alt="page-1Logo" />
       <nav class="nav-login">
         <p class="span-nav-login">Not a Join user?</p>
@@ -20,84 +20,74 @@
       </nav>
     </header>
 
-    <main class="main-login fade-in">
+    <main class="main-login">
       <!-- login form -->
-      <article class="login-content dnone">
-        <form id="" onsubmit="" return false; class="form-login" id="form_login">
-          <section class="form--title">
-            <h1 class="h1-login">Log in</h1>
-          </section>
+      <!-- onsubmit="" return false; -->
+      <form class="form--container login" id="login">
+        <section class="form--title">
+          <h1>Log in</h1>
+        </section>
 
+        <section class="input--container">
+          <div class="input--section">
+            <input class="input" id="email" type="email" name="Email" placeholder="Email" autocomplete="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Bitte gib eine gültige E-Mail-Adresse ein (z.B. max@mustermann.de)" required />
+            <img src="./assets/img/icons/input/mail.svg" alt="letter icon" class="input--icon" />
+          </div>
+
+          <div class="input--section">
+            <input class="input" type="password" name="Password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Muss mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten und mindestens 8 Zeichen lang sein" required />
+            <img src="./assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
+          </div>
+        </section>
+
+        <section class="login-buttons">
+          <button type="submit" class="btn btn--primary btn--login">Log in</button>
+          <button onclick="" type="submit" class="btn btn--secondary btn--login">Guest Log in</button>
+        </section>
+      </form>
+
+      <!-- sign up form  -->
+      <!-- onsubmit="" return false; -->
+      <form class="form--container signup" id="signup">
+        <section class="form--title">
+          <button class="btn btn--arrow"><img class="arrowBackToLogin" src="../assets/img/icons/general/Vector.svg" alt="zurück zum login" /></button>
+          <h1>Sign Up</h1>
+        </section>
+        <div class="input--container-wrapper">
           <section class="input--container">
             <div class="input--section">
+              <input class="input" id="name" type="name" name="Name" placeholder="Name" autocomplete="Name" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Bitte gib einen Namen ein (z.B. Max Mustermann)" required />
+              <img src="../assets/img/icons/input/person.svg" alt="letter icon" class="input--icon" />
+            </div>
+
+            <div class="input--section">
               <input class="input" id="email" type="email" name="Email" placeholder="Email" autocomplete="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Bitte gib eine gültige E-Mail-Adresse ein (z.B. max@mustermann.de)" required />
-              <img src="./assets/img/icons/input/mail.svg" alt="letter icon" class="input--icon" />
+              <img src="../assets/img/icons/input/mail.svg" alt="letter icon" class="input--icon" />
             </div>
 
             <div class="input--section">
               <input class="input" type="password" name="Password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Muss mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten und mindestens 8 Zeichen lang sein" required />
-              <img src="./assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
+              <img src="../assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
+            </div>
+
+            <div class="input--section">
+              <input class="input" type="password" name="Confirm Password" placeholder="Confirm Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Muss mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten und mindestens 8 Zeichen lang sein" required />
+              <img src="../assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
             </div>
           </section>
-
-          <section class="login-buttons">
-            <button type="submit" class="btn btn--primary btn--login">Log in</button>
-            <button onclick="" type="submit" class="btn btn--secondary btn--login">Guest Log in</button>
-          </section>
-        </form>
-      </article>
-
-      <!-- sign up form  -->
-      <article class="signup-content">
-        <form id="" onsubmit="" return false; class="form-signUp" id="form_login">
-         
-          <div class="form--title">
-            <a href="../index.html"><img class="arrowBackToLogin" src="../assets/img/icons/general/Vector.svg" alt="pfeil zurück zum login"></a>
-           <h1 class="h1-signUp">Sign Up</h1> 
-           
+          <div class="privacy-content">
+            <input type="checkbox" id="privacy" required />
+            <span> I accept the </span>
+            <a href="./html/privacyPolicy.html" class="acceptPrivacyPolicy" s>Privacy policy</a>
           </div>
-           
-          <section class="input--section">
-            <input class="input" id="name" type="name" name="Name" placeholder="Name" autocomplete="Name"
-              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Bitte gib einen Namen ein (z.B. Max Mustermann)"
-              required />
-            <img src="../assets/img/icons/input/person.svg" alt="letter icon" class="input--icon" />
-          </section>
-  
-          <section class="input--section">
-            <input class="input" id="email" type="email" name="Email" placeholder="Email" autocomplete="email"
-              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-              title="Bitte gib eine gültige E-Mail-Adresse ein (z.B. max@mustermann.de)" required />
-            <img src="../assets/img/icons/input/mail.svg" alt="letter icon" class="input--icon" />
-          </section>
-  
-          <section class="input--section">
-            <input class="input" type="password" name="Password" placeholder="Password"
-              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-              title="Muss mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten und mindestens 8 Zeichen lang sein"
-              required />
-            <img src="../assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
-          </section>
-  
-          <section class="input--section">
-            <input class="input" type="password" name="Confirm Password" placeholder="Confirm Password"
-              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-              title="Muss mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten und mindestens 8 Zeichen lang sein"
-              required />
-            <img src="../assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
-          </section>
-  
-          <section class="privacy-content">
-            <input type="checkbox" id="privacy" required><span >
-              I accept the <span></span><a href="privacyPolicy.html" target="_blank" class="acceptPrivacyPolicy"s >Privacy policy</a>
-          </section>
-  
-          <section class="login-buttons">
-            <button type="submit" class="btn btn--primary">Sign up</button>
-          </section>
-  
-        </form>
-      </article>
+        </div>
+
+        <section class="login-buttons">
+          <button type="submit" class="btn btn--primary btn--signup">Sign up</button>
+        </section>
+      </form>
+
+      <!--  -->
     </main>
     <footer class="footer-login">
       <div class="footer-content">
