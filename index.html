@@ -9,21 +9,21 @@
     <link rel="stylesheet" href="../styles/fonts.css" />
     <link rel="stylesheet" href="../styles/colors.css" />
     <link rel="stylesheet" href="../styles/login.css" />
+
+    <script src="./scripts/login.js"></script>
   </head>
 
-  <body>
+  <body onload="init()">
     <header class="header">
       <img class="join-logo" src="./assets/img/logo-join-dark.svg" alt="page-1Logo" />
-      <nav class="nav-login">
+      <nav class="nav-login" id="nav_login">
         <p class="span-nav-login">Not a Join user?</p>
-        <button id="" class="btn btn--primary btn--signup">Sign up</button>
+        <button id="signup_btn" class="btn btn--primary btn--signup">Sign up</button>
       </nav>
     </header>
 
     <main class="main-login">
-      <!-- login form -->
-      <!-- onsubmit="" return false; -->
-      <form class="form--container login " id="login">
+      <form class="form--container login" id="login">
         <section class="form--title">
           <h1>Log in</h1>
         </section>
@@ -46,11 +46,9 @@
         </section>
       </form>
 
-      <!-- sign up form  -->
-      <!-- onsubmit="" return false; -->
       <form class="form--container signup dnone" id="signup">
         <section class="form--title">
-          <button class="btn btn--arrow"><img class="arrowBackToLogin" src="../assets/img/icons/general/Vector.svg" alt="zurück zum login" /></button>
+          <button class="btn btn--arrow" id="signup_back"><img class="arrowBackToLogin" src="../assets/img/icons/general/Vector.svg" alt="zurück zum login" /></button>
           <h1>Sign Up</h1>
         </section>
         <div class="input--container-wrapper">
@@ -81,10 +79,8 @@
             <a href="./html/privacyPolicy.html" class="acceptPrivacyPolicy" s>Privacy policy</a>
           </div>
         </div>
-          <button type="submit" class="btn btn--primary btn--signup">Sign up</button>
+        <button type="submit" class="btn btn--primary btn--signup">Sign up</button>
       </form>
-
-      <!--  -->
     </main>
     <footer class="footer-login">
       <div class="footer-content">
