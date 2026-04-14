@@ -1,7 +1,7 @@
 :root {
   --primary-color: rgba(42, 54, 71, 1); /*btn main,*/
   --secondary-color: rgba(41, 171, 226, 1); /*btn secondary, input activ*/
-
+  --third-color: rgba(9, 25, 49, 1);
   --fourth-color: rgba(0, 56, 255, 1);
   --fifth-color: rgba(31, 215, 193, 1);
   --sixth-color: rgba(42, 61, 89, 1);
@@ -11,7 +11,7 @@
   --rate-color-low: rgba(122, 226, 41, 1);
   --primary-text-color: rgba(0, 0, 0, 1);
   --secondary-text-color: rgba(42, 54, 71, 1);
-
+  --third-text-color: rgba(255, 255, 255, 1);
   --fourth-text-color: rgba(168, 168, 168, 1);
   --fifth-text-color: rgba(205, 205, 205, 1);
   --faulty-entry-color: rgba(230, 0, 38, 1); /*input faulty entry*/

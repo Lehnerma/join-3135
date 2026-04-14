@@ -10,12 +10,11 @@
 }
 
 .btn {
-  font-size: 21px;
-  font-weight: 700;
-  padding: 16px 24px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .btn--primary {
@@ -25,11 +24,13 @@
   &:hover {
     background-color: var(--secondary-color);
     box-shadow: var(--btn-shadow-hover);
+    color: white;
   }
 
   &:active {
     background-color: var(--btn-click-color);
     box-shadow: var(--btn-shadow-main);
+    
   }
 }
 
@@ -50,6 +51,18 @@
   }
 }
 
+.btn--login {
+  padding: 16px 24px;
+  height: 48px;
+  font-size: 21px;
+}
+
+.btn--signup {
+  height: 48px;
+  font-size: 16px;
+  padding: 16px;
+}
+
 .input {
   font-size: 20px;
   padding: 16px 24px;
@@ -68,22 +81,12 @@
 }
 
 .input--icon {
-<<<<<<< Updated upstream
   width: 24px;
   height: 24px;
   position: absolute;
   right: 16px;
-  top: 34%;
+  top: 50%;
   transform: translateY(-50%);
-=======
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%); 
-    
->>>>>>> Stashed changes
 }
 
 .mainField {
@@ -122,5 +125,3 @@
   justify-content: center;
   gap: 40px;
 }
-
-/* sidebar styling for flexebility */

@@ -14,6 +14,7 @@
 </head>
 
 <body class="app">
+
     <header class="app--title">
         <h1 class="app--title-headline">Kanban Project Management Tool</h1>
         <div class="app--icons">
@@ -23,26 +24,25 @@
     </header>
 
     <nav class="sidebar">
-        <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
+        <img class="nav-logo" src="../assets/img/logo-join.svg" />
         <ul>
-            <li>
+            <li class="">
                 <a class="nav-category" href="summary.html"><img class="nav-category-img"
                         src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
             </li>
-            <li>
-                <a class="nav-category" href="addTask.html"><img class="nav-category-img"
+            <li class="">
+                <a class="nav-category" href="addTaskPage.html"><img class="nav-category-img"
                         src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
             </li>
-            <li class="active">
+            <li class="">
                 <a class="nav-category" href="board.html"><img class="nav-category-img"
                         src="../assets/img/icons/general/board.svg" alt="" />Board</a>
             </li>
-            <li>
+            <li class="">
                 <a class="nav-category" href="contacts.html"><img class="nav-category-img"
                         src="../assets/img/icons/general/contacts.svg" alt="" />Contacts</a>
             </li>
         </ul>
-
         <div class="legal-section">
             <a class="legal-section-link" href="#">Privacy Policy</a>
             <a class="legal-section-link" href="#">Legal Notice</a>
@@ -50,67 +50,109 @@
     </nav>
 
     <main class="app--content">
-        <!-- Board Header mit Suche und Add Task Button -->
+
         <section class="board-header-section">
             <div class="board-title-container">
                 <h1>Board</h1>
                 <div class="board-actions">
-                    <div class="search-container">
-                        <input type="text" id="search-task" placeholder="Find Task">
-                        <div class="search-divider"></div>
-                        <img src="../assets/img/icons/general/search.svg" alt="search">
-                    </div>
+                    <input type="text" id="search-task" placeholder="Find Task">
                     <button class="btn-dark">Add task +</button>
                 </div>
             </div>
         </section>
 
-        <!-- Die vier Kanban Spalten -->
         <section class="kanban-columns">
-            <!-- Spalte: TO DO -->
+
+            <!-- TO DO -->
             <div class="kanban-column">
                 <div class="column-title">
                     <span>To do</span>
-                    <img src="../assets/img/icons/general/plus-button.svg" alt="plus">
                 </div>
-                <div class="task-list" id="todo-list">
-                    <!-- Beispiel-Karte -->
-                    <div class="task-card">
-                        <div class="category-label user-story">User Story</div>
-                        <div class="task-title">Contact Form & Imprint</div>
-                        <div class="task-description">Create a contact form and imprint page...</div>
-                        <div class="subtask-progress">
-                            <div class="progress-bar-bg">
-                                <div class="progress-bar-fill" style="width: 0%"></div>
-                            </div>
-                            <span>0/2 Subtasks</span>
-                        </div>
-                        <div class="task-footer">
-                            <div class="assignees">
-                                <div class="initials-circle orange">AN</div>
-                                <div class="initials-circle turquoise">EM</div>
-                                <div class="initials-circle purple">MB</div>
-                            </div>
-                            <img class="prio-icon" src="../assets/img/icons/prio/urgent.svg" alt="urgent">
-                        </div>
-                    </div>
-                </div>
+                <div class="task-list" id="todo-list"></div>
             </div>
 
-            <!-- Weitere Spalten (werden analog aufgebaut) -->
+            <!-- IN PROGRESS -->
             <div class="kanban-column">
-                <div class="column-title"><span>In progress</span><img src="../assets/img/icons/general/plus-button.svg"
-                        alt="+"></div>
+                <div class="column-title">
+                    <span>In progress</span>
+                </div>
+                <div class="task-list" id="inprogress-list"></div>
             </div>
+
+            <!-- FEEDBACK -->
             <div class="kanban-column">
-                <div class="column-title"><span>Await feedback</span><img
-                        src="../assets/img/icons/general/plus-button.svg" alt="+"></div>
+                <div class="column-title">
+                    <span>Await feedback</span>
+                </div>
+                <div class="task-list" id="feedback-list"></div>
             </div>
+
+            <!-- DONE -->
             <div class="kanban-column">
-                <div class="column-title"><span>Done</span></div>
+                <div class="column-title">
+                    <span>Done</span>
+                </div>
+                <div class="task-list" id="done-list"></div>
             </div>
+
         </section>
+
     </main>
+
+    <script>
+        function loadTasks() {
+            return JSON.parse(localStorage.getItem("tasks")) || [];
+        }
+
+        function renderBoard() {
+            let tasks = loadTasks();
+
+            let todo = document.getElementById("todo-list");
+            let inProgress = document.getElementById("inprogress-list");
+            let feedback = document.getElementById("feedback-list");
+            let done = document.getElementById("done-list");
+
+            todo.innerHTML = "";
+            inProgress.innerHTML = "";
+            feedback.innerHTML = "";
+            done.innerHTML = "";
+
+            for (let i = 0; i < tasks.length; i++) {
+                let task = tasks[i];
+
+                let card = `
+            <div class="task-card">
+                <div class="category-label">${task.category}</div>
+                <div class="task-title">${task.title}</div>
+                <div class="task-description">${task.description}</div>
+
+                <div class="task-footer">
+                    <span>${task.priority}</span>
+                </div>
+            </div>
+        `;
+
+                if (task.status === "todo") {
+                    todo.innerHTML += card;
+                }
+
+                if (task.status === "inProgress") {
+                    inProgress.innerHTML += card;
+                }
+
+                if (task.status === "feedback") {
+                    feedback.innerHTML += card;
+                }
+
+                if (task.status === "done") {
+                    done.innerHTML += card;
+                }
+            }
+        }
+
+        renderBoard();
+    </script>
+
 </body>
 
 </html>

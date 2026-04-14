@@ -1,0 +1,95 @@
+.utility-h1 {
+  padding-bottom: 20px;
+  font-family: Inter-Bold;
+  font-size: clamp(46px, calc(41.429px + 1.429vw), 62px);
+}
+
+.utility-h2 {
+  padding: 20px 0 10px 0;
+  font-family: Inter-Bold;
+  font-size: 28px;
+}
+
+.utility-h3 {
+  padding: 10px 0;
+}
+
+.utility-h4 {
+  padding: 10px 0;
+}
+
+.utility-highlighted {
+  color: var(--secondary-color);
+}
+
+.utility-section {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: clamp(46px, calc(41.429px + 1.429vw), 62px);
+}
+
+.utility-section-link {
+  font-size: 16px;
+  color: var(--fifth-text-color);
+}
+
+.utility-section-link:hover {
+  color: var(--third-text-color);
+}
+
+.utility-content {
+  padding-top: 120px;
+  padding-left: 100px;
+  padding-right: calc((100% - 1208px) / 2);
+  margin-right: 24px;
+}
+
+.utility-ol {
+  list-style: none;
+  counter-reset: my-counter;
+  padding-left: 0;
+  margin-top: 12px;
+}
+
+
+.utility-ol li {
+  counter-increment: my-counter;
+  position: relative;
+  padding-left: 2.5em;
+  margin-bottom: 10px;
+}
+
+
+.utility-ol li h3 {
+  padding: 0;
+  padding-top: 10px;
+}
+
+ol li::before {
+  content: counter(my-counter) ".";
+  position: absolute;
+  top: 8px;
+  left: 0;
+  width: 2em;
+  font-family: Inter-Bold;
+  font-size: 24px;
+}
+
+.d-none {
+  display: none;
+}
+
+.return {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+}
+
+.btn-return {
+  background: none;
+  border: none;
+}

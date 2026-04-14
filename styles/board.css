@@ -1,4 +1,11 @@
 /* --- Board Header & Suche --- */
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
 .board-header-section {
     padding: 40px 60px;
 }
@@ -110,7 +117,9 @@
     margin-bottom: 12px;
 }
 
-.user-story { background-color: #0038FF; }
+.user-story {
+    background-color: #0038FF;
+}
 
 .task-title {
     font-weight: 700;
@@ -170,12 +179,21 @@
     justify-content: center;
     font-size: 12px;
     border: 2px solid white;
-    margin-right: -8px; /* Überlappung */
+    margin-right: -8px;
+    /* Überlappung */
 }
 
-.orange { background-color: #FF7A00; }
-.turquoise { background-color: #1FD7C1; }
-.purple { background-color: #462F8A; }
+.orange {
+    background-color: #FF7A00;
+}
+
+.turquoise {
+    background-color: #1FD7C1;
+}
+
+.purple {
+    background-color: #462F8A;
+}
 
 .prio-icon {
     width: 17px;
