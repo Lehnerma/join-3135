@@ -9,6 +9,10 @@
   font-family: "Inter-Regular", sans-serif;
 }
 
+.dnone{
+  display: none;
+}
+
 .btn {
   border-radius: 8px;
   border: none;
