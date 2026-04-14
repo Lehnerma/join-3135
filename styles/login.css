@@ -113,7 +113,8 @@ body {
 
 .nav-login,
 .login-content,
-.form-login {
+.form-login,
+.footer-content {
   opacity: 0;
   animation: fadeInLoginContent 0.7s ease-in forwards;
   animation-delay: 0.8s;
@@ -123,17 +124,14 @@ body {
 .login-content.no-animation,
 .form-login.no-animation,
 .footer-content.no-animation {
+  animation: none;
   opacity: 1;
-  animation: fadeInLoginContent 0.7s ease-in forwards;
-  animation-delay: 0.8s;
+
 }
 
-
-
 @keyframes fadeInLoginContent {
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .footer-login {
@@ -151,9 +149,6 @@ body {
   justify-content: center;
   align-items: center;
   gap: 16px;
-  opacity: 0;
-  animation: fadeInLoginContent 0.7s ease-in forwards;
-  animation-delay: 1s;
 }
 
 a {
