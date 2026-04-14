@@ -1,5 +1,8 @@
+let SHOW_SIGNUP = false;
+
 function init() {
   btnInit();
+  triggerAnimations();
 }
 
 function btnInit() {
@@ -8,13 +11,47 @@ function btnInit() {
   const FORM_LOGIN = document.getElementById("login");
   const FORM_SIGNUP = document.getElementById("signup");
 
-  SIGNUP_BACK.addEventListener("click", toggelForms);
-  SIGNUP.addEventListener("click", toggelForms);
+  SIGNUP_BACK.addEventListener("click", (event) => toggelForms(event));
+  SIGNUP.addEventListener("click", (event) => toggelForms(event));
 }
 
-function toggelForms() {
+function triggerAnimations() {
+  const JOIN_LOGO = document.querySelector(".join-logo");
+  JOIN_LOGO.classList.add("logo-animation");
+  const FORM_CONTAINER = document.querySelector(".form--container");
+  FORM_CONTAINER.classList.add("fade-in");
+  const NAV_LOGIN = document.querySelector(".nav-login");
+  NAV_LOGIN.classList.add("fade-in");
+  const FOOTER_LOGIN = document.querySelector(".footer-login");
+  FOOTER_LOGIN.classList.add("fade-in");
+}
+
+function removeFade(container) {
+  container.classList.remove("fade-in");
+  container.style.opacity = "1";
+}
+
+function toggelForms(event) {
+  event.preventDefault();
   const LOGIN_FORM = document.getElementById("login");
-  const SIGUNUP_FORM = document.getElementById("signup");
-  LOGIN_FORM.classList.toggle("dnone");
-  SIGUNUP_FORM.classList.toggle("dnone");
+  const SIGNUP_FORM = document.getElementById("signup");
+  const NAV_LOGIN = document.getElementById("nav_login");
+
+  SHOW_SIGNUP = !SHOW_SIGNUP;
+  LOGIN_FORM.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
+  NAV_LOGIN.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
+  SIGNUP_FORM.classList[SHOW_SIGNUP ? "remove" : "add"]("dnone");
+
+  removeFade(LOGIN_FORM);
+  removeFade(NAV_LOGIN);
+  setRequired(SHOW_SIGNUP);
+}
+
+function setRequired(condition) {
+  const INPUTS = document.querySelectorAll(".input_signup");
+  if (condition) {
+    INPUTS.forEach((e) => (e.required = true));
+  } else {
+    INPUTS.forEach((e) => (e.required = false));
+  }
 }
