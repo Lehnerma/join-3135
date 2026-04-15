@@ -1,4 +1,6 @@
 let SHOW_SIGNUP = false;
+let USERS = [];
+const USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users" + ".json";
 
 function init() {
   btnInit();
@@ -15,6 +17,7 @@ function btnInit() {
   SIGNUP_BACK.addEventListener("click", (event) => toggelForms(event));
   SIGNUP.addEventListener("click", (event) => toggelForms(event));
   GUEST_LOGIN.addEventListener("click", guestLogin);
+  FORM_SIGNUP.addEventListener("submit", (event) => creatUser(event));
 }
 
 function triggerAnimations() {
@@ -60,4 +63,45 @@ function setRequired(condition) {
 
 function guestLogin() {
   window.location.href = "./html/summary.html";
+}
+
+async function creatUser(ev) {
+  ev.preventDefault(); // verhindert das neuladen der seite.
+  const FORM = new FormData(ev.target);
+  const NEW_USER = Object.fromEntries(FORM.entries());
+  const USER_ID = generateId();
+  pushUser(NEW_USER, USER_ID);
+}
+
+function generateId() {
+  return (Date.now().toString(36) + Math.random().toString(36)).substring(0, 6);
+}
+
+async function getUsers() {
+  const RESPONSE = await fetch(USERS_URL);
+  const RESULT = await RESPONSE.json();
+  USERS = [];
+  USERS.push(RESULT);
+}
+
+async function pushUser(user) {
+  try {
+    const RESPONSE = await fetch(USERS_URL, {
+      method: "PUT",
+      body: JSON.stringify({ title: generateId(), content: user }),
+    });
+    if (!RESPONSE.ok) {
+      throw new Error(`Push the User to Firebase don't work see: ${RESPONSE.status}`);
+    }
+  } catch (er) {
+    console.error(`the function pushUser() don't worke see: ${er}`);
+  }
+}
+
+async function loginUser(user_id) {
+  const USER = "";
+  const PW = "";
+  await getUsers();
+  const ACTIV_USER = Object.values(USERS).find((u) => u.id === user_id);
+  console.log(ACTIV_USER);
 }
