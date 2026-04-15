@@ -10,9 +10,11 @@ function btnInit() {
   const SIGNUP_BACK = document.getElementById("signup_back");
   const FORM_LOGIN = document.getElementById("login");
   const FORM_SIGNUP = document.getElementById("signup");
+  const GUEST_LOGIN = document.getElementById("guest_login");
 
   SIGNUP_BACK.addEventListener("click", (event) => toggelForms(event));
   SIGNUP.addEventListener("click", (event) => toggelForms(event));
+  GUEST_LOGIN.addEventListener("click", guestLogin);
 }
 
 function triggerAnimations() {
@@ -54,4 +56,8 @@ function setRequired(condition) {
   } else {
     INPUTS.forEach((e) => (e.required = false));
   }
+}
+
+function guestLogin() {
+  window.location.href = "./html/summary.html";
 }
