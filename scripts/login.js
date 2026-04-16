@@ -7,7 +7,9 @@ function init() {
   btnInit();
   triggerAnimations();
 }
-
+/**
+ * initial all buttons for eventlisteners
+ */
 function btnInit() {
   const SIGNUP = document.getElementById("signup_btn");
   const SIGNUP_BACK = document.getElementById("signup_back");
@@ -22,7 +24,9 @@ function btnInit() {
   FORM_LOGIN.addEventListener("submit", (event) => loginUser(event));
   FORM_SIGNUP.addEventListener("submit", (event) => creatUser(event));
 }
-
+/**
+ * function to trigger the animation on the beginning.
+ */
 function triggerAnimations() {
   const JOIN_LOGO = document.querySelector(".join-logo");
   JOIN_LOGO.classList.add("logo-animation");
@@ -34,11 +38,19 @@ function triggerAnimations() {
   FOOTER_LOGIN.classList.add("fade-in");
 }
 
+/**
+ * Remove the fade of the forms to swap between the login in and sign up form.
+ * @param {*} container - is the container for the style
+ */
 function removeFade(container) {
   container.classList.remove("fade-in");
   container.style.opacity = "1";
 }
 
+/**
+ * to show or hide the forms
+ * @param {*} event -> to disable the reload for the switching
+ */
 function toggelForms(event) {
   event.preventDefault();
   const LOGIN_FORM = document.getElementById("login");
@@ -55,6 +67,10 @@ function toggelForms(event) {
   setRequired(SHOW_SIGNUP);
 }
 
+/**
+ * Workaround to get no Errors in the console
+ * @param {*} condition -> is the condition if the form is hide or not
+ */
 function setRequired(condition) {
   const INPUTS = document.querySelectorAll(".input_signup");
   if (condition) {
@@ -64,12 +80,20 @@ function setRequired(condition) {
   }
 }
 
+/**
+ * redirect for the guest login and set id for the session storage
+ */
 function guestLogin() {
   window.location.href = "./html/summary.html";
+  sessionStorage.setItem("user_id", "guest");
 }
 
+/**
+ *To sign up a new user.
+ * @param {*} ev -> need for disable the reload of the side.
+ */
 async function creatUser(ev) {
-  ev.preventDefault(); // verhindert das neuladen der seite.
+  ev.preventDefault();
   const FORM = new FormData(ev.target);
   const NEW_USER = Object.fromEntries(FORM.entries());
   NEW_USER.id = generateId();
@@ -79,6 +103,10 @@ async function creatUser(ev) {
   console.log(ev.target);
 }
 
+/**
+ * To generate a unique id for evry user witch is create from the time
+ * @returns -> uniqe id
+ */
 function generateId() {
   return (Date.now().toString(36) + Math.random().toString(36)).substring(0, 6);
 }
