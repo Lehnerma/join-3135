@@ -231,3 +231,6 @@ body {
   font-weight: 700;
   transform: scale(1.05);
 }
+
+@media (max-width: 660px) {
+}
