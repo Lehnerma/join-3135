@@ -1,4 +1,7 @@
 let SHOW_SIGNUP = false;
+let USERS = [];
+
+const USERS_URL = (id = "") => "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/" + id + ".json";
 
 function init() {
   btnInit();
@@ -15,6 +18,9 @@ function btnInit() {
   SIGNUP_BACK.addEventListener("click", (event) => toggelForms(event));
   SIGNUP.addEventListener("click", (event) => toggelForms(event));
   GUEST_LOGIN.addEventListener("click", guestLogin);
+
+  FORM_LOGIN.addEventListener("submit", (event) => loginUser(event));
+  FORM_SIGNUP.addEventListener("submit", (event) => creatUser(event));
 }
 
 function triggerAnimations() {
@@ -60,4 +66,56 @@ function setRequired(condition) {
 
 function guestLogin() {
   window.location.href = "./html/summary.html";
+}
+
+async function creatUser(ev) {
+  ev.preventDefault(); // verhindert das neuladen der seite.
+  const FORM = new FormData(ev.target);
+  const NEW_USER = Object.fromEntries(FORM.entries());
+  NEW_USER.id = generateId();
+  pushUser(NEW_USER);
+  ev.target.reset();
+  toggelForms(ev);
+  console.log(ev.target);
+}
+
+function generateId() {
+  return (Date.now().toString(36) + Math.random().toString(36)).substring(0, 6);
+}
+
+async function pushUser(user) {
+  try {
+    const RESPONSE = await fetch(USERS_URL(user.id), {
+      method: "PUT",
+      body: JSON.stringify(user),
+    });
+    if (!RESPONSE.ok) {
+      throw new Error(`Push the User to Firebase don't work see: ${RESPONSE.status}`);
+    }
+  } catch (er) {
+    console.error(`the function pushUser() don't worke see: ${er}`);
+  }
+}
+
+async function loginUser(ev) {
+  ev.preventDefault();
+  const FORM = new FormData(ev.target);
+  const EMAIL = FORM.get("email");
+  const PW = FORM.get("password");
+  await getUsers();
+  const ACTIV_USER = USERS.find((u) => u.email == EMAIL);
+  if (ACTIV_USER.password === PW) {
+    saveId(ACTIV_USER.id);
+    window.location.href = "./html/summary.html";
+  }
+}
+
+async function getUsers() {
+  const RESPONSE = await fetch(USERS_URL());
+  const RESULT = await RESPONSE.json();
+  USERS = Object.values(RESULT);
+}
+
+function saveId(id) {
+  sessionStorage.setItem("user_id", id);
 }
