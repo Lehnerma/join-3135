@@ -74,6 +74,9 @@ async function creatUser(ev) {
   const NEW_USER = Object.fromEntries(FORM.entries());
   NEW_USER.id = generateId();
   pushUser(NEW_USER);
+  ev.target.reset();
+  toggelForms(ev);
+  console.log(ev.target);
 }
 
 function generateId() {
