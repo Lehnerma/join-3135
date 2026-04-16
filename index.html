@@ -30,19 +30,21 @@
 
         <section class="input--container">
           <div class="input--section">
-            <input class="input" id="email" type="email" name="Email" placeholder="Email" autocomplete="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Bitte gib eine gültige E-Mail-Adresse ein (z.B. max@mustermann.de)" required />
+            <input class="input" id="email" type="email" name="email" placeholder="Email" autocomplete="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Bitte gib eine gültige E-Mail-Adresse ein (z.B. max@mustermann.de)" required />
             <img src="./assets/img/icons/input/mail.svg" alt="letter icon" class="input--icon" />
           </div>
 
           <div class="input--section">
-            <input class="input" type="password" name="Password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Muss mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten und mindestens 8 Zeichen lang sein" required />
+            <input class="input" type="password" name="password" placeholder="Password" required />
             <img src="./assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
           </div>
         </section>
 
+        <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Muss mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten und mindestens 8 Zeichen lang sein" // add to password -->
+
         <section class="login-buttons">
           <button type="submit" class="btn btn--primary btn--login">Log in</button>
-          <button onclick="" type="submit" class="btn btn--secondary btn--login" id="guest_login">Guest Log in</button>
+          <button type="button" class="btn btn--secondary btn--login" id="guest_login">Guest Log in</button>
         </section>
       </form>
 
@@ -71,7 +73,7 @@
             <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Muss mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten und mindestens 8 Zeichen lang sein"  // für das password -->
 
             <div class="input--section">
-              <input class="input input_signup" type="password" name="confirm_password" placeholder="Confirm Password" required />
+              <input class="input input_signup" type="password" name="password" placeholder="Confirm Password" required />
               <img src="../assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
             </div>
           </section>
