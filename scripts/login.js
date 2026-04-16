@@ -101,11 +101,18 @@ async function loginUser(ev) {
   const PW = FORM.get("password");
   await getUsers();
   const ACTIV_USER = USERS.find((u) => u.email == EMAIL);
-  console.log(ACTIV_USER);
+  if (ACTIV_USER.password === PW) {
+    saveId(ACTIV_USER.id);
+    window.location.href = "./html/summary.html";
+  }
 }
 
 async function getUsers() {
   const RESPONSE = await fetch(USERS_URL());
   const RESULT = await RESPONSE.json();
   USERS = Object.values(RESULT);
+}
+
+function saveId(id) {
+  sessionStorage.setItem("user_id", id);
 }
