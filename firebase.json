@@ -1,0 +1,161 @@
+{
+  "contacts": {
+    "c1": {
+      "email": "anton@mail.de",
+      "name": "Anton Schmidt",
+      "phone": "+49 170 1234567"
+    },
+    "c10": {
+      "email": "julia.meyer@web.de",
+      "name": "Julia Meyer",
+      "phone": "+49 170 5656565"
+    },
+    "c11": {
+      "email": "k.neu@gmail.com",
+      "name": "Kevin Neu",
+      "phone": "+49 171 7878787"
+    },
+    "c12": {
+      "email": "laura@otto-design.de",
+      "name": "Laura Otto",
+      "phone": "+49 172 9090909"
+    },
+    "c13": {
+      "email": "max.p@service.com",
+      "name": "Maximilian Peters",
+      "phone": "+49 151 1122446"
+    },
+    "c14": {
+      "email": "nina.q@web.de",
+      "name": "Nina Quast",
+      "phone": "+49 160 1122334"
+    },
+    "c15": {
+      "email": "o.richter@gmx.de",
+      "name": "Olaf Richter",
+      "phone": "+49 174 5566778"
+    },
+    "c16": {
+      "email": "p.schwarz@outlook.com",
+      "name": "Peter Schwarz",
+      "phone": "+49 152 9988112"
+    },
+    "c17": {
+      "email": "q.thoms@gmail.com",
+      "name": "Quentin Thomsen",
+      "phone": "+49 171 4455661"
+    },
+    "c18": {
+      "email": "radek@nowak-it.com",
+      "name": "Radek Nowak",
+      "phone": "+49 160 9988112"
+    },
+    "c19": {
+      "email": "s.ullmann@t-online.de",
+      "name": "Stefan Ullmann",
+      "phone": "+49 176 2233445"
+    },
+    "c2": {
+      "email": "b.becker@gmail.com",
+      "name": "Berrit Becker",
+      "phone": "+49 172 9988776"
+    },
+    "c20": {
+      "email": "t.vogel@web.de",
+      "name": "Thomas Vogel",
+      "phone": "+49 170 8877665"
+    },
+    "c21": {
+      "email": "uwe.w@gmx.net",
+      "name": "Uwe Wagner",
+      "phone": "+49 155 1212121"
+    },
+    "c22": {
+      "email": "v.xylander@test.de",
+      "name": "Verena Xylander",
+      "phone": "+49 179 3434343"
+    },
+    "c23": {
+      "email": "w.young@service.com",
+      "name": "Walter Young",
+      "phone": "+49 151 5656565"
+    },
+    "c24": {
+      "email": "xaver@zander.de",
+      "name": "Xaver Zander",
+      "phone": "+49 172 7878787"
+    },
+    "c25": {
+      "email": "yannick@mail.de",
+      "name": "Yannick Zimmer",
+      "phone": "+49 170 9090909"
+    },
+    "c26": {
+      "email": "zoe.graf@provider.com",
+      "name": "Zoe Graf",
+      "phone": "+49 176 1122446"
+    },
+    "c3": {
+      "email": "chris.d@outlook.com",
+      "name": "Christian Dahlem",
+      "phone": "+49 155 4433221"
+    },
+    "c4": {
+      "email": "fischer.d@test.de",
+      "name": "David Fischer",
+      "phone": "+49 160 5566778"
+    },
+    "c5": {
+      "email": "elena.grote@provider.de",
+      "name": "Elena Grote",
+      "phone": "+49 176 1122334"
+    },
+    "c6": {
+      "email": "fabian@heise.de",
+      "name": "Fabian Heise",
+      "phone": "+49 152 4455667"
+    },
+    "c7": {
+      "email": "gisela@jaeger-mail.com",
+      "name": "Gisela Jäger",
+      "phone": "+49 179 8877665"
+    },
+    "c8": {
+      "email": "hannah.k@t-online.de",
+      "name": "Hannah Klein",
+      "phone": "+49 173 1212121"
+    },
+    "c9": {
+      "email": "ingo.lenz@gmx.net",
+      "name": "Ingo Lenz",
+      "phone": "+49 157 3434343"
+    }
+  },
+  "users": [
+    {
+      "id": "1",
+      "user": "max@join.de",
+      "password": "test123"
+    },
+    {
+      "id": "2",
+      "user": "monika@join.de",
+      "password": "test123"
+    },
+    {
+      "id": "3",
+      "user": "radek@join.de",
+      "password": "test123"
+    },
+    {
+      "id": "4",
+      "user": "nick@join.de",
+      "password": "test123"
+    }
+  ],
+  "tasks": [
+    { "id": "1", "title": "Name", "description": "beschreibung", "date": "2024-06-30", "priority": "urgent medium low", "assignee": "Max Mustermann", "category": "bug, user story, task, improvement, technical task", "subtasks": [{ "task": "Subtask 1" }, { "task": "Subtask 2" }, { "task": "Subtask 3" }, { "task": "Subtask 4" }], "status": "todo" },
+    { "id": "2", "title": "Name", "description": "beschreibung", "date": "2024-06-30", "priority": "medium", "assignee": "Max Mustermann", "category": "user_story", "subtasks": [{ "task": "Subtask 1" }, { "task": "Subtask 2" }, { "task": "Subtask 3" }, { "task": "Subtask 4" }], "status": "todo" },
+    { "id": "3", "title": "Name", "description": "beschreibung", "date": "2024-06-30", "priority": "medium", "assignee": "Max Mustermann", "category": "user_story", "subtasks": [{ "task": "Subtask 1" }, { "task": "Subtask 2" }, { "task": "Subtask 3" }, { "task": "Subtask 4" }], "status": "todo" }
+  ]
+}

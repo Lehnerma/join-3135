@@ -1,0 +1,4 @@
+Already up to date.
+[login 770355f] feat - up function with storage in the firebase.
+ 3 files changed, 27 insertions(+), 20 deletions(-)
+ create mode 100644 sign
