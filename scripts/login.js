@@ -106,7 +106,7 @@ async function creatUser(ev) {
   NEW_USER.id = generateId();
   pushUser(NEW_USER);
   ev.target.reset();
-  toggelForms(ev);
+  toggleForms(ev);
   console.log(ev.target);
 }
 
