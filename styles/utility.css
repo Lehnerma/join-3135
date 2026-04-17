@@ -54,14 +54,12 @@
   margin-top: 12px;
 }
 
-
 .utility-ol li {
   counter-increment: my-counter;
   position: relative;
   padding-left: 2.5em;
   margin-bottom: 10px;
 }
-
 
 .utility-ol li h3 {
   padding: 0;
@@ -87,10 +85,10 @@ ol li::before {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-
 }
 
 .btn-return {
   background: none;
   border: none;
+  cursor: pointer;
 }
