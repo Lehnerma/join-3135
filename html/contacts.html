@@ -56,11 +56,12 @@
 
     <div class="left-content">
 
-      <button type="button" class="btn btn--primary add-button-size" id="add">Add new contact<img
-          class="add-contact-icon." src="../assets/img/icons/general/person_add.svg" alt="add contact button"></button>
+      <button type="button" class="btn btn--primary add-button-size" id="add">
+        Add new contact
+        <img class="add-contact-icon" src="../assets/img/icons/general/person_add.svg" alt="add contact button">
+      </button>
       <div class="contact-list">
-        <div class="letter-divider">A</div>
-        <div class="contact-details">Radek</div>
+              <div id="contactList" class="contact-data">Radek</div>
       </div>
     </div>
 
@@ -72,8 +73,6 @@
         <div id="contactDetails" class="contact-details">Hier kommen die Datails</div>
       </div>
 
-
-
   </main>
   <dialog class="add-contact" id="add_contact">
     <header class="dialog-header">
@@ -84,30 +83,30 @@
       </section>
     </header>
     <main>
-      <button>close x</button>
+      <button type="button">close x</button>
       <article>
         <img src="" alt="person icon" />
         <form id="add_form">
           <input type="text" name="name" placeholder="Name" required />
           <input type="email" name="email" placeholder="Email" required />
           <input type="tel" name="phone" placeholder="Phone" />
-          <button>Cancel</button>
-          <button>Creat</button>
+          <button type="button">Cancel</button>
+          <button type="button">Creat</button>
         </form>
       </article>
     </main>
   </dialog>
   <dialog class="edit-contact" id="edit_contact">
     <article class="dialog-content">
-      <button>close x</button>
+      <button type="button">close x</button>
       <article>
         <img src="" alt="initialen" />
         <form id="edit_form">
           <input type="text" name="name" placeholder="Name" required />
           <input type="email" name="email" placeholder="Email" required />
           <input type="tel" name="phone" placeholder="Phone" />
-          <button>Delete</button>
-          <button>Save</button>
+          <button type="button">Delete</button>
+          <button type="button">Save</button>
         </form>
       </article>
     </article>
@@ -115,3 +114,8 @@
 </body>
 
 </html>
+
+
+
+
+

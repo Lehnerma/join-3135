@@ -26,33 +26,31 @@ const contactColors = {
   Z: 'rgba(120, 120, 120, 1)'
 };
 
-let URL = "";
-let contacts = {};
+let USERS = [];
+let userContent = [];
+
 
 function init() {
   initBtn();
-  getContacts();
+  getUsers();
 }
 
-function getBoxId(id) {
-  const BOX_ID = document.getElementById(id);
-  return BOX_ID;
-}
-
+// function getBoxId(id) {
+//   const BOX_ID = document.getElementById(id);
+//   return BOX_ID;
+// }
 
 function initBtn() {
   const ADD_BTN = document.getElementById("add");
-  const EDIT_BTN = document.getElementById("edit");
   ADD_BTN.addEventListener("click", () => openDialog("add_contact"));
-  // EDIT_BTN.addEventListener("click", () => openDialog("edit_contact"));
 }
 
-function generateId() {
-  return (Date.now().toString(36) + Math.random().toString(36)).substring(0, 6);
-}
+// function generateId() {
+//   return (Date.now().toString(36) + Math.random().toString(36)).substring(0, 6);
+// }
 
-function openDialog(el) {
-  const DIALOG_REF = document.getElementById(el);
+function openDialog(add_contact) {
+  const DIALOG_REF = document.getElementById(add_contact);
   DIALOG_REF.showModal();
 }
 
@@ -69,22 +67,62 @@ function openDialog(el) {
 //   }
 // }
 
-async function getContacts() {
-  URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/contacts.json";
-  let response = await fetch(URL);
-  contacts = await response.json();
-  
-  contactList();
+async function getUsers() {
+  const USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+  const RESPONSE = await fetch(USERS_URL);
+  const RESULT = await RESPONSE.json();
+  USERS = Object.values(RESULT);
+  sortUserContactList();
 }
 
+function sortUserContactList() {
+  USERS.sort(function (a, b) {
+    let x = a.name.toLowerCase();
+    let y = b.name.toLowerCase();
+    if (x < y) { return -1; }
+    if (x > y) { return 1; }
+    return 0;
+  })
+  UserContectList();
+}
 
-function contactList() {
-  
+function UserContectList() {
+  let contactList = document.getElementById('contactList');
+  contactList.innerHTML = '';
+  for (let i = 0; i < USERS.length; i++) {
+    userContent.push(USERS[i]);
+    console.log(userContent);
+    contactList.innerHTML += renderContectListTpl(USERS[i]);
+  }
+  }
 
-  
-};
+function renderContectListTpl(user) {
+  let firstLetter = user.name.charAt(0).toUpperCase();
+  let initials = getInitials(user.name); 
+  let color = contactColors[firstLetter];
 
+  return `
+    <div class="letter-divider">${firstLetter}</div>
+  <div class="userSelection">
+    <div class="initials" style="background-color: ${color}">
+      ${initials}
+    </div>
+    <div class="contact-list">
+      <div class="name">${user.name}</div>
+      <div class="email">${user.email}</div>
+    </div>
+    </div>
+    
+  `;
+}
 
-
-
-
+function getInitials(name) {
+  let splitNames = name.split(' ');
+  console.log(splitNames);
+  let currentInitial = '';
+  currentInitial += splitNames[0].charAt(0).toUpperCase();
+  if (splitNames.length > 1) {
+    currentInitial += splitNames[splitNames.length - 1].charAt(0).toUpperCase();
+  }
+    return currentInitial;
+}

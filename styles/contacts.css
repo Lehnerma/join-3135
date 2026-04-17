@@ -1,7 +1,7 @@
 .main-content {
   display: grid;
   grid-template-columns: 32vw 1fr;
-  min-height: 100vh;
+  max-height: 100vh;
   background-color: var(--input-text-color);
 }
 
@@ -10,23 +10,26 @@
   grid-template-rows: auto 1fr;
   margin-top: 2.5vh;
   background-color: var(--input-text-color);
-  max-height: 100vh;
+  max-height: 80vh;
   overflow: hidden;
   justify-content: center;
   min-width: 250px;
+
 }
 
 .add-button-size {
   font-family: Inter-Bold;
   font-weight: 700;
-  font-size:clamp(16px, 1.5vw, 21px);
+  font-size: clamp(16px, 1.5vw, 21px);
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
+  gap: 2vh;
   width: 24vw;
   height: 6vh;
   min-width: 200px;
   min-height: 45px;
+  margin-left: 25px;
+  margin-bottom: 40px;
 }
 
 .contact-list {
@@ -37,11 +40,59 @@
 
 .letter-divider {
   font-size: 20px;
-  padding: 20px 10px 10px;
+  padding: 17px 36px 17px 36px;
   border-bottom: 1px solid;
   border-color: var(--fifth-text-color);
   margin-bottom: 15px;
+}
 
+.userSelection {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 24px 15px 24px;
+  cursor: pointer;
+
+}
+
+.userSelection:hover {
+  border-radius: 8px;
+  background-color: var(--primary-color);
+  color: var(--input-text-color);
+
+}
+
+.initials {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border-style: solid;
+  border-width: 2px;
+  border-color: var(--input-text-color);
+}
+
+.contact-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-family: Inter-Regular;
+  font-weight: 400;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.email {
+  font-size: 16px;
+  color: var(--secondary-color);
+  text-decoration: none;
 }
 
 .right-content {
