@@ -1,7 +1,7 @@
 body {
   display: grid;
   min-height: 100vh;
-  grid-template-rows: auto 1fr 80px;
+  grid-template-rows: 150px 1fr 80px;
   place-items: center;
   background-color: var(--background-color);
 }
@@ -10,10 +10,15 @@ body {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  position: relative;
   width: 100%;
   max-width: var(--max-dp-width);
   padding-top: 67px;
+}
+
+@media (min-width: 1500px) {
+  .header {
+    position: relative;
+  }
 }
 
 .nav-login {
@@ -74,26 +79,20 @@ body {
 }
 
 .form--container {
+  width: clamp(300px, 90dvw, 650px);
   border-radius: 30px;
   box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.11);
   background-color: white;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
+  display: flex;
+  flex-direction: column;
   gap: 32px;
-  padding: 48px 0;
+  padding: 48px 115px;
   justify-items: center;
   align-items: center;
   opacity: 0;
 }
 
-.login {
-  width: 652px;
-  height: 450px;
-}
-
 .signup {
-  width: 652px;
-  height: 600px;
   opacity: 1;
 }
 
@@ -101,22 +100,22 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80%;
+  width: 100%;
+  padding: 16px 0;
   position: relative;
 }
 
 .form--title .btn {
   position: absolute;
-  left: 0;
+  left: -60px;
 }
 
 .form--title h1 {
   display: flex;
   justify-content: center;
-  align-items: center;
   font-size: 60px;
-  font-family: Inter-Bold;
   position: relative;
+  font-weight: 700;
 }
 
 .form--title h1::after {
@@ -132,7 +131,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 32px;
-  margin-top: 16px;
+  height: 326px;
 }
 
 .input--container {
@@ -140,6 +139,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 24px;
+  min-height: 152px;
 }
 
 .input {
@@ -148,7 +148,6 @@ body {
 }
 
 .login-buttons {
-  height: 48px;
   display: flex;
   align-items: center;
   gap: 35px;
@@ -204,6 +203,10 @@ body {
   text-decoration: none;
 }
 
+.phone-signup {
+  display: none;
+}
+
 .footer-login {
   width: 100%;
   display: flex;
@@ -230,4 +233,67 @@ body {
   color: var(--secondary-color);
   font-weight: 700;
   transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+  body {
+    grid-template-rows: 110px 1fr auto 80px;
+  }
+
+  @keyframes slide-diagonal {
+    0% {
+      top: 50vh;
+      left: 50%;
+      translate: -50% -50%;
+    }
+    10%,
+    20% {
+      top: 50vh;
+      left: 50%;
+      translate: -50% -50%;
+    }
+
+    100% {
+      top: 40px;
+      left: 36px;
+      width: 64px;
+      height: 80px;
+      translate: 0 0;
+    }
+  }
+
+  .nav-login {
+    display: none;
+  }
+
+  .phone-signup {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    font-size: 20px;
+    font-weight: 400;
+  }
+  .form--container {
+    padding: 16px;
+  }
+  .form--title h1 {
+    font-size: 47px;
+    font-family: "Inter-Bold";
+  }
+
+  .input,
+  .input--container,
+  .input--section {
+    width: 100%;
+  }
+
+  .login-buttons {
+    flex-direction: column;
+    gap: 21px;
+
+    .btn {
+      width: 180px;
+      height: 51px;
+    }
+  }
 }
