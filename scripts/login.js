@@ -56,6 +56,7 @@ function toggelForms(event) {
   const LOGIN_FORM = document.getElementById("login");
   const SIGNUP_FORM = document.getElementById("signup");
   const NAV_LOGIN = document.getElementById("nav_login");
+  const NAV_PHONE = document.getElementById("phone_signup");
 
   SHOW_SIGNUP = !SHOW_SIGNUP;
   LOGIN_FORM.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
