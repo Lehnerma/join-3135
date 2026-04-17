@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join - Board</title>
@@ -10,137 +11,190 @@
     <link rel="stylesheet" href="../styles/fonts.css" />
     <link rel="stylesheet" href="../styles/colors.css" />
     <link rel="stylesheet" href="../styles/board.css" />
-  </head>
+</head>
 
-  <body class="app">
+<body class="app">
+
     <header class="app--title">
-      <h1 class="app--title-headline">Kanban Project Management Tool</h1>
-      <div class="app--icons">
-        <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="?" class="app--icon" /></a>
-        <img src="../assets/img/user_initials.svg" alt="M L" class="app--initials" />
-      </div>
+        <h1 class="app--title-headline">Kanban Project Management Tool</h1>
+        <div class="app--icons">
+            <a href="#"><img src="../assets/img/icons/general/help.svg" alt="?" class="app--icon" /></a>
+            <img src="../assets/img/user_initials.svg" alt="M L" class="app--initials" />
+        </div>
     </header>
 
     <nav class="sidebar">
-      <img class="nav-logo" src="../assets/img/logo-join.svg" />
-      <ul>
-        <li class="">
-          <a class="nav-category" href="summary.html"><img class="nav-category-img" src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
-        </li>
-        <li class="">
-          <a class="nav-category" href="addTaskPage.html"><img class="nav-category-img" src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
-        </li>
-        <li class="">
-          <a class="nav-category" href="board.html"><img class="nav-category-img" src="../assets/img/icons/general/board.svg" alt="" />Board</a>
-        </li>
-        <li class="">
-          <a class="nav-category" href="contacts.html"><img class="nav-category-img" src="../assets/img/icons/general/contacts.svg" alt="" />Contacts</a>
-        </li>
-      </ul>
-      <div class="legal-section">
-        <a class="legal-section-link" href="#">Privacy Policy</a>
-        <a class="legal-section-link" href="#">Legal Notice</a>
-      </div>
+        <img class="nav-logo" src="../assets/img/logo-join.svg" />
+        <ul>
+            <li class="">
+                <a class="nav-category" href="summary.html"><img class="nav-category-img"
+                        src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
+            </li>
+            <li class="">
+                <a class="nav-category" href="addTaskPage.html"><img class="nav-category-img"
+                        src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
+            </li>
+            <li class="">
+                <a class="nav-category" href="board.html"><img class="nav-category-img"
+                        src="../assets/img/icons/general/board.svg" alt="" />Board</a>
+            </li>
+            <li class="">
+                <a class="nav-category" href="contacts.html"><img class="nav-category-img"
+                        src="../assets/img/icons/general/contacts.svg" alt="" />Contacts</a>
+            </li>
+        </ul>
+        <div class="legal-section">
+            <a class="legal-section-link" href="#">Privacy Policy</a>
+            <a class="legal-section-link" href="#">Legal Notice</a>
+        </div>
     </nav>
 
     <main class="app--content">
-      <section class="board-header-section">
-        <div class="board-title-container">
-          <h1>Board</h1>
-          <div class="board-actions">
-            <input type="text" id="search-task" placeholder="Find Task" />
-            <button class="btn-dark">Add task +</button>
-          </div>
-        </div>
-      </section>
 
-      <section class="kanban-columns">
-        <!-- TO DO -->
-        <div class="kanban-column">
-          <div class="column-title">
-            <span>To do</span>
-          </div>
-          <div class="task-list" id="todo-list"></div>
-        </div>
+        <section class="board-header-section">
+            <div class="board-title-container">
+                <h1>Board</h1>
+                <div class="board-actions">
+                    <input type="text" id="search-task" placeholder="Find Task">
+                    <button class="btn-dark">Add task +</button>
+                </div>
+            </div>
+        </section>
 
-        <!-- IN PROGRESS -->
-        <div class="kanban-column">
-          <div class="column-title">
-            <span>In progress</span>
-          </div>
-          <div class="task-list" id="inprogress-list"></div>
-        </div>
+        <section class="kanban-columns">
 
-        <!-- FEEDBACK -->
-        <div class="kanban-column">
-          <div class="column-title">
-            <span>Await feedback</span>
-          </div>
-          <div class="task-list" id="feedback-list"></div>
-        </div>
+            <!-- TO DO -->
+            <div class="kanban-column">
+                <div class="column-title">
+                    <span>To do</span>
+                </div>
+                <div class="task-list" id="todo-list"></div>
+            </div>
 
-        <!-- DONE -->
-        <div class="kanban-column">
-          <div class="column-title">
-            <span>Done</span>
-          </div>
-          <div class="task-list" id="done-list"></div>
-        </div>
-      </section>
+            <!-- IN PROGRESS -->
+            <div class="kanban-column">
+                <div class="column-title">
+                    <span>In progress</span>
+                </div>
+                <div class="task-list" id="inprogress-list"></div>
+            </div>
+
+            <!-- FEEDBACK -->
+            <div class="kanban-column">
+                <div class="column-title">
+                    <span>Await feedback</span>
+                </div>
+                <div class="task-list" id="feedback-list"></div>
+            </div>
+
+            <!-- DONE -->
+            <div class="kanban-column">
+                <div class="column-title">
+                    <span>Done</span>
+                </div>
+                <div class="task-list" id="done-list"></div>
+            </div>
+
+        </section>
+
     </main>
 
     <script>
-      function loadTasks() {
-        return JSON.parse(localStorage.getItem("tasks")) || [];
-      }
-
-      function renderBoard() {
-        let tasks = loadTasks();
-
-        let todo = document.getElementById("todo-list");
-        let inProgress = document.getElementById("inprogress-list");
-        let feedback = document.getElementById("feedback-list");
-        let done = document.getElementById("done-list");
-
-        todo.innerHTML = "";
-        inProgress.innerHTML = "";
-        feedback.innerHTML = "";
-        done.innerHTML = "";
-
-        for (let i = 0; i < tasks.length; i++) {
-          let task = tasks[i];
-
-          let card = `
-            <div class="task-card">
-                <div class="category-label">${task.category}</div>
-                <div class="task-title">${task.title}</div>
-                <div class="task-description">${task.description}</div>
-
-                <div class="task-footer">
-                    <span>${task.priority}</span>
-                </div>
-            </div>
-        `;
-
-          if (task.status === "todo") {
-            todo.innerHTML += card;
-          }
-
-          if (task.status === "inProgress") {
-            inProgress.innerHTML += card;
-          }
-
-          if (task.status === "feedback") {
-            feedback.innerHTML += card;
-          }
-
-          if (task.status === "done") {
-            done.innerHTML += card;
-          }
+        function loadTasks() {
+            return JSON.parse(localStorage.getItem("tasks")) || [];
         }
-      }
 
-      renderBoard();
+        function renderBoard() {
+            let tasks = loadTasks();
+
+            let todo = document.getElementById("todo-list");
+            let inProgress = document.getElementById("inprogress-list");
+            let feedback = document.getElementById("feedback-list");
+            let done = document.getElementById("done-list");
+
+            todo.innerHTML = "";
+            inProgress.innerHTML = "";
+            feedback.innerHTML = "";
+            done.innerHTML = "";
+
+            function getProgress(subtasks) {
+                let done = subtasks.filter(s => s.done).length;
+                let total = subtasks.length;
+                return { done, total };
+            }
+
+            for (let i = 0; i < tasks.length; i++) {
+                let task = tasks[i];
+
+
+
+                let progress = getProgress(task.subtasks || []);
+                let percent = progress.total ? (progress.done / progress.total) * 100 : 0;
+
+                let card = `
+                            <div class="task-card">
+                            
+                                <div class="category-label">${task.category}</div>
+                                <div class="task-title">${task.title}</div>
+                                <div class="task-description">${task.description}</div>
+                            
+                                ${progress.total > 0 ? `
+                                <div class="subtask-progress" title="${progress.done} of ${progress.total} subtasks done">
+                                    <div class="progress-bar-bg">
+                                        <div class="progress-bar-fill" style="width:${percent}%"></div>
+                                    </div>
+                                    <span>${progress.done}/${progress.total} Subtasks</span>
+                                </div>
+                                ` : ""}
+                            
+                                <div class="subtask-list">
+                                    ${(task.subtasks || []).map((sub, subIndex) => `
+                                        <div class="subtask-item" onclick="toggleSubtask(${i}, ${subIndex})">
+                                            ${sub.done ? "✔" : "❌"} ${sub.title}
+                                        </div>
+                                    `).join("")}
+                                </div>
+                            
+                                <div class="task-footer">
+                                    <span>${task.priority}</span>
+                                </div>
+                            
+                            </div>
+                            `;
+
+
+
+                if (task.status === "todo") {
+                    todo.innerHTML += card;
+                }
+
+                if (task.status === "inProgress") {
+                    inProgress.innerHTML += card;
+                }
+
+                if (task.status === "feedback") {
+                    feedback.innerHTML += card;
+                }
+
+                if (task.status === "done") {
+                    done.innerHTML += card;
+                }
+            }
+        }
+
+        renderBoard();
+
+        function toggleSubtask(taskIndex, subIndex) {
+            let tasks = JSON.parse(localStorage.getItem("tasks"));
+
+            tasks[taskIndex].subtasks[subIndex].done =
+                !tasks[taskIndex].subtasks[subIndex].done;
+
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+            renderBoard();
+        }
     </script>
-  </body>
+
+</body>
+
 </html>
