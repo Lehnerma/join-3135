@@ -31,12 +31,13 @@ function btnInit() {
  */
 function triggerAnimations() {
   const JOIN_LOGO = document.querySelector(".join-logo");
-  JOIN_LOGO.classList.add("logo-animation");
   const FORM_CONTAINER = document.querySelector(".form--container");
-  FORM_CONTAINER.classList.add("fade-in");
   const NAV_LOGIN = document.querySelector(".nav-login");
-  NAV_LOGIN.classList.add("fade-in");
   const FOOTER_LOGIN = document.querySelector(".footer-login");
+
+  JOIN_LOGO.classList.add("logo-animation");
+  FORM_CONTAINER.classList.add("fade-in");
+  NAV_LOGIN.classList.add("fade-in");
   FOOTER_LOGIN.classList.add("fade-in");
 }
 
@@ -106,7 +107,7 @@ async function creatUser(ev) {
   NEW_USER.id = generateId();
   pushUser(NEW_USER);
   ev.target.reset();
-  toggelForms(ev);
+  toggleForms(ev);
   console.log(ev.target);
 }
 

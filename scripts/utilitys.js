@@ -1,8 +1,12 @@
 /**
  * Check if the User can enter the side or not
  */
-function checkAuth() {
-  if (checkUserId(sessionStorage.getItem("user_id"))) {
+async function checkAuth() {
+  const ID = sessionStorage.getItem("user_id");
+  const BOOL = await checkUserId(ID);
+  if (BOOL) {
+    console.log("true");
+  } else {
     window.location.href = "../index.html";
   }
 }
@@ -18,12 +22,11 @@ async function checkUserId(id) {
     if (!RESPONS.ok) {
       throw new Error(RESPONS.status);
     }
-    const RESULT = RESPONS.json;
+    const RESULT = await RESPONS.json();
     const ALLIDS = Object.values(RESULT).map((items) => items.id);
     return Object.values(RESULT).some((item) => item.id === id);
   } catch (er) {
     console.error(er);
   }
 }
-
 checkAuth();
