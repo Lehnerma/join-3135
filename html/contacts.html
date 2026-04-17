@@ -56,12 +56,12 @@
 
     <div class="left-content">
 
-      <button type="button" class="btn btn--primary add-button-size" id="add">
+      <button type="button" class="btn btn--primary add-button-size" onclick="openOverlayContact()">
         Add new contact
         <img class="add-contact-icon" src="../assets/img/icons/general/person_add.svg" alt="add contact button">
       </button>
       <div class="contact-list">
-              <div id="contactList" class="contact-data">Radek</div>
+        <div id="contactList" class="contact-data">Radek</div>
       </div>
     </div>
 
@@ -74,48 +74,60 @@
       </div>
 
   </main>
-  <dialog class="add-contact" id="add_contact">
-    <header class="dialog-header">
-      <img src="../assets/img/logo-join.svg" alt="logo-join" />
-      <section>
-        <h2>Add contact</h2>
-        <p>Tasks are better with a team!</p>
-      </section>
-    </header>
-    <main>
-      <button type="button">close x</button>
-      <article>
-        <img src="" alt="person icon" />
-        <form id="add_form">
-          <input type="text" name="name" placeholder="Name" required />
-          <input type="email" name="email" placeholder="Email" required />
-          <input type="tel" name="phone" placeholder="Phone" />
-          <button type="button">Cancel</button>
-          <button type="button">Creat</button>
-        </form>
-      </article>
-    </main>
+
+ <dialog class="dialog-content" id="addNewContact">
+   
+    <aside class="aside-content">
+        <img class="aside-logo" src="../assets/img/logo-join.svg" alt="logo-join" />
+        <section>
+            <h2>Add contact</h2>
+            <p>Tasks are better with a team!</p>
+            <div class="blue-line-horizontal"></div>
+        </section>
+    </aside>
+
+  
+    <div class="form-section-wrapper">
+        <button type="button" id="close-btn" class="close-btn-overlay" onclick="document.getElementById('addNewContact').close()">x</button>
+        
+        <div class="form-body">
+           
+            <div class="profile-badge-container">
+                <img src="../assets/img/icons/input/person.svg" alt="Profile" class="large-profile-icon">
+            </div>
+
+            
+            <form class="form--container login" id="login">
+                <section class="input--container">
+                    <div class="input--section">
+                        <input class="input" type="text" name="name" placeholder="Name" required />
+                        <img src="../assets/img/icons/input/person.svg" alt="icon" class="input--icon" />
+                    </div>
+
+                    <div class="input--section">
+                        <input class="input" id="email" type="email" name="email" placeholder="Email" required />
+                        <img src="../assets/img/icons/input/mail.svg" alt="icon" class="input--icon" />
+                    </div>
+
+                    <div class="input--section">
+                        <input class="input" type="tel" name="phone" placeholder="Phone" required />
+                        <img src="../assets/img/icons/input/phone.svg" alt="icon" class="input--icon" />
+                    </div>
+                </section>
+
+                <section class="login-buttons">
+                    <button type="button" class="btn btn--secondary"  onclick="document.getElementById('addNewContact').close()">Cancel <span class="cancel-x">x</span></button>
+                    <button type="submit" class="btn btn--primary">Create contact</button>
+                </section>
+            </form>
+        </div>
+    </div>
+</dialog>
   </dialog>
-  <dialog class="edit-contact" id="edit_contact">
-    <article class="dialog-content">
-      <button type="button">close x</button>
-      <article>
-        <img src="" alt="initialen" />
-        <form id="edit_form">
-          <input type="text" name="name" placeholder="Name" required />
-          <input type="email" name="email" placeholder="Email" required />
-          <input type="tel" name="phone" placeholder="Phone" />
-          <button type="button">Delete</button>
-          <button type="button">Save</button>
-        </form>
-      </article>
-    </article>
-  </dialog>
+
+
+
+
 </body>
 
 </html>
-
-
-
-
-

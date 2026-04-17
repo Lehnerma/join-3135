@@ -14,7 +14,6 @@
   overflow: hidden;
   justify-content: center;
   min-width: 250px;
-
 }
 
 .add-button-size {
@@ -30,6 +29,11 @@
   min-height: 45px;
   margin-left: 25px;
   margin-bottom: 40px;
+}
+
+.add-contact-icon {
+  width: 3.2vw;
+  height: 3.2vh;
 }
 
 .contact-list {
@@ -52,14 +56,21 @@
   gap: 20px;
   padding: 15px 24px 15px 24px;
   cursor: pointer;
+}
 
+.show-user-details-button {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 24px 15px 24px;
+  cursor: pointer;
+  border: none;
 }
 
 .userSelection:hover {
   border-radius: 8px;
   background-color: var(--primary-color);
   color: var(--input-text-color);
-
 }
 
 .initials {
@@ -133,66 +144,141 @@
   white-space: nowrap;
 }
 
-
-.contact-details {}
-
+/* --- DIALOG CONTENT --- */
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* .test-bg {
-  background-color: var(--primary-color);
-} */
-
-dialog {
-  position: fixed;
-  max-width: 1200px;
-  height: 592px;
-  margin: auto;
+.dialog-content {
+    display: none;
+    border: none;
+    padding: 0;
+    border-radius: 30px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1212px;
+    height: 592px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+    background-color: white;
 }
 
-/* .dialog-content {
-} */
-
-.dialog-header {
-  background-color: var(--primary-color);
+.dialog-content[open] {
+    display: flex; 
 }
 
-dialog::backdrop {
-  background: rgba(0, 0, 0, 0.5);
+
+.aside-content {
+    background-color:var(--primary-color);
+    width: 476px;
+    height: 594px;
+    color:var(--input-text-color);
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    position: relative;
 }
+
+.aside-logo {
+    position: absolute;
+    top: 170px;
+    left: 48px;
+    width: 56px; 
+    height: 66px;
+}
+
+.aside-text-wrapper h2 {
+    font-size: 61px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.aside-text-wrapper p {
+    font-size: 27px;
+    margin: 12px 0 16px 0;
+}
+
+.blue-underline-horizontal {
+    width: 90px;
+    height: 3px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+}
+
+
+.form-section-wrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 0 48px;
+}
+
+ .close-btn-overlay {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+} 
+
+.form-body {
+    display: flex;
+    align-items: center;
+    gap: 60px; 
+}
+
+
+.profile-badge-container {
+    width: 120px;
+    height: 120px;
+    background-color:  #D1D1D1;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.input--container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 48px;
+}
+
+.input--section {
+    position: relative;
+    width: 420px;
+}
+
+.input {
+    width: 100%;
+    padding: 13px 21px;
+    border: 1px solid #D1D1D1;
+    border-radius: 10px;
+    font-size: 20px;
+    box-sizing: border-box;
+}
+
+.input--icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    opacity: 0.5;
+}
+
+
+.login-buttons {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 35px;
+}
+

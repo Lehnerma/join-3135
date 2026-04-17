@@ -31,8 +31,8 @@ let userContent = [];
 
 
 function init() {
-  initBtn();
-  getUsers();
+  
+    getUsers();
 }
 
 // function getBoxId(id) {
@@ -40,19 +40,19 @@ function init() {
 //   return BOX_ID;
 // }
 
-function initBtn() {
-  const ADD_BTN = document.getElementById("add");
-  ADD_BTN.addEventListener("click", () => openDialog("add_contact"));
+function openOverlayContact() {
+  const dialog = document.getElementById("addNewContact");
+        dialog.showModal();
 }
 
 // function generateId() {
 //   return (Date.now().toString(36) + Math.random().toString(36)).substring(0, 6);
 // }
 
-function openDialog(add_contact) {
-  const DIALOG_REF = document.getElementById(add_contact);
-  DIALOG_REF.showModal();
-}
+// function cerateContactDialog(add_contact) {
+//   const DIALOG_REF = document.getElementById(add_contact);
+//   DIALOG_REF.showModal();
+// }
 
 // class contact {
 //   constructor(data = {}) {
@@ -94,27 +94,28 @@ function UserContectList() {
     console.log(userContent);
     contactList.innerHTML += renderContectListTpl(USERS[i]);
   }
-  }
+}
 
-function renderContectListTpl(user) {
+function renderContectListTpl(user, i) {
   let firstLetter = user.name.charAt(0).toUpperCase();
-  let initials = getInitials(user.name); 
+  let userID = user.id
+  console.log(userID);
+  let initials = getInitials(user.name);
   let color = contactColors[firstLetter];
 
-  return `
+  return /*html*/ `
     <div class="letter-divider">${firstLetter}</div>
-  <div class="userSelection">
-    <div class="initials" style="background-color: ${color}">
-      ${initials}
+       <div id="${userID}" class="userSelection" onclick="showDetails()">
+        <div class="initials" style="background-color: ${color}">
+         ${initials}
     </div>
     <div class="contact-list">
-      <div class="name">${user.name}</div>
-      <div class="email">${user.email}</div>
-    </div>
-    </div>
-    
-  `;
+       <div class="name">${user.name}</div>
+         <a href="mailto:${user.email}" class="email" onclick="event.stopPropagation()" >${user.email}
+       </div>
+    </div>`;
 }
+
 
 function getInitials(name) {
   let splitNames = name.split(' ');
@@ -124,5 +125,5 @@ function getInitials(name) {
   if (splitNames.length > 1) {
     currentInitial += splitNames[splitNames.length - 1].charAt(0).toUpperCase();
   }
-    return currentInitial;
+  return currentInitial;
 }
