@@ -160,7 +160,10 @@
                 assignedTo: document.getElementById("assignedTo").value,
                 priority: selectedPriority,
                 status: "todo",
-                subtasks: []
+                subtasks: [
+                    { title: "Task 1", done: true },
+                    { title: "Task 2", done: false }
+                ]
             };
 
             let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -172,7 +175,11 @@
             setTimeout(() => {
                 window.location.href = "board.html";
             }, 1000);
+
+            
         }
+
+       
 
         window.onload = function () {
             selectPriority("medium");
@@ -187,6 +194,10 @@
                 toast.classList.remove("show");
             }, 2000);
         }
+
+      
+
+
     </script>
 
 </body>
