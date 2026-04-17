@@ -102,9 +102,17 @@
 
                         <label>Subtasks</label>
                         <div class="subtask-input">
-                            <input type="text" placeholder="Add subtask">
-                            <span class="subtask-icons">✕ | ✓</span>
+                            <input id="subtaskInput" type="text" placeholder="Add subtask">
+
+                            <span class="subtask-icons">
+                                <span onclick="addSubtask()">✓</span>
+                                <span onclick="clearSubtaskInput()">✕</span>
+                            </span>
                         </div>
+
+
+                        <div id="subtaskList"></div>
+
                     </div>
 
                 </div>
@@ -128,6 +136,7 @@
     <script>
 
         let selectedPriority = "medium";
+        let subtasks = [];
 
         function selectPriority(prio) {
             selectedPriority = prio;
@@ -160,10 +169,7 @@
                 assignedTo: document.getElementById("assignedTo").value,
                 priority: selectedPriority,
                 status: "todo",
-                subtasks: [
-                    { title: "Task 1", done: true },
-                    { title: "Task 2", done: false }
-                ]
+                subtasks: subtasks
             };
 
             let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -176,10 +182,10 @@
                 window.location.href = "board.html";
             }, 1000);
 
-            
+
         }
 
-       
+
 
         window.onload = function () {
             selectPriority("medium");
@@ -195,7 +201,48 @@
             }, 2000);
         }
 
-      
+
+        function addSubtask() {
+            let input = document.getElementById("subtaskInput");
+            let value = input.value.trim();
+
+            if (value === "") return;
+
+            subtasks.push({
+                title: value,
+                done: false
+            });
+
+            input.value = "";
+            renderSubtasks();
+        }
+
+
+        function renderSubtasks() {
+            let container = document.getElementById("subtaskList");
+
+            container.innerHTML = "";
+
+            for (let i = 0; i < subtasks.length; i++) {
+                container.innerHTML += `
+            <div class="subtask-item">
+                <span class="dot">•</span>
+                <span>${subtasks[i].title}</span>
+                <span onclick="removeSubtask(${i})">✕</span>
+            </div>
+        `;
+            }
+        }
+
+
+        function removeSubtask(index) {
+            subtasks.splice(index, 1);
+            renderSubtasks();
+        }
+
+        renderSubtasks();
+
+
 
 
     </script>
