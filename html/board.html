@@ -117,20 +117,52 @@
             feedback.innerHTML = "";
             done.innerHTML = "";
 
+            function getProgress(subtasks) {
+                let done = subtasks.filter(s => s.done).length;
+                let total = subtasks.length;
+                return { done, total };
+            }
+
             for (let i = 0; i < tasks.length; i++) {
                 let task = tasks[i];
 
-                let card = `
-            <div class="task-card">
-                <div class="category-label">${task.category}</div>
-                <div class="task-title">${task.title}</div>
-                <div class="task-description">${task.description}</div>
 
-                <div class="task-footer">
-                    <span>${task.priority}</span>
-                </div>
-            </div>
-        `;
+
+                let progress = getProgress(task.subtasks || []);
+                let percent = progress.total ? (progress.done / progress.total) * 100 : 0;
+
+                let card = `
+                            <div class="task-card">
+                            
+                                <div class="category-label">${task.category}</div>
+                                <div class="task-title">${task.title}</div>
+                                <div class="task-description">${task.description}</div>
+                            
+                                ${progress.total > 0 ? `
+                                <div class="subtask-progress" title="${progress.done} of ${progress.total} subtasks done">
+                                    <div class="progress-bar-bg">
+                                        <div class="progress-bar-fill" style="width:${percent}%"></div>
+                                    </div>
+                                    <span>${progress.done}/${progress.total} Subtasks</span>
+                                </div>
+                                ` : ""}
+                            
+                                <div class="subtask-list">
+                                    ${(task.subtasks || []).map((sub, subIndex) => `
+                                        <div class="subtask-item" onclick="toggleSubtask(${i}, ${subIndex})">
+                                            ${sub.done ? "✔" : "❌"} ${sub.title}
+                                        </div>
+                                    `).join("")}
+                                </div>
+                            
+                                <div class="task-footer">
+                                    <span>${task.priority}</span>
+                                </div>
+                            
+                            </div>
+                            `;
+
+
 
                 if (task.status === "todo") {
                     todo.innerHTML += card;
@@ -151,6 +183,16 @@
         }
 
         renderBoard();
+
+        function toggleSubtask(taskIndex, subIndex) {
+            let tasks = JSON.parse(localStorage.getItem("tasks"));
+
+            tasks[taskIndex].subtasks[subIndex].done =
+                !tasks[taskIndex].subtasks[subIndex].done;
+
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+            renderBoard();
+        }
     </script>
 
 </body>
