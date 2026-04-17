@@ -6,6 +6,8 @@
   --fifth-color: rgba(31, 215, 193, 1);
   --sixth-color: rgba(42, 61, 89, 1);
   --background-color: rgba(240, 240, 240, 1);
+  --secondary-background-color: rgba(255, 255, 255, 1);
+  --third-background-color: rgba(246, 247, 248, 1);
   --rate-color-urgent: rgba(255, 61, 0, 1);
   --rate-color-medium: rgba(255, 168, 0, 1);
   --rate-color-low: rgba(122, 226, 41, 1);
