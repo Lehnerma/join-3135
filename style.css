@@ -9,8 +9,8 @@
   font-family: "Inter-Regular", sans-serif;
 }
 
-.dnone{
-  display: none !important; 
+.dnone {
+  display: none !important;
 }
 
 .btn {
@@ -20,6 +20,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: transparent;
 }
 
 .btn--primary {
@@ -35,7 +36,6 @@
   &:active {
     background-color: var(--btn-click-color);
     box-shadow: var(--btn-shadow-main);
-    
   }
 }
 
@@ -70,7 +70,7 @@
   padding: 16px;
 }
 
-.btn--arrow{
+.btn--arrow {
   width: 32px;
   height: 32px;
   background-color: transparent;
@@ -79,6 +79,17 @@
     background-color: var(--btn-arrow-hover);
     border-radius: 50%;
   }
+}
+
+.btn--user {
+  width: 56px;
+  height: 56px;
+  background-color: white;
+  border: solid 3px var(--secondary-text-color);
+  border-radius: 50%;
+  color: var(--secondary-color);
+  font-size: 16px;
+  font-family: "Inter-Bold", sans-serif;
 }
 
 .input {
