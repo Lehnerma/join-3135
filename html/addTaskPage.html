@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join - Add Task</title>
 
     <link rel="stylesheet" href="../style.css" />
@@ -11,184 +10,165 @@
     <link rel="stylesheet" href="../styles/fonts.css" />
     <link rel="stylesheet" href="../styles/colors.css" />
     <link rel="stylesheet" href="../styles/addTaskPage.css" />
-</head>
+  </head>
 
-<body class="app">
-
+  <body class="app">
     <header class="app--title">
-        <h1 class="app--title-headline">Kanban Project Management Tool</h1>
-        <div class="app--icons">
-            <a href="#"><img src="../assets/img/icons/general/help.svg" alt="?" class="app--icon" /></a>
-            <img src="../assets/img/user_initials.svg" alt="M L" class="app--initials" />
-        </div>
+      <h1 class="app--title-headline">Kanban Project Management Tool</h1>
+      <div class="app--icons">
+        <a href="#"><img src="../assets/img/icons/general/help.svg" alt="?" class="app--icon" /></a>
+        <img src="../assets/img/user_initials.svg" alt="M L" class="app--initials" />
+      </div>
     </header>
 
     <nav class="sidebar">
-        <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
-        <ul>
-            <li class="">
-                <a class="nav-category" href="summary.html"><img class="nav-category-img"
-                        src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
-            </li>
-            <li class="">
-                <a class="nav-category" href="addTaskPage.html"><img class="nav-category-img"
-                        src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
-            </li>
-            <li class="">
-                <a class="nav-category" href="board.html"><img class="nav-category-img"
-                        src="../assets/img/icons/general/board.svg" alt="" />Board</a>
-            </li>
-            <li class="">
-                <a class="nav-category" href="contacts.html"><img class="nav-category-img"
-                        src="../assets/img/icons/general/contacts.svg" alt="" />Contacts</a>
-            </li>
-        </ul>
+      <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
+      <ul>
+        <li class="">
+          <a class="nav-category" href="summary.html"><img class="nav-category-img" src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
+        </li>
+        <li class="">
+          <a class="nav-category" href="addTaskPage.html"><img class="nav-category-img" src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
+        </li>
+        <li class="">
+          <a class="nav-category" href="board.html"><img class="nav-category-img" src="../assets/img/icons/general/board.svg" alt="" />Board</a>
+        </li>
+        <li class="">
+          <a class="nav-category" href="contacts.html"><img class="nav-category-img" src="../assets/img/icons/general/contacts.svg" alt="" />Contacts</a>
+        </li>
+      </ul>
 
-        <div class="legal-section">
-            <a class="legal-section-link" href="#">Privacy Policy</a>
-            <a class="legal-section-link" href="#">Legal Notice</a>
-        </div>
+      <div class="legal-section">
+        <a class="legal-section-link" href="#">Privacy Policy</a>
+        <a class="legal-section-link" href="#">Legal Notice</a>
+      </div>
     </nav>
 
     <main class="app--content">
+      <article class="board-title-container">
+        <h1>Add Task</h1>
 
-        <div class="board-title-container">
-            <h1>Add Task</h1>
+        <form class="task-form" onsubmit="createTask(event)">
+          <div class="form-columns">
+            <!-- Linke Spalte -->
+            <div class="column">
+              <label>Title<span>*</span></label>
+              <input id="title" type="text" placeholder="Enter a title" />
 
+              <label>Description</label>
+              <textarea id="description" placeholder="Enter a Description"></textarea>
 
-            <form class="task-form" onsubmit="createTask(event)">
+              <label>Due date<span>*</span></label>
+              <input id="dueDate" type="date" />
+            </div>
 
-                <div class="form-columns">
+            <div class="divider"></div>
 
-                    <!-- Linke Spalte -->
-                    <div class="column">
-                        <label>Title<span>*</span></label>
-                        <input id="title" type="text" placeholder="Enter a title">
+            <!-- Rechte Spalte -->
+            <div class="column">
+              <label>Priority</label>
 
-                        <label>Description</label>
-                        <textarea id="description" placeholder="Enter a Description"></textarea>
+              <div class="priority-group">
+                <button type="button" id="btn-urgent" class="prio-btn" onclick="selectPriority('urgent')">Urgent</button>
 
-                        <label>Due date<span>*</span></label>
-                        <input id="dueDate" type="date">
-                    </div>
+                <button type="button" id="btn-medium" class="prio-btn" onclick="selectPriority('medium')">Medium</button>
 
-                    <div class="divider"></div>
+                <button type="button" id="btn-low" class="prio-btn" onclick="selectPriority('low')">Low</button>
+              </div>
 
-                    <!-- Rechte Spalte -->
-                    <div class="column">
-                        <label>Priority</label>
+              <label>Assigned to</label>
+              <select id="assignedTo">
+                <option value="">Select contacts to assign</option>
+              </select>
 
-                        <div class="priority-group">
-                            <button type="button" id="btn-urgent" class="prio-btn"
-                                onclick="selectPriority('urgent')">Urgent</button>
+              <label>Category<span>*</span></label>
+              <select id="category">
+                <option value="Technical Task">Technical Task</option>
+                <option value="User Story">User Story</option>
+              </select>
 
-                            <button type="button" id="btn-medium" class="prio-btn"
-                                onclick="selectPriority('medium')">Medium</button>
+              <label>Subtasks</label>
+              <div class="subtask-input">
+                <input type="text" placeholder="Add subtask" />
+                <span class="subtask-icons">✕ | ✓</span>
+              </div>
+            </div>
+          </div>
 
-                            <button type="button" id="btn-low" class="prio-btn"
-                                onclick="selectPriority('low')">Low</button>
-                        </div>
+          <div class="form-footer">
+            <p><span>*</span>This field is required</p>
 
-                        <label>Assigned to</label>
-                        <select id="assignedTo">
-                            <option value="">Select contacts to assign</option>
-                        </select>
-
-                        <label>Category<span>*</span></label>
-                        <select id="category">
-                            <option value="Technical Task">Technical Task</option>
-                            <option value="User Story">User Story</option>
-                        </select>
-
-                        <label>Subtasks</label>
-                        <div class="subtask-input">
-                            <input type="text" placeholder="Add subtask">
-                            <span class="subtask-icons">✕ | ✓</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="form-footer">
-                    <p><span>*</span>This field is required</p>
-
-                    <div class="action-buttons">
-                        <button type="reset" class="btn-clear">Clear ✕</button>
-                        <button type="submit" class="btn-create">Create Task ✓</button>
-                    </div>
-                </div>
-
-            </form>
-            </section>
-
+            <div class="action-buttons">
+              <button type="reset" class="btn-clear">Clear ✕</button>
+              <button type="submit" class="btn-create">Create Task ✓</button>
+            </div>
+          </div>
+        </form>
+      </article>
     </main>
 
     <div id="toast" class="toast">Task added to board ✅</div>
 
     <script>
+      let selectedPriority = "medium";
 
-        let selectedPriority = "medium";
+      function selectPriority(prio) {
+        selectedPriority = prio;
 
-        function selectPriority(prio) {
-            selectedPriority = prio;
+        document.getElementById("btn-urgent").classList.remove("urgent-active");
+        document.getElementById("btn-medium").classList.remove("medium-active");
+        document.getElementById("btn-low").classList.remove("low-active");
 
-            document.getElementById('btn-urgent').classList.remove('urgent-active');
-            document.getElementById('btn-medium').classList.remove('medium-active');
-            document.getElementById('btn-low').classList.remove('low-active');
+        const activeBtn = document.getElementById("btn-" + prio);
+        activeBtn.classList.add(prio + "-active");
+      }
 
-            const activeBtn = document.getElementById('btn-' + prio);
-            activeBtn.classList.add(prio + '-active');
+      function createTask(event) {
+        event.preventDefault();
+
+        let title = document.getElementById("title").value;
+        let dueDate = document.getElementById("dueDate").value;
+
+        if (!title || !dueDate) {
+          alert("Title and Due Date are required!");
+          return;
         }
 
-        function createTask(event) {
-            event.preventDefault();
-
-
-            let title = document.getElementById("title").value;
-            let dueDate = document.getElementById("dueDate").value;
-
-            if (!title || !dueDate) {
-                alert("Title and Due Date are required!");
-                return;
-            }
-
-            let task = {
-                title: title,
-                description: document.getElementById("description").value,
-                dueDate: dueDate,
-                category: document.getElementById("category").value,
-                assignedTo: document.getElementById("assignedTo").value,
-                priority: selectedPriority,
-                status: "todo",
-                subtasks: []
-            };
-
-            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-            tasks.push(task);
-            localStorage.setItem("tasks", JSON.stringify(tasks));
-
-            showToast("Task added to board ✅");
-
-            setTimeout(() => {
-                window.location.href = "board.html";
-            }, 1000);
-        }
-
-        window.onload = function () {
-            selectPriority("medium");
+        let task = {
+          title: title,
+          description: document.getElementById("description").value,
+          dueDate: dueDate,
+          category: document.getElementById("category").value,
+          assignedTo: document.getElementById("assignedTo").value,
+          priority: selectedPriority,
+          status: "todo",
+          subtasks: [],
         };
 
-        function showToast(message) {
-            let toast = document.getElementById("toast");
-            toast.innerText = message;
-            toast.classList.add("show");
+        let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        tasks.push(task);
+        localStorage.setItem("tasks", JSON.stringify(tasks));
 
-            setTimeout(() => {
-                toast.classList.remove("show");
-            }, 2000);
-        }
+        showToast("Task added to board ✅");
+
+        setTimeout(() => {
+          window.location.href = "board.html";
+        }, 1000);
+      }
+
+      window.onload = function () {
+        selectPriority("medium");
+      };
+
+      function showToast(message) {
+        let toast = document.getElementById("toast");
+        toast.innerText = message;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2000);
+      }
     </script>
-
-</body>
-
+  </body>
 </html>
