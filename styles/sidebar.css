@@ -14,7 +14,6 @@
   box-shadow: var(--shadow-app-sidebar);
   display: grid;
   grid-template-rows: auto 1fr auto;
-  /* justify-content: center; */
   gap: 64px;
 }
 
@@ -35,11 +34,12 @@
 
 .sidebar ul li {
   display: flex;
+  justify-items: center;
   align-items: center;
   height: 46px;
   width: 100%;
   padding: 8px;
-  padding-left: 56px;
+  cursor: pointer;
 }
 
 .sidebar ul li a {
@@ -48,6 +48,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  /* padding-left: 56px; */
 }
 
 .sidebar ul li:hover {
@@ -57,10 +58,6 @@
 .active {
   background-color: var(--btn-click-color);
 }
-
-/* .active {
-  background-color: var(--third-color);
-} */
 
 .legal-section {
   justify-self: center;
@@ -115,10 +112,15 @@
   align-items: center;
   gap: 16px;
   padding-right: 16px;
+  transition: transform 0.7s ease-in-out;
 }
 .app--icon {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
+
+  &:hover {
+    transform: scale(1.2);
+  }
 }
 
 /* checken wie dynamisch die initalen eingefugt werden */
@@ -136,16 +138,49 @@
       "content"
       "sidebar";
   }
-}
 
-.app--title {
-  h1 {
-    display: none;
+  .app--title {
+    h1 {
+      display: none;
+    }
+
+    .title-logo {
+      display: block;
+      width: 32px;
+      height: 32px;
+    }
   }
 
-  .title-logo {
-    display: block;
-    width: 32px;
-    height: 32px;
+  .sidebar {
+    grid-template-rows: 1fr;
+
+    .nav-logo {
+      display: none;
+    }
+
+    ul {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    ul li {
+      flex-direction: column;
+
+      height: auto;
+      width: auto;
+    }
+
+    ul li a {
+      flex-direction: column;
+    }
+
+    .legal-section {
+      display: none;
+    }
+  }
+
+  .active {
+    border-radius: 16px;
+    /* border: solid 2px green; */
   }
 }
