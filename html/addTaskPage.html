@@ -15,10 +15,9 @@
   <body class="app">
     <header class="app--title">
       <h1 class="app--title-headline">Kanban Project Management Tool</h1>
-      <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
       <div class="app--icons">
-        <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="help" class="app--icon" /></a>
-        <button id="user-menu-button" class="btn btn--user">ML</button>
+        <a href="#"><img src="../assets/img/icons/general/help.svg" alt="?" class="app--icon" /></a>
+        <img src="../assets/img/user_initials.svg" alt="M L" class="app--initials" />
       </div>
     </header>
 
@@ -79,7 +78,7 @@
 
               <label>Assigned to</label>
               <select id="assignedTo">
-                <option value="" selected>Select contacts to assign</option>
+                <option value="">Select contacts to assign</option>
               </select>
 
               <label>Category<span>*</span></label>
@@ -90,15 +89,9 @@
 
               <label>Subtasks</label>
               <div class="subtask-input">
-                <input id="subtaskInput" type="text" placeholder="Add subtask" />
-
-                <span class="subtask-icons">
-                  <span onclick="addSubtask()">✓</span>
-                  <span onclick="clearSubtaskInput()">✕</span>
-                </span>
+                <input type="text" placeholder="Add subtask" />
+                <span class="subtask-icons">✕ | ✓</span>
               </div>
-
-              <div id="subtaskList"></div>
             </div>
           </div>
 
@@ -116,6 +109,66 @@
 
     <div id="toast" class="toast">Task added to board ✅</div>
 
-    <script></script>
+    <script>
+      let selectedPriority = "medium";
+
+      function selectPriority(prio) {
+        selectedPriority = prio;
+
+        document.getElementById("btn-urgent").classList.remove("urgent-active");
+        document.getElementById("btn-medium").classList.remove("medium-active");
+        document.getElementById("btn-low").classList.remove("low-active");
+
+        const activeBtn = document.getElementById("btn-" + prio);
+        activeBtn.classList.add(prio + "-active");
+      }
+
+      function createTask(event) {
+        event.preventDefault();
+
+        let title = document.getElementById("title").value;
+        let dueDate = document.getElementById("dueDate").value;
+
+        if (!title || !dueDate) {
+          alert("Title and Due Date are required!");
+          return;
+        }
+
+        let task = {
+          title: title,
+          description: document.getElementById("description").value,
+          dueDate: dueDate,
+          category: document.getElementById("category").value,
+          assignedTo: document.getElementById("assignedTo").value,
+          priority: selectedPriority,
+          status: "todo",
+          subtasks: [],
+        };
+
+        let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        tasks.push(task);
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+
+        showToast("Task added to board ✅");
+
+        setTimeout(() => {
+          window.location.href = "board.html";
+        }, 1000);
+      }
+
+      window.onload = function () {
+        selectPriority("medium");
+      };
+
+      function showToast(message) {
+        let toast = document.getElementById("toast");
+        toast.innerText = message;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2000);
+      }
+    </script>
   </body>
 </html>

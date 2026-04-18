@@ -209,31 +209,3 @@ textarea {
   opacity: 1;
   transform: translateX(-50%) translateY(-10px);
 }
-
-.subtask-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-}
-
-.dot {
-  font-weight: bold;
-}
-
-.subtask-input {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.subtask-icons {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.subtask-icons span {
-  cursor: pointer;
-  font-size: 18px;
-}
