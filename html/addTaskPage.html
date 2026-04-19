@@ -9,15 +9,17 @@
     <link rel="stylesheet" href="../styles/sidebar.css" />
     <link rel="stylesheet" href="../styles/fonts.css" />
     <link rel="stylesheet" href="../styles/colors.css" />
-    <link rel="stylesheet" href="../styles/addTaskPage.css" />
+    <!-- <link rel="stylesheet" href="../styles/addTaskPage.css" /> -->
+    <link rel="stylesheet" href="../styles/addTask.css" />
   </head>
 
   <body class="app">
     <header class="app--title">
       <h1 class="app--title-headline">Kanban Project Management Tool</h1>
+      <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
       <div class="app--icons">
-        <a href="#"><img src="../assets/img/icons/general/help.svg" alt="?" class="app--icon" /></a>
-        <img src="../assets/img/user_initials.svg" alt="M L" class="app--initials" />
+        <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="help" class="app--icon" /></a>
+        <button id="user-menu-button" class="btn btn--user">ML</button>
       </div>
     </header>
 
@@ -45,13 +47,13 @@
     </nav>
 
     <main class="app--content">
-      <article class="board-title-container">
+      <article class="task-container">
         <h1>Add Task</h1>
 
-        <form class="task-form" onsubmit="createTask(event)">
-          <div class="form-columns">
+        <form class="form-task" onsubmit="createTask(event)">
+          <article class="form-columns">
             <!-- Linke Spalte -->
-            <div class="column">
+            <section class="column">
               <label>Title<span>*</span></label>
               <input id="title" type="text" placeholder="Enter a title" />
 
@@ -60,12 +62,12 @@
 
               <label>Due date<span>*</span></label>
               <input id="dueDate" type="date" />
-            </div>
+            </section>
 
             <div class="divider"></div>
 
             <!-- Rechte Spalte -->
-            <div class="column">
+            <section class="column">
               <label>Priority</label>
 
               <div class="priority-group">
@@ -92,8 +94,8 @@
                 <input type="text" placeholder="Add subtask" />
                 <span class="subtask-icons">✕ | ✓</span>
               </div>
-            </div>
-          </div>
+            </section>
+          </article>
 
           <div class="form-footer">
             <p><span>*</span>This field is required</p>
