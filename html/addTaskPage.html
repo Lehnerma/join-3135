@@ -90,9 +90,11 @@
                         </div>
 
                         <label>Assigned to</label>
-                        <select id="assignedTo">
+                        <select id="assignedTo" onchange="selectUser(this.value)">
                             <option value="">Select contacts to assign</option>
                         </select>
+
+
 
                         <label>Category<span>*</span></label>
                         <select id="category">
@@ -136,7 +138,16 @@
     <script>
 
         let selectedPriority = "medium";
+        let selectedUsers = [];
         let subtasks = [];
+
+        const usersData = {
+            c1: { name: "Anton Schmidt" },
+            c10: { name: "Julia Meyer" },
+            c11: { name: "Kevin Neu" },
+            c12: { name: "Laura Otto" }
+        };
+
 
         function selectPriority(prio) {
             selectedPriority = prio;
@@ -189,6 +200,7 @@
 
         window.onload = function () {
             selectPriority("medium");
+            renderUserOptions();
         };
 
         function showToast(message) {
@@ -241,6 +253,46 @@
         }
 
         renderSubtasks();
+
+
+
+        function renderUserOptions() {
+            let select = document.getElementById("assignedTo");
+
+            select.innerHTML = `<option value="">Select contacts to assign</option>`;
+
+            for (let key in usersData) {
+                let user = usersData[key];
+
+                let isSelected = selectedUsers.includes(user.name);
+
+                select.innerHTML += `
+                    <option value="${user.name}">
+                         ${user.name} ${isSelected ? "☑ " : "☐ "} 
+                    </option>`;
+            }
+        }
+
+
+
+        function selectUser(value) {
+            if (!value) return;
+
+            let index = selectedUsers.indexOf(value);
+
+            if (index === -1) {
+                selectedUsers.push(value);
+            } else {
+                selectedUsers.splice(index, 1);
+            }
+
+            renderUserOptions();
+
+            document.getElementById("assignedTo").value = "";
+        }
+
+
+
 
 
 
