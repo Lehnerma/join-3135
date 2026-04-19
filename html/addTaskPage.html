@@ -59,12 +59,12 @@
             </div>
             <div class="input-section">
               <label for="description">Description</label>
-              <textarea id="description" class="input" placeholder="Enter a Description"></textarea>
+              <textarea id="description" class="input" placeholder="Enter a Description" rows="3"></textarea>
             </div>
 
             <div class="input-section">
               <label for="dueDate" class="required">Due date</label>
-              <input id="dueDate" class="input" type="date" />
+              <input id="dueDate" class="input input-date" type="date" />
             </div>
           </section>
 
@@ -75,9 +75,18 @@
             <div class="input-section">
               <label for="priority">Priority</label>
               <div class="priority-group">
-                <button type="button" id="btn-urgent" class="prio-btn" onclick="selectPriority('urgent')">Urgent</button>
-                <button type="button" id="btn-medium" class="prio-btn" onclick="selectPriority('medium')">Medium</button>
-                <button type="button" id="btn-low" class="prio-btn" onclick="selectPriority('low')">Low</button>
+                <button type="button" id="btn-urgent" class="prio-btn" onclick="selectPriority('urgent')">
+                  Urgent
+                  <img class="img-prio urgent" src="../assets/img/icons/prio/urgent.svg" alt="" />
+                </button>
+                <button type="button" id="btn-medium" class="prio-btn" onclick="selectPriority('medium')">
+                  Medium
+                  <img class="img-prio medium" src="../assets/img/icons/prio/medium.svg" alt="" />
+                </button>
+                <button type="button" id="btn-low" class="prio-btn" onclick="selectPriority('low')">
+                  Low
+                  <img class="img-prio low" src="../assets/img/icons/prio/low.svg" alt="" />
+                </button>
               </div>
             </div>
             <div class="input-section">

@@ -89,7 +89,8 @@
   align-items: center;
   padding-left: 40px;
   background-color: var(--input-text-color);
-  box-shadow: var(--shadow-app-title);
+  z-index: 1;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
 }
 
 .app--title .title-logo {
