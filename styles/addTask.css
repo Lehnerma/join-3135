@@ -21,7 +21,12 @@ main {
 .input {
   padding: 10px;
   font-size: 16px;
-  font-weight: 400;
+}
+
+.input::placeholder {
+  font-size: 16px;
+  font-weight: 200;
+  padding: 10px 21px;
 }
 
 .input-section {

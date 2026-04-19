@@ -101,13 +101,11 @@
   padding: 16px 24px;
   border: 1px solid var(--input-default-main);
   border-radius: 12px;
-  font-family: "Inter";
-  font-weight: 400;
+}
 
-  &::placeholder {
-    color: var(--input-default-main);
-    font-size: 20px;
-  }
+.input::placeholder {
+  color: var(--input-default-main);
+  font-size: 20px;
 }
 
 .input--section {

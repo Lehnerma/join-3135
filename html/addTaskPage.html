@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join - Add Task</title>
 
-    <link rel="stylesheet" href="../style.css" />
-    <link rel="stylesheet" href="../styles/sidebar.css" />
     <link rel="stylesheet" href="../styles/fonts.css" />
     <link rel="stylesheet" href="../styles/colors.css" />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../styles/sidebar.css" />
     <!-- <link rel="stylesheet" href="../styles/addTaskPage.css" /> -->
     <link rel="stylesheet" href="../styles/addTask.css" />
   </head>
@@ -29,7 +29,7 @@
         <li class="">
           <a class="nav-category" href="summary.html"><img class="nav-category-img" src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
         </li>
-        <li class="">
+        <li class="active">
           <a class="nav-category" href="addTaskPage.html"><img class="nav-category-img" src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
         </li>
         <li class="">
@@ -50,55 +50,61 @@
       <article class="task-container">
         <h1>Add Task</h1>
 
-        <form class="form-task" onsubmit="createTask(event)">
-          <article class="form-columns">
-            <!-- Linke Spalte -->
-            <section class="column">
-              <label>Title<span>*</span></label>
-              <input id="title" type="text" placeholder="Enter a title" />
+        <form class="form-task form-columns" onsubmit="createTask(event)">
+          <!-- Linke Spalte -->
+          <section class="column left">
+            <div class="input-section">
+              <label for="title" class="required">Title</label>
+              <input id="title" class="input" type="text" placeholder="Enter a title" />
+            </div>
+            <div class="input-section">
+              <label for="description">Description</label>
+              <textarea id="description" class="input" placeholder="Enter a Description"></textarea>
+            </div>
 
-              <label>Description</label>
-              <textarea id="description" placeholder="Enter a Description"></textarea>
+            <div class="input-section">
+              <label for="dueDate" class="required">Due date</label>
+              <input id="dueDate" class="input" type="date" />
+            </div>
+          </section>
 
-              <label>Due date<span>*</span></label>
-              <input id="dueDate" type="date" />
-            </section>
+          <div class="divider"></div>
 
-            <div class="divider"></div>
-
-            <!-- Rechte Spalte -->
-            <section class="column">
-              <label>Priority</label>
-
+          <!-- Rechte Spalte -->
+          <section class="column right">
+            <div class="input-section">
+              <label for="priority">Priority</label>
               <div class="priority-group">
                 <button type="button" id="btn-urgent" class="prio-btn" onclick="selectPriority('urgent')">Urgent</button>
-
                 <button type="button" id="btn-medium" class="prio-btn" onclick="selectPriority('medium')">Medium</button>
-
                 <button type="button" id="btn-low" class="prio-btn" onclick="selectPriority('low')">Low</button>
               </div>
-
-              <label>Assigned to</label>
-              <select id="assignedTo">
+            </div>
+            <div class="input-section">
+              <label for="assignedTo">Assigned to</label>
+              <select id="assignedTo" class="input">
                 <option value="">Select contacts to assign</option>
               </select>
-
-              <label>Category<span>*</span></label>
-              <select id="category">
+            </div>
+            <div class="input-section">
+              <label for="category" class="required">Category</label>
+              <select id="category" class="input">
                 <option value="Technical Task">Technical Task</option>
                 <option value="User Story">User Story</option>
               </select>
+            </div>
 
-              <label>Subtasks</label>
+            <div class="input-section">
+              <label for="subtask">Subtasks</label>
               <div class="subtask-input">
-                <input type="text" placeholder="Add subtask" />
+                <input id="subtask" class="input" type="text" placeholder="Add subtask" />
                 <span class="subtask-icons">✕ | ✓</span>
               </div>
-            </section>
-          </article>
+            </div>
+          </section>
 
           <div class="form-footer">
-            <p><span>*</span>This field is required</p>
+            <p class="required">This field is required</p>
 
             <div class="action-buttons">
               <button type="reset" class="btn-clear">Clear ✕</button>
