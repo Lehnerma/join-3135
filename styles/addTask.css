@@ -1,0 +1,59 @@
+main {
+  background-color: var(--main-bg);
+}
+
+.task-container {
+  max-width: var(--max-dp-width);
+  padding: 16px;
+
+  h1 {
+    font-size: 47px;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    padding-top: 48px;
+  }
+}
+
+.form-task {
+  grid-template-columns: 1fr;
+}
+
+.input {
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 0;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.priority-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.prio-btn {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+}
+
+.required::after {
+  content: "*";
+  color: var(--input-required);
+  right: 2px;
+}
