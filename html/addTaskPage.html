@@ -1,304 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join - Add Task</title>
 
-    <link rel="stylesheet" href="../style.css" />
-    <link rel="stylesheet" href="../styles/sidebar.css" />
     <link rel="stylesheet" href="../styles/fonts.css" />
     <link rel="stylesheet" href="../styles/colors.css" />
-    <link rel="stylesheet" href="../styles/addTaskPage.css" />
-</head>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../styles/sidebar.css" />
+    <!-- <link rel="stylesheet" href="../styles/addTaskPage.css" /> -->
+    <link rel="stylesheet" href="../styles/addTask.css" />
+  </head>
 
-<body class="app">
-
+  <body class="app">
     <header class="app--title">
-        <h1 class="app--title-headline">Kanban Project Management Tool</h1>
-        <div class="app--icons">
-            <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="?" class="app--icon" /></a>
-            <img src="../assets/img/user_initials.svg" alt="M L" class="app--initials" />
-        </div>
+      <h1 class="app--title-headline">Kanban Project Management Tool</h1>
+      <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
+      <div class="app--icons">
+        <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="help" class="app--icon" /></a>
+        <button id="user-menu-button" class="btn btn--user">ML</button>
+      </div>
     </header>
 
     <nav class="sidebar">
-        <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
-        <ul>
-            <li class="">
-                <a class="nav-category" href="summary.html"><img class="nav-category-img"
-                        src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
-            </li>
-            <li class="">
-                <a class="nav-category" href="addTaskPage.html"><img class="nav-category-img"
-                        src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
-            </li>
-            <li class="">
-                <a class="nav-category" href="board.html"><img class="nav-category-img"
-                        src="../assets/img/icons/general/board.svg" alt="" />Board</a>
-            </li>
-            <li class="">
-                <a class="nav-category" href="contacts.html"><img class="nav-category-img"
-                        src="../assets/img/icons/general/contacts.svg" alt="" />Contacts</a>
-            </li>
-        </ul>
+      <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
+      <ul>
+        <li class="">
+          <a class="nav-category" href="summary.html"><img class="nav-category-img" src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
+        </li>
+        <li class="active">
+          <a class="nav-category" href="addTaskPage.html"><img class="nav-category-img" src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
+        </li>
+        <li class="">
+          <a class="nav-category" href="board.html"><img class="nav-category-img" src="../assets/img/icons/general/board.svg" alt="" />Board</a>
+        </li>
+        <li class="">
+          <a class="nav-category" href="contacts.html"><img class="nav-category-img" src="../assets/img/icons/general/contacts.svg" alt="" />Contacts</a>
+        </li>
+      </ul>
 
-        <div class="legal-section">
-            <a class="legal-section-link" href="#">Privacy Policy</a>
-            <a class="legal-section-link" href="#">Legal Notice</a>
-        </div>
+      <div class="legal-section">
+        <a class="legal-section-link" href="#">Privacy Policy</a>
+        <a class="legal-section-link" href="#">Legal Notice</a>
+      </div>
     </nav>
 
     <main class="app--content">
+      <article class="task-container">
+        <h1>Add Task</h1>
 
-        <div class="board-title-container">
-            <h1>Add Task</h1>
+        <form class="form-task form-columns" onsubmit="createTask(event)">
+          <!-- Linke Spalte -->
+          <section class="column left">
+            <div class="input-section">
+              <label for="title" class="required">Title</label>
+              <input id="title" class="input" type="text" placeholder="Enter a title" />
+            </div>
+            <div class="input-section">
+              <label for="description">Description</label>
+              <textarea id="description" class="input" placeholder="Enter a Description" rows="3"></textarea>
+            </div>
 
+            <div class="input-section">
+              <label for="dueDate" class="required">Due date</label>
+              <input id="dueDate" class="input input-date" type="date" />
+            </div>
+          </section>
 
-            <form class="task-form" onsubmit="createTask(event)">
+          <div class="divider"></div>
 
-                <div class="form-columns">
+          <!-- Rechte Spalte -->
+          <section class="column right">
+            <div class="input-section">
+              <label for="priority">Priority</label>
+              <div class="priority-group">
+                <button type="button" id="btn-urgent" class="prio-btn" onclick="selectPriority('urgent')">
+                  Urgent
+                  <img class="img-prio urgent" src="../assets/img/icons/prio/urgent.svg" alt="" />
+                </button>
+                <button type="button" id="btn-medium" class="prio-btn" onclick="selectPriority('medium')">
+                  Medium
+                  <img class="img-prio medium" src="../assets/img/icons/prio/medium.svg" alt="" />
+                </button>
+                <button type="button" id="btn-low" class="prio-btn" onclick="selectPriority('low')">
+                  Low
+                  <img class="img-prio low" src="../assets/img/icons/prio/low.svg" alt="" />
+                </button>
+              </div>
+            </div>
+            <div class="input-section">
+              <label for="assignedTo">Assigned to</label>
+              <select id="assignedTo" class="input">
+                <option value="">Select contacts to assign</option>
+              </select>
+            </div>
+            <div class="input-section">
+              <label for="category" class="required">Category</label>
+              <select id="category" class="input">
+                <option value="Technical Task">Technical Task</option>
+                <option value="User Story">User Story</option>
+              </select>
+            </div>
 
-                    <!-- Linke Spalte -->
-                    <div class="column">
-                        <label>Title<span>*</span></label>
-                        <input id="title" type="text" placeholder="Enter a title">
+            <div class="input-section">
+              <label for="subtask">Subtasks</label>
+              <div class="subtask-input">
+                <input id="subtask" class="input" type="text" placeholder="Add subtask" />
+                <span class="subtask-icons">✕ | ✓</span>
+              </div>
+            </div>
+          </section>
 
-                        <label>Description</label>
-                        <textarea id="description" placeholder="Enter a Description"></textarea>
+          <div class="form-footer">
+            <p class="required">This field is required</p>
 
-                        <label>Due date<span>*</span></label>
-                        <input id="dueDate" type="date">
-                    </div>
-
-                    <div class="divider"></div>
-
-                    <!-- Rechte Spalte -->
-                    <div class="column">
-                        <label>Priority</label>
-
-                        <div class="priority-group">
-                            <button type="button" id="btn-urgent" class="prio-btn"
-                                onclick="selectPriority('urgent')">Urgent</button>
-
-                            <button type="button" id="btn-medium" class="prio-btn"
-                                onclick="selectPriority('medium')">Medium</button>
-
-                            <button type="button" id="btn-low" class="prio-btn"
-                                onclick="selectPriority('low')">Low</button>
-                        </div>
-
-                        <label>Assigned to</label>
-                        <select id="assignedTo" onchange="selectUser(this.value)">
-                            <option value="">Select contacts to assign</option>
-                        </select>
-
-
-
-                        <label>Category<span>*</span></label>
-                        <select id="category">
-                            <option value="Technical Task">Technical Task</option>
-                            <option value="User Story">User Story</option>
-                        </select>
-
-                        <label>Subtasks</label>
-                        <div class="subtask-input">
-                            <input id="subtaskInput" type="text" placeholder="Add subtask">
-
-                            <span class="subtask-icons">
-                                <span onclick="addSubtask()">✓</span>
-                                <span onclick="clearSubtaskInput()">✕</span>
-                            </span>
-                        </div>
-
-
-                        <div id="subtaskList"></div>
-
-                    </div>
-
-                </div>
-
-                <div class="form-footer">
-                    <p><span>*</span>This field is required</p>
-
-                    <div class="action-buttons">
-                        <button type="reset" class="btn-clear">Clear ✕</button>
-                        <button type="submit" class="btn-create">Create Task ✓</button>
-                    </div>
-                </div>
-
-            </form>
-            </section>
-
+            <div class="action-buttons">
+              <button type="reset" class="btn-clear">Clear ✕</button>
+              <button type="submit" class="btn-create">Create Task ✓</button>
+            </div>
+          </div>
+        </form>
+      </article>
     </main>
 
     <div id="toast" class="toast">Task added to board ✅</div>
 
     <script>
+      let selectedPriority = "medium";
 
-        let selectedPriority = "medium";
-        let selectedUsers = [];
-        let subtasks = [];
+      function selectPriority(prio) {
+        selectedPriority = prio;
 
-        const usersData = {
-            c1: { name: "Anton Schmidt" },
-            c10: { name: "Julia Meyer" },
-            c11: { name: "Kevin Neu" },
-            c12: { name: "Laura Otto" }
+        document.getElementById("btn-urgent").classList.remove("urgent-active");
+        document.getElementById("btn-medium").classList.remove("medium-active");
+        document.getElementById("btn-low").classList.remove("low-active");
+
+        const activeBtn = document.getElementById("btn-" + prio);
+        activeBtn.classList.add(prio + "-active");
+      }
+
+      function createTask(event) {
+        event.preventDefault();
+
+        let title = document.getElementById("title").value;
+        let dueDate = document.getElementById("dueDate").value;
+
+        if (!title || !dueDate) {
+          alert("Title and Due Date are required!");
+          return;
+        }
+
+        let task = {
+          title: title,
+          description: document.getElementById("description").value,
+          dueDate: dueDate,
+          category: document.getElementById("category").value,
+          assignedTo: document.getElementById("assignedTo").value,
+          priority: selectedPriority,
+          status: "todo",
+          subtasks: [],
         };
 
+        let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+        tasks.push(task);
+        localStorage.setItem("tasks", JSON.stringify(tasks));
 
-        function selectPriority(prio) {
-            selectedPriority = prio;
+        showToast("Task added to board ✅");
 
-            document.getElementById('btn-urgent').classList.remove('urgent-active');
-            document.getElementById('btn-medium').classList.remove('medium-active');
-            document.getElementById('btn-low').classList.remove('low-active');
+        setTimeout(() => {
+          window.location.href = "board.html";
+        }, 1000);
+      }
 
-            const activeBtn = document.getElementById('btn-' + prio);
-            activeBtn.classList.add(prio + '-active');
-        }
+      window.onload = function () {
+        selectPriority("medium");
+      };
 
-        function createTask(event) {
-            event.preventDefault();
+      function showToast(message) {
+        let toast = document.getElementById("toast");
+        toast.innerText = message;
+        toast.classList.add("show");
 
-
-            let title = document.getElementById("title").value;
-            let dueDate = document.getElementById("dueDate").value;
-
-            if (!title || !dueDate) {
-                alert("Title and Due Date are required!");
-                return;
-            }
-
-            let task = {
-                title: title,
-                description: document.getElementById("description").value,
-                dueDate: dueDate,
-                category: document.getElementById("category").value,
-                assignedTo: document.getElementById("assignedTo").value,
-                priority: selectedPriority,
-                status: "todo",
-                subtasks: subtasks
-            };
-
-            let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-            tasks.push(task);
-            localStorage.setItem("tasks", JSON.stringify(tasks));
-
-            showToast("Task added to board ✅");
-
-            setTimeout(() => {
-                window.location.href = "board.html";
-            }, 1000);
-
-
-        }
-
-
-
-        window.onload = function () {
-            selectPriority("medium");
-            renderUserOptions();
-        };
-
-        function showToast(message) {
-            let toast = document.getElementById("toast");
-            toast.innerText = message;
-            toast.classList.add("show");
-
-            setTimeout(() => {
-                toast.classList.remove("show");
-            }, 2000);
-        }
-
-
-        function addSubtask() {
-            let input = document.getElementById("subtaskInput");
-            let value = input.value.trim();
-
-            if (value === "") return;
-
-            subtasks.push({
-                title: value,
-                done: false
-            });
-
-            input.value = "";
-            renderSubtasks();
-        }
-
-
-        function renderSubtasks() {
-            let container = document.getElementById("subtaskList");
-
-            container.innerHTML = "";
-
-            for (let i = 0; i < subtasks.length; i++) {
-                container.innerHTML += `
-            <div class="subtask-item">
-                <span class="dot">•</span>
-                <span>${subtasks[i].title}</span>
-                <span onclick="removeSubtask(${i})">✕</span>
-            </div>
-        `;
-            }
-        }
-
-
-        function removeSubtask(index) {
-            subtasks.splice(index, 1);
-            renderSubtasks();
-        }
-
-        renderSubtasks();
-
-
-
-        function renderUserOptions() {
-            let select = document.getElementById("assignedTo");
-
-            select.innerHTML = `<option value="">Select contacts to assign</option>`;
-
-            for (let key in usersData) {
-                let user = usersData[key];
-
-                let isSelected = selectedUsers.includes(user.name);
-
-                select.innerHTML += `
-                    <option value="${user.name}">
-                         ${user.name} ${isSelected ? "☑ " : "☐ "} 
-                    </option>`;
-            }
-        }
-
-
-
-        function selectUser(value) {
-            if (!value) return;
-
-            let index = selectedUsers.indexOf(value);
-
-            if (index === -1) {
-                selectedUsers.push(value);
-            } else {
-                selectedUsers.splice(index, 1);
-            }
-
-            renderUserOptions();
-
-            document.getElementById("assignedTo").value = "";
-        }
-
-
-
-
-
-
-
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 2000);
+      }
     </script>
-
-</body>
-
+  </body>
 </html>
