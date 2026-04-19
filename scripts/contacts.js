@@ -28,7 +28,7 @@ const contactColors = {
 
 let USERS = [];
 let userContent = [];
-
+const dialogRef = document.getElementById("addNewContact");
 
 function init() {
   
@@ -40,10 +40,19 @@ function init() {
 //   return BOX_ID;
 // }
 
-function openOverlayContact() {
-  const dialog = document.getElementById("addNewContact");
-        dialog.showModal();
+function openContactDialog() {
+          dialogRef.showModal();
 }
+
+function closeContactDialog() {
+  dialogRef.close();
+}
+
+function closeDialogOutsite(event) {
+    event.stopPropagation();
+}
+
+
 
 // function generateId() {
 //   return (Date.now().toString(36) + Math.random().toString(36)).substring(0, 6);
@@ -105,14 +114,14 @@ function renderContectListTpl(user, i) {
 
   return /*html*/ `
     <div class="letter-divider">${firstLetter}</div>
-       <div id="${userID}" class="userSelection" onclick="showDetails()">
+    <div id="${userID}" class="userSelection" onclick="showDetails()">
         <div class="initials" style="background-color: ${color}">
-         ${initials}
-    </div>
-    <div class="contact-list">
-       <div class="name">${user.name}</div>
-         <a href="mailto:${user.email}" class="email" onclick="event.stopPropagation()" >${user.email}
-       </div>
+            ${initials}
+        </div>
+        <div class="contact-info-text">
+            <div class="name">${user.name}</div>
+            <a href="mailto:${user.email}" class="email">${user.email}</a>
+        </div>
     </div>`;
 }
 
