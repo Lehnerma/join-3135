@@ -28,53 +28,10 @@ const contactColors = {
 
 let USERS = [];
 let userContent = [];
-const dialogRef = document.getElementById("addNewContact");
 
 function init() {
-  
-    getUsers();
+  getUsers();
 }
-
-// function getBoxId(id) {
-//   const BOX_ID = document.getElementById(id);
-//   return BOX_ID;
-// }
-
-function openContactDialog() {
-          dialogRef.showModal();
-}
-
-function closeContactDialog() {
-  dialogRef.close();
-}
-
-function closeDialogOutsite(event) {
-    event.stopPropagation();
-}
-
-
-
-// function generateId() {
-//   return (Date.now().toString(36) + Math.random().toString(36)).substring(0, 6);
-// }
-
-// function cerateContactDialog(add_contact) {
-//   const DIALOG_REF = document.getElementById(add_contact);
-//   DIALOG_REF.showModal();
-// }
-
-// class contact {
-//   constructor(data = {}) {
-//     this.id = data.id || this.generateId();
-//     this.firstName = data.firstName || "";
-//     this.lastName = data.lastName || "";
-//     this.email = data.email || "";
-//     this.phone = data.phone || "";
-
-//     this.createdAt = data.createdAt || new Date();
-//     this.updatedAt = new Date();
-//   }
-// }
 
 async function getUsers() {
   const USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
@@ -83,6 +40,7 @@ async function getUsers() {
   USERS = Object.values(RESULT);
   sortUserContactList();
 }
+
 
 function sortUserContactList() {
   USERS.sort(function (a, b) {
@@ -95,26 +53,28 @@ function sortUserContactList() {
   UserContectList();
 }
 
+
 function UserContectList() {
   let contactList = document.getElementById('contactList');
   contactList.innerHTML = '';
   for (let i = 0; i < USERS.length; i++) {
     userContent.push(USERS[i]);
-    console.log(userContent);
-    contactList.innerHTML += renderContectListTpl(USERS[i]);
+    contactList.innerHTML += renderContectListTpl(USERS[i], i);
   }
+  console.log(userContent);
 }
+
 
 function renderContectListTpl(user, i) {
   let firstLetter = user.name.charAt(0).toUpperCase();
   let userID = user.id
-  console.log(userID);
+
   let initials = getInitials(user.name);
   let color = contactColors[firstLetter];
 
   return /*html*/ `
     <div class="letter-divider">${firstLetter}</div>
-    <div id="${userID}" class="userSelection" onclick="showDetails()">
+    <div id="${userID}" class="userSelection" onclick="showDetails(${i})">
         <div class="initials" style="background-color: ${color}">
             ${initials}
         </div>
@@ -135,4 +95,74 @@ function getInitials(name) {
     currentInitial += splitNames[splitNames.length - 1].charAt(0).toUpperCase();
   }
   return currentInitial;
+}
+
+
+function openContactDialog() {
+  const dialogRef = document.getElementById("openNewDialog");
+  // dialogRef.classList.remove('hide');
+  dialogRef.innerHTML = renderHtmlContactDialog();
+  dialogRef.showModal();
+
+}
+
+
+
+
+function closeContactDialog() {
+  const dialogRef = document.getElementById("openNewDialog");
+  dialogRef.close();
+  // dialogRef.classList.add('hide');
+  const formRef = document.getElementById('formRef');
+
+  if (formRef) {
+    formRef.reset();
+  }
+}
+
+function closeDialogOutsite(event) {
+  event.stopPropagation();
+}
+
+
+function showDetails(index) {
+  let user = userContent[index];
+  const dialogRef = document.getElementById('openNewDialog');
+  
+  dialogRef.innerHTML = renderShowDetailsTpl(user);
+  dialogRef.showModal();
+
+
+}
+
+
+function renderShowDetailsTpl(user) {
+
+  let initials = getInitials(user.name);
+  let firstLetter = user.name.charAt(0).toUpperCase();
+  let color = contactColors[firstLetter];
+  return /*html*/ `
+   <div class="contact-details" onclick="closeDialogOutsite(event)" >
+            <header class="header-contect-details">
+             <div class="initials-large" style="background-color: ${color}">
+            ${initials}
+            </div>
+           <nav class="nav-contect-details">
+          <div class="name-and-buttons">
+             <h1 class="h1-contact-details">${user.name}</h1>
+            <button type="button"><img src="../assets/img/icons/general/edit-contacts.svg" alt="edit contact">Edit</button>
+            <button type="button"><img src="../assets/img/icons/general/trash-contact-.svg" alt="contacts delete">Delete</button>
+          </div>
+        </nav>
+      </header>
+      <main class="main-contact-details">
+      
+      <div class="contact-information"></div>
+      
+      
+      
+      
+      </main>
+    </div>`;
+
 }
