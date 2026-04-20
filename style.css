@@ -115,18 +115,19 @@
   padding: 16px 24px;
   border: 1px solid var(--input-default-main);
   border-radius: 12px;
-  color: var(--input-default-main);
 }
 
 .input::placeholder {
   font-size: 20px;
+  color: var(--input-default-main);
 }
 
 .input--section {
   position: relative;
 }
 
-.input:active {
+.input:active,
+.input:not(:placeholder-shown) {
   border: 1px solid var(--secondary-color);
 }
 

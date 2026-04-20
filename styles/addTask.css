@@ -64,7 +64,6 @@ main {
 }
 
 .prio-btn .active {
-  /* farb variablen ersetzen */
   background-color: #ff3d00;
   color: white;
   border-color: #ff3d00;
@@ -94,16 +93,47 @@ main {
 
 .input--section {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
-.subtask-icons {
+.input--section .input {
+  padding-right: 100px;
+}
+
+.btn--subtask {
   position: absolute;
-  right: 16px;
   top: 50%;
   transform: translateY(-50%);
-  color: #666;
-  z-index: 2;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.btn--subtask img {
+  width: 20px;
+  height: 20px;
+}
+
+.subtask-action-btns {
+  display: flex;
+  gap: 8px;
+}
+/* #subtask-close {
+  right: 68px;
+}
+
+#subtask-bin {
+  right: 40px;
+}
+
+#subtask-save {
+  right: 12px;
+} */
 
 .required::after {
   content: "*";
