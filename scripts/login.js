@@ -13,12 +13,14 @@ function init() {
 function btnInit() {
   const SIGNUP = document.getElementById("signup_btn");
   const SIGNUP_BACK = document.getElementById("signup_back");
+  const SIGNUP_PHONE = document.getElementById("signup_phone_btn");
   const FORM_LOGIN = document.getElementById("login");
   const FORM_SIGNUP = document.getElementById("signup");
   const GUEST_LOGIN = document.getElementById("guest_login");
 
-  SIGNUP_BACK.addEventListener("click", (event) => toggelForms(event));
-  SIGNUP.addEventListener("click", (event) => toggelForms(event));
+  SIGNUP_BACK.addEventListener("click", (event) => toggleForms(event));
+  SIGNUP.addEventListener("click", (event) => toggleForms(event));
+  SIGNUP_PHONE.addEventListener("click", (event) => toggleForms(event));
   GUEST_LOGIN.addEventListener("click", guestLogin);
 
   FORM_LOGIN.addEventListener("submit", (event) => loginUser(event));
@@ -29,12 +31,13 @@ function btnInit() {
  */
 function triggerAnimations() {
   const JOIN_LOGO = document.querySelector(".join-logo");
-  JOIN_LOGO.classList.add("logo-animation");
   const FORM_CONTAINER = document.querySelector(".form--container");
-  FORM_CONTAINER.classList.add("fade-in");
   const NAV_LOGIN = document.querySelector(".nav-login");
-  NAV_LOGIN.classList.add("fade-in");
   const FOOTER_LOGIN = document.querySelector(".footer-login");
+
+  JOIN_LOGO.classList.add("logo-animation");
+  FORM_CONTAINER.classList.add("fade-in");
+  NAV_LOGIN.classList.add("fade-in");
   FOOTER_LOGIN.classList.add("fade-in");
 }
 
@@ -51,16 +54,21 @@ function removeFade(container) {
  * to show or hide the forms
  * @param {*} event -> to disable the reload for the switching
  */
-function toggelForms(event) {
+function toggleForms(event) {
   event.preventDefault();
   const LOGIN_FORM = document.getElementById("login");
   const SIGNUP_FORM = document.getElementById("signup");
   const NAV_LOGIN = document.getElementById("nav_login");
-
+  const NAV_PHONE = document.getElementById("phone_signup");
   SHOW_SIGNUP = !SHOW_SIGNUP;
   LOGIN_FORM.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
-  NAV_LOGIN.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
   SIGNUP_FORM.classList[SHOW_SIGNUP ? "remove" : "add"]("dnone");
+  if (window.innerWidth > 600) {
+    NAV_LOGIN.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
+  }
+  if (window.innerWidth < 600) {
+    NAV_PHONE.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
+  }
 
   removeFade(LOGIN_FORM);
   removeFade(NAV_LOGIN);
@@ -99,7 +107,7 @@ async function creatUser(ev) {
   NEW_USER.id = generateId();
   pushUser(NEW_USER);
   ev.target.reset();
-  toggelForms(ev);
+  toggleForms(ev);
   console.log(ev.target);
 }
 

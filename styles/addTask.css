@@ -1,0 +1,84 @@
+main {
+  background-color: var(--main-bg);
+}
+
+.task-container {
+  max-width: var(--max-dp-width);
+  padding: 16px;
+
+  h1 {
+    font-size: 47px;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    padding-top: 48px;
+  }
+}
+
+.form-task {
+  grid-template-columns: 1fr;
+}
+
+.input {
+  font-size: 16px;
+  padding: 10px 21px;
+}
+
+.input::placeholder {
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 0;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.priority-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.prio-btn {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.img-prio {
+  margin-left: 8px;
+  width: 20px;
+  height: auto;
+}
+
+.low,
+.urgent,
+.medium {
+  height: 15px;
+  object-fit: contain;
+  object-position: center;
+}
+
+.required::after {
+  content: "*";
+  color: var(--input-required);
+  right: 2px;
+}
