@@ -21,6 +21,8 @@
   align-items: center;
   justify-content: center;
   background-color: transparent;
+  object-fit: contain;
+  object-position: center;
 }
 
 .btn--primary {
@@ -96,23 +98,36 @@
   background-color: var(--btn-user-hover);
 }
 
+.btn--subtask {
+  background-color: transparent;
+  border: none;
+  img {
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    object-fit: contain;
+    object-position: center;
+  }
+}
+
 .input {
   font-size: 20px;
   padding: 16px 24px;
   border: 1px solid var(--input-default-main);
   border-radius: 12px;
-  color: var(--input-default-main);
 }
 
 .input::placeholder {
   font-size: 20px;
+  color: var(--input-default-main);
 }
 
 .input--section {
   position: relative;
 }
 
-.input:active {
+.input:active,
+.input:not(:placeholder-shown) {
   border: 1px solid var(--secondary-color);
 }
 

@@ -63,6 +63,12 @@ main {
   }
 }
 
+.prio-btn .active {
+  background-color: #ff3d00;
+  color: white;
+  border-color: #ff3d00;
+}
+
 .img-prio {
   margin-left: 8px;
   width: 20px;
@@ -77,8 +83,68 @@ main {
   object-position: center;
 }
 
+.dropdown {
+  color: black;
+}
+
+.input {
+  width: 100%;
+}
+
+.input--section {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input--section .input {
+  padding-right: 100px;
+}
+
+.btn--subtask {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn--subtask img {
+  width: 20px;
+  height: 20px;
+}
+
+.subtask-action-btns {
+  display: flex;
+  gap: 8px;
+}
+/* #subtask-close {
+  right: 68px;
+}
+
+#subtask-bin {
+  right: 40px;
+}
+
+#subtask-save {
+  right: 12px;
+} */
+
 .required::after {
   content: "*";
   color: var(--input-required);
   right: 2px;
+}
+
+.action-btns {
+  position: sticky;
+  bottom: 0;
+  z-index: 5;
+  background-color: var(--main-bg);
+  padding: 16px 0;
 }
