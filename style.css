@@ -21,6 +21,8 @@
   align-items: center;
   justify-content: center;
   background-color: transparent;
+  object-fit: contain;
+  object-position: center;
 }
 
 .btn--primary {
@@ -94,6 +96,18 @@
 
 .btn--user:hover {
   background-color: var(--btn-user-hover);
+}
+
+.btn--subtask {
+  background-color: transparent;
+  border: none;
+  img {
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    object-fit: contain;
+    object-position: center;
+  }
 }
 
 .input {
