@@ -101,39 +101,38 @@ main {
   padding-right: 100px;
 }
 
-.btn--subtask {
+.subtask--btns {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent;
-  border: none;
-  cursor: pointer;
+
   padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 4px;
+
+  position: absolute;
+  right: 16px;
+}
+
+.btn--subtask {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .btn--subtask img {
   width: 20px;
   height: 20px;
+  object-fit: contain;
+  object-position: center;
 }
 
-.subtask-action-btns {
-  display: flex;
-  gap: 8px;
+.div-vert {
+  width: 1px;
+  height: 24px;
+  background-color: var(--input-default-main);
 }
-/* #subtask-close {
-  right: 68px;
-}
-
-#subtask-bin {
-  right: 40px;
-}
-
-#subtask-save {
-  right: 12px;
-} */
 
 .required::after {
   content: "*";
