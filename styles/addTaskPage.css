@@ -237,3 +237,24 @@ textarea {
   cursor: pointer;
   font-size: 18px;
 }
+
+.assignedUserField {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.user-circle {
+  display: flex;
+  flex-direction: column;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #0f8ed7;
+  color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}

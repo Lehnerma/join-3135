@@ -111,8 +111,9 @@ body {
 .category-label {
     padding: 4px 16px;
     border-radius: 8px;
-    color: white;
-    font-size: 16px;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    font-weight: bold;
     width: fit-content;
     margin-bottom: 12px;
 }
