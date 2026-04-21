@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -55,7 +55,7 @@
           <section class="column left">
             <div class="input-section">
               <label for="title" class="required">Title</label>
-              <input id="title" class="input" type="text" placeholder="Enter a title" />
+              <input id="title" class="input" type="text" placeholder="Enter a title" required />
             </div>
             <div class="input-section">
               <label for="description">Description</label>
@@ -64,7 +64,7 @@
 
             <div class="input-section">
               <label for="dueDate" class="required">Due date</label>
-              <input id="dueDate" class="input input-date" type="date" />
+              <input id="dueDate" class="input input-date" type="date" required />
             </div>
           </section>
 
@@ -76,15 +76,15 @@
             <div class="input-section">
               <label for="priority">Priority</label>
               <div class="priority-group">
-                <button type="button" id="btn-urgent" class="prio-btn" onclick="selectPriority('urgent')">
+                <button type="button" id="btn-urgent" class="btn btn--prio" onclick="selectPriority('urgent')" value="urgent">
                   Urgent
                   <img class="img-prio urgent" src="../assets/img/icons/prio/urgent.svg" alt="" />
                 </button>
-                <button type="button" id="btn-medium" class="prio-btn" onclick="selectPriority('medium')">
+                <button type="button" id="btn-medium" class="btn btn--prio" onclick="selectPriority('medium')" value="medium">
                   Medium
                   <img class="img-prio medium" src="../assets/img/icons/prio/medium.svg" alt="" />
                 </button>
-                <button type="button" id="btn-low" class="prio-btn" onclick="selectPriority('low')">
+                <button type="button" id="btn-low" class="btn btn--prio" onclick="selectPriority('low')" value="low">
                   Low
                   <img class="img-prio low" src="../assets/img/icons/prio/low.svg" alt="" />
                 </button>
@@ -135,67 +135,5 @@
     </main>
 
     <!-- <div id="toast" class="toast">Task added to board ✅</div> -->
-
-    <script>
-      let selectedPriority = "medium";
-
-      function selectPriority(prio) {
-        selectedPriority = prio;
-
-        document.getElementById("btn-urgent").classList.remove("urgent-active");
-        document.getElementById("btn-medium").classList.remove("medium-active");
-        document.getElementById("btn-low").classList.remove("low-active");
-
-        const activeBtn = document.getElementById("btn-" + prio);
-        activeBtn.classList.add(prio + "-active");
-      }
-
-      function createTask(event) {
-        event.preventDefault();
-
-        let title = document.getElementById("title").value;
-        let dueDate = document.getElementById("dueDate").value;
-
-        if (!title || !dueDate) {
-          alert("Title and Due Date are required!");
-          return;
-        }
-
-        let task = {
-          title: title,
-          description: document.getElementById("description").value,
-          dueDate: dueDate,
-          category: document.getElementById("category").value,
-          assignedTo: document.getElementById("assignedTo").value,
-          priority: selectedPriority,
-          status: "todo",
-          subtasks: [],
-        };
-
-        let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-        tasks.push(task);
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-
-        showToast("Task added to board ✅");
-
-        setTimeout(() => {
-          window.location.href = "board.html";
-        }, 1000);
-      }
-
-      window.onload = function () {
-        selectPriority("medium");
-      };
-
-      function showToast(message) {
-        let toast = document.getElementById("toast");
-        toast.innerText = message;
-        toast.classList.add("show");
-
-        setTimeout(() => {
-          toast.classList.remove("show");
-        }, 2000);
-      }
-    </script>
   </body>
 </html>

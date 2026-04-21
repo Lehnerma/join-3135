@@ -36,6 +36,10 @@ main {
   padding: 8px 0;
 }
 
+.input:required {
+  border: 1px solid red;
+}
+
 .column {
   display: flex;
   flex-direction: column;
@@ -48,8 +52,13 @@ main {
   margin-bottom: 10px;
 }
 
-.prio-btn {
+.btn--prio {
+  height: 56px;
+
   flex: 1;
+  min-width: 50px;
+  max-width: 136px;
+
   padding: 12px;
   border: 1px solid var(--border-color);
   border-radius: 10px;
@@ -64,7 +73,7 @@ main {
   }
 }
 
-.prio-btn .active {
+.priority-group .active {
   background-color: #ff3d00;
   color: white;
   border-color: #ff3d00;
@@ -86,6 +95,7 @@ main {
 
 .dropdown {
   color: black;
+  background-color: white;
 }
 
 .input {
@@ -149,6 +159,7 @@ main {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  flex-wrap: wrap;
   gap: 32px;
   position: sticky;
   bottom: 0;
