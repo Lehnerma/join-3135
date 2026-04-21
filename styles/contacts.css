@@ -1,9 +1,18 @@
+[role="button"],
+*[style*="cursor: pointer"],
+a,
+button {
+  transition: all 100ms ease-in-out;
+}
+
+
 .main-content {
   display: grid;
   grid-template-columns: 32vw 1fr;
   max-height: 100vh;
   background-color: var(--input-text-color);
 }
+
 
 .left-content {
   display: grid;
@@ -157,11 +166,45 @@
   width: 1212px;
   height: 594px;
   background-color: var(--input-text-color);
+  z-index: 10;
+
 }
 
 .dialog-content[open] {
   display: flex;
+  animation: slideIn 0.4s ease-out forwards;
 }
+
+@keyframes slideIn {
+  from {
+    transform: translate(100vw, -50%);
+  }
+
+  to {
+    transform: translate(-50%, -50%);
+    
+  }
+}
+
+.dialog-content.hide {
+  display: flex;
+  animation: slideOut 0.5s ease-in forwards;
+}
+
+@keyframes slideOut {
+  from {
+    transform: translate(-50%, -50%);
+  }
+
+  to {
+    transform: translate(100vw, -50%);
+
+  }
+}
+
+/* .dialog-content.off {
+  display: none;
+} */
 
 .dialog-content::backdrop {
   background-color: rgba(0, 0, 0, 0.7);
@@ -170,7 +213,7 @@
 .dialog-container {
   width: 100%;
   display: flex;
-  }
+}
 
 .aside-content {
   background-color: var(--primary-color);
@@ -264,7 +307,7 @@
 .person-logo {
   width: 64px;
   height: 64px;
-  
+
 }
 
 .dialog-input-container {
@@ -285,7 +328,6 @@
   height: 50px;
   border-radius: 10px;
   border: 1px solid var(--input-default-main);
-
 
 }
 
@@ -315,24 +357,116 @@
 }
 
 
- .dialog-login-buttons {
+.dialog-login-buttons {
   display: flex;
   margin-top: 40px;
   margin-right: 32px;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
   gap: 16px;
+  cursor: pointer;
+
+}
+
+.img-check {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+  margin-left: 6px;
+
+
   font-family: Inter-Bold;
   font-size: 21px;
   font-weight: 700;
   white-space: nowrap;
-} 
+}
 
-.img-check{
-filter: brightness(0) invert(1);
-margin-left: 6px;
+.img-check {
+  filter: brightness(0) invert(1);
+  margin-left: 6px;
 }
 
 .img-x {
-margin-left: 6px;
+  width: 24px;
+  height: 24px;
+  margin-left: 6px;
+  margin-bottom: 2px;
 }
+
+.btn-cancel-text {
+  font-family: Inter-Regular;
+  font-size: 21px;
+  font-weight: 400;
+}
+
+
+
+/* --- DIALOG DETAILS --- */
+
+
+.contact-details-box {
+  display: none;
+  height: 364px;
+  width: 641px;
+  border: none;
+  position: fixed;
+  top: 53%;
+  left: 63%;
+  transform: translate(-50%, -50%);
+  background-color:transparent;
+  z-index: 5;
+}
+
+.contact-details-box[open] {
+  display: flex;
+  animation: slideIn 0.4s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translate(100vw, -50%);
+  }
+
+  to {
+    transform: translate(-50%, -50%);
+
+  }
+}
+
+.header-contect-details {
+  display: flex;
+  justify-content: space-between;
+  width: 641px;
+  height: 120px;
+
+}
+
+.initials-large {
+  width: 120px;
+  height: 120px;
+  border-radius: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--input-default-main);
+  font-size: 47px;
+  font-weight: bold;
+  border-style: solid;
+  border-width: 3px;
+  border-color: var(--input-text-color);
+}
+
+
+.main-contact-details {}
+
+.contact-information {}
+
+.h1-contact-details {
+
+  font-family: Inter-SemiBold;
+  font-size: 47px;
+  font-weight: 500;
+}
+
+
+

@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="../styles/fonts.css" />
   <link rel="stylesheet" href="../styles/colors.css" />
   <script defer src="../scripts/contacts.js"></script>
+  <script defer src="../scripts/contacts-template.js"></script>
 </head>
 
 <body class="app" onload="init()">
@@ -69,12 +70,12 @@
         <h1 class="contacts-title">Contacts</h1>
         <div class="vertical-divider"></div>
         <span class="contacts-subtitle">Better with a team</span>
-        <div id="contactDetails" class="contact-details">Hier kommen die Datails</div>
+        <div id="contactDetails" class="contact-details"></div>
       </div>
 
   </main>
 
-  <dialog class="dialog-content" id="addNewContact" onclick="closeContactDialog()">
+  <dialog class="dialog-content" id="openNewDialog" onclick="closeContactDialog()">
 
     <div class="dialog-container" onclick="closeDialogOutsite(event)">
 
@@ -118,12 +119,17 @@
             <button type="button" class="btn btn--secondary btn--login"
               onclick="document.getElementById('addNewContact').close()">Cancel<img class="img-x"
                 src="../assets/img/icons/general/close-dark.svg" alt="checkbox cancel"></button>
-            <button type="submit" class="btn btn--primary btn--login">Create contact  <img class="img-check" src="../assets/img/icons/general/check.svg" alt="create check"> </button>
+            <button type="submit" class="btn btn--primary btn--login">Create contact <img class="img-check"
+                src="../assets/img/icons/general/check.svg" alt="create check"> </button>
           </section>
-        </form><script></script>
+        </form>
+        <script></script>
       </main>
     </div>
   </dialog>
 </body>
 
 </html>
+
+
+

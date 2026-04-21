@@ -100,19 +100,17 @@ function getInitials(name) {
 
 function openContactDialog() {
   const dialogRef = document.getElementById("openNewDialog");
-  // dialogRef.classList.remove('hide');
+  dialogRef.classList.remove('hide');
   dialogRef.innerHTML = renderHtmlContactDialog();
   dialogRef.showModal();
 
 }
 
 
-
-
 function closeContactDialog() {
   const dialogRef = document.getElementById("openNewDialog");
   dialogRef.close();
-  // dialogRef.classList.add('hide');
+  dialogRef.classList.add('hide');
   const formRef = document.getElementById('formRef');
 
   if (formRef) {
@@ -120,49 +118,45 @@ function closeContactDialog() {
   }
 }
 
+
 function closeDialogOutsite(event) {
   event.stopPropagation();
 }
 
 
 function showDetails(index) {
-  let user = userContent[index];
-  const dialogRef = document.getElementById('openNewDialog');
-  
+ let user = userContent[index];
+ const dialogRef = document.getElementById('openNewDialog');
+ dialogRef.classList.remove('dialog-content');  dialogRef.classList.add('contact-details-box');
   dialogRef.innerHTML = renderShowDetailsTpl(user);
   dialogRef.showModal();
-
-
 }
 
 
 function renderShowDetailsTpl(user) {
-
   let initials = getInitials(user.name);
   let firstLetter = user.name.charAt(0).toUpperCase();
   let color = contactColors[firstLetter];
   return /*html*/ `
-   <div class="contact-details" onclick="closeDialogOutsite(event)" >
-            <header class="header-contect-details">
-             <div class="initials-large" style="background-color: ${color}">
-            ${initials}
-            </div>
-           <nav class="nav-contect-details">
-          <div class="name-and-buttons">
-             <h1 class="h1-contact-details">${user.name}</h1>
-            <button type="button"><img src="../assets/img/icons/general/edit-contacts.svg" alt="edit contact">Edit</button>
-            <button type="button"><img src="../assets/img/icons/general/trash-contact-.svg" alt="contacts delete">Delete</button>
-          </div>
-        </nav>
-      </header>
-      <main class="main-contact-details">
-      
-      <div class="contact-information"></div>
-      
-      
-      
-      
-      </main>
-    </div>`;
+  <div class="contact-details" onclick="closeDialogOutsite(event)">
+  <header class="header-contect-details">
+    <div class="initials-large" style="background-color:${color}">
+      ${initials}
+    </div>
+    <nav class="nav-contect-details">
+      <div class="name-and-buttons">
+        <h1 class="h1-contact-details">${user.name}</h1>
+        <button type="button"><img src="../assets/img/icons/general/edit-contacts.svg" alt="edit contact">Edit</button>
+        <button type="button"><img src="../assets/img/icons/general/trash-contact-.svg"
+            alt="contacts delete">Delete</button>
+      </div>
+    </nav>
+  </header>
+  <main class="main-contact-details">
+    <div class="contact-information"></div>
+
+  </main>
+</div>
+  `;
 
 }
