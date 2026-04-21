@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../assets/img/favicon/favicon-join.svg" type="image/x-icon" />
     <title>Join - Add Task</title>
 
     <link rel="stylesheet" href="../styles/fonts.css" />
     <link rel="stylesheet" href="../styles/colors.css" />
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../styles/sidebar.css" />
-    <!-- <link rel="stylesheet" href="../styles/addTaskPage.css" /> -->
     <link rel="stylesheet" href="../styles/addTask.css" />
   </head>
 
@@ -72,6 +72,7 @@
 
           <!-- Rechte Spalte -->
           <section class="column right">
+            <!-- priority -->
             <div class="input-section">
               <label for="priority">Priority</label>
               <div class="priority-group">
@@ -89,12 +90,14 @@
                 </button>
               </div>
             </div>
+            <!-- assignt to -->
             <div class="input-section">
               <label for="assignedTo">Assigned to</label>
               <select id="assignedTo" class="input dropdown">
                 <option value="">Select contacts to assign</option>
               </select>
             </div>
+            <!-- category -->
             <div class="input-section">
               <label for="category" class="required">Category</label>
               <select id="category" class="input dropdown">
@@ -103,7 +106,7 @@
                 <option value="User Story">User Story</option>
               </select>
             </div>
-
+            <!-- subtask -->
             <div class="input-section">
               <label for="subtask">Subtasks</label>
               <div class="input--section">
@@ -116,19 +119,22 @@
               </div>
             </div>
           </section>
-
-          <div class="form-footer">
-            <p class="required">This field is required</p>
+          <!-- info -->
+          <section class="form-info-section">
+            <p><b class="form-info">*</b> This field is required</p>
+          </section>
+          <!-- footer -->
+          <section class="form-footer">
             <div class="action-btns">
-              <button type="reset" class="btn-clear">Clear ✕</button>
-              <button type="submit" class="btn-create">Create Task ✓</button>
+              <button type="reset" class="btn btn--secondary clear">Clear</button>
+              <button type="submit" class="btn btn--primary">Create Task</button>
             </div>
-          </div>
+          </section>
         </form>
       </article>
     </main>
 
-    <div id="toast" class="toast">Task added to board ✅</div>
+    <!-- <div id="toast" class="toast">Task added to board ✅</div> -->
 
     <script>
       let selectedPriority = "medium";
