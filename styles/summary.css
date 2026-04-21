@@ -15,13 +15,13 @@
 }
 
 .summary-headline h1 {
-    font-family: Inter-Bold;
+    font-weight: 700;
     font-size: 62px;
     color: var(--primary-text-color);
 }
 
 .summary-headline span {
-    font-family: Inter-Regular;
+    font-weight: 400;
     font-size: 28px;
     color: var(--secondary-text-color);
 }
@@ -82,13 +82,13 @@
 }
 
 .summary-todo-amount {
-    font-family: Inter-SemiBold;
+    font-weight: 600;
     font-size: 64px;
     color: var(--primary-text-color);
 }
 
 .summary-todo-text {
-    font-family: Inter-Regular;
+    font-weight: 400;
     font-size: 20px;
     color: var(--secondary-text-color);
     text-align: center;
@@ -132,19 +132,19 @@
 }
 
 .summary-urgent-date {
-    font-family: Inter-Bold;
+    font-weight: 700;
     font-size: 20px;
     color: var(--primary-color);
 }
 
 .summary-urgent-text {
-    font-family: Inter-Regular;
+    font-weight: 400;
     font-size: 16px;
     color: var(--primary-color);
 }
 
 .summary-overview-text {
-    font-family: Inter-Regular;
+    font-weight: 400;
     font-size: 16px;
     color: var(--secondary-text-color);
 }
@@ -170,13 +170,13 @@
 }
 
 .summary-greeting-text {
-    font-family: Inter-Regular;
+    font-weight: 500;
     font-size: 48px;
     color: var(--primary-color);
 }
 
 .summary-greeting-name {
-    font-family: Inter-Bold;
+    font-weight: 700;
     font-size: 64px;
     color: var(--secondary-color);
 }
