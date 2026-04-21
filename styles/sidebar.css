@@ -104,8 +104,7 @@
 /* only for testing */
 .app--content {
   grid-area: content;
-  overflow: scroll;
-  padding: 0;
+  overflow: auto;
 }
 
 .app--icons {
@@ -130,7 +129,7 @@
   height: 56px;
 }
 
-@media screen and (width <= 600px) {
+@media screen and (width <= 720px) {
   .app {
     grid-template-rows: 80px 1fr 80px;
     grid-template-columns: 1fr;
@@ -182,6 +181,5 @@
 
   .active {
     border-radius: 16px;
-    /* border: solid 2px green; */
   }
 }

@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../assets/img/favicon/favicon-join.svg" type="image/x-icon" />
     <title>Join - Add Task</title>
 
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../styles/sidebar.css" />
     <link rel="stylesheet" href="../styles/fonts.css" />
     <link rel="stylesheet" href="../styles/colors.css" />
-    <link rel="stylesheet" href="../styles/addTaskPage.css" />
-</head>
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="../styles/sidebar.css" />
+    <link rel="stylesheet" href="../styles/addTask.css" />
+  </head>
 
 <body class="app">
 
@@ -74,67 +76,71 @@
 
                     <div class="divider"></div>
 
-                    <!-- Rechte Spalte -->
-                    <div class="column">
-                        <label>Priority</label>
-
-                        <div class="priority-group">
-                            <button type="button" id="btn-urgent" class="prio-btn"
-                                onclick="selectPriority('urgent')">Urgent</button>
-
-                            <button type="button" id="btn-medium" class="prio-btn"
-                                onclick="selectPriority('medium')">Medium</button>
-
-                            <button type="button" id="btn-low" class="prio-btn"
-                                onclick="selectPriority('low')">Low</button>
-                        </div>
-
-                        <label>Assigned to</label>
-                        <select id="assignedTo" onchange="selectUser(this.value)">
-                            <option value="">Select contacts to assign</option>
-                        </select>
-                        <div id="assignedContainer"></div>
-
-
-
-                        <label>Category<span>*</span></label>
-                        <select id="category">
-                            <option value="Technical Task">Technical Task</option>
-                            <option value="User Story">User Story</option>
-                        </select>
-
-                        <label>Subtasks</label>
-                        <div class="subtask-input">
-                            <input id="subtaskInput" type="text" placeholder="Add subtask">
-
-                            <span class="subtask-icons">
-                                <span onclick="addSubtask()">✓</span>
-                                <span onclick="clearSubtaskInput()">✕</span>
-                            </span>
-                        </div>
-
-
-                        <div id="subtaskList"></div>
-
-                    </div>
-
+          <!-- Rechte Spalte -->
+          <section class="column right">
+            <!-- priority -->
+            <div class="input-section">
+              <label for="priority">Priority</label>
+              <div class="priority-group">
+                <button type="button" id="btn-urgent" class="prio-btn" onclick="selectPriority('urgent')">
+                  Urgent
+                  <img class="img-prio urgent" src="../assets/img/icons/prio/urgent.svg" alt="" />
+                </button>
+                <button type="button" id="btn-medium" class="prio-btn" onclick="selectPriority('medium')">
+                  Medium
+                  <img class="img-prio medium" src="../assets/img/icons/prio/medium.svg" alt="" />
+                </button>
+                <button type="button" id="btn-low" class="prio-btn" onclick="selectPriority('low')">
+                  Low
+                  <img class="img-prio low" src="../assets/img/icons/prio/low.svg" alt="" />
+                </button>
+              </div>
+            </div>
+            <!-- assignt to -->
+            <div class="input-section">
+              <label for="assignedTo">Assigned to</label>
+              <select id="assignedTo" class="input dropdown">
+                <option value="">Select contacts to assign</option>
+              </select>
+            </div>
+            <!-- category -->
+            <div class="input-section">
+              <label for="category" class="required">Category</label>
+              <select id="category" class="input dropdown">
+                <option value="none" selected>Select task category</option>
+                <option value="Technical Task">Technical Task</option>
+                <option value="User Story">User Story</option>
+              </select>
+            </div>
+            <!-- subtask -->
+            <div class="input-section">
+              <label for="subtask">Subtasks</label>
+              <div class="input--section">
+                <input id="subtask" class="input" type="text" placeholder="Add subtask" />
+                <div class="subtask--btns">
+                  <button id="subtask-close" class="btn--subtask close"><img src="../assets/img/icons/subtask/close.svg" alt="x" /></button>
+                  <span class="div-vert"></span>
+                  <button id="subtask-save" class="btn--subtask check"><img src="../assets/img/icons/subtask/check.svg" alt="check" /></button>
                 </div>
-
-                <div class="form-footer">
-                    <p><span>*</span>This field is required</p>
-
-                    <div class="action-buttons">
-                        <button type="reset" class="btn-clear">Clear ✕</button>
-                        <button type="submit" class="btn-create">Create Task ✓</button>
-                    </div>
-                </div>
-
-            </form>
-            </section>
-
+              </div>
+            </div>
+          </section>
+          <!-- info -->
+          <section class="form-info-section">
+            <p><b class="form-info">*</b> This field is required</p>
+          </section>
+          <!-- footer -->
+          <section class="form-footer">
+            <div class="action-btns">
+              <button type="reset" class="btn btn--secondary clear">Clear</button>
+              <button type="submit" class="btn btn--primary">Create Task</button>
+            </div>
+          </section>
+        </form>
+      </article>
     </main>
 
-    <div id="toast" class="toast">Task added to board ✅</div>
+    <!-- <div id="toast" class="toast">Task added to board ✅</div> -->
 
     <script>
 
