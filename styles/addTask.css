@@ -64,10 +64,22 @@ main {
   }
 }
 
-.prio-btn .active {
+.prio-btn.urgent-active {
   background-color: #ff3d00;
   color: white;
   border-color: #ff3d00;
+}
+
+.prio-btn.medium-active {
+  background-color: #ffa800;
+  color: white;
+  border-color: #ffa800;
+}
+
+.prio-btn.low-active {
+  background-color: #7ae229;
+  color: white;
+  border-color: #7ae229;
 }
 
 .img-prio {
@@ -198,6 +210,27 @@ main {
 
 .app--content {
   container-type: inline-size;
+}
+
+
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2ecc71;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-10px);
 }
 
 @media (min-width: 900px) {

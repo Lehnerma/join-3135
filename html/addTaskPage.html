@@ -134,7 +134,7 @@
       </article>
     </main>
 
-    <!-- <div id="toast" class="toast">Task added to board ✅</div> -->
+    <div id="toast" class="toast">Task added to board ✅</div>
 
     <script>
       let selectedPriority = "medium";
@@ -148,6 +148,7 @@
 
         const activeBtn = document.getElementById("btn-" + prio);
         activeBtn.classList.add(prio + "-active");
+        console.log("CLICK:", prio);
       }
 
       function createTask(event) {
