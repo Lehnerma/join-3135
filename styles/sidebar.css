@@ -15,10 +15,6 @@
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 64px;
-  height: 100dvh;
-  position: sticky;
-  top: 0;
-  bottom: 0;
 }
 
 .nav-logo {
@@ -27,7 +23,6 @@
   padding-top: 64px;
   justify-self: center;
 }
-
 .nav-category-img {
   width: 25px;
   height: auto;
@@ -72,18 +67,13 @@
   gap: 16px;
   padding-bottom: 64px;
   transition: all 0.7s ease-in-out;
-  width: 100%;
 }
 
 .legal-section-link {
   font-size: 16px;
   color: var(--fifth-text-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-align: start;
   font-weight: 400;
-  width: 100%;
-  height: 35px;
 
   &:hover {
     color: var(--secondary-color);
@@ -99,7 +89,8 @@
   align-items: center;
   padding-left: 40px;
   background-color: var(--input-text-color);
-  box-shadow: var(--shadow-app-title);
+  z-index: 1;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
 }
 
 .app--title .title-logo {
@@ -110,13 +101,10 @@
   font-size: 20px;
   color: var(--primary-text-color);
 }
-
 /* only for testing */
-
 .app--content {
   grid-area: content;
-  overflow-y: auto;
-  padding: 0;
+  overflow: auto;
 }
 
 .app--icons {
@@ -126,7 +114,6 @@
   padding-right: 16px;
   transition: transform 0.7s ease-in-out;
 }
-
 .app--icon {
   width: 20px;
   height: 20px;
@@ -142,7 +129,7 @@
   height: 56px;
 }
 
-@media screen and (width <= 600px) {
+@media screen and (width <= 720px) {
   .app {
     grid-template-rows: 80px 1fr 80px;
     grid-template-columns: 1fr;
@@ -194,6 +181,5 @@
 
   .active {
     border-radius: 16px;
-    /* border: solid 2px green; */
   }
 }
