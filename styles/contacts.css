@@ -1,3 +1,10 @@
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  margin: 0;
+  overflow: hidden;
+}
+
 [role="button"],
 *[style*="cursor: pointer"],
 a,
@@ -7,22 +14,35 @@ button {
 
 
 .main-content {
-  display: grid;
-  grid-template-columns: 32vw 1fr;
+  display: flex;
   max-height: 100vh;
   background-color: var(--input-text-color);
 }
 
 
 .left-content {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  margin-top: 2.5vh;
+  margin-top: 12px;
+  width: 456px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   background-color: var(--input-text-color);
-  max-height: 80vh;
+  height: 85vh;
   overflow: hidden;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+
+.add-button-container {
+  display: flex;
   justify-content: center;
-  min-width: 250px;
+  align-items: center;
+  position: fixed;
+  width: 400px;
+  height: 101px;
+  background-color: var(--input-text-color);
+
 }
 
 .add-button-size {
@@ -31,40 +51,52 @@ button {
   font-size: clamp(16px, 1.5vw, 21px);
   display: flex;
   align-items: center;
-  gap: 2vh;
-  width: 24vw;
-  height: 6vh;
+  gap: 16px;
+  width: 352px;
+  height: 56px;
   min-width: 200px;
-  min-height: 45px;
-  margin-left: 25px;
-  margin-bottom: 40px;
 }
 
 .add-contact-icon {
-  width: 3.2vw;
-  height: 3.2vh;
+  width: 32px;
+  height: 32px;
 }
 
 .contact-list {
-  overflow-y: auto;
-  margin-top: 2vh;
-  height: 100%;
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+  width: 400px;
+}
+
+.first-letter {
+  width: 352px;
+  height: 78px;
+  flex-shrink: 0;
+  padding: 17px 36px 17px 36px;
+  font-family: Inter-Regular;
+  font-weight: 400;
+  font-size: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .letter-divider {
-  font-size: 20px;
-  padding: 17px 36px 17px 36px;
+  width: 352px;
   border-bottom: 1px solid;
   border-color: var(--fifth-text-color);
-  margin-bottom: 15px;
 }
 
-.userSelection {
+.user-Selection {
+  width: 352px;
+  height: 78px;
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: flex-start;
+  gap: 35px;
   padding: 15px 24px 15px 24px;
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .show-user-details-button {
@@ -76,20 +108,20 @@ button {
   border: none;
 }
 
-.userSelection:hover {
+.bg-color-active {
   border-radius: 8px;
   background-color: var(--primary-color);
   color: var(--input-text-color);
 }
 
 .initials {
-  width: 50px;
-  height: 50px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: var(--input-text-color);
   font-size: 16px;
   font-weight: bold;
   border-style: solid;
@@ -102,11 +134,15 @@ button {
   flex-direction: column;
 }
 
+.cotact-info-text {
+  display: flex;
+  gap: 5px;
+}
+
 .name {
   font-family: Inter-Regular;
   font-weight: 400;
   font-size: 20px;
-  margin-bottom: 8px;
 }
 
 .email {
@@ -116,32 +152,34 @@ button {
 }
 
 .right-content {
+  display: flex;
+  position: relative;
+  align-items: flex-start;
+  width: 100%;
   margin-top: 10px;
   box-shadow: inset 3px 2px 10px 2px rgba(0, 0, 0, 0.1);
   background-color: var(--background-color);
 }
 
 .headline {
-  display: grid;
-  grid-template-columns: auto 3px auto;
+  display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 2vw;
-  margin-top: 10vh;
-  margin-left: 2vw;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: 110px;
+  margin-left: 55px;
 }
 
 .contacts-title {
-  font-size: 4.5vw;
+  font-family: Inter-Bold;
+  font-size: 61px;
   font-weight: 700;
   margin: 0;
-  line-height: 1;
-  font-family: Inter-Bold;
 }
 
 .vertical-divider {
   background-color: var(--secondary-color);
-  height: 4.5vw;
+  height: 59px;
   width: 3px;
   border-radius: 2px;
 }
@@ -149,7 +187,7 @@ button {
 .contacts-subtitle {
   font-family: Inter-Regular;
   font-weight: 400;
-  font-size: 2vw;
+  font-size: 27px;
   white-space: nowrap;
 }
 
@@ -160,14 +198,13 @@ button {
   border: none;
   border-radius: 30px;
   position: fixed;
-  top: 50%;
+  top: 54%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 1212px;
   height: 594px;
   background-color: var(--input-text-color);
   z-index: 10;
-
 }
 
 .dialog-content[open] {
@@ -180,9 +217,10 @@ button {
     transform: translate(100vw, -50%);
   }
 
+
   to {
     transform: translate(-50%, -50%);
-    
+
   }
 }
 
@@ -202,12 +240,8 @@ button {
   }
 }
 
-/* .dialog-content.off {
-  display: none;
-} */
-
 .dialog-content::backdrop {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.3s);
 }
 
 .dialog-container {
@@ -229,17 +263,21 @@ button {
 
 .aside-logo {
   position: absolute;
-  top: 154px;
+  top: 150px;
   left: 47px;
   width: 56px;
   height: 66px;
 }
 
 .aside-h2 {
+  display: flex;
+  justify-content:center;
+  align-items: center;
   font-family: Inter-Bold;
   font-weight: 700;
   font-size: 61px;
-
+  margin: 0;
+  
 }
 
 .aside-text-wrapper {
@@ -248,18 +286,19 @@ button {
   align-items: flex-start;
   width: 371px;
   height: 129px;
-  margin: 16px 0 16px 0;
+  margin: 16px 0 8px 0;
 }
 
 .aside-p {
   font-size: 27px;
   font-family: Inter-Regular;
   font-weight: 400;
-  height: 32px;
+  margin-top: 8px;
   margin-bottom: 8px;
 }
 
 .blue-line-horizontal {
+  
   content: "";
   width: 90px;
   height: 3px;
@@ -300,9 +339,10 @@ button {
   border-radius: 70%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin: auto;
+  align-items:center;
+  margin: 0px 85px 65px 85px;
 }
+
 
 .person-logo {
   width: 64px;
@@ -348,14 +388,11 @@ button {
   color: var(--input-default-main);
 }
 
-
 .dialog-input-icon {
   width: 24px;
   height: 24px;
   margin-right: 21px;
-
 }
-
 
 .dialog-login-buttons {
   display: flex;
@@ -365,7 +402,6 @@ button {
   align-items: center;
   gap: 16px;
   cursor: pointer;
-
 }
 
 .img-check {
@@ -373,8 +409,6 @@ button {
   height: 24px;
   filter: brightness(0) invert(1);
   margin-left: 6px;
-
-
   font-family: Inter-Bold;
   font-size: 21px;
   font-weight: 700;
@@ -400,34 +434,33 @@ button {
 }
 
 
-
 /* --- DIALOG DETAILS --- */
 
 
 .contact-details-box {
-  display: none;
-  height: 364px;
-  width: 641px;
-  border: none;
-  position: fixed;
-  top: 53%;
-  left: 63%;
-  transform: translate(-50%, -50%);
-  background-color:transparent;
-  z-index: 5;
-}
-
-.contact-details-box[open] {
+  position: absolute;
   display: flex;
-  animation: slideIn 0.4s ease-out forwards;
+  flex-direction: column;
+  gap: 21px;
+  height: 364px;
+  width: 561px;
+  border: none;
+  top: 45%;
+  left: 27%;
+  background-color: transparent;
+  z-index: 5;
+  animation: slideInDetailBox 0.4s ease-out forwards;
 }
 
-@keyframes slideIn {
+@keyframes slideInDetailBox {
   from {
-    transform: translate(100vw, -50%);
+
+    transform: translate(150vw, -40%);
+
   }
 
   to {
+
     transform: translate(-50%, -50%);
 
   }
@@ -435,10 +468,10 @@ button {
 
 .header-contect-details {
   display: flex;
-  justify-content: space-between;
-  width: 641px;
+  justify-self: flex-start;
+  align-items: center;
   height: 120px;
-
+  gap: 54px;
 }
 
 .initials-large {
@@ -457,16 +490,80 @@ button {
 }
 
 
-.main-contact-details {}
+.name-and-buttons {}
 
-.contact-information {}
 
-.h1-contact-details {
+.main-contact-details {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+ 
+  
+}
 
-  font-family: Inter-SemiBold;
-  font-size: 47px;
-  font-weight: 500;
+.contact-information {
+  font-family: Inter-Regular;
+  font-size: 21px;
+  font-weight: 400;
+  padding-top: 59px;
+ padding-bottom: 59px;
+}
+
+.email-and-phone{
+
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+   gap: 15px;
 }
 
 
+.h1-contact-details {
+  font-family: Inter-SemiBold;
+  font-size: 47px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  white-space: nowrap;
+}
 
+.edit-delete {
+  display: flex;
+  gap: 13px;
+}
+
+.edit-delete-button {
+  display: flex;
+  align-items: center;
+  font-family: Inter-Regular;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--primary-color);
+  border: none;
+}
+
+.edit-icon,
+.delete-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
+
+
+li {
+
+  list-style-type: none;
+}
+
+.contact-email,
+.contact-phone {
+
+  font-family: Inter-Bold;
+  font-size: 16px;
+  font-weight: 700;
+
+
+}

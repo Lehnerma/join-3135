@@ -29,8 +29,7 @@ const contactColors = {
 let USERS = [];
 let userContent = [];
 
-function init() {
-  getUsers();
+function init() {getUsers();
 }
 
 async function getUsers() {
@@ -57,6 +56,7 @@ function sortUserContactList() {
 function UserContectList() {
   let contactList = document.getElementById('contactList');
   contactList.innerHTML = '';
+  userContent = [];
   for (let i = 0; i < USERS.length; i++) {
     userContent.push(USERS[i]);
     contactList.innerHTML += renderContectListTpl(USERS[i], i);
@@ -73,8 +73,9 @@ function renderContectListTpl(user, i) {
   let color = contactColors[firstLetter];
 
   return /*html*/ `
-    <div class="letter-divider">${firstLetter}</div>
-    <div id="${userID}" class="userSelection" onclick="showDetails(${i})">
+   <p class="first-letter">${firstLetter}</p>
+    <div class="letter-divider"></div>
+       <div id="${userID}" class="user-Selection" onclick="getUserDetails(${i}, ${userID})">
         <div class="initials" style="background-color: ${color}">
             ${initials}
         </div>
@@ -99,16 +100,25 @@ function getInitials(name) {
 
 
 function openContactDialog() {
-  const dialogRef = document.getElementById("openNewDialog");
+  const dialogRef = document.getElementById('openNewDialog');
   dialogRef.classList.remove('hide');
-  dialogRef.innerHTML = renderHtmlContactDialog();
+  dialogRef.innerHTML = renderHtmlContactDialogTpl();
+  dialogRef.showModal();
+
+}
+
+function showEditDialog() {
+  const dialogRef = document.getElementById('openNewDialog');
+  dialogRef.classList.remove('hide');
+  dialogRef.innerHTML = renderHtmlEditContactDialogTpl();
   dialogRef.showModal();
 
 }
 
 
+
 function closeContactDialog() {
-  const dialogRef = document.getElementById("openNewDialog");
+  const dialogRef = document.getElementById('openNewDialog');
   dialogRef.close();
   dialogRef.classList.add('hide');
   const formRef = document.getElementById('formRef');
@@ -124,12 +134,32 @@ function closeDialogOutsite(event) {
 }
 
 
-function showDetails(index) {
- let user = userContent[index];
- const dialogRef = document.getElementById('openNewDialog');
- dialogRef.classList.remove('dialog-content');  dialogRef.classList.add('contact-details-box');
-  dialogRef.innerHTML = renderShowDetailsTpl(user);
-  dialogRef.showModal();
+function getUserDetails(index) {
+  let user = userContent[index];
+  let currentUserID = user.id;
+  const userSelectionID = document.getElementById(currentUserID);
+  const isAlreadyActive = userSelectionID.classList.contains('bg-color-active');
+  removeAllBgColors(user, isAlreadyActive, userSelectionID);
+}
+
+
+function removeAllBgColors(user, isAlreadyActive, userSelectionID) {
+  const allSelections = document.querySelectorAll('.user-Selection');
+  allSelections.forEach(element => {
+    element.classList.remove('bg-color-active');
+  });
+  showDetails(user, isAlreadyActive, userSelectionID);
+}
+
+
+function showDetails(user, isAlreadyActive, userSelectionID) {
+  const dialogRef = document.getElementById('contactDetailsDialog');
+  if (!isAlreadyActive) {
+    userSelectionID.classList.add('bg-color-active');
+    dialogRef.innerHTML = renderShowDetailsTpl(user);
+  } else {
+    dialogRef.innerHTML = '';
+  }
 }
 
 
@@ -137,26 +167,49 @@ function renderShowDetailsTpl(user) {
   let initials = getInitials(user.name);
   let firstLetter = user.name.charAt(0).toUpperCase();
   let color = contactColors[firstLetter];
-  return /*html*/ `
-  <div class="contact-details" onclick="closeDialogOutsite(event)">
+  return /*html*/ `<div class="contact-details-box">
   <header class="header-contect-details">
     <div class="initials-large" style="background-color:${color}">
       ${initials}
     </div>
-    <nav class="nav-contect-details">
-      <div class="name-and-buttons">
-        <h1 class="h1-contact-details">${user.name}</h1>
-        <button type="button"><img src="../assets/img/icons/general/edit-contacts.svg" alt="edit contact">Edit</button>
-        <button type="button"><img src="../assets/img/icons/general/trash-contact-.svg"
-            alt="contacts delete">Delete</button>
+    <div class="name-and-buttons">
+      <h1 class="h1-contact-details">${user.name}</h1>
+      <div class="edit-delete">
+        <button type="button" class="edit-delete-button" onclick="openEditContactDialog()"><img class="edit-icon"
+            src="../assets/img/icons/general/edit-contacts.svg" alt="edit contact">Edit</button>
+        <button type="button" class="edit-delete-button"><img class="delete-icon"
+            src="../assets/img/icons/general/trash-contact-.svg" alt="contacts delete">Delete</button>
       </div>
-    </nav>
+    </div>
   </header>
   <main class="main-contact-details">
-    <div class="contact-information"></div>
-
+    <div class="contact-information">
+      Contact Information</div>
+    <ul class="email-and-phone">
+      <li class="contact-email">Email</li>
+      <li><a href="mailto:${user.email}" class="email">${user.email}</a></li>
+      <li class="contact-phone">Phone</li>
+      <li>${user.phone}</li>
+    </ul>
   </main>
-</div>
-  `;
+</div>`;
+}
 
+function openEditContactDialog() {
+  showEditDialog();
+}
+
+
+function createContact() {
+  
+}
+
+
+function deleteContact() {
+  
+}
+
+
+function saveContact(){
+  
 }
