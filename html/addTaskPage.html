@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -48,14 +48,14 @@
 
     <main class="app--content">
       <article class="task-container">
-        <h1>Add Task</h1>
+        <h1 class="input--title">Add Task</h1>
 
-        <form class="form-task form-columns" onsubmit="createTask(event)">
+        <form class="form-task form-columns" id="form_task" onsubmit="createTask(event)">
           <!-- Linke Spalte -->
           <section class="column left">
             <div class="input-section">
               <label for="title" class="required">Title</label>
-              <input id="title" class="input" type="text" placeholder="Enter a title" />
+              <input id="title" class="input" type="text" placeholder="Enter a title" required />
             </div>
             <div class="input-section">
               <label for="description">Description</label>
@@ -64,7 +64,7 @@
 
             <div class="input-section">
               <label for="dueDate" class="required">Due date</label>
-              <input id="dueDate" class="input input-date" type="date" />
+              <input id="dueDate" class="input input-date" type="date" required />
             </div>
           </section>
 
@@ -76,15 +76,15 @@
             <div class="input-section">
               <label for="priority">Priority</label>
               <div class="priority-group">
-                <button type="button" id="btn-urgent" class="prio-btn" onclick="selectPriority('urgent')">
+                <button type="button" id="btn-urgent" class="btn btn--prio" onclick="selectPriority('urgent')" value="urgent">
                   Urgent
                   <img class="img-prio urgent" src="../assets/img/icons/prio/urgent.svg" alt="" />
                 </button>
-                <button type="button" id="btn-medium" class="prio-btn" onclick="selectPriority('medium')">
+                <button type="button" id="btn-medium" class="btn btn--prio" onclick="selectPriority('medium')" value="medium">
                   Medium
                   <img class="img-prio medium" src="../assets/img/icons/prio/medium.svg" alt="" />
                 </button>
-                <button type="button" id="btn-low" class="prio-btn" onclick="selectPriority('low')">
+                <button type="button" id="btn-low" class="btn btn--prio" onclick="selectPriority('low')" value="low">
                   Low
                   <img class="img-prio low" src="../assets/img/icons/prio/low.svg" alt="" />
                 </button>
@@ -101,7 +101,7 @@
             <div class="input-section">
               <label for="category" class="required">Category</label>
               <select id="category" class="input dropdown">
-                <option value="none" selected>Select task category</option>
+                <option value="" selected>Select task category</option>
                 <option value="Technical Task">Technical Task</option>
                 <option value="User Story">User Story</option>
               </select>
@@ -123,80 +123,16 @@
           <section class="form-info-section">
             <p><b class="form-info">*</b> This field is required</p>
           </section>
-          <!-- footer -->
-          <section class="form-footer">
-            <div class="action-btns">
-              <button type="reset" class="btn btn--secondary clear">Clear</button>
-              <button type="submit" class="btn btn--primary">Create Task</button>
-            </div>
-          </section>
         </form>
+        <section class="form-footer">
+          <div class="action-btns">
+            <button type="reset" class="btn btn--secondary clear" form="form_task">Clear</button>
+            <button type="submit" class="btn btn--primary" form="form_task">Create Task</button>
+          </div>
+        </section>
       </article>
     </main>
-
-    <div id="toast" class="toast">Task added to board ✅</div>
-
-    <script>
-      let selectedPriority = "medium";
-
-      function selectPriority(prio) {
-        selectedPriority = prio;
-
-        document.getElementById("btn-urgent").classList.remove("urgent-active");
-        document.getElementById("btn-medium").classList.remove("medium-active");
-        document.getElementById("btn-low").classList.remove("low-active");
-
-        const activeBtn = document.getElementById("btn-" + prio);
-        activeBtn.classList.add(prio + "-active");
-        console.log("CLICK:", prio);
-      }
-
-      function createTask(event) {
-        event.preventDefault();
-
-        let title = document.getElementById("title").value;
-        let dueDate = document.getElementById("dueDate").value;
-
-        if (!title || !dueDate) {
-          alert("Title and Due Date are required!");
-          return;
-        }
-
-        let task = {
-          title: title,
-          description: document.getElementById("description").value,
-          dueDate: dueDate,
-          category: document.getElementById("category").value,
-          assignedTo: document.getElementById("assignedTo").value,
-          priority: selectedPriority,
-          status: "todo",
-          subtasks: [],
-        };
-
-        let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-        tasks.push(task);
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-
-        showToast("Task added to board ✅");
-
-        setTimeout(() => {
-          window.location.href = "board.html";
-        }, 1000);
-      }
-
-      window.onload = function () {
-        selectPriority("medium");
-      };
-
-      function showToast(message) {
-        let toast = document.getElementById("toast");
-        toast.innerText = message;
-        toast.classList.add("show");
-
-        setTimeout(() => {
-          toast.classList.remove("show");
-        }, 2000);
-      }
-    </script>
+    <script src="../scripts/addTask.js"></script>
+    <!-- <div id="toast" class="toast">Task added to board ✅</div> -->
   </body>
 </html>
