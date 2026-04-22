@@ -4,7 +4,7 @@ main {
 
 .task-container {
   max-width: var(--max-dp-width);
-  padding: 16px;
+  padding: 0 16px;
 
   h1 {
     font-size: 47px;
@@ -36,7 +36,9 @@ main {
   padding: 8px 0;
 }
 
-.input:required {
+.form-task.submitted .input:required:invalid,
+.form-task.submitted select:required:invalid,
+.form-task.submitted textarea:required:invalid {
   border: 1px solid red;
 }
 
@@ -159,8 +161,9 @@ main {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 32px;
+
+  gap: clamp(8px, 3vw, 32px);
+
   position: sticky;
   bottom: 0;
   z-index: 5;
@@ -177,7 +180,6 @@ main {
     content: "";
     width: 24px;
     height: 24px;
-
     background: url("../assets/img/icons/subtask/close.svg");
     background-position: center;
     background-size: contain;
@@ -207,10 +209,6 @@ main {
   }
 }
 
-.app--content {
-  container-type: inline-size;
-}
-
 @media (min-width: 900px) {
   .task-container {
     margin-left: clamp(16px, 5vw, 96px);
@@ -218,12 +216,11 @@ main {
   .form-task {
     max-width: 1000px;
     grid-template-columns: 1fr 10px 1fr;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto;
     gap: 32px;
     grid-template-areas:
       "left-col divider right-col"
-      "info info info"
-      "footer footer footer";
+      "info info info";
   }
   .left {
     grid-area: left-col;
@@ -239,7 +236,37 @@ main {
   .form-info-section {
     grid-area: info;
   }
+
   .form-footer {
-    grid-area: footer;
+    max-width: 1000px;
+  }
+}
+
+@media (max-width: 900px) {
+  .input--title,
+  .form-footer {
+    position: sticky;
+    background-color: var(--main-bg);
+    z-index: 5;
+  }
+  .input--title {
+    top: 0;
+  }
+  .form-footer {
+    bottom: 0;
+  }
+  .form-info-section {
+    padding-bottom: 32px;
+  }
+}
+
+@media (max-width: 330px) {
+  .task-container {
+    padding: 0;
+  }
+  .input--title,
+  .form-task,
+  .form-footer {
+    padding: 0 16px;
   }
 }

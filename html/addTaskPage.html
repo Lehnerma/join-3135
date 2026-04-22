@@ -48,9 +48,9 @@
 
     <main class="app--content">
       <article class="task-container">
-        <h1>Add Task</h1>
+        <h1 class="input--title">Add Task</h1>
 
-        <form class="form-task form-columns" onsubmit="createTask(event)">
+        <form class="form-task form-columns" id="form_task" onsubmit="createTask(event)">
           <!-- Linke Spalte -->
           <section class="column left">
             <div class="input-section">
@@ -101,7 +101,7 @@
             <div class="input-section">
               <label for="category" class="required">Category</label>
               <select id="category" class="input dropdown">
-                <option value="none" selected>Select task category</option>
+                <option value="" selected>Select task category</option>
                 <option value="Technical Task">Technical Task</option>
                 <option value="User Story">User Story</option>
               </select>
@@ -123,17 +123,16 @@
           <section class="form-info-section">
             <p><b class="form-info">*</b> This field is required</p>
           </section>
-          <!-- footer -->
-          <section class="form-footer">
-            <div class="action-btns">
-              <button type="reset" class="btn btn--secondary clear">Clear</button>
-              <button type="submit" class="btn btn--primary">Create Task</button>
-            </div>
-          </section>
         </form>
+        <section class="form-footer">
+          <div class="action-btns">
+            <button type="reset" class="btn btn--secondary clear" form="form_task">Clear</button>
+            <button type="submit" class="btn btn--primary" form="form_task">Create Task</button>
+          </div>
+        </section>
       </article>
     </main>
-
+    <script src="../scripts/addTask.js"></script>
     <!-- <div id="toast" class="toast">Task added to board ✅</div> -->
   </body>
 </html>
