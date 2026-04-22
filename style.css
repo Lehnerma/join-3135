@@ -101,6 +101,7 @@
 .btn--subtask {
   background-color: transparent;
   border: none;
+
   img {
     width: 24px;
     height: 24px;
@@ -126,8 +127,7 @@
   position: relative;
 }
 
-.input:active,
-.input:not(:placeholder-shown) {
+.input:active {
   border: 1px solid var(--secondary-color);
 }
 
@@ -144,26 +144,6 @@
   display: flex;
   gap: 200px;
 }
-
-/* .sidebar {
-  width: 180px;
-  height: 100vh;
-  background: #333;
-  color: white;
-  padding: 20px;
-}
-
-.sidebar .logo {
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.sidebar a {
-  display: block;
-  color: white;
-  text-decoration: none;
-  margin-bottom: 10px;
-} */
 
 .mainAddTaskField {
   display: flex;

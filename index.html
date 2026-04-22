@@ -50,7 +50,7 @@
 
       <form class="form--container signup dnone" id="signup">
         <section class="form--title">
-          <button class="btn btn--arrow" id="signup_back"><img class="arrowBackToLogin" src="../assets/img/icons/general/Vector.svg" alt="zurück zum login" /></button>
+          <button type="button" class="btn btn--arrow" id="signup_back"><img class="arrowBackToLogin" src="../assets/img/icons/general/Vector.svg" alt="zurück zum login" /></button>
           <h1>Sign Up</h1>
         </section>
         <div class="input--container-wrapper">
@@ -79,9 +79,9 @@
           </section>
           <!-- pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Muss mindestens eine Zahl, einen Groß- und einen Kleinbuchstaben enthalten und mindestens 8 Zeichen lang sein" // für das password -->
           <div class="privacy-content">
-            <input class="input_signup" type="checkbox" id="privacy" name="privacy" required />
+            <input class="input_signup" title=" Please accept the Privacy policy "    type="checkbox" id="privacy" name="privacy" required />
             <span> I accept the </span>
-            <a href="./html/privacyPolicy.html" class="acceptPrivacyPolicy" s>Privacy policy</a>
+            <a href="../html/privacyPolicy.html" class="acceptPrivacyPolicy">Privacy policy</a>
           </div>
         </div>
         <button type="submit" class="btn btn--primary btn--signup">Sign up</button>
@@ -90,12 +90,12 @@
 
     <section class="phone-signup" id="phone_signup">
       <p class="span-nav-login">Not a Join user?</p>
-      <button id="signup_phone_btn" class="btn btn--primary btn--signup">Sign up</button>
+      <button type="button" id="signup_phone_btn" class="btn btn--primary btn--signup">Sign up</button>
     </section>
 
     <footer class="footer-login">
       <div class="footer-content">
-        <a href="privacyPolicy.html">
+        <a href="./html/privacyPolicy.html">
           <p>Privacy Policy</p>
         </a>
         <a href="./html/legalNotice.html">
