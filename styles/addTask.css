@@ -153,15 +153,20 @@ main {
 
 .subtask--btns {
   position: absolute;
-
+  right: 16px;
   padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
 
-  position: absolute;
-  right: 16px;
+.input--section:focus-within .subtask--btns {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .btn--subtask {
@@ -185,13 +190,60 @@ main {
 }
 
 .subtask-list {
-  padding: 8px 16px;
-  overflow-y: scroll;
+  margin: 8px 0;
+  padding: 0;
   font-size: 16px;
+  list-style: none;
 }
 
 .subtask-item {
-  padding-left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: default;
+
+  &::before {
+    content: "•";
+    font-size: 20px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  &:hover .subtask-item--btns,
+  &.editing .subtask-item--btns {
+    opacity: 1;
+    background-color: red;
+    border-radius: 50%;
+  }
+}
+
+.subtask-text {
+  flex: 1;
+  cursor: default;
+  user-select: none;
+}
+
+.subtask-item--btns {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.subtask-edit-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  padding: 2px 4px;
+  background: transparent;
 }
 
 .required::after {
@@ -260,7 +312,6 @@ main {
   container-type: inline-size;
 }
 
-
 .toast {
   position: fixed;
   bottom: 30px;
@@ -273,7 +324,9 @@ main {
   font-size: 14px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
 }
 
 .toast.show {
@@ -342,4 +395,3 @@ main {
     padding: 0 16px;
   }
 }
-
