@@ -1,6 +1,6 @@
 let selectedPriority = "medium";
 let subtasks = [];
-
+const TASK_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks"+".json"
 function selectPriority(prio) {
   selectedPriority = prio;
 
