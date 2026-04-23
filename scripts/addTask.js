@@ -1,6 +1,6 @@
 let selectedPriority = "medium";
 let subtasks = [];
-
+const TASK_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks"+".json"
 function selectPriority(prio) {
   selectedPriority = prio;
 
@@ -14,11 +14,6 @@ function selectPriority(prio) {
 
 function createTask(event) {
   const form = event.target;
-  form.classList.add("submitted");
-
-  if (!form.checkValidity()) {
-    return;
-  }
   event.preventDefault();
 
   let title = document.getElementById("title").value;

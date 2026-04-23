@@ -56,6 +56,7 @@
             <div class="input-section">
               <label for="title" class="required">Title</label>
               <input id="title" class="input" type="text" placeholder="Enter a title" required />
+              <span class="field-error">This field is required</span>
             </div>
             <div class="input-section">
               <label for="description">Description</label>
@@ -65,6 +66,7 @@
             <div class="input-section">
               <label for="dueDate" class="required">Due date</label>
               <input id="dueDate" class="input input-date" type="date" required />
+              <span class="field-error">This field is required</span>
             </div>
           </section>
 
@@ -100,11 +102,12 @@
             <!-- category -->
             <div class="input-section">
               <label for="category" class="required">Category</label>
-              <select id="category" class="input dropdown">
+              <select id="category" class="input dropdown form--select" required>
                 <option value="" selected>Select task category</option>
                 <option value="Technical Task">Technical Task</option>
                 <option value="User Story">User Story</option>
               </select>
+              <span class="field-error">This field is required</span>
             </div>
             <!-- subtask -->
             <div class="input-section">
