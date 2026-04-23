@@ -184,6 +184,16 @@ main {
   background-color: var(--input-default-main);
 }
 
+.subtask-list {
+  padding: 8px 16px;
+  overflow-y: scroll;
+  font-size: 16px;
+}
+
+.subtask-item {
+  padding-left: 16px;
+}
+
 .required::after {
   content: "*";
   color: var(--input-required);
@@ -332,3 +342,4 @@ main {
     padding: 0 16px;
   }
 }
+

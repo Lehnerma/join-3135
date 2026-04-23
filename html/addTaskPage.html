@@ -11,9 +11,11 @@
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../styles/sidebar.css" />
     <link rel="stylesheet" href="../styles/addTask.css" />
+    <!-- <script src="../scripts/addTask.js"></script> -->
+    <script src="../scripts/addTask2.js"></script>
   </head>
 
-  <body class="app">
+  <body class="app" onload="init()">
     <header class="app--title">
       <h1 class="app--title-headline">Kanban Project Management Tool</h1>
       <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
@@ -50,7 +52,7 @@
       <article class="task-container">
         <h1 class="input--title">Add Task</h1>
 
-        <form class="form-task form-columns" id="form_task" onsubmit="createTask(event)">
+        <form class="form-task form-columns" id="form_task">
           <!-- Linke Spalte -->
           <section class="column left">
             <div class="input-section">
@@ -78,15 +80,15 @@
             <div class="input-section">
               <label for="priority">Priority</label>
               <div class="priority-group">
-                <button type="button" id="btn-urgent" class="btn btn--prio" onclick="selectPriority('urgent')" value="urgent">
+                <button type="button" id="btn_urgent" class="btn btn--prio" onclick="selectPriority('urgent')" value="urgent">
                   Urgent
                   <img class="img-prio urgent" src="../assets/img/icons/prio/urgent.svg" alt="" />
                 </button>
-                <button type="button" id="btn-medium" class="btn btn--prio" onclick="selectPriority('medium')" value="medium">
+                <button type="button" id="btn_medium" class="btn btn--prio medium-active" onclick="selectPriority('medium')" value="medium">
                   Medium
                   <img class="img-prio medium" src="../assets/img/icons/prio/medium.svg" alt="" />
                 </button>
-                <button type="button" id="btn-low" class="btn btn--prio" onclick="selectPriority('low')" value="low">
+                <button type="button" id="btn_low" class="btn btn--prio" onclick="selectPriority('low')" value="low">
                   Low
                   <img class="img-prio low" src="../assets/img/icons/prio/low.svg" alt="" />
                 </button>
@@ -120,6 +122,9 @@
                   <button id="subtask-save" class="btn--subtask check"><img src="../assets/img/icons/subtask/check.svg" alt="check" /></button>
                 </div>
               </div>
+              <ul id="subtask-list" class="subtask-list">
+                <li class="subtask-item"></li>
+              </ul>
             </div>
           </section>
           <!-- info -->
@@ -135,7 +140,7 @@
         </section>
       </article>
     </main>
-    <script src="../scripts/addTask.js"></script>
+
     <div id="toast" class="toast">Task added to board ✅</div>
   </body>
 </html>
