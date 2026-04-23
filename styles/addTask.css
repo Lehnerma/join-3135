@@ -36,10 +36,21 @@ main {
   padding: 8px 0;
 }
 
-.form-task.submitted .input:required:invalid,
-.form-task.submitted select:required:invalid,
-.form-task.submitted textarea:required:invalid {
+.input:user-invalid,
+.form--select:user-invalid:user-invalid {
   border: 1px solid red;
+}
+
+.field-error {
+  display: none;
+  color: #ff3d00;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.input:user-invalid ~ .field-error,
+.form--select:user-invalid ~ .field-error {
+  display: block;
 }
 
 .column {

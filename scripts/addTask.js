@@ -14,11 +14,6 @@ function selectPriority(prio) {
 
 function createTask(event) {
   const form = event.target;
-  form.classList.add("submitted");
-
-  if (!form.checkValidity()) {
-    return;
-  }
   event.preventDefault();
 
   let title = document.getElementById("title").value;
