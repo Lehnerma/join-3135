@@ -15,15 +15,21 @@ function btnInit() {
   FORM.addEventListener("submit", (event) => getFormData(event));
 }
 
+/**
+ * Get the actuall Date - and set the default value of the date input to today.
+ */
 function initDateInput() {
   const dueDateInput = document.getElementById("dueDate");
   const now = new Date();
-  console.log(now);
-
-  // dueDateInput.min = today;
-  // dueDateInput.value = today;
+  const today = now.toISOString().split('T')[0];
+  dueDateInput.min = today;
+  dueDateInput.value = today;
 }
 
+/**
+ * set the priority of the Task - and hightlight it.
+ * @param {String} priority 
+ */
 function selectPriority(priority) {
   const priorities = ["urgent", "medium", "low"];
   priorities.forEach((prio) => {
@@ -33,6 +39,9 @@ function selectPriority(priority) {
   selectedPriority = priority;
 }
 
+/**
+ * Initial all subtasks function after loading the body
+ */
 function subtaskInit() {
   const SUBTASK_SAVE = document.getElementById("subtask-save");
   const SUBTASK_CLEAR = document.getElementById("subtask-close");
