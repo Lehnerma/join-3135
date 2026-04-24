@@ -24,17 +24,17 @@ function renderHtmlContactDialogTpl() {
         <form id="formRef">
           <section class="dialog-input-container">
             <div class="dialog-input-section">
-              <input class="dialog-input" id="name" type="text" name="name" placeholder="Name" required />
+              <input class="dialog-input" id="createName" type="text" name="name" placeholder="Name" required />
               <img src="../assets/img/icons/input/person.svg" alt="icon" class="dialog-input-icon" />
             </div>
 
             <div class="dialog-input-section">
-              <input class="dialog-input" id="email" type="email" name="email" placeholder="Email" required />
+              <input class="dialog-input" id="createEmail" type="email" name="email" placeholder="Email" required />
               <img src="../assets/img/icons/input/mail.svg" alt="icon" class="dialog-input-icon" />
             </div>
 
             <div class="dialog-input-section">
-              <input class="dialog-input" id="phone" type="tel" name="phone" placeholder="Phone" pattern="[0-9+ ]*"
+              <input class="dialog-input" id="createPhone" type="tel" name="phone" placeholder="Phone" pattern="[0-9+ ]*"
                 title="Bitte nur Zahlen, Leerzeichen oder ein + eingeben" required />
               <img src="../assets/img/icons/input/phone.svg" alt="icon" class="dialog-input-icon" />
             </div>
@@ -42,7 +42,7 @@ function renderHtmlContactDialogTpl() {
           <section class="dialog-login-buttons">
             <button type="button" class="btn btn--secondary btn--login btn-cancel-text "
               onclick="closeContactDialog()">Cancel<svg class="img-x"><use href="../assets/img/icons/general/close-white.svg"></use></svg></button>
-            <button type="submit" class="btn btn--primary btn--login" onclick="createContact">Create contact<img class="img-check"
+            <button type="button" class="btn btn--primary btn--login" onclick="createContact()">Create contact<img class="img-check"
                 src="../assets/img/icons/general/check.svg" alt="create check"></button>
           </section>
         </form>
@@ -76,7 +76,7 @@ function renderHtmlEditContactDialogTpl() {
         <form>
           <section class="dialog-input-container">
             <div class="dialog-input-section">
-              <input class="dialog-input" type="text" name="name" placeholder="Name" required />
+              <input class="dialog-input"  type="text" name="name" placeholder="Name" required />
               <img src="../assets/img/icons/input/person.svg" alt="icon" class="dialog-input-icon" />
             </div>
 

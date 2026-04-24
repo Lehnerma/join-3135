@@ -41,7 +41,6 @@ async function getUsers() {
   sortUserContactList();
 }
 
-
 function sortUserContactList() {
   USERS.sort(function (a, b) {
     let x = a.name.toLowerCase();
@@ -52,7 +51,6 @@ function sortUserContactList() {
   })
   UserContectList();
 }
-
 
 function UserContectList() {
   let contactList = document.getElementById('contactList');
@@ -76,13 +74,13 @@ function renderContectListTpl(user, i) {
   return /*html*/ `
    <p class="first-letter">${firstLetter}</p>
     <div class="letter-divider"></div>
-       <div id="${userID}" class="user-Selection" onclick="getUserDetails(${i}, ${userID})">
+       <div id="${userID}" class="user-Selection" onclick="getUserDetails(${i})">
         <div class="initials" style="background-color: ${color}">
             ${initials}
         </div>
         <div class="contact-info-text">
             <div class="name">${user.name}</div>
-            <a href="mailto:${user.email}" class="email">${user.email}</a>
+            <p class="email">${user.email}</p>
         </div>
     </div>`;
 }
@@ -115,7 +113,6 @@ function showEditDialog() {
   dialogRef.showModal();
 
 }
-
 
 
 function closeContactDialog() {
@@ -202,8 +199,52 @@ function openEditContactDialog() {
 
 
 function createContact() {
+  const name = document.getElementById('createName').value;
+  const email = document.getElementById('createEmail').value;
+  const phone = document.getElementById('createPhone').value;
 
+  const newContact = ({
+    name: name,
+    email: email,
+    phone: phone,
+    id: new Date().getTime()
+  });
+
+  USERS.push(newContact);
+  sortUserContactList();
+  closeContactDialog();
+
+  const newIndex = userContent.findIndex(u => u.id === newContact.id);
+
+  closeContactDialog();
+  if (newIndex !== -1) {
+    getUserDetails(newIndex);
+  }
+
+
+  try {
+      
+      const response = await fetch('https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newContact) 
+      });
+
+      if (response.ok) {
+        console.log('Kontakt erfolgreich synchronisiert!');
+       
+      } else {
+        console.error('Fehler beim Speichern');
+      }
+    } catch (error) {
+      console.error('Netzwerkfehler:', error);
+    }
 }
+
+
+
 
 
 function deleteContact() {

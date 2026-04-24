@@ -1,5 +1,5 @@
 html {
-  overflow: hidden;
+   overflow: hidden; 
 }
 
 [role="button"],
@@ -44,7 +44,7 @@ button {
 .add-button-size {
   font-family: "Inter";
   font-weight: 700;
-  font-size: clamp(16px, 1.5vw, 21px);
+  font-size: 21px;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -422,10 +422,20 @@ button {
   font-family: "Inter";
   font-size: 21px;
   font-weight: 400;
-}
+} 
 
 
-/* --- DIALOG DETAILS --- */
+
+
+
+
+
+ 
+
+
+
+
+/* --- DIALOG CONTACT DETAILS BOX --- */
 
 
 .contact-details-box {
@@ -436,8 +446,8 @@ button {
   height: 364px;
   width: 561px;
   border: none;
-  top: 45%;
-  left: 27%;
+  top: 250px;
+  left: 55px;
   background-color: transparent;
   z-index: 5;
   animation: slideInDetailBox 0.4s ease-out forwards;
@@ -446,13 +456,13 @@ button {
 @keyframes slideInDetailBox {
   from {
 
-    transform: translate(150vw, -40%);
+    transform: translate(100vw);
     opacity: 0;
   }
 
   to {
 
-    transform: translate(-50%, -50%);
+    transform: translate(0);
     opacity: 1;
   }
 }
@@ -540,10 +550,8 @@ button {
   transform: scale(1.05);
 }
 
-.edit-delete-button svg{
-
+.edit-delete-button svg {
   fill: currentColor;
-  
 }
 
 .edit-svg,
@@ -557,4 +565,3 @@ button {
 li {
   list-style-type: none;
 }
-
