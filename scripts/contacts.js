@@ -29,43 +29,8 @@ const contactColors = {
 let USERS = [];
 let userContent = [];
 
-
-function init() {
-  
-    getUsers();
+function init() {getUsers();
 }
-
-// function getBoxId(id) {
-//   const BOX_ID = document.getElementById(id);
-//   return BOX_ID;
-// }
-
-function openOverlayContact() {
-  const dialog = document.getElementById("addNewContact");
-        dialog.showModal();
-}
-
-// function generateId() {
-//   return (Date.now().toString(36) + Math.random().toString(36)).substring(0, 6);
-// }
-
-// function cerateContactDialog(add_contact) {
-//   const DIALOG_REF = document.getElementById(add_contact);
-//   DIALOG_REF.showModal();
-// }
-
-// class contact {
-//   constructor(data = {}) {
-//     this.id = data.id || this.generateId();
-//     this.firstName = data.firstName || "";
-//     this.lastName = data.lastName || "";
-//     this.email = data.email || "";
-//     this.phone = data.phone || "";
-
-//     this.createdAt = data.createdAt || new Date();
-//     this.updatedAt = new Date();
-//   }
-// }
 
 async function getUsers() {
   const USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
@@ -74,6 +39,7 @@ async function getUsers() {
   USERS = Object.values(RESULT);
   sortUserContactList();
 }
+
 
 function sortUserContactList() {
   USERS.sort(function (a, b) {
@@ -86,33 +52,37 @@ function sortUserContactList() {
   UserContectList();
 }
 
+
 function UserContectList() {
   let contactList = document.getElementById('contactList');
   contactList.innerHTML = '';
+  userContent = [];
   for (let i = 0; i < USERS.length; i++) {
     userContent.push(USERS[i]);
-    console.log(userContent);
-    contactList.innerHTML += renderContectListTpl(USERS[i]);
+    contactList.innerHTML += renderContectListTpl(USERS[i], i);
   }
+  console.log(userContent);
 }
+
 
 function renderContectListTpl(user, i) {
   let firstLetter = user.name.charAt(0).toUpperCase();
   let userID = user.id
-  console.log(userID);
+
   let initials = getInitials(user.name);
   let color = contactColors[firstLetter];
 
   return /*html*/ `
-    <div class="letter-divider">${firstLetter}</div>
-       <div id="${userID}" class="userSelection" onclick="showDetails()">
+   <p class="first-letter">${firstLetter}</p>
+    <div class="letter-divider"></div>
+       <div id="${userID}" class="user-Selection" onclick="getUserDetails(${i}, ${userID})">
         <div class="initials" style="background-color: ${color}">
-         ${initials}
-    </div>
-    <div class="contact-list">
-       <div class="name">${user.name}</div>
-         <a href="mailto:${user.email}" class="email" onclick="event.stopPropagation()" >${user.email}
-       </div>
+            ${initials}
+        </div>
+        <div class="contact-info-text">
+            <div class="name">${user.name}</div>
+            <a href="mailto:${user.email}" class="email">${user.email}</a>
+        </div>
     </div>`;
 }
 
@@ -126,4 +96,120 @@ function getInitials(name) {
     currentInitial += splitNames[splitNames.length - 1].charAt(0).toUpperCase();
   }
   return currentInitial;
+}
+
+
+function openContactDialog() {
+  const dialogRef = document.getElementById('openNewDialog');
+  dialogRef.classList.remove('hide');
+  dialogRef.innerHTML = renderHtmlContactDialogTpl();
+  dialogRef.showModal();
+
+}
+
+function showEditDialog() {
+  const dialogRef = document.getElementById('openNewDialog');
+  dialogRef.classList.remove('hide');
+  dialogRef.innerHTML = renderHtmlEditContactDialogTpl();
+  dialogRef.showModal();
+
+}
+
+
+
+function closeContactDialog() {
+  const dialogRef = document.getElementById('openNewDialog');
+  dialogRef.close();
+  dialogRef.classList.add('hide');
+  const formRef = document.getElementById('formRef');
+
+  if (formRef) {
+    formRef.reset();
+  }
+}
+
+
+function closeDialogOutsite(event) {
+  event.stopPropagation();
+}
+
+
+function getUserDetails(index) {
+  let user = userContent[index];
+  let currentUserID = user.id;
+  const userSelectionID = document.getElementById(currentUserID);
+  const isAlreadyActive = userSelectionID.classList.contains('bg-color-active');
+  removeAllBgColors(user, isAlreadyActive, userSelectionID);
+}
+
+
+function removeAllBgColors(user, isAlreadyActive, userSelectionID) {
+  const allSelections = document.querySelectorAll('.user-Selection');
+  allSelections.forEach(element => {
+    element.classList.remove('bg-color-active');
+  });
+  showDetails(user, isAlreadyActive, userSelectionID);
+}
+
+
+function showDetails(user, isAlreadyActive, userSelectionID) {
+  const dialogRef = document.getElementById('contactDetailsDialog');
+  if (!isAlreadyActive) {
+    userSelectionID.classList.add('bg-color-active');
+    dialogRef.innerHTML = renderShowDetailsTpl(user);
+  } else {
+    dialogRef.innerHTML = '';
+  }
+}
+
+
+function renderShowDetailsTpl(user) {
+  let initials = getInitials(user.name);
+  let firstLetter = user.name.charAt(0).toUpperCase();
+  let color = contactColors[firstLetter];
+  return /*html*/ `<div class="contact-details-box">
+  <header class="header-contect-details">
+    <div class="initials-large" style="background-color:${color}">
+      ${initials}
+    </div>
+    <div class="name-and-buttons">
+      <h1 class="h1-contact-details">${user.name}</h1>
+      <div class="edit-delete">
+        <button type="button" class="edit-delete-button" onclick="openEditContactDialog()"><img class="edit-icon"
+            src="../assets/img/icons/general/edit-contacts.svg" alt="edit contact">Edit</button>
+        <button type="button" class="edit-delete-button"><img class="delete-icon"
+            src="../assets/img/icons/general/trash-contact-.svg" alt="contacts delete">Delete</button>
+      </div>
+    </div>
+  </header>
+  <main class="main-contact-details">
+    <div class="contact-information">
+      Contact Information</div>
+    <ul class="email-and-phone">
+      <li class="contact-email">Email</li>
+      <li><a href="mailto:${user.email}" class="email">${user.email}</a></li>
+      <li class="contact-phone">Phone</li>
+      <li>${user.phone}</li>
+    </ul>
+  </main>
+</div>`;
+}
+
+function openEditContactDialog() {
+  showEditDialog();
+}
+
+
+function createContact() {
+  
+}
+
+
+function deleteContact() {
+  
+}
+
+
+function saveContact(){
+  
 }

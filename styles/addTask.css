@@ -4,7 +4,7 @@ main {
 
 .task-container {
   max-width: var(--max-dp-width);
-  padding: 16px;
+  padding: 0 16px;
 
   h1 {
     font-size: 47px;
@@ -36,6 +36,12 @@ main {
   padding: 8px 0;
 }
 
+.form-task.submitted .input:required:invalid,
+.form-task.submitted select:required:invalid,
+.form-task.submitted textarea:required:invalid {
+  border: 1px solid red;
+}
+
 .column {
   display: flex;
   flex-direction: column;
@@ -48,8 +54,13 @@ main {
   margin-bottom: 10px;
 }
 
-.prio-btn {
+.btn--prio {
+  height: 56px;
+
   flex: 1;
+  min-width: 50px;
+  max-width: 136px;
+
   padding: 12px;
   border: 1px solid var(--border-color);
   border-radius: 10px;
@@ -64,10 +75,23 @@ main {
   }
 }
 
-.prio-btn .active {
+.priority-group .active {
+.prio-btn.urgent-active {
   background-color: #ff3d00;
   color: white;
   border-color: #ff3d00;
+}
+
+.prio-btn.medium-active {
+  background-color: #ffa800;
+  color: white;
+  border-color: #ffa800;
+}
+
+.prio-btn.low-active {
+  background-color: #7ae229;
+  color: white;
+  border-color: #7ae229;
 }
 
 .img-prio {
@@ -86,6 +110,7 @@ main {
 
 .dropdown {
   color: black;
+  background-color: white;
 }
 
 .input {
@@ -149,7 +174,9 @@ main {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 32px;
+
+  gap: clamp(8px, 3vw, 32px);
+
   position: sticky;
   bottom: 0;
   z-index: 5;
@@ -166,7 +193,6 @@ main {
     content: "";
     width: 24px;
     height: 24px;
-
     background: url("../assets/img/icons/subtask/close.svg");
     background-position: center;
     background-size: contain;
@@ -200,6 +226,27 @@ main {
   container-type: inline-size;
 }
 
+
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2ecc71;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-10px);
+}
+
 @media (min-width: 900px) {
   .task-container {
     margin-left: clamp(16px, 5vw, 96px);
@@ -207,12 +254,11 @@ main {
   .form-task {
     max-width: 1000px;
     grid-template-columns: 1fr 10px 1fr;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto;
     gap: 32px;
     grid-template-areas:
       "left-col divider right-col"
-      "info info info"
-      "footer footer footer";
+      "info info info";
   }
   .left {
     grid-area: left-col;
@@ -228,7 +274,37 @@ main {
   .form-info-section {
     grid-area: info;
   }
+
   .form-footer {
-    grid-area: footer;
+    max-width: 1000px;
+  }
+}
+
+@media (max-width: 900px) {
+  .input--title,
+  .form-footer {
+    position: sticky;
+    background-color: var(--main-bg);
+    z-index: 5;
+  }
+  .input--title {
+    top: 0;
+  }
+  .form-footer {
+    bottom: 0;
+  }
+  .form-info-section {
+    padding-bottom: 32px;
+  }
+}
+
+@media (max-width: 330px) {
+  .task-container {
+    padding: 0;
+  }
+  .input--title,
+  .form-task,
+  .form-footer {
+    padding: 0 16px;
   }
 }
