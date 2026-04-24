@@ -29,7 +29,8 @@ const contactColors = {
 let USERS = [];
 let userContent = [];
 
-function init() {getUsers();
+function init() {
+  getUsers();
 }
 
 async function getUsers() {
@@ -174,11 +175,11 @@ function renderShowDetailsTpl(user) {
     </div>
     <div class="name-and-buttons">
       <h1 class="h1-contact-details">${user.name}</h1>
-      <div class="edit-delete">
-        <button type="button" class="edit-delete-button" onclick="openEditContactDialog()"><img class="edit-icon"
-            src="../assets/img/icons/general/edit-contacts.svg" alt="edit contact">Edit</button>
-        <button type="button" class="edit-delete-button"><img class="delete-icon"
-            src="../assets/img/icons/general/trash-contact-.svg" alt="contacts delete">Delete</button>
+      <div class="edit-delete-container">
+        <button type="button" class="edit-delete-button" onclick="openEditContactDialog()"><svg class="edit-svg"><use
+            href="../assets/img/icons/general/edit-contacts.svg"></use></svg>Edit</button>
+        <button type="button" class="edit-delete-button"><svg class="delete-svg">
+            <use href="../assets/img/icons/general/trash-contact.svg"></use></svg>Delete</button>
       </div>
     </div>
   </header>
@@ -201,15 +202,15 @@ function openEditContactDialog() {
 
 
 function createContact() {
-  
+
 }
 
 
 function deleteContact() {
-  
+
 }
 
 
-function saveContact(){
-  
+function saveContact() {
+
 }
