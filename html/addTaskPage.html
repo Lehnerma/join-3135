@@ -11,8 +11,9 @@
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../styles/sidebar.css" />
     <link rel="stylesheet" href="../styles/addTask.css" />
-    <!-- <script src="../scripts/addTask.js"></script> -->
-    <script src="../scripts/addTask2.js"></script>
+    
+    <script src="../scripts/templates.js"></script>
+    <script src="../scripts/addTask.js"></script>
   </head>
 
   <body class="app" onload="init()">
@@ -111,11 +112,17 @@
               </select>
               <span class="field-error">This field is required</span>
             </div>
+
+
+
+
+
+
             <!-- subtask -->
             <div class="input-section">
-              <label for="subtask">Subtasks</label>
+              <label for="subtask_input">Subtasks</label>
               <div class="input--section">
-                <input id="subtask" class="input" type="text" placeholder="Add subtask" />
+                <input id="subtask_input" class="input" type="text" placeholder="Add subtask" />
                 <div class="subtask--btns">
                   <button id="subtask-close" class="btn--subtask close"><img src="../assets/img/icons/subtask/close.svg" alt="x" /></button>
                   <span class="div-vert"></span>
@@ -125,6 +132,13 @@
               <ul id="subtask-list" class="subtask-list"></ul>
             </div>
           </section>
+
+
+
+
+
+
+
           <!-- info -->
           <section class="form-info-section">
             <p><b class="form-info">*</b> This field is required</p>

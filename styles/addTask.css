@@ -218,8 +218,6 @@ main {
   &:hover .subtask-item--btns,
   &.editing .subtask-item--btns {
     opacity: 1;
-    background-color: red;
-    border-radius: 50%;
   }
 }
 
