@@ -6,16 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" href="../assets/img/favicon/favicon-join.svg" type="image/x-icon" />
   <title>Contacts</title>
-
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="../styles/sidebar.css" />
   <link rel="stylesheet" href="../styles/contacts.css" />
-
   <link rel="stylesheet" href="../styles/fonts.css" />
   <link rel="stylesheet" href="../styles/colors.css" />
   <script defer src="../scripts/contacts.js"></script>
   <script defer src="../scripts/contacts-template.js"></script>
-  <script src="../scripts/utilitys.js"></script>
+  <!-- <script defer src="../scripts/utilitys.js"></script> -->
 </head>
 
 <body class="app" onload="init()">
@@ -54,7 +52,6 @@
   </nav>
 
   <main class="main-content">
-
     <div class="left-content">
       <div class="add-button-container">
         <button type="button" class="btn btn--primary add-button-size" onclick="openContactDialog()">
@@ -66,7 +63,6 @@
         <div id="contactList" class="contact-data"></div>
       </div>
     </div>
-
     <div class="right-content">
       <div class="headline">
         <h1 class="contacts-title">Contacts</h1>
@@ -77,13 +73,8 @@
   </main>
 
   <dialog class="dialog-content" id="openNewDialog" onclick="closeContactDialog()">
-
   </dialog>
+
 </body>
 
 </html>
-
-
-
-
-
