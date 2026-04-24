@@ -1,7 +1,4 @@
 html {
-  box-sizing: border-box;
-  scroll-behavior: smooth;
-  margin: 0;
   overflow: hidden;
 }
 
@@ -15,11 +12,11 @@ button {
 .main-content {
   display: flex;
   max-height: 100vh;
+
   background-color: var(--input-text-color);
 }
 
 .left-content {
-  margin-top: 12px;
   width: 456px;
   display: flex;
   align-items: center;
@@ -29,7 +26,10 @@ button {
   overflow: hidden;
   overflow-y: auto;
   flex-shrink: 0;
+  z-index: 10;
+  box-shadow: 4px 0px 4px 0px rgba(0, 0, 0, 0.1);
 }
+
 
 .add-button-container {
   display: flex;
@@ -152,9 +152,7 @@ button {
   position: relative;
   align-items: flex-start;
   width: 100%;
-  margin-top: 10px;
-  box-shadow: inset 3px 2px 10px 2px rgba(0, 0, 0, 0.1);
-  background-color: var(--background-color);
+  background-color: var(--main-bg);
 }
 
 .headline {
@@ -405,9 +403,6 @@ button {
   height: 24px;
   filter: brightness(0) invert(1);
   margin-left: 6px;
-  font-family: "Inter";
-  font-size: 21px;
-  font-weight: 700;
   white-space: nowrap;
 }
 
@@ -419,9 +414,9 @@ button {
 .img-x {
   width: 24px;
   height: 24px;
+  margin-top: 2px;
   margin-left: 6px;
-  margin-bottom: 2px;
-}
+ }
 
 .btn-cancel-text {
   font-family: "Inter";
@@ -522,10 +517,11 @@ button {
   white-space: nowrap;
 }
 
-.edit-delete {
+.edit-delete-container {
   display: flex;
   gap: 13px;
 }
+
 
 .edit-delete-button {
   display: flex;
@@ -535,23 +531,30 @@ button {
   font-weight: 400;
   color: var(--primary-color);
   border: none;
+  cursor: pointer;
 }
 
-.edit-icon,
-.delete-icon {
+.edit-delete-button:hover {
+  color: var(--secondary-color);
+  font-weight: 700;
+  transform: scale(1.05);
+}
+
+.edit-delete-button svg{
+
+  fill: currentColor;
+  
+}
+
+.edit-svg,
+.delete-svg {
   width: 24px;
   height: 24px;
   margin-right: 8px;
 }
 
+
 li {
   list-style-type: none;
 }
 
-.contact-email,
-.contact-phone {
-
-  font-family: "Inter";
-  font-size: 16px;
-  font-weight: 700;
-}
