@@ -64,7 +64,7 @@ function renderHtmlEditContactDialogTpl() {
       </aside>
 
       <header class="dialog-header">
-        <button type="button" id="close-btn" class="close-btn-overlay" onclick="closeContactDialog()"><svg class="img-x"><use href="../assets/img/icons/general/close-white.svg"></use></svg></button>
+        <button type="button" id="close-btn" class="close-btn-overlay" onclick="closeContactDialog()"></button>
       </header>
 
       <main class="dialog-main">
