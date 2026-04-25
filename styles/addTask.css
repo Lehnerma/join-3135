@@ -365,7 +365,7 @@ main {
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 950px) {
   .input--title,
   .form-footer {
     position: sticky;
