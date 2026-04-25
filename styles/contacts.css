@@ -1,5 +1,5 @@
 html {
-   overflow: hidden; 
+  overflow: hidden;
 }
 
 [role="button"],
@@ -12,23 +12,51 @@ button {
 .main-content {
   display: flex;
   max-height: 100vh;
-
   background-color: var(--input-text-color);
 }
 
 .left-content {
-  width: 456px;
+  width: clamp(300px, 30vw, 456px);
+  height: 90vh;
   display: flex;
   align-items: center;
   flex-direction: column;
   background-color: var(--input-text-color);
-  height: 85vh;
-  overflow: hidden;
+  overflow-x: hidden;
   overflow-y: auto;
   flex-shrink: 0;
   z-index: 10;
   box-shadow: 4px 0px 4px 0px rgba(0, 0, 0, 0.1);
 }
+
+.left-content::-webkit-scrollbar {
+  width: 24px;
+}
+
+.left-content::-webkit-scrollbar-thumb {
+    background-color: var(--fourth-text-color);
+  border: 8px solid var(--input-text-color);
+  border-radius: 20px;
+ }
+
+.left-content::-webkit-scrollbar-button:vertical {
+  display: flex;
+  height: 40px;
+  background-color: var(--input-text-color);
+  background-repeat: no-repeat;
+  border: none;
+}
+
+.left-content::-webkit-scrollbar-button:vertical:decrement {
+  background-image: url("../assets/img/icons/general/Vector\ 12.svg");
+  background-position: center;
+}
+
+.left-content::-webkit-scrollbar-button:vertical:increment {
+  background-image: url("../assets/img/icons/general/Vector\ 13.svg");
+  background-position: center;
+}
+
 
 
 .add-button-container {
@@ -59,10 +87,11 @@ button {
 }
 
 .contact-list {
-  margin-top: 80px;
+  margin-top: 53px;
   display: flex;
   justify-content: center;
   width: 400px;
+  padding: 32px 24px 32px 24px;
 }
 
 .first-letter {
@@ -78,9 +107,12 @@ button {
 }
 
 .letter-divider {
-  width: 352px;
+  /* clamp(Minimum, Bevorzugt, Maximum) */
+  width: clamp(150px, 90%, 352px);
   border-bottom: 1px solid;
   border-color: var(--fifth-text-color);
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .user-Selection {
@@ -185,9 +217,15 @@ button {
   white-space: nowrap;
 }
 
+
+
+
+
+
+
 /* --- DIALOG CONTENT --- */
 
-.dialog-content {
+/* .dialog-content {
   display: none;
   border: none;
   border-radius: 30px;
@@ -422,7 +460,7 @@ button {
   font-family: "Inter";
   font-size: 21px;
   font-weight: 400;
-} 
+}   */
 
 
 
@@ -430,12 +468,240 @@ button {
 
 
 
- 
+
+.dialog-content {
+  display: none;
+  border: none;
+  border-radius: clamp(15px, 2.5vw, 30px);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: clamp(700px, 90vw, 1212px);
+  aspect-ratio: 1212 / 594;
+  max-height: 95vh;
+  background-color: var(--input-text-color);
+  z-index: 10;
+  overflow: hidden;
+}
+
+.dialog-content[open] {
+  display: flex;
+  animation: slideIn 0.4s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translate(100vw, -50%);
+  }
+
+  to {
+    transform: translate(-50%, -50%);
+  }
+}
+
+.dialog-content.hide {
+  display: flex;
+  animation: slideOut 0.5s ease-in forwards;
+}
+
+@keyframes slideOut {
+  from {
+    transform: translate(-50%, -50%);
+  }
+
+  to {
+    transform: translate(100vw, -50%);
+  }
+}
+
+.dialog-content::backdrop {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.dialog-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: relative;
+}
+
+.aside-content {
+  background-color: var(--primary-color);
+  width: 39.3%;
+  height: 100%;
+  color: var(--input-text-color);
+  padding: 0 clamp(20px, 4vw, 48px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.aside-logo {
+  position: absolute;
+  top: clamp(30px, 12.3vw, 150px);
+  left: clamp(20px, 3.9vw, 47px);
+  width: clamp(35px, 5vw, 56px);
+  height: auto;
+}
+
+.aside-h2 {
+  font-family: "Inter";
+  font-weight: 700;
+  font-size: clamp(30px, 5vw, 61px);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.aside-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: clamp(8px, 1.3vw, 16px) 0;
+}
+
+.aside-p {
+  font-size: clamp(16px, 2.2vw, 27px);
+  font-family: "Inter";
+  font-weight: 400;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.blue-line-horizontal {
+  width: clamp(45px, 7.4vw, 90px);
+  height: clamp(2px, 0.25vw, 3px);
+  background-color: var(--secondary-color);
+  border-radius: clamp(1px, 0.16vw, 2px);
+  margin-top: clamp(8px, 1.3vw, 16px);
+}
+
+.close-btn-overlay {
+  position: absolute;
+  top: clamp(15px, 2.6vw, 32px);
+  right: clamp(15px, 2.6vw, 32px);
+  background: none;
+  border: none;
+  font-size: clamp(18px, 2vw, 24px);
+  cursor: pointer;
+  z-index: 20;
+}
+
+.dialog-main {
+  width: 60.7%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  flex-shrink: 0;
+}
+
+.person-Logo-container {
+  flex-shrink: 0;
+  width: clamp(80px, 10vw, 120px);
+  height: clamp(80px, 10vw, 120px);
+  background-color: var(--input-default-main);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 85px 65px 85px;
+}
+
+.person-logo {
+  width: 53%;
+  height: auto;
+}
+
+.dialog-input-container {
+  width: 100%;
+  max-width: clamp(300px, 34.8vw, 422px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(10px, 2.6vw, 32px);
+}
+
+.dialog-input-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: clamp(35px, 4.1vw, 50px);
+  border-radius: clamp(6px, 0.8vw, 10px);
+  border: clamp(1px, 0.1vw, 1.5px) solid var(--input-default-main);
+}
+
+.dialog-input {
+  width: 100%;
+  height: 100%;
+  padding-left: clamp(10px, 1.7vw, 21px);
+  border: none;
+  outline: none;
+  font-family: "Inter";
+  font-size: clamp(14px, 1.6vw, 20px);
+  background: transparent;
+}
+
+.dialog-input-icon {
+  width: clamp(18px, 2vw, 24px);
+  height: auto;
+  margin-right: clamp(10px, 1.7vw, 21px);
+}
+
+.dialog-login-buttons {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: clamp(8px, 1.3vw, 16px);
+  margin-top: clamp(10px, 3.3vw, 40px);
+}
+
+.dialog-login-buttons button,
+.dialog-login-buttons div[onclick] {
+  padding: clamp(8px, 1.2vw, 15px) clamp(15px, 2vw, 25px);
+  border-radius: clamp(6px, 0.8vw, 10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  font-size: clamp(14px, 1.7vw, 21px);
+  width: auto;
+  cursor: pointer;
+}
+
+.img-check,
+.img-x {
+  width: clamp(16px, 2vw, 24px);
+  height: clamp(16px, 2vw, 24px);
+  margin-left: clamp(4px, 0.6vw, 8px);
+}
+
+.img-check {
+  filter: brightness(0) invert(1);
+}
+
+@media (max-width: 700px) {
+  .dialog-content {
+    width: 95vw;
+    aspect-ratio: 1212 / 594;
+  }
+}
+
+
+
 
 
 
 
 /* --- DIALOG CONTACT DETAILS BOX --- */
+
+
+
+
 
 
 .contact-details-box {
