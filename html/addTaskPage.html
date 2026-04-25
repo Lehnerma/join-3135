@@ -10,8 +10,9 @@
     <link rel="stylesheet" href="../styles/colors.css" />
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../styles/sidebar.css" />
+    <link rel="stylesheet" href="../styles/subtasks.css" />
     <link rel="stylesheet" href="../styles/addTask.css" />
-    
+
     <script src="../scripts/templates.js"></script>
     <script src="../scripts/addTask.js"></script>
   </head>
@@ -113,11 +114,6 @@
               <span class="field-error">This field is required</span>
             </div>
 
-
-
-
-
-
             <!-- subtask -->
             <div class="input-section">
               <label for="subtask_input">Subtasks</label>
@@ -129,15 +125,9 @@
                   <button id="subtask-save" class="btn--subtask check"><img src="../assets/img/icons/subtask/check.svg" alt="check" /></button>
                 </div>
               </div>
-              <ul id="subtask-list" class="subtask-list"></ul>
+              <ul id="subtask_list" class="subtask-list"></ul>
             </div>
           </section>
-
-
-
-
-
-
 
           <!-- info -->
           <section class="form-info-section">
@@ -146,7 +136,7 @@
         </form>
         <section class="form-footer">
           <div class="action-btns">
-            <button type="reset" class="btn btn--secondary clear" form="form_task">Clear</button>
+            <button id="form_clear" type="reset" class="btn btn--secondary clear" form="form_task">Clear</button>
             <button type="submit" class="btn btn--primary" form="form_task">Create Task</button>
           </div>
         </section>
