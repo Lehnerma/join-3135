@@ -31,6 +31,7 @@ let userContent = [];
 
 function init() {
   getUsers();
+  getSavedContact();
 }
 
 async function getUsers() {
@@ -63,14 +64,11 @@ function UserContectList() {
   console.log(userContent);
 }
 
-
 function renderContectListTpl(user, i) {
   let firstLetter = user.name.charAt(0).toUpperCase();
   let userID = user.id
-
   let initials = getInitials(user.name);
   let color = contactColors[firstLetter];
-
   return /*html*/ `
    <p class="first-letter">${firstLetter}</p>
     <div class="letter-divider"></div>
@@ -88,7 +86,6 @@ function renderContectListTpl(user, i) {
 
 function getInitials(name) {
   let splitNames = name.split(' ');
-  console.log(splitNames);
   let currentInitial = '';
   currentInitial += splitNames[0].charAt(0).toUpperCase();
   if (splitNames.length > 1) {
@@ -120,7 +117,6 @@ function closeContactDialog() {
   dialogRef.close();
   dialogRef.classList.add('hide');
   const formRef = document.getElementById('formRef');
-
   if (formRef) {
     formRef.reset();
   }
@@ -132,8 +128,10 @@ function closeDialogOutsite(event) {
 }
 
 
-function getUserDetails(index) {
-  let user = userContent[index];
+function getUserDetails(userIndex) {
+  let user = userContent[userIndex];
+  console.log(user);
+
   let currentUserID = user.id;
   const userSelectionID = document.getElementById(currentUserID);
   const isAlreadyActive = userSelectionID.classList.contains('bg-color-active');
@@ -175,7 +173,7 @@ function renderShowDetailsTpl(user) {
       <div class="edit-delete-container">
         <button type="button" class="edit-delete-button" onclick="openEditContactDialog()"><svg class="edit-svg"><use
             href="../assets/img/icons/general/edit-contacts.svg"></use></svg>Edit</button>
-        <button type="button" class="edit-delete-button"><svg class="delete-svg">
+        <button type="button" class="edit-delete-button" onclick="deleteContact(${user.id})"><svg class="delete-svg">
             <use href="../assets/img/icons/general/trash-contact.svg"></use></svg>Delete</button>
       </div>
     </div>
@@ -202,56 +200,84 @@ function createContact() {
   const name = document.getElementById('createName').value;
   const email = document.getElementById('createEmail').value;
   const phone = document.getElementById('createPhone').value;
-
+  const id = Math.floor(1000 + Math.random() * 9000);
   const newContact = ({
     name: name,
     email: email,
     phone: phone,
-    id: new Date().getTime()
+    id: id
   });
+  addNewContact(newContact);
+}
 
+
+function addNewContact(newContact) {
   USERS.push(newContact);
+  const contactIndex = userContent.findIndex(user => user.id === newContact.id);
   sortUserContactList();
+  
+      
+  if (contactIndex) {
+    getUserDetails(newContact);
+  }
   closeContactDialog();
+  syncNewContact(newContact);
+  localStorageNewcontact();
+}
 
-  const newIndex = userContent.findIndex(u => u.id === newContact.id);
 
-  closeContactDialog();
-  if (newIndex !== -1) {
-    getUserDetails(newIndex);
+function localStorageNewcontact() {
+  localStorage.setItem('tempContact'.JSON.stringify(newContact));
   }
 
 
-  try {
-      
-      const response = await fetch('https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newContact) 
-      });
+  function getSavedContact() {
+  const saved = localStorage.getItem('tempContact');
+  return saved ? JSON.parse(saved) : null;
+}
 
-      if (response.ok) {
-        console.log('Kontakt erfolgreich synchronisiert!');
-       
-      } else {
-        console.error('Fehler beim Speichern');
-      }
-    } catch (error) {
-      console.error('Netzwerkfehler:', error);
-    }
+
+async function syncNewContact(newContact) {
+  const response = await fetch('https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newContact)
+  });
+  if (response.ok) {
+    console.log('Kontakt erfolgreich synchronisiert!');
+
+  } else {
+    console.error('Fehler beim Speichern');
+  }
+}
+
+
+
+function deleteContact(deleteUser) {
+localStorage.removeItem('userContent');
+getUsers();
+deleteContact();
+}
+
+async function deleteContact(deleteUser) {
+  const response = await fetch(`https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/${deleteUser}.json`, {
+    method: 'DELETE'
+  });
+
+  if (response.ok) {
+    console.log('Kontakt erfolgreich gelöscht!');
+  } else {
+    console.error('Fehler beim Löschen');
+  }
 }
 
 
 
 
 
-function deleteContact() {
 
-}
-
-
-function saveContact() {
+function saveEditContact() {
 
 }
