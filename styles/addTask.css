@@ -139,6 +139,7 @@ main {
 
 .input {
   width: 100%;
+  background-color: rgba(255, 255, 255, 1);
 }
 
 .input--section {
@@ -174,11 +175,17 @@ main {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  width: 24px;
+  height: 24px;
+  &:hover {
+    background-color: rgba(238, 238, 238, 1);
+    border-radius: 50%;
+  }
 }
 
 .btn--subtask img {
-  width: 20px;
-  height: 20px;
+  width: auto;
+  height: auto;
   object-fit: contain;
   object-position: center;
 }
@@ -200,8 +207,8 @@ main {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 8px;
-  border-radius: 8px;
+  padding: 4px 16px;
+  border-radius: 10px;
   cursor: default;
 
   &::before {
@@ -212,12 +219,21 @@ main {
   }
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: rgba(238, 238, 238, 1);
   }
 
   &:hover .subtask-item--btns,
   &.editing .subtask-item--btns {
     opacity: 1;
+  }
+
+  &.editing {
+    border-bottom: solid 1px var(--subtask-edit-border);
+    border-radius: 0;
+  }
+
+  &.editing::before {
+    visibility: hidden;
   }
 }
 
@@ -238,10 +254,9 @@ main {
 .subtask-edit-input {
   flex: 1;
   border: none;
-  border-bottom: solid 1px var(--subtask-edit-border);
   outline: none;
-  padding: 4px 16px;
-  background: white;
+  padding: 2px 4px;
+  background: transparent;
 }
 
 .required::after {
@@ -370,7 +385,9 @@ main {
     padding: 12px;
     font-size: 20px;
   }
-  .urgent-active, .medium-active, .low-active {
+  .urgent-active,
+  .medium-active,
+  .low-active {
     font-size: 21px;
   }
 }

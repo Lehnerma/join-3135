@@ -4,7 +4,7 @@
  */
 function getSubtaskTemplate(title, index){
     return `
-    <input id="subtask${index}" class="subtask-text">${escapeHtml(title)}</input>
+    <span id="subtask${index}" class="subtask-text">${escapeHtml(title)}</span>
     <div class="subtask-item--btns">
       <button type="button" class="btn--subtask btn--delete">
         <img src="../assets/img/icons/subtask/bin.svg" alt="delete" />
@@ -15,3 +15,4 @@ function getSubtaskTemplate(title, index){
       </button>
     </div>`
 }
+
