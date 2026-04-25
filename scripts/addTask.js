@@ -58,6 +58,9 @@ function subtaskInit() {
   });
 }
 
+/**
+ * Resets the task form to its default state and clears all subtasks.
+ */
 function clearForm() {
   document.getElementById("form_task").reset();
   initDateInput();
@@ -155,12 +158,22 @@ function addSubtaskEventListener(LI) {
   });
 }
 
+/**
+ * Escapes special HTML characters in a string to prevent XSS.
+ * @param {string} str - The raw string to escape.
+ * @returns {string} The escaped HTML-safe string.
+ */
 function escapeHtml(str) {
   const div = document.createElement("div");
   div.textContent = str;
   return div.innerHTML;
 }
 
+/**
+ * Switches a subtask list item into inline edit mode.
+ * Replaces the text span with an input field and updates the edit button icon.
+ * @param {HTMLLIElement} li - The subtask list item to edit.
+ */
 function startEditSubtask(li) {
   if (li.classList.contains("editing")) return;
 
@@ -183,6 +196,10 @@ function startEditSubtask(li) {
   input.select();
 }
 
+/**
+ * Cancels inline editing and restores the original subtask text.
+ * @param {HTMLLIElement} li - The subtask list item being edited.
+ */
 function cancelEditSubtask(li) {
 const input = li.querySelector(".subtask-edit-input");
 if (!input) return;
@@ -197,6 +214,11 @@ li.classList.remove("editing");
 li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
 }
 
+/**
+ * Removes a subtask from the SUBTASKS array and from the DOM.
+ * Re-indexes all remaining subtask items after deletion.
+ * @param {HTMLLIElement} li - The subtask list item to delete.
+ */
 function deleteSubtask(li) {
 subtasks.splice(parseInt(li.dataset.index), 1);
 li.remove();
@@ -205,6 +227,11 @@ item.dataset.index = i;
 });
 }
 
+/**
+ * Saves the edited subtask title and exits inline edit mode.
+ * Updates the SUBTASKS array and replaces the input with a text span.
+ * @param {HTMLLIElement} li - The subtask list item being edited.
+ */
 function saveSubtask(li) {
 const input = li.querySelector(".subtask-edit-input");
 if (!input) return;
