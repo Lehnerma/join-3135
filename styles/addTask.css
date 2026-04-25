@@ -238,10 +238,10 @@ main {
 .subtask-edit-input {
   flex: 1;
   border: none;
+  border-bottom: solid 1px var(--subtask-edit-border);
   outline: none;
-  font-size: 16px;
-  padding: 2px 4px;
-  background: transparent;
+  padding: 4px 16px;
+  background: white;
 }
 
 .required::after {

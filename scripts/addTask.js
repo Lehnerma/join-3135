@@ -1,7 +1,7 @@
 const TASK_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks" + ".json";
 
 let selectedPriority = "medium";
-let SUBTASKS = [];
+let SUBTASKS = []
 
 function init() {
   btnInit();
@@ -9,9 +9,12 @@ function init() {
   initDateInput();
 }
 
+/**
+ * Initial all btns in the form.
+ */
 function btnInit() {
   const FORM = document.getElementById("form_task");
-
+  const CLEAR_FORM = document.getElementById("form_clear");
   FORM.addEventListener("submit", (event) => getFormData(event));
 }
 
@@ -21,14 +24,14 @@ function btnInit() {
 function initDateInput() {
   const dueDateInput = document.getElementById("dueDate");
   const now = new Date();
-  const today = now.toISOString().split('T')[0];
+  const today = now.toISOString().split("T")[0];
   dueDateInput.min = today;
   dueDateInput.value = today;
 }
 
 /**
  * set the priority of the Task - and hightlight it.
- * @param {String} priority 
+ * @param {String} priority
  */
 function selectPriority(priority) {
   const priorities = ["urgent", "medium", "low"];
@@ -50,12 +53,18 @@ function subtaskInit() {
   SUBTASK_CLEAR.addEventListener("click", (event) => clearSubtaskInput(event));
   SUBTASK_INPUT.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-      e.preventDefault();
-      addSubtask();
+      addSubtask(e);
     }
   });
 }
 
+function clearForm() {
+  document.getElementById("form_task").reset();
+  initDateInput();
+  selectPriority("medium");
+  SUBTASKS = [];
+  document.getElementById("subtask_list").innerHTML = "";
+}
 /**
  * Clear the input of the Subtask
  */
@@ -73,7 +82,7 @@ function addSubtask(ev) {
   ev.preventDefault();
   const INPUT = document.getElementById("subtask_input");
   const TITLE = INPUT.value.trim();
-  if (!TITLE && TITLE.length > 5) return;
+  if (!TITLE) return;
   const INDEX = SUBTASKS.length;
   SUBTASKS.push({ TITLE });
   INPUT.value = "";
@@ -87,11 +96,12 @@ function addSubtask(ev) {
  * @param {String} title
  */
 function renderSubtaskItem(index, title) {
-  const LIST = document.getElementById("subtask-list");
+  const LIST = document.getElementById("subtask_list");
   const LI = document.createElement("li");
-  LI.className = "subtask-item";
+  LI.className = "subtask-item input--section";
   LI.dataset.index = index;
-  LI.innerHTML = getSubtaskTemplate(title);
+  LI.id = "subtask" + index;
+  LI.innerHTML = getSubtaskTemplate(title, index);
 
   LI.querySelector(".subtask-text").addEventListener("dblclick", () => startEditSubtask(LI));
   LI.querySelector(".btn--delete").addEventListener("click", () => deleteSubtask(LI));
@@ -106,74 +116,6 @@ function renderSubtaskItem(index, title) {
   LIST.appendChild(LI);
 }
 
-function startEditSubtask(li) {
-  if (li.classList.contains("editing")) return;
-
-  li.classList.add("editing");
-
-  const span = li.querySelector(".subtask-text");
-  const input = document.createElement("input");
-  input.type = "text";
-  input.className = "subtask-edit-input";
-  input.value = span.textContent;
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") saveSubtask(li);
-    if (e.key === "Escape") cancelEditSubtask(li);
-  });
-
-  li.replaceChild(input, span);
-  li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/check.svg";
-
-  input.focus();
-  input.select();
-}
-
-function saveSubtask(li) {
-  const input = li.querySelector(".subtask-edit-input");
-  if (!input) return;
-
-  const newTitle = input.value.trim();
-  if (!newTitle) return;
-
-  subtasks[parseInt(li.dataset.index)].title = newTitle;
-
-  const span = document.createElement("span");
-  span.className = "subtask-text";
-  span.textContent = newTitle;
-  span.addEventListener("dblclick", () => startEditSubtask(li));
-  li.replaceChild(span, input);
-
-  li.classList.remove("editing");
-  li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
-}
-
-function cancelEditSubtask(li) {
-  const input = li.querySelector(".subtask-edit-input");
-  if (!input) return;
-
-  const span = document.createElement("span");
-  span.className = "subtask-text";
-  span.textContent = subtasks[parseInt(li.dataset.index)].title;
-  span.addEventListener("dblclick", () => startEditSubtask(li));
-  li.replaceChild(span, input);
-
-  li.classList.remove("editing");
-  li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
-}
-
-function deleteSubtask(li) {
-  subtasks.splice(parseInt(li.dataset.index), 1);
-  li.remove();
-  document.querySelectorAll("#subtask-list .subtask-item").forEach((item, i) => {
-    item.dataset.index = i;
-  });
-}
-
-function escapeHtml(str) {
-  const div = document.createElement("div");
-  div.textContent = str;
-  return div.innerHTML;
-}
 
 function getFormData(ev) {
   ev.preventDefault();
