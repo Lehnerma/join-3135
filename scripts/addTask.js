@@ -9,9 +9,12 @@ function init() {
   initDateInput();
 }
 
+/**
+ * Initial all btns in the form.
+ */
 function btnInit() {
   const FORM = document.getElementById("form_task");
-
+  const CLEAR_FORM = document.getElementById("form_clear");
   FORM.addEventListener("submit", (event) => getFormData(event));
 }
 
@@ -21,14 +24,14 @@ function btnInit() {
 function initDateInput() {
   const dueDateInput = document.getElementById("dueDate");
   const now = new Date();
-  const today = now.toISOString().split('T')[0];
+  const today = now.toISOString().split("T")[0];
   dueDateInput.min = today;
   dueDateInput.value = today;
 }
 
 /**
  * set the priority of the Task - and hightlight it.
- * @param {String} priority 
+ * @param {String} priority
  */
 function selectPriority(priority) {
   const priorities = ["urgent", "medium", "low"];
@@ -50,12 +53,21 @@ function subtaskInit() {
   SUBTASK_CLEAR.addEventListener("click", (event) => clearSubtaskInput(event));
   SUBTASK_INPUT.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-      e.preventDefault();
-      addSubtask();
+      addSubtask(e);
     }
   });
 }
 
+/**
+ * Resets the task form to its default state and clears all subtasks.
+ */
+function clearForm() {
+  document.getElementById("form_task").reset();
+  initDateInput();
+  selectPriority("medium");
+  SUBTASKS = [];
+  document.getElementById("subtask_list").innerHTML = "";
+}
 /**
  * Clear the input of the Subtask
  */
@@ -66,33 +78,75 @@ const clearSubtaskInput = (ev) => {
 };
 
 /**
+ * Get the Form inputs into a Object to put it into firebase
+ * @param {event} ev - the browser knows where we click
+ * @returns
+ */
+function getFormData(ev) {
+  ev.preventDefault();
+  return buildTaskObj();
+}
+
+/**
+ * Helper func to creat the task object for put to database
+ * @returns Task Object
+ */
+function buildTaskObj() {
+  const val = (id) => document.getElementById(id).value;
+  return {
+    title: val("title"),
+    description: val("description"),
+    dueDate: val("dueDate"),
+    category: val("category"),
+    assignedTo: val("assignedTo"),
+    priority: selectedPriority,
+    status: "todo",
+    subtasks: SUBTASKS,
+  };
+}
+
+/**
  * Adds the subtask to the array (SUBTASKS) and render the subtasks
  * @returns a savety point to get out of the funktion if no title is in it. or it`s length is shorter than 5 letters.
  */
 function addSubtask(ev) {
   ev.preventDefault();
   const INPUT = document.getElementById("subtask_input");
-  const TITLE = INPUT.value.trim();
-  if (!TITLE && TITLE.length > 5) return;
+  const title = INPUT.value.trim();
+  if (!title) return;
   const INDEX = SUBTASKS.length;
-  SUBTASKS.push({ TITLE });
+  SUBTASKS.push({ title });
   INPUT.value = "";
 
-  renderSubtaskItem(INDEX, TITLE);
+  renderSubtaskItem(INDEX, title);
 }
 
 /**
- * Render the subtask - also creat the eventlistender for the subtask to edit it inline - also set dataset with an index.
- * @param {String} index
- * @param {String} title
+ * Creates a subtask list item and appends it to the subtask list in the DOM.
+ * Sets the element's index via dataset and id, renders its HTML via template,
+ * and attaches all required event listeners.
+ * @param {number} index - The position of the subtask in the SUBTASKS array.
+ * @param {string} title - The display text of the subtask.
  */
 function renderSubtaskItem(index, title) {
-  const LIST = document.getElementById("subtask-list");
+  const LIST = document.getElementById("subtask_list");
   const LI = document.createElement("li");
-  LI.className = "subtask-item";
+  LI.className = "subtask-item input--section";
   LI.dataset.index = index;
-  LI.innerHTML = getSubtaskTemplate(title);
+  LI.id = "subtask" + index;
+  LI.innerHTML = getSubtaskTemplate(title, index);
+  addSubtaskEventListener(LI);
+  LIST.appendChild(LI);
+}
 
+/**
+ * Attaches event listeners to a subtask list item for inline editing and deletion.
+ * - Dblclick on the text starts inline editing.
+ * - Click on the delete button removes the subtask.
+ * - Click on the edit button toggles between saving and starting inline editing.
+ * @param {HTMLLIElement} LI - The subtask list item element to attach listeners to.
+ */
+function addSubtaskEventListener(LI) {
   LI.querySelector(".subtask-text").addEventListener("dblclick", () => startEditSubtask(LI));
   LI.querySelector(".btn--delete").addEventListener("click", () => deleteSubtask(LI));
   LI.querySelector(".btn--edit").addEventListener("click", () => {
@@ -102,10 +156,24 @@ function renderSubtaskItem(index, title) {
       startEditSubtask(LI);
     }
   });
-
-  LIST.appendChild(LI);
 }
 
+/**
+ * Escapes special HTML characters in a string to prevent XSS.
+ * @param {string} str - The raw string to escape.
+ * @returns {string} The escaped HTML-safe string.
+ */
+function escapeHtml(str) {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+/**
+ * Switches a subtask list item into inline edit mode.
+ * Replaces the text span with an input field and updates the edit button icon.
+ * @param {HTMLLIElement} li - The subtask list item to edit.
+ */
 function startEditSubtask(li) {
   if (li.classList.contains("editing")) return;
 
@@ -128,69 +196,57 @@ function startEditSubtask(li) {
   input.select();
 }
 
-function saveSubtask(li) {
-  const input = li.querySelector(".subtask-edit-input");
-  if (!input) return;
-
-  const newTitle = input.value.trim();
-  if (!newTitle) return;
-
-  subtasks[parseInt(li.dataset.index)].title = newTitle;
-
-  const span = document.createElement("span");
-  span.className = "subtask-text";
-  span.textContent = newTitle;
-  span.addEventListener("dblclick", () => startEditSubtask(li));
-  li.replaceChild(span, input);
-
-  li.classList.remove("editing");
-  li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
-}
-
+/**
+ * Cancels inline editing and restores the original subtask text.
+ * @param {HTMLLIElement} li - The subtask list item being edited.
+ */
 function cancelEditSubtask(li) {
-  const input = li.querySelector(".subtask-edit-input");
-  if (!input) return;
+const input = li.querySelector(".subtask-edit-input");
+if (!input) return;
 
-  const span = document.createElement("span");
-  span.className = "subtask-text";
-  span.textContent = subtasks[parseInt(li.dataset.index)].title;
-  span.addEventListener("dblclick", () => startEditSubtask(li));
-  li.replaceChild(span, input);
+const span = document.createElement("span");
+span.className = "subtask-text";
+span.textContent = subtasks[parseInt(li.dataset.index)].title;
+span.addEventListener("dblclick", () => startEditSubtask(li));
+li.replaceChild(span, input);
 
-  li.classList.remove("editing");
-  li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
+li.classList.remove("editing");
+li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
 }
 
+/**
+ * Removes a subtask from the SUBTASKS array and from the DOM.
+ * Re-indexes all remaining subtask items after deletion.
+ * @param {HTMLLIElement} li - The subtask list item to delete.
+ */
 function deleteSubtask(li) {
-  subtasks.splice(parseInt(li.dataset.index), 1);
-  li.remove();
-  document.querySelectorAll("#subtask-list .subtask-item").forEach((item, i) => {
-    item.dataset.index = i;
-  });
+subtasks.splice(parseInt(li.dataset.index), 1);
+li.remove();
+document.querySelectorAll("#subtask_list .subtask-item").forEach((item, i) => {
+item.dataset.index = i;
+});
 }
 
-function escapeHtml(str) {
-  const div = document.createElement("div");
-  div.textContent = str;
-  return div.innerHTML;
-}
+/**
+ * Saves the edited subtask title and exits inline edit mode.
+ * Updates the SUBTASKS array and replaces the input with a text span.
+ * @param {HTMLLIElement} li - The subtask list item being edited.
+ */
+function saveSubtask(li) {
+const input = li.querySelector(".subtask-edit-input");
+if (!input) return;
 
-function getFormData(ev) {
-  ev.preventDefault();
-  const task = buildTaskObj();
-  console.log(task);
-  return task;
-}
+const newTitle = input.value.trim();
+if (!newTitle) return;
 
-function buildTaskObj() {
-  return {
-    title: document.getElementById("title").value,
-    description: document.getElementById("description").value,
-    dueDate: document.getElementById("dueDate").value,
-    category: document.getElementById("category").value,
-    assignedTo: document.getElementById("assignedTo").value,
-    priority: selectedPriority,
-    status: "todo",
-    subtasks: subtasks,
-  };
+SUBTASKS[parseInt(li.dataset.index)].title = newTitle;
+
+const span = document.createElement("span");
+span.className = "subtask-text";
+span.textContent = newTitle;
+span.addEventListener("dblclick", () => startEditSubtask(li));
+li.replaceChild(span, input);
+
+li.classList.remove("editing");
+li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
 }

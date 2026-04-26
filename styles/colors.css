@@ -47,6 +47,7 @@
   --input-text-color: rgba(255, 255, 255, 1); /*input text color*/
   --input-default-main: rgba(209, 209, 209, 1);
   --input-required: rgba(255, 129, 144, 1);
+  --subtask-edit-border: rgba(151, 71, 255, 1);
 
   /* shadows */
   --shadow-app-title: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);

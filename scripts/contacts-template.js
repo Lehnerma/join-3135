@@ -13,6 +13,7 @@ function renderHtmlContactDialogTpl() {
 
       <header class="dialog-header">
         <button type="button" id="close-btn" class="close-btn-overlay" onclick="closeContactDialog()"><svg class="img-x"><use href="../assets/img/icons/general/close-white.svg"></use></svg></button>
+        <button type="button" id="close-btn" class="close-btn-overlay" onclick="closeContactDialog()"><svg class="img-x"><use href="../assets/img/icons/general/close-white.svg"></use></svg></button>
       </header>
 
       <main class="dialog-main">
@@ -93,7 +94,9 @@ function renderHtmlEditContactDialogTpl() {
           <section class="dialog-login-buttons">
             <button type="button" class="btn btn--secondary btn--login"
               onclick="document.getElementById('addNewContact').close()" onclick="deleteContact()">Delete</button>
+              onclick="document.getElementById('addNewContact').close()" onclick="deleteContact()">Delete</button>
             <button type="submit" class="btn btn--primary btn--login" onclick="saveContact()">Save<img class="img-check"
+                src="../assets/img/icons/general/check.svg" alt="create check"></button>
                 src="../assets/img/icons/general/check.svg" alt="create check"></button>
           </section>
         </form>
