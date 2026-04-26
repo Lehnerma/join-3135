@@ -51,10 +51,10 @@ function sortUserContactList() {
     return 0;
   })
   UserContectList();
-}
+  }
 
 function UserContectList() {
-  let contactList = document.getElementById('contactList');
+ 
   contactList.innerHTML = '';
   userContent = [];
   for (let i = 0; i < USERS.length; i++) {
@@ -64,15 +64,23 @@ function UserContectList() {
   console.log(userContent);
 }
 
+
+
 function renderContectListTpl(user, i) {
+  
   let firstLetter = user.name.charAt(0).toUpperCase();
   let userID = user.id
   let initials = getInitials(user.name);
   let color = contactColors[firstLetter];
+  
+  
+
   return /*html*/ `
-   <p class="first-letter">${firstLetter}</p>
-    <div class="letter-divider"></div>
-       <div id="${userID}" class="user-Selection" onclick="getUserDetails(${i})">
+        <div id="singleContacts" class="single-contacts">
+        <p class="first-letter">${firstLetter}</p>
+        <div class="letter-divider"></div> 
+        </div>
+              <div id="${userID}" class="user-Selection" onclick="getUserDetails(${i})">
         <div class="initials" style="background-color: ${color}">
             ${initials}
         </div>
@@ -80,8 +88,22 @@ function renderContectListTpl(user, i) {
             <div class="name">${user.name}</div>
             <p class="email">${user.email}</p>
         </div>
-    </div>`;
+    </div>
+    `;
+
 }
+
+// if (color == initials[0].charAt(0).toUpperCase()){
+//     let singleContacts = document.getElementById('singleContacts');
+//   }
+//   else{
+ 
+
+//   }
+
+
+
+
 
 
 function getInitials(name) {

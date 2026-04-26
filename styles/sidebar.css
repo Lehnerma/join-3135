@@ -6,6 +6,7 @@
   grid-template-columns: 232px 1fr;
   grid-template-rows: 96px 1fr;
   height: 100vh;
+  
 }
 
 .sidebar {
@@ -15,6 +16,7 @@
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 64px;
+  
 }
 
 .nav-logo {

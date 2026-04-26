@@ -17,7 +17,7 @@ button {
 
 .left-content {
   width: clamp(300px, 30vw, 456px);
-  height: 90vh;
+  height: clamp(500px, 90vh, 1080px);
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -30,18 +30,18 @@ button {
 }
 
 .left-content::-webkit-scrollbar {
-  width: 24px;
+  width: clamp(12px, 1.6vw, 24px);
 }
 
 .left-content::-webkit-scrollbar-thumb {
-    background-color: var(--fourth-text-color);
-  border: 8px solid var(--input-text-color);
-  border-radius: 20px;
- }
+  background-color: var(--fourth-text-color);
+  border: clamp(4px, 0.5vw, 8px) solid var(--input-text-color);
+  border-radius: clamp(10px, 1.4vw, 20px);
+}
 
 .left-content::-webkit-scrollbar-button:vertical {
   display: flex;
-  height: 40px;
+  height: clamp(20px, 2.7vw, 40px);
   background-color: var(--input-text-color);
   background-repeat: no-repeat;
   border: none;
@@ -57,72 +57,70 @@ button {
   background-position: center;
 }
 
-
-
 .add-button-container {
   display: flex;
   justify-content: center;
   align-items: center;
   position: fixed;
-  width: 400px;
-  height: 101px;
+  width: clamp(280px, 27.7vw, 400px);
+  height: clamp(70px, 7vw, 101px);
   background-color: var(--input-text-color);
 }
 
 .add-button-size {
   font-family: "Inter";
   font-weight: 700;
-  font-size: 21px;
+  font-size: clamp(16px, 1.4vw, 21px);
   display: flex;
   align-items: center;
-  gap: 16px;
-  width: 352px;
-  height: 56px;
-  min-width: 200px;
+  gap: clamp(8px, 1.1vw, 16px);
+  width: clamp(280px, 24.4vw, 352px);
+  height: clamp(40px, 3.8vw, 56px);
+  min-width: clamp(150px, 13.8vw, 200px);
 }
 
 .add-contact-icon {
-  width: 32px;
-  height: 32px;
+  width: clamp(20px, 2.2vw, 32px);
+  height: clamp(20px, 2.2vw, 32px);
 }
 
 .contact-list {
-  margin-top: 53px;
+  margin-top: clamp(30px, 3.6vw, 53px);
   display: flex;
   justify-content: center;
-  width: 400px;
-  padding: 32px 24px 32px 24px;
+  align-items: center;
+  width: clamp(320px, 27.7vw, 400px);
+  padding: clamp(16px, 2.2vw, 32px) clamp(12px, 1.6vw, 24px) clamp(16px, 2.2vw, 32px) clamp(12px, 1.6vw, 24px);
 }
 
 .first-letter {
-  width: 352px;
-  height: 78px;
+  display: flex;
+  align-items: center;
+  width: clamp(240px, 24.4vw, 352px);
+  height: clamp(50px, 5.4vw, 78px);
   flex-shrink: 0;
-  padding: 17px 36px 17px 36px;
+  padding: clamp(10px, 1.1vw, 17px) clamp(18px, 2.5vw, 36px) clamp(10px, 1.1vw, 17px) clamp(18px, 2.5vw, 36px);
   font-family: "Inter";
   font-weight: 400;
-  font-size: 20px;
+  font-size: clamp(16px, 1.3vw, 20px);
   white-space: nowrap;
-  flex-shrink: 0;
 }
 
 .letter-divider {
-  /* clamp(Minimum, Bevorzugt, Maximum) */
-  width: clamp(150px, 90%, 352px);
-  border-bottom: 1px solid;
+  width: clamp(150px, 95%, 352px);
+  border-bottom: clamp(1px, 0.1vw, 1px) solid;
   border-color: var(--fifth-text-color);
-  margin-top: 8px;
-  margin-bottom: 8px;
+  margin: 8px;
 }
 
 .user-Selection {
-  width: 352px;
-  height: 78px;
+  width: clamp(280px, 24.4vw, 352px);
+  height: clamp(50px, 5.4vw, 78px);
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 35px;
-  padding: 15px 24px 15px 24px;
+  gap: clamp(15px, 2.4vw, 35px);
+  padding: clamp(8px, 1vw, 15px) clamp(12px, 1.6vw, 24px) clamp(8px, 1vw, 15px) clamp(12px, 1.6vw, 24px);
   cursor: pointer;
   flex-shrink: 0;
 }
@@ -130,28 +128,28 @@ button {
 .show-user-details-button {
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 15px 24px 15px 24px;
+  gap: clamp(10px, 1.3vw, 20px);
+  padding: clamp(8px, 1vw, 15px) clamp(12px, 1.6vw, 24px) clamp(8px, 1vw, 15px) clamp(12px, 1.6vw, 24px);
   cursor: pointer;
   border: none;
 }
 
 .bg-color-active {
-  border-radius: 8px;
+  border-radius: clamp(4px, 0.5vw, 8px);
   background-color: var(--primary-color);
   color: var(--input-text-color);
 }
 
 .initials {
-  width: 42px;
-  height: 42px;
+  width: clamp(38px, 2.9vw, 42px);
+  height: clamp(38px, 2.9vw, 42px);
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   color: var(--input-text-color);
-  font-size: 16px;
-  font-weight: bold;
+  font-size: clamp(16px, 1.1vw, 16px);
+  font-weight: 400;
   border-style: solid;
   border-width: 2px;
   border-color: var(--input-text-color);
@@ -164,20 +162,26 @@ button {
 
 .cotact-info-text {
   display: flex;
-  gap: 5px;
+  gap: clamp(2px, 0.3vw, 5px);
 }
 
 .name {
   font-family: "Inter";
   font-weight: 400;
-  font-size: 20px;
+  font-size: clamp(16px, 1.3vw, 20px);
 }
 
 .email {
-  font-size: 16px;
-  color: var(--secondary-color);
+  font-size: clamp(16px, 1.1vw, 16px);
+  color: var(--contact-color-email);
   text-decoration: none;
+ 
 }
+
+
+
+
+
 
 .right-content {
   display: flex;
@@ -191,37 +195,31 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
-  margin-top: 110px;
-  margin-left: 55px;
+  gap: clamp(15px, 2vw, 30px);
+  margin-top: clamp(30px, 7.6vw, 110px);
+  padding-left: clamp(16px, 2.6vw, 55px);
 }
 
 .contacts-title {
   font-family: "Inter";
-  font-size: 61px;
+  font-size: clamp(32px, 4.2vw, 61px);
   font-weight: 700;
   margin: 0;
 }
 
 .vertical-divider {
   background-color: var(--secondary-color);
-  height: 59px;
-  width: 3px;
-  border-radius: 2px;
+  height: clamp(30px, 4vw, 59px);
+  width: clamp(2px, 0.2vw, 3px);
+  border-radius: clamp(1px, 0.1vw, 2px);
 }
 
 .contacts-subtitle {
   font-family: "Inter";
   font-weight: 400;
-  font-size: 27px;
+  font-size: clamp(16px, 1.8vw, 27px);
   white-space: nowrap;
 }
-
-
-
-
-
-
 
 /* --- DIALOG CONTENT --- */
 
@@ -462,13 +460,6 @@ button {
   font-weight: 400;
 }   */
 
-
-
-
-
-
-
-
 .dialog-content {
   display: none;
   border: none;
@@ -540,10 +531,10 @@ button {
 
 .aside-logo {
   position: absolute;
-  top: clamp(30px, 12.3vw, 150px);
+  top: clamp(45px, 11.5vw, 150px);
   left: clamp(20px, 3.9vw, 47px);
-  width: clamp(35px, 5vw, 56px);
-  height: auto;
+  width: clamp(51px, 4.5vw, 56px);
+  height: clamp(51px, 4.5vw, 56px);
 }
 
 .aside-h2 {
@@ -595,8 +586,8 @@ button {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 32px;
-  flex-shrink: 0;
+  padding: 55px 32px 32px 0 ;
+  
 }
 
 .person-Logo-container {
@@ -608,7 +599,8 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0px 85px 65px 85px;
+  margin: 70px auto 130px auto;
+  flex-shrink: 0;
 }
 
 .person-logo {
@@ -618,7 +610,7 @@ button {
 
 .dialog-input-container {
   width: 100%;
-  max-width: clamp(300px, 34.8vw, 422px);
+  width: clamp(300px, 32.8vw, 422px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -642,7 +634,7 @@ button {
   border: none;
   outline: none;
   font-family: "Inter";
-  font-size: clamp(14px, 1.6vw, 20px);
+  font-size: clamp(16px, 1.6vw, 20px);
   background: transparent;
 }
 
@@ -657,21 +649,21 @@ button {
   justify-content: flex-start;
   align-items: center;
   gap: clamp(8px, 1.3vw, 16px);
-  margin-top: clamp(10px, 3.3vw, 40px);
-}
+  margin-top: clamp(10px, 3.3vw, 60px);
+  }
 
 .dialog-login-buttons button,
 .dialog-login-buttons div[onclick] {
-  padding: clamp(8px, 1.2vw, 15px) clamp(15px, 2vw, 25px);
+  
   border-radius: clamp(6px, 0.8vw, 10px);
   display: flex;
   align-items: center;
   justify-content: center;
   white-space: nowrap;
-  font-size: clamp(14px, 1.7vw, 21px);
+  font-size: clamp(16px, 1.4vw, 21px);
   width: auto;
   cursor: pointer;
-}
+} 
 
 .img-check,
 .img-x {
@@ -684,36 +676,23 @@ button {
   filter: brightness(0) invert(1);
 }
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
   .dialog-content {
     width: 95vw;
     aspect-ratio: 1212 / 594;
   }
 }
 
-
-
-
-
-
-
-/* --- DIALOG CONTACT DETAILS BOX --- */
-
-
-
-
-
-
 .contact-details-box {
   position: absolute;
   display: flex;
   flex-direction: column;
-  gap: 21px;
-  height: 364px;
-  width: 561px;
+  gap: clamp(10px, 1.9vw, 21px);
+  height: clamp(200px, 33vw, 364px);
+  width: clamp(300px, 51vw, 561px);
   border: none;
-  top: 250px;
-  left: 55px;
+  top: clamp(80px, 17.5vw, 250px);
+  left: clamp(8px, 2.5vw, 55px);
   background-color: transparent;
   z-index: 5;
   animation: slideInDetailBox 0.4s ease-out forwards;
@@ -721,13 +700,11 @@ button {
 
 @keyframes slideInDetailBox {
   from {
-
     transform: translate(100vw);
     opacity: 0;
   }
 
   to {
-
     transform: translate(0);
     opacity: 1;
   }
@@ -735,29 +712,39 @@ button {
 
 .header-contect-details {
   display: flex;
-  justify-self: flex-start;
+  justify-content:flex-start;
   align-items: center;
-  height: 120px;
-  gap: 54px;
+  height: clamp(80px, 10vw, 120px);
+  gap:54px;
 }
 
+@media (max-width: 1124px) {
+  .header-contect-details {
+    gap: clamp(10px, 3vw, 54px);
+  }
+}
+
+
+@media (max-width: 1024px) {
+  .header-contect-details {
+    gap: 15px;
+  }
+}
 .initials-large {
-  width: 120px;
-  height: 120px;
+  width: clamp(90px, 8vw, 120px);
+  height: clamp(90px, 8vw, 120px);
   border-radius: 70%;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: var(--input-default-main);
-  font-size: 47px;
-  font-weight: bold;
+  color: var(--input-text-color);
+  font-size: clamp(16px, 4vw, 47px);
+  font-weight: 500;
   border-style: solid;
-  border-width: 3px;
+  border-width:  3px;
   border-color: var(--input-text-color);
+  box-shadow: var(--contact-shadow-initials);
 }
-
-
-.name-and-buttons {}
 
 
 .main-contact-details {
@@ -770,10 +757,10 @@ button {
 
 .contact-information {
   font-family: "Inter";
-  font-size: 21px;
+  font-size: clamp(16px, 1.9vw, 21px);
   font-weight: 400;
-  padding-top: 59px;
-  padding-bottom: 59px;
+  padding-top: clamp(20px, 5.3vw, 59px);
+  padding-bottom: clamp(20px, 5.3vw, 59px);
 }
 
 .email-and-phone {
@@ -781,29 +768,27 @@ button {
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: clamp(8px, 1.3vw, 15px);
 }
-
 
 .h1-contact-details {
   font-family: "Inter";
-  font-size: 47px;
+  font-size: clamp(27px, 3vw, 47px);
   font-weight: 500;
-  margin-bottom: 8px;
+  margin-bottom: clamp(4px, 0.7vw, 8px);
   white-space: nowrap;
 }
 
 .edit-delete-container {
   display: flex;
-  gap: 13px;
+  gap: clamp(6px, 1.1vw, 13px);
 }
-
 
 .edit-delete-button {
   display: flex;
   align-items: center;
   font-family: "Inter";
-  font-size: 16px;
+  font-size: clamp(16px, 1.4vw, 16px);
   font-weight: 400;
   color: var(--primary-color);
   border: none;
@@ -822,11 +807,10 @@ button {
 
 .edit-svg,
 .delete-svg {
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
+  width: clamp(16px, 2.1vw, 24px);
+  height: clamp(16px, 2.1vw, 24px);
+  margin-right: clamp(4px, 0.7vw, 8px);
 }
-
 
 li {
   list-style-type: none;
