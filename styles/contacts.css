@@ -784,7 +784,7 @@ button {
   white-space: nowrap;
 }
 
-.edit-delete-container {
+
 .edit-delete-container {
   display: flex;
   gap: clamp(6px, 1.1vw, 13px);
