@@ -2,65 +2,130 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join - Add Task</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="../assets/img/favicon/favicon-join.svg" type="image/x-icon" />
+  <title>Join</title>
 
-    <link rel="stylesheet" href="../style.css" />
-    <link rel="stylesheet" href="../styles/sidebar.css" />
-    <link rel="stylesheet" href="../styles/fonts.css" />
-    <link rel="stylesheet" href="../styles/colors.css" />
-    <link rel="stylesheet" href="../styles/addTaskPage.css" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../styles/sidebar.css" />
+
+  <link rel="stylesheet" href="../styles/fonts.css" />
+  <link rel="stylesheet" href="../styles/colors.css" />
+  <link rel="stylesheet" href="../styles/summary.css" />
+  <script src="../scripts/utilitys.js"></script>
 </head>
 
 <body class="app">
+  <header class="app--title">
+    <h1 class="app--title-headline">Kanban Project Management Tool</h1>
+    <div class="app--icons">
+      <a href="#"><img src="../assets/img/icons/general/help.svg" alt="?" class="app--icon" /></a>
+      <img src="../assets/img/user_initials.svg" alt="M L" class="app--initials" />
+    </div>
+  </header>
+  <nav class="sidebar">
+    <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
+    <ul>
+      <li class="active">
+        <a class="nav-category" href="#"><img class="nav-category-img" src="../assets/img/icons/general/summary.svg"
+            alt="" />Summary</a>
+      </li>
+      <li class="">
+        <a class="nav-category" href="#"><img class="nav-category-img" src="../assets/img/icons/general/add-task.svg"
+            alt="" />Add Task</a>
+      </li>
+      <li class="">
+        <a class="nav-category" href="#"><img class="nav-category-img" src="../assets/img/icons/general/board.svg"
+            alt="" />Board</a>
+      </li>
+      <li class="">
+        <a class="nav-category" href="#"><img class="nav-category-img" src="../assets/img/icons/general/contacts.svg"
+            alt="" />Contacts</a>
+      </li>
+    </ul>
 
-    <header class="app--title">
-        <h1 class="app--title-headline">Kanban Project Management Tool</h1>
-        <div class="app--icons">
-            <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="?" class="app--icon" /></a>
-            <img src="../assets/img/user_initials.svg" alt="M L" class="app--initials" />
+    <div class="legal-section">
+      <a class="legal-section-link" href="../html/privacyPolicy.html">Privacy Policy</a>
+      <a class="legal-section-link" href="../html/legalNotice.html">Legal Notice</a>
+    </div>
+  </nav>
+
+  <main class="app--content">
+    <section class="summary">
+
+      <div class="summary-headline">
+        <h1>Join 360</h1>
+        <div class="vl"></div>
+        <span>Key Metrics at a Glance</span>
+      </div>
+
+      <div class="summary-main">
+        <div class="summary-overview">
+
+          <div class="summary-overview-1">
+
+            <div class="summary-todo">
+              <img src="../assets/img/icons/summary/edit-dark.svg" alt="To-do">
+              <div class="summary-todo-content">
+                <span class="summary-todo-amount">1</span>
+                <span class="summary-todo-text">To-do</span>
+              </div>
+            </div>
+
+            <div class="summary-todo">
+              <img src="../assets/img/icons/summary/done-dark.svg" alt="Done">
+              <div class="summary-todo-content">
+                <span class="summary-todo-amount">1</span>
+                <span class="summary-todo-text">Done</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="summary-overview-2">
+            <div class="summary-urgent">
+              <img src="../assets/img/icons/summary/urgent.svg" alt="Urgent">
+              <div class="summary-todo-content">
+                <span class="summary-todo-amount">1</span>
+                <span class="summary-overview-text">Urgent</span>
+              </div>
+
+              <div class="vl-2"></div>
+
+              <div class="summary-urgent-content">
+                <span class="summary-urgent-date">April 29, 2026</span>
+                <span class="summary-urgent-text">Upcoming Deadline</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary-overview-1">
+            <div class="summary-overview-small-tabs">
+              <span class="summary-todo-amount">5</span>
+              <span class="summary-todo-text">Tasks in<br>Board</span>
+            </div>
+
+            <div class="summary-overview-small-tabs">
+              <span class="summary-todo-amount">2</span>
+              <span class="summary-todo-text">Tasks in<br>Progress</span>
+            </div>
+
+            <div class="summary-overview-small-tabs">
+              <span class="summary-todo-amount">2</span>
+              <span class="summary-todo-text">Awaiting<br>Feedback</span>
+            </div>
+
+          </div>
+
+
         </div>
-    </header>
-
-    <nav class="sidebar">
-        <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
-        <ul>
-            <li class="">
-                <a class="nav-category" href="summary.html"><img class="nav-category-img"
-                        src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
-            </li>
-            <li class="">
-                <a class="nav-category" href="addTaskPage.html"><img class="nav-category-img"
-                        src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
-            </li>
-            <li class="">
-                <a class="nav-category" href="board.html"><img class="nav-category-img"
-                        src="../assets/img/icons/general/board.svg" alt="" />Board</a>
-            </li>
-            <li class="">
-                <a class="nav-category" href="contacts.html"><img class="nav-category-img"
-                        src="../assets/img/icons/general/contacts.svg" alt="" />Contacts</a>
-            </li>
-        </ul>
-
-        <div class="legal-section">
-            <a class="legal-section-link" href="#">Privacy Policy</a>
-            <a class="legal-section-link" href="#">Legal Notice</a>
+        <div class="summary-greeting">
+          <span class="summary-greeting-text">Good morning,</span>
+          <span class="summary-greeting-name">Sofia Müller</span>
         </div>
-    </nav>
-
-    <h1>Summary</h1>
-
-    <script>
-
-       
-
-
-
-
-    </script>
-
+    </section>
+  </main>
 </body>
 
 </html>
