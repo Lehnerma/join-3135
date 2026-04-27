@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" href="../assets/img/favicon/favicon-join.svg" type="image/x-icon" />
-  <title>Join</title>
+  <title>Summary</title>
 
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="../styles/sidebar.css" />
@@ -16,12 +16,13 @@
   <script src="../scripts/utilitys.js"></script>
 </head>
 
-<body class="app">
+<body class="app" onload="initUtilitys()">
   <header class="app--title">
     <h1 class="app--title-headline">Kanban Project Management Tool</h1>
+    <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
     <div class="app--icons">
-      <a href="#"><img src="../assets/img/icons/general/help.svg" alt="?" class="app--icon" /></a>
-      <img src="../assets/img/user_initials.svg" alt="M L" class="app--initials" />
+      <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="help" class="app--icon" /></a>
+      <button id="user-menu-button" class="btn btn--user"></button>
     </div>
   </header>
   <nav class="sidebar">
@@ -56,8 +57,9 @@
 
       <div class="summary-headline">
         <h1>Join 360</h1>
-        <div class="vl"></div>
+        <div class="vl-1"></div>
         <span>Key Metrics at a Glance</span>
+        <div class="vl-2"></div>
       </div>
 
       <div class="summary-main">
@@ -66,7 +68,9 @@
           <div class="summary-overview-1">
 
             <div class="summary-todo">
-              <img src="../assets/img/icons/summary/edit-dark.svg" alt="To-do">
+              <div class="summary-todo-icon">
+                <img src="../assets/img/icons/summary/edit-dark.svg" alt="To-do">
+              </div>
               <div class="summary-todo-content">
                 <span class="summary-todo-amount">1</span>
                 <span class="summary-todo-text">To-do</span>
@@ -74,7 +78,9 @@
             </div>
 
             <div class="summary-todo">
-              <img src="../assets/img/icons/summary/done-dark.svg" alt="Done">
+              <div class="summary-todo-icon">
+                <img src="../assets/img/icons/summary/done-dark.svg" alt="Done">
+              </div>
               <div class="summary-todo-content">
                 <span class="summary-todo-amount">1</span>
                 <span class="summary-todo-text">Done</span>
@@ -91,7 +97,7 @@
                 <span class="summary-overview-text">Urgent</span>
               </div>
 
-              <div class="vl-2"></div>
+              <div class="vl-3"></div>
 
               <div class="summary-urgent-content">
                 <span class="summary-urgent-date">April 29, 2026</span>
@@ -122,7 +128,7 @@
         </div>
         <div class="summary-greeting">
           <span class="summary-greeting-text">Good morning,</span>
-          <span class="summary-greeting-name">Sofia Müller</span>
+          <span id="greeting-name" class="summary-greeting-name">Sofia Müller</span>
         </div>
     </section>
   </main>
