@@ -7,6 +7,7 @@ function init() {
   btnInit();
   subtaskInit();
   initDateInput();
+  loadUsers();
 }
 
 /**
@@ -44,7 +45,8 @@ function selectPriority(priority) {
 
 function loadUsers() {
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
-  USER_URL; fetch(USER_URL)
+
+  fetch(USER_URL)
     .then((response) => response.json())
     .then((data) => {
       fillUserDropdown(data);
@@ -53,20 +55,35 @@ function loadUsers() {
 }
 
 
-loadUsers();
+
 
 function fillUserDropdown(users) {
-  const select = document.getElementById("assignedTo");
+  const container = document.getElementById("dropdown");
 
-  for (let key in users) {
-    const user = users[key];
+  let html = "";
 
-    const option = document.createElement("option");
-    option.value = user.name; // oder user.id
-    option.textContent = user.name;
+  for (const userId in users) {
+    const user = users[userId];
 
-    select.appendChild(option);
+    html += `
+      <label class="user-item">
+        <input type="checkbox" value="${user.name}">
+        <span>${user.name}</span>
+      </label>
+    `;
   }
+
+  container.innerHTML = html;
+}
+
+function getAssignedUsers() {
+  const checkboxes = document.querySelectorAll("#dropdown input[type='checkbox']:checked");
+  return Array.from(checkboxes).map(cb => cb.value);
+}
+
+
+function toggleDropdown() {
+  document.getElementById("dropdown").classList.toggle("hidden");
 }
 
 
@@ -127,7 +144,7 @@ function buildTaskObj() {
     description: val("description"),
     dueDate: val("dueDate"),
     category: val("category"),
-    assignedTo: val("assignedTo"),
+    assignedTo: getAssignedUsers(),
     priority: selectedPriority,
     status: "todo",
     subtasks: SUBTASKS,
