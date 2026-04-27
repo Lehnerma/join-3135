@@ -4,10 +4,14 @@ let selectedPriority = "medium";
 let SUBTASKS = [];
 
 function init() {
+  console.log("INIT läuft");
+  console.log("dropdown:", document.getElementById("dropdown"));
+
   btnInit();
   subtaskInit();
   initDateInput();
   loadUsers();
+
 }
 
 /**
@@ -43,7 +47,13 @@ function selectPriority(priority) {
   selectedPriority = priority;
 }
 
+
+/**
+ *  User Assignment Dropdown functions
+ */
+
 function loadUsers() {
+
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
   fetch(USER_URL)
@@ -58,6 +68,9 @@ function loadUsers() {
 
 
 function fillUserDropdown(users) {
+
+  console.log("USERS DATA:", users);
+
   const container = document.getElementById("dropdown");
 
   let html = "";
@@ -66,15 +79,20 @@ function fillUserDropdown(users) {
     const user = users[userId];
 
     html += `
-      <label class="user-item">
-        <input type="checkbox" value="${user.name}">
-        <span>${user.name}</span>
-      </label>
-    `;
+            <label class="user-item">
+              <div class="initials">${user.name.charAt(0)}</div>
+              <span>${user.name}</span>
+              <input type="checkbox" value="${user.name}">
+            </label>
+        `;
   }
 
   container.innerHTML = html;
 }
+
+
+
+
 
 function getAssignedUsers() {
   const checkboxes = document.querySelectorAll("#dropdown input[type='checkbox']:checked");
@@ -85,6 +103,11 @@ function getAssignedUsers() {
 function toggleDropdown() {
   document.getElementById("dropdown").classList.toggle("hidden");
 }
+
+
+/**
+ *  User Assignment Dropdown functions
+ */
 
 
 
