@@ -4,9 +4,14 @@ let selectedPriority = "medium";
 let SUBTASKS = [];
 
 function init() {
+  console.log("INIT läuft");
+  console.log("dropdown:", document.getElementById("dropdown"));
+
   btnInit();
   subtaskInit();
   initDateInput();
+  loadUsers();
+
 }
 
 /**
@@ -41,6 +46,70 @@ function selectPriority(priority) {
   document.getElementById(`btn_${priority}`).classList.add(`${priority}-active`);
   selectedPriority = priority;
 }
+
+
+/**
+ *  User Assignment Dropdown functions
+ */
+
+function loadUsers() {
+
+  const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+
+  fetch(USER_URL)
+    .then((response) => response.json())
+    .then((data) => {
+      fillUserDropdown(data);
+    })
+    .catch((error) => console.error("Error fetching users:", error));
+}
+
+
+
+
+function fillUserDropdown(users) {
+
+  console.log("USERS DATA:", users);
+
+  const container = document.getElementById("dropdown");
+
+  let html = "";
+
+  for (const userId in users) {
+    const user = users[userId];
+
+    html += `
+            <label class="user-item">
+              <div class="initials">${user.name.charAt(0)}</div>
+              <span>${user.name}</span>
+              <input type="checkbox" value="${user.name}">
+            </label>
+        `;
+  }
+
+  container.innerHTML = html;
+}
+
+
+
+
+
+function getAssignedUsers() {
+  const checkboxes = document.querySelectorAll("#dropdown input[type='checkbox']:checked");
+  return Array.from(checkboxes).map(cb => cb.value);
+}
+
+
+function toggleDropdown() {
+  document.getElementById("dropdown").classList.toggle("hidden");
+}
+
+
+/**
+ *  User Assignment Dropdown functions
+ */
+
+
 
 /**
  * Initial all subtasks function after loading the body
@@ -98,7 +167,7 @@ function buildTaskObj() {
     description: val("description"),
     dueDate: val("dueDate"),
     category: val("category"),
-    assignedTo: val("assignedTo"),
+    assignedTo: getAssignedUsers(),
     priority: selectedPriority,
     status: "todo",
     subtasks: SUBTASKS,
@@ -201,17 +270,17 @@ function startEditSubtask(li) {
  * @param {HTMLLIElement} li - The subtask list item being edited.
  */
 function cancelEditSubtask(li) {
-const input = li.querySelector(".subtask-edit-input");
-if (!input) return;
+  const input = li.querySelector(".subtask-edit-input");
+  if (!input) return;
 
-const span = document.createElement("span");
-span.className = "subtask-text";
-span.textContent = subtasks[parseInt(li.dataset.index)].title;
-span.addEventListener("dblclick", () => startEditSubtask(li));
-li.replaceChild(span, input);
+  const span = document.createElement("span");
+  span.className = "subtask-text";
+  span.textContent = subtasks[parseInt(li.dataset.index)].title;
+  span.addEventListener("dblclick", () => startEditSubtask(li));
+  li.replaceChild(span, input);
 
-li.classList.remove("editing");
-li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
+  li.classList.remove("editing");
+  li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
 }
 
 /**
@@ -220,11 +289,11 @@ li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
  * @param {HTMLLIElement} li - The subtask list item to delete.
  */
 function deleteSubtask(li) {
-subtasks.splice(parseInt(li.dataset.index), 1);
-li.remove();
-document.querySelectorAll("#subtask_list .subtask-item").forEach((item, i) => {
-item.dataset.index = i;
-});
+  subtasks.splice(parseInt(li.dataset.index), 1);
+  li.remove();
+  document.querySelectorAll("#subtask_list .subtask-item").forEach((item, i) => {
+    item.dataset.index = i;
+  });
 }
 
 /**
@@ -233,20 +302,20 @@ item.dataset.index = i;
  * @param {HTMLLIElement} li - The subtask list item being edited.
  */
 function saveSubtask(li) {
-const input = li.querySelector(".subtask-edit-input");
-if (!input) return;
+  const input = li.querySelector(".subtask-edit-input");
+  if (!input) return;
 
-const newTitle = input.value.trim();
-if (!newTitle) return;
+  const newTitle = input.value.trim();
+  if (!newTitle) return;
 
-SUBTASKS[parseInt(li.dataset.index)].title = newTitle;
+  SUBTASKS[parseInt(li.dataset.index)].title = newTitle;
 
-const span = document.createElement("span");
-span.className = "subtask-text";
-span.textContent = newTitle;
-span.addEventListener("dblclick", () => startEditSubtask(li));
-li.replaceChild(span, input);
+  const span = document.createElement("span");
+  span.className = "subtask-text";
+  span.textContent = newTitle;
+  span.addEventListener("dblclick", () => startEditSubtask(li));
+  li.replaceChild(span, input);
 
-li.classList.remove("editing");
-li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
+  li.classList.remove("editing");
+  li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
 }

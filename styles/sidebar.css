@@ -93,6 +93,7 @@
   background-color: var(--input-text-color);
   z-index: 10;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+  padding-right: calc((100% - 1208px) / 2);
 }
 
 .app--title .title-logo {
@@ -101,6 +102,7 @@
 
 .app--title-headline {
   font-size: 20px;
+  font-weight: 400;
   color: var(--primary-text-color);
 }
 /* only for testing */

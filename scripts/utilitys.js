@@ -1,3 +1,21 @@
+function initUtilitys() {
+  loggedInUserName();
+}
+
+function loggedInUserName() {
+  let USER_INITIALS = document.getElementById("user-menu-button");
+  let GREETING_NAME = document.getElementById("greeting-name");
+  const FULL_NAME = localStorage.getItem('activeUserName');
+  let SPLITTED_NAME = FULL_NAME.split(" ");
+  let INITIALS = SPLITTED_NAME[0][0];
+  if (SPLITTED_NAME.length > 1) {
+    INITIALS += SPLITTED_NAME[SPLITTED_NAME.length - 1][0];
+  }
+  INITIALS = INITIALS.toUpperCase();
+  USER_INITIALS.innerHTML = INITIALS;
+  GREETING_NAME.innerHTML = FULL_NAME;
+}
+
 /**
  * Check if the User can enter the side or not
  */
@@ -5,7 +23,9 @@ async function checkAuth() {
   const ID = sessionStorage.getItem("user_id");
   const BOOL = await checkUserId(ID);
   if (BOOL) {
-    console.log("true");
+    return;
+  } else if (ID === "guest") {
+    return;
   } else {
     window.location.href = "../index.html";
   }
@@ -30,3 +50,4 @@ async function checkUserId(id) {
   }
 }
 checkAuth();
+
