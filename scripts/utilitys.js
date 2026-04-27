@@ -5,7 +5,9 @@ async function checkAuth() {
   const ID = sessionStorage.getItem("user_id");
   const BOOL = await checkUserId(ID);
   if (BOOL) {
-    console.log("true");
+    return;
+  } else if (ID === "guest") {
+    return;
   } else {
     window.location.href = "../index.html";
   }
