@@ -13,7 +13,6 @@ function renderHtmlContactDialogTpl() {
 
       <header class="dialog-header">
         <button type="button" id="close-btn" class="close-btn-overlay" onclick="closeContactDialog()"><svg class="img-x"><use href="../assets/img/icons/general/close-white.svg"></use></svg></button>
-        <button type="button" id="close-btn" class="close-btn-overlay" onclick="closeContactDialog()"><svg class="img-x"><use href="../assets/img/icons/general/close-white.svg"></use></svg></button>
       </header>
 
       <main class="dialog-main">
@@ -52,7 +51,7 @@ function renderHtmlContactDialogTpl() {
 }
 
 
-function renderHtmlEditContactDialogTpl() {
+function renderHtmlEditContactDialogTpl(editUserIndex) {
   return /*html*/` <div class="dialog-container" onclick="closeDialogOutsite(event)">
 
       <aside class="aside-content">
@@ -77,26 +76,24 @@ function renderHtmlEditContactDialogTpl() {
         <form>
           <section class="dialog-input-container">
             <div class="dialog-input-section">
-              <input class="dialog-input"  type="text" name="name" placeholder="Name" required />
+              <input class="dialog-input" id="editName"  type="text" name="name" placeholder="Name" required />
               <img src="../assets/img/icons/input/person.svg" alt="icon" class="dialog-input-icon" />
             </div>
 
             <div class="dialog-input-section">
-              <input class="dialog-input" id="email" type="email" name="email" placeholder="Email" required />
+              <input class="dialog-input" id="editEmail" type="email" name="email" placeholder="Email" required />
               <img src="../assets/img/icons/input/mail.svg" alt="icon" class="dialog-input-icon" />
             </div>
 
             <div class="dialog-input-section">
-              <input class="dialog-input" type="tel" name="phone" placeholder="Phone" required />
+              <input class="dialog-input" id="editPhone" type="tel" name="phone" placeholder="Phone" required />
               <img src="../assets/img/icons/input/phone.svg" alt="icon" class="dialog-input-icon" />
             </div>
           </section>
           <section class="dialog-login-buttons">
             <button type="button" class="btn btn--secondary btn--login"
-              onclick="document.getElementById('addNewContact').close()" onclick="deleteContact()">Delete</button>
-              onclick="document.getElementById('addNewContact').close()" onclick="deleteContact()">Delete</button>
-            <button type="submit" class="btn btn--primary btn--login" onclick="saveContact()">Save<img class="img-check"
-                src="../assets/img/icons/general/check.svg" alt="create check"></button>
+              onclick=" deleteContact(${editUserIndex})">Delete</button>
+            <button type="submit" class="btn btn--primary btn--login" onclick="saveNewContactData(${editUserIndex})">Save<img class="img-check"
                 src="../assets/img/icons/general/check.svg" alt="create check"></button>
           </section>
         </form>

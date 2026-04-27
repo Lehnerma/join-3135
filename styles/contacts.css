@@ -12,7 +12,6 @@ button {
 .main-content {
   display: flex;
   max-height: 100vh;
-
   background-color: var(--input-text-color);
 }
 
@@ -57,7 +56,6 @@ button {
   background-image: url("../assets/img/icons/general/Vector\ 13.svg");
   background-position: center;
 }
-
 
 .add-button-container {
   display: flex;
@@ -177,13 +175,7 @@ button {
   font-size: clamp(16px, 1.1vw, 16px);
   color: var(--contact-color-email);
   text-decoration: none;
- 
-}
-
-
-
-
-
+ }
 
 .right-content {
   display: flex;
@@ -225,245 +217,6 @@ button {
 }
 
 /* --- DIALOG CONTENT --- */
-
-/* .dialog-content {
-  display: none;
-  border: none;
-  border-radius: 30px;
-  position: fixed;
-  top: 54%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 1212px;
-  height: 594px;
-  background-color: var(--input-text-color);
-  z-index: 10;
-}
-
-.dialog-content[open] {
-  display: flex;
-  animation: slideIn 0.4s ease-out forwards;
-}
-
-@keyframes slideIn {
-  from {
-    transform: translate(100vw, -50%);
-  }
-
-
-  to {
-    transform: translate(-50%, -50%);
-
-  }
-}
-
-.dialog-content.hide {
-  display: flex;
-  animation: slideOut 0.5s ease-in forwards;
-}
-
-@keyframes slideOut {
-  from {
-    transform: translate(-50%, -50%);
-  }
-
-  to {
-    transform: translate(100vw, -50%);
-
-  }
-}
-
-.dialog-content::backdrop {
-  background-color: rgba(0, 0, 0, 0.3s);
-}
-
-.dialog-container {
-  width: 100%;
-  display: flex;
-}
-
-.aside-content {
-  background-color: var(--primary-color);
-  width: 476px;
-  height: 594px;
-  color: var(--input-text-color);
-  padding: 66px 48px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-}
-
-.aside-logo {
-  position: absolute;
-  top: 150px;
-  left: 47px;
-  width: 56px;
-  height: 66px;
-}
-
-.aside-h2 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Inter";
-  font-weight: 700;
-  font-size: 61px;
-  margin: 0;
-
-}
-
-.aside-text-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 371px;
-  height: 129px;
-  margin: 16px 0 8px 0;
-}
-
-.aside-p {
-  font-size: 27px;
-  font-family: "Inter";
-  font-weight: 400;
-  margin-top: 8px;
-  margin-bottom: 8px;
-}
-
-.blue-line-horizontal {
-
-  content: "";
-  width: 90px;
-  height: 3px;
-  background-color: var(--secondary-color);
-  border-radius: 2px;
-
-}
-
-.dialog-header {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-
-}
-
-.close-btn-overlay {
-  position: absolute;
-  top: 32px;
-  right: 32px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.dialog-main {
-  width: 100%;
-  display: flex;
-  align-items: center;
-
-}
-
-.person-Logo-container {
-  display: flex;
-  width: 120px;
-  height: 120px;
-  background-color: var(--input-default-main);
-  border-radius: 70%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0px 85px 65px 85px;
-}
-
-
-.person-logo {
-  width: 64px;
-  height: 64px;
-
-}
-
-.dialog-input-container {
-  width: 422px;
-  height: 215px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 32px;
-  margin-right: 32px;
-}
-
-.dialog-input-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 422px;
-  height: 50px;
-  border-radius: 10px;
-  border: 1px solid var(--input-default-main);
-
-}
-
-.dialog-input {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 380px;
-  height: 24px;
-  margin: 13px 0px 13px 21px;
-  border: none;
-  font-family: "Inter";
-  font-size: 20px;
-  font-weight: 400;
-}
-
-.dialog-input::placeholder {
-  color: var(--input-default-main);
-}
-
-.dialog-input-icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 21px;
-}
-
-.dialog-login-buttons {
-  display: flex;
-  margin-top: 40px;
-  margin-right: 32px;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  cursor: pointer;
-}
-
-.img-check {
-  width: 24px;
-  height: 24px;
-  filter: brightness(0) invert(1);
-  margin-left: 6px;
-  white-space: nowrap;
-}
-
-.img-check {
-  filter: brightness(0) invert(1);
-  margin-left: 6px;
-}
-
-.img-x {
-  width: 24px;
-  height: 24px;
-  margin-top: 2px;
-  margin-top: 2px;
-  margin-left: 6px;
- }
- }
-
-.btn-cancel-text {
-  font-family: "Inter";
-  font-size: 21px;
-  font-weight: 400;
-}   */
 
 .dialog-content {
   display: none;
@@ -688,6 +441,41 @@ button {
   }
 }
 
+
+
+/* SUCCESS OVERLAY*/
+
+
+
+.contact-success-overlay {
+    position: fixed;
+    right: 50px; 
+    bottom: 50px;
+    width: 326px;
+    height: 74px;
+    background-color:var(--primary-color);
+    color: var(--fourth-text-color);
+    display: flex;
+    font-weight: 400;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    font-size: 20px;
+    z-index: 11;
+    transition: transform 0.3s ease-in-out; 
+}
+
+
+.hide-overlay {
+    transform: translateX(calc(100% + 100px)); 
+}
+
+
+
+/* CONATCT DETAIL BOX */
+
+
 .contact-details-box {
   position: absolute;
   display: flex;
@@ -750,7 +538,6 @@ button {
   border-color: var(--input-text-color);
   box-shadow: var(--contact-shadow-initials);
 }
-
 
 .main-contact-details {
   width: 100%;

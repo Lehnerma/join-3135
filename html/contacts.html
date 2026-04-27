@@ -8,11 +8,11 @@
   <title>Contacts</title>
   <link rel="stylesheet" href="../style.css" />
 
-  <link rel="stylesheet" href="../styles/sidebar.css" /> 
+  <link rel="stylesheet" href="../styles/sidebar.css" />
   <link rel="stylesheet" href="../styles/contacts.css" />
   <link rel="stylesheet" href="../styles/fonts.css" />
   <link rel="stylesheet" href="../styles/colors.css" />
-   <script defer src="../scripts/contacts.js"></script>
+  <script defer src="../scripts/contacts.js"></script>
   <script defer src="../scripts/contacts-template.js"></script>
   <!-- <script defer src="../scripts/utilitys.js"></script> -->
 </head>
@@ -54,7 +54,7 @@
 
   <main class="main-content">
     <div class="scroll-container">
-  </div>
+    </div>
     <div class="left-content">
       <div class="add-button-container">
         <button type="button" class="btn btn--primary add-button-size" onclick="openContactDialog()">
@@ -62,12 +62,16 @@
           <img class="add-contact-icon" src="../assets/img/icons/general/person_add.svg" alt="add contact button">
         </button>
       </div>
-      <div class="contact-list">
-        <div id="contactList"></div>
-        
+      
+      <div id="contactList" class="contact-list">
+        <div id="singleContacts" class="single-contacts"></div>
       </div>
+      <div id="contactSuccessOverlay" class="contact-success-overlay hide-overlay">
+    <span>Contact successfully created</span>
+</div>
+
     </div>
-       
+
     <div class="right-content">
       <div class="headline">
         <h1 class="contacts-title">Contacts</h1>
