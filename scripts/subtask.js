@@ -1,7 +1,3 @@
-function init() {
-  subtaskInit();
-}
-
 /**
  * Initial all subtasks function after loading the body
  */
