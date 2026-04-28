@@ -82,14 +82,16 @@ function fillUserDropdown(users) {
     let initials = user.name.charAt(0);
 
     html += `
-          <label class="user-item user-Selection" onclick="toggleUser(this)">
+          <label  class="user-item user-Selection assignedTo" onclick="toggleUser(this)">
+            <div class="logoNameField">
               <div class="initials" style="background-color: ${color};">
                 ${initials}
               </div>
             
-              <div>
+              <div class="contact-info-text">
                 <span>${user.name}</span>
               </div>
+            </div>
             
               <input type="checkbox" value="${user.name}">
           </label>
