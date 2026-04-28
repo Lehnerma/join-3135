@@ -33,7 +33,7 @@ function renderHtmlContactDialogTpl() {
           <p class="aside-p">Tasks are better with a team!</p>
           <div class="blue-line-horizontal"></div>
         </section>
-      </aside>
+      </aside> 
 
       <header class="dialog-header">
         <button type="button" id="close-btn" class="close-btn-overlay" onclick="closeContactDialog()"><svg class="img-x"><use href="../assets/img/icons/contacts/close-white.svg"></use></svg></button>

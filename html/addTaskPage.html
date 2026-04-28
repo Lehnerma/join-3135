@@ -6,14 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" href="../assets/img/favicon/favicon-join.svg" type="image/x-icon" />
   <title>Join - Add Task</title>
-<script src="../scripts/utilitys.js"></script>
+  <script src="../scripts/utilitys.js"></script>
   <link rel="stylesheet" href="../styles/fonts.css" />
   <link rel="stylesheet" href="../styles/colors.css" />
+  <link rel="stylesheet" href="../styles/contacts.css" />
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="../styles/sidebar.css" />
   <link rel="stylesheet" href="../styles/subtasks.css" />
   <link rel="stylesheet" href="../styles/addTask.css" />
 
+  <script src="../scripts/colors.js"></script>
+  <script src="../scripts/contacts.js"></script>
   <script src="../scripts/templates.js"></script>
   <script src="../scripts/addTask.js"></script>
 </head>
@@ -30,20 +33,24 @@
 
   <nav class="sidebar">
     <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
-      <ul>
-        <li class="">
-          <a class="nav-category" href="./summary.html"><img class="nav-category-img" src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
-        </li>
-        <li class="active">
-          <a class="nav-category" href="./addTaskPage.html"><img class="nav-category-img" src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
-        </li>
-        <li class="">
-          <a class="nav-category" href="./board.html"><img class="nav-category-img" src="../assets/img/icons/general/board.svg" alt="" />Board</a>
-        </li>
-        <li class="">
-          <a class="nav-category" href="./contacts.html"><img class="nav-category-img" src="../assets/img/icons/general/contacts.svg" alt="" /> Contacts</a>
-        </li>
-      </ul>
+    <ul>
+      <li class="">
+        <a class="nav-category" href="./summary.html"><img class="nav-category-img"
+            src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
+      </li>
+      <li class="active">
+        <a class="nav-category" href="./addTaskPage.html"><img class="nav-category-img"
+            src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
+      </li>
+      <li class="">
+        <a class="nav-category" href="./board.html"><img class="nav-category-img"
+            src="../assets/img/icons/general/board.svg" alt="" />Board</a>
+      </li>
+      <li class="">
+        <a class="nav-category" href="./contacts.html"><img class="nav-category-img"
+            src="../assets/img/icons/general/contacts.svg" alt="" /> Contacts</a>
+      </li>
+    </ul>
 
     <div class="legal-section">
       <a class="legal-section-link" href="#">Privacy Policy</a>
@@ -109,7 +116,9 @@
               <span>▼</span>
             </div>
 
-            <div id="dropdown" class="dropdown hidden"></div>
+            <div id="dropdown" class="dropdown hidden"> </div>
+            <div></div>
+            
           </div>
 
           <!-- category -->

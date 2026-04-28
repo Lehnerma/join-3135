@@ -3,6 +3,8 @@ const TASK_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.a
 let selectedPriority = "medium";
 let SUBTASKS = [];
 
+
+
 function init() {
   console.log("INIT läuft");
   console.log("dropdown:", document.getElementById("dropdown"));
@@ -68,27 +70,44 @@ function loadUsers() {
 
 
 function fillUserDropdown(users) {
-
-  console.log("USERS DATA:", users);
-
+  // console.log("USERS DATA:", users);
   const container = document.getElementById("dropdown");
 
   let html = "";
 
   for (const userId in users) {
     const user = users[userId];
+    let firstLetter = user.name.charAt(0).toUpperCase();
+    let color = contactColors[firstLetter];
+    let initials = user.name.charAt(0);
 
     html += `
-            <label class="user-item">
-              <div class="initials">${user.name.charAt(0)}</div>
-              <span>${user.name}</span>
+          <label  class="user-item user-Selection assignedTo" onclick="toggleUser(this)">
+            <div class="logoNameField">
+              <div class="initials" style="background-color: ${color};">
+                ${initials}
+              </div>
+            
+              <div class="contact-info-text">
+                <span>${user.name}</span>
+              </div>
+            </div>
+            
               <input type="checkbox" value="${user.name}">
-            </label>
-        `;
+          </label>
+    `;
+
   }
 
   container.innerHTML = html;
 }
+
+function toggleUser(el) {
+  const checkbox = el.querySelector("input");
+
+  checkbox.checked = !checkbox.checked;
+  el.classList.toggle("active", checkbox.checked);
+} 
 
 
 

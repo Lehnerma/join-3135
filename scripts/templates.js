@@ -16,3 +16,8 @@ function getSubtaskTemplate(title, index){
     </div>`
 }
 
+function getNoTasksTemplate(status){
+  return `
+    <li class="board-task no-task">No tasks ${status}</li>
+  `
+}

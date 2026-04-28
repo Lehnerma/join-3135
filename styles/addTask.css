@@ -163,6 +163,18 @@ main {
   display: none;
 }
 
+.assignedTo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+.logoNameField {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 
 .user-item {
   display: flex;
@@ -176,12 +188,16 @@ main {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: rgb(6, 190, 223);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
+.user-item.active {
+  background-color: #2a3647;
+  color: white;
+} 
 
 
 
