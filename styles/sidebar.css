@@ -111,6 +111,7 @@
 .app--content {
   grid-area: content;
   overflow: auto;
+  background-color: var(--third-background-color);
 }
 
 .app--icons {
