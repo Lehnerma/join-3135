@@ -34,29 +34,30 @@ const alphabet = [
 
 let USERS = [];
 let newContact = "";
-let USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
-
 let editName = '';
 let editEmail = '';
 let editPhone = '';
 let editUserIndex = '';
+let USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+
 
 function init() {
   getUsers();
 }
 
+
 async function getUsers() {
   const RESPONSE = await fetch(USERS_URL);
   let RESULT = await RESPONSE.json();
-  USERS = []; 
+  USERS = [];
   for (let key in RESULT) {
     let person = RESULT[key];
     person.firebaseKey = key;
     USERS.push(person);
   }
-
   sortUserContactList();
 }
+
 
 function sortUserContactList() {
   USERS.sort(function (a, b) {
@@ -69,22 +70,16 @@ function sortUserContactList() {
   addAlphabetTable();
 }
 
+
 function addAlphabetTable() {
   let singleContacts = document.getElementById('singleContacts');
   singleContacts.innerHTML = '';
   for (let i = 0; i < alphabet.length; i++) {
-    singleContacts.innerHTML += renderAlphabetTable(alphabet[i]);
+    singleContacts.innerHTML += renderAlphabetTableTpl(alphabet[i]);
   }
   userContectList();
 }
 
-function renderAlphabetTable(alphabet) {
-  return /*html*/ `
-        <div id="${alphabet}">
-        <p class="first-letter">${alphabet}</p>
-        <div class="letter-divider"></div> 
-        </div>`;
-}
 
 function userContectList() {
   for (let i = 0; i < USERS.length; i++) {
@@ -92,24 +87,19 @@ function userContectList() {
     let firstLetter = user.name.charAt(0).toUpperCase();
     let targetContainer = document.getElementById(firstLetter);
     if (targetContainer) {
-      targetContainer.innerHTML += getSingelUser(user, i);
+      targetContainer.innerHTML += getSingleUser(user, i);
     }
   }
 }
 
-function getSingelUser(user, i) {
-  let initials = getInitials(user.name);
-  let firstLetter = user.name.charAt(0).toUpperCase();
-  let color = contactColors[firstLetter];
 
-  return /*html*/` <div id="${i}" class="user-Selection" onclick="getUserDetails(${i})">
-        <div class="initials" style="background-color: ${color}">
-           ${initials}         </div>
-         <div class="contact-info-text">
-            <div class="name">${user.name}</div>
-            <p class="email">${user.email}</p>
-        </div> `;
+function getSingleUser(user, i) {
+  let initials = getInitials(user.name);
+  const firstLetter = user.name.charAt(0).toUpperCase();
+  let scolor = contactColors[firstLetter];
+  return renderSingleUserHtml(user, i, initials, color);
 }
+
 
 function getInitials(name) {
   let splitNames = name.trim().split(' ');
@@ -121,6 +111,7 @@ function getInitials(name) {
   return currentInitial;
 }
 
+
 function openContactDialog() {
   const dialogRef = document.getElementById('openNewDialog');
   dialogRef.classList.remove('hide');
@@ -128,15 +119,29 @@ function openContactDialog() {
   dialogRef.showModal();
 }
 
-function openEditDialog() {
+
+function openEditDialog(editUserIndex, initials, color) {
   const dialogRef = document.getElementById('openNewDialog');
   dialogRef.classList.remove('hide');
-  dialogRef.innerHTML = renderHtmlEditContactDialogTpl(editUserIndex);
+  dialogRef.innerHTML = renderHtmlEditContactDialogTpl(editUserIndex, initials, color);
   dialogRef.showModal();
-
   document.getElementById('editName').value = editName;
   document.getElementById('editEmail').value = editEmail;
   document.getElementById('editPhone').value = editPhone;
+}
+
+function addEditContactDetails(editUserIndex) {
+  let user = USERS[editUserIndex];
+  let initials = getInitials(user.name);
+  let firstLetter = user.name.charAt(0).toUpperCase();
+  let color = contactColors[firstLetter];
+  openEditDialog(editUserIndex, initials, color);
+  
+}
+
+function openEditContactDialog() {
+  addEditContactDetails(editUserIndex);
+  
 }
 
 function closeContactDialog() {
@@ -149,9 +154,11 @@ function closeContactDialog() {
   }
 }
 
+
 function closeDialogOutsite(event) {
   event.stopPropagation();
 }
+
 
 function getUserDetails(userIndex) {
   editUserIndex = userIndex;
@@ -164,6 +171,7 @@ function getUserDetails(userIndex) {
   removeAllBgColors(user, isAlreadyActive, userSelectionID, userIndex);
 }
 
+
 function removeAllBgColors(user, isAlreadyActive, userSelectionID, i) {
   const allSelections = document.querySelectorAll('.user-Selection');
   allSelections.forEach(element => {
@@ -172,51 +180,28 @@ function removeAllBgColors(user, isAlreadyActive, userSelectionID, i) {
   showDetails(user, isAlreadyActive, userSelectionID, i);
 }
 
+
 function showDetails(user, isAlreadyActive, userSelectionID, i) {
   const dialogRef = document.getElementById('contactDetailsDialog');
   if (!isAlreadyActive) {
     userSelectionID.classList.add('bg-color-active');
-    dialogRef.innerHTML = renderShowDetailsTpl(user, i);
+    dialogRef.innerHTML = addShowDetails(user, i);
   } else {
     dialogRef.innerHTML = '';
   }
 }
 
-function renderShowDetailsTpl(user, i) {
-  let initials = getInitials(user.name);
-  let firstLetter = user.name.charAt(0).toUpperCase();
-  let color = contactColors[firstLetter];
-  return /*html*/ `<div class="contact-details-box show">
-  <header class="header-contect-details">
-    <div class="initials-large" style="background-color:${color}">
-      ${initials}
-    </div>
-    <div class="name-and-buttons">
-      <h1 class="h1-contact-details">${user.name}</h1>
-      <div class="edit-delete-container">
-        <button type="button" class="edit-delete-button" onclick="openEditContactDialog()"><svg class="edit-svg"><use
-            href="../assets/img/icons/general/edit-contacts.svg"></use></svg>Edit</button>
-        <button type="button" class="edit-delete-button" onclick="deleteContact(${i})"><svg class="delete-svg">
-            <use href="../assets/img/icons/general/trash-contact.svg"></use></svg>Delete</button>
-      </div>
-    </div>
-  </header>
-  <main class="main-contact-details">
-    <div class="contact-information">
-      Contact Information</div>
-    <ul class="email-and-phone">
-      <li class="contact-email">Email</li>
-      <li><a href="mailto:${user.email}" class="email">${user.email}</a></li>
-      <li class="contact-phone">Phone</li>
-      <li>${user.phone}</li>
-    </ul>
-  </main>
-</div>`;
+
+
+function addShowDetails(user, i) {
+  const initials = getInitials(user.name);
+  const firstLetter = user.name.charAt(0).toUpperCase();
+  const color = contactColors[firstLetter];
+  return renderShowDetailsTpl(user, i, initials, color);
 }
 
-function openEditContactDialog() {
-  openEditDialog();
-}
+
+
 
 function createContact() {
   const name = document.getElementById('createName').value;
@@ -234,6 +219,7 @@ function createContact() {
 
 async function addNewContact(newContact) {
   USERS.push(newContact);
+  
   const contactIndex = USERS.findIndex(user => user.id === newContact.id);
   sortUserContactList();
   if (contactIndex == -1) {
@@ -243,6 +229,7 @@ async function addNewContact(newContact) {
   syncNewContact(newContact);
   showSuccessBanner();
 }
+
 
 async function syncNewContact(newContact) {
   const response = await fetch(USERS_URL, {
@@ -256,68 +243,43 @@ async function syncNewContact(newContact) {
     const RESULT = await response.json();
     const generatedKey = await RESULT.name;
     newContact.firebaseKey = generatedKey;
-
   }
-
 }
 
 
 async function deleteContact(index) {
-  let deleteSelectedUser = USERS[index];
-  let deleteUser = deleteSelectedUser.firebaseKey;
-  document.getElementById(index).remove();
-  const response = await fetch(`https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/${deleteUser}.json`, {
-    method: 'DELETE'
-  });
-
-  if (response.ok) {
-    await getUsers();
+  const userKey = USERS[index].firebaseKey;
+  const success = await deleteUserFromDatabase(userKey);
+  if (success) {
+    document.getElementById(index).remove();
     document.getElementById('contactDetailsDialog').innerHTML = '';
-
-  } else {
-    console.error('Fehler beim Löschen');
-  }
-  closeContactDialog();
-}
-
-
-
-function showSuccessBanner() {
-  const banner = document.getElementById('contactSuccessOverlay');
-  banner.classList.remove('hide-overlay');
-  setTimeout(() => {
-    banner.classList.add('hide-overlay');
-  }, 800);
-}
-
-
-async function saveNewContactData(index) {
-  let user = USERS[index];
-  let key = user.firebaseKey;
-
-  let updatedData = {
-    name: document.getElementById('editName').value,
-    email: document.getElementById('editEmail').value,
-    phone: document.getElementById('editPhone').value,
-
-  };
-
-  const response = await fetch(`https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(updatedData)
-  });
-
-  if (response.ok) {
-    console.log('Update erfolgreich!');
     await getUsers();
-    await closeEditDialog();
+    closeContactDialog();
   } else {
-    console.error('Fehler beim Updaten');
+    console.error('Fehler beim Löschen des Kontakts');
   }
 }
+
+
+async function deleteUserFromDatabase(firebaseKey) {
+  const url = `https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/${firebaseKey}.json`;
+  try {
+    const response = await fetch(url, { method: 'DELETE' });
+    return response.ok;
+  } catch (error) {
+    console.error("Fetch-Fehler:", error);
+    return false;
+  }
+}
+
+
+function getSingleUser(user, i) {
+  const initials = getInitials(user.name);
+  const firstLetter = user.name.charAt(0).toUpperCase();
+  const color = contactColors[firstLetter];
+  return renderSingleUserHtml(user, i, initials, color);
+}
+
 
 
 
