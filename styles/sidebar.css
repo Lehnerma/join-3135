@@ -85,7 +85,8 @@
     font-weight: 700;
   }
 }
-.active .app--title {
+
+.app--title {
   grid-area: title;
   display: flex;
   justify-content: space-between;

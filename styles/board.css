@@ -1,10 +1,4 @@
 /* --- Board Header & Suche --- */
-body {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    min-height: 100vh;
-    overflow: hidden;
-}
 
 .board-header-section {
     padding: 40px 60px;
