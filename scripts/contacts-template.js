@@ -16,7 +16,7 @@ function renderHtmlContactDialogTpl() {
       </header>
 
       <main class="dialog-main">
-
+         <div class="dialog-main-wrapper">
         <div class="person-Logo-container">
           <img class="person-logo" src="../assets/img/icons/input/person.svg" alt="Profile" class="large-profile-icon">
         </div>
@@ -46,6 +46,7 @@ function renderHtmlContactDialogTpl() {
                 src="../assets/img/icons/general/check.svg" alt="create check"></button>
           </section>
         </form>
+        </div>
       </main>
     </div>`;
 }
@@ -68,7 +69,7 @@ function renderHtmlEditContactDialogTpl(editUserIndex) {
       </header>
 
       <main class="dialog-main">
-
+        <div class="dialog-main-wrapper">
         <div class="person-Logo-container">
           <img class="person-logo" src="../assets/img/icons/input/person.svg" alt="Profile" class="large-profile-icon">
         </div>
@@ -97,7 +98,7 @@ function renderHtmlEditContactDialogTpl(editUserIndex) {
                 src="../assets/img/icons/general/check.svg" alt="create check"></button>
           </section>
         </form>
-        <script></script>
+        </div>
       </main>
     </div>`;
 

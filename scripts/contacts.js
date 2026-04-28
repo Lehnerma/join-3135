@@ -186,7 +186,7 @@ function renderShowDetailsTpl(user, i) {
   let initials = getInitials(user.name);
   let firstLetter = user.name.charAt(0).toUpperCase();
   let color = contactColors[firstLetter];
-  return /*html*/ `<div class="contact-details-box">
+  return /*html*/ `<div class="contact-details-box show">
   <header class="header-contect-details">
     <div class="initials-large" style="background-color:${color}">
       ${initials}

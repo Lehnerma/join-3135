@@ -133,7 +133,7 @@
   height: 56px;
 }
 
-@media screen and (width <= 720px) {
+@media screen and (width <= 1024px) {
   .app {
     grid-template-rows: 80px 1fr 80px;
     grid-template-columns: 1fr;
