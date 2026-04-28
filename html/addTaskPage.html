@@ -1,154 +1,166 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../assets/img/favicon/favicon-join.svg" type="image/x-icon" />
-    <title>Join - Add Task</title>
-    <script src="../scripts/utilitys.js"></script>
-    <link rel="stylesheet" href="../styles/fonts.css" />
-    <link rel="stylesheet" href="../styles/colors.css" />
-    <link rel="stylesheet" href="../style.css" />
-    <link rel="stylesheet" href="../styles/sidebar.css" />
-    <link rel="stylesheet" href="../styles/subtasks.css" />
-    <link rel="stylesheet" href="../styles/addTask.css" />
 
-    <script src="../scripts/templates.js"></script>
-    <script src="../scripts/addTask.js"></script>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="../assets/img/favicon/favicon-join.svg" type="image/x-icon" />
+  <title>Join - Add Task</title>
+  <script src="../scripts/utilitys.js"></script>
+  <link rel="stylesheet" href="../styles/fonts.css" />
+  <link rel="stylesheet" href="../styles/colors.css" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../styles/sidebar.css" />
+  <link rel="stylesheet" href="../styles/subtasks.css" />
+  <link rel="stylesheet" href="../styles/addTask.css" />
 
-  <body class="app" onload="(init(), initUtilitys())">
-    <header class="app--title">
-      <h1 class="app--title-headline">Kanban Project Management Tool</h1>
-      <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
-      <div class="app--icons">
-        <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="help" class="app--icon" /></a>
-        <button id="user_menu_button" class="btn btn--user"></button>
-      </div>
-    </header>
+  <script src="../scripts/colors.js"></script>
+  <script src="../scripts/contacts.js"></script>
+  <script src="../scripts/templates.js"></script>
+  <script src="../scripts/addTask.js"></script>
+</head>
 
-    <nav class="sidebar">
-      <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
-      <ul>
-        <li class="">
-          <a class="nav-category" href="./summary.html"><img class="nav-category-img" src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
-        </li>
-        <li class="active">
-          <a class="nav-category" href="./addTaskPage.html"><img class="nav-category-img" src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
-        </li>
-        <li class="">
-          <a class="nav-category" href="./board.html"><img class="nav-category-img" src="../assets/img/icons/general/board.svg" alt="" />Board</a>
-        </li>
-        <li class="">
-          <a class="nav-category" href="./contacts.html"><img class="nav-category-img" src="../assets/img/icons/general/contacts.svg" alt="" /> Contacts</a>
-        </li>
-      </ul>
+<body class="app" onload="init()">
+  <header class="app--title">
+    <h1 class="app--title-headline">Kanban Project Management Tool</h1>
+    <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
+    <div class="app--icons">
+      <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="help" class="app--icon" /></a>
+      <button id="user-menu-button" class="btn btn--user"></button>
+    </div>
+  </header>
 
-      <div class="legal-section">
-        <a class="legal-section-link" href="#">Privacy Policy</a>
-        <a class="legal-section-link" href="#">Legal Notice</a>
-      </div>
-    </nav>
+  <nav class="sidebar">
+    <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
+    <ul>
+      <li class="">
+        <a class="nav-category" href="./summary.html"><img class="nav-category-img"
+            src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
+      </li>
+      <li class="active">
+        <a class="nav-category" href="./addTaskPage.html"><img class="nav-category-img"
+            src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
+      </li>
+      <li class="">
+        <a class="nav-category" href="./board.html"><img class="nav-category-img"
+            src="../assets/img/icons/general/board.svg" alt="" />Board</a>
+      </li>
+      <li class="">
+        <a class="nav-category" href="./contacts.html"><img class="nav-category-img"
+            src="../assets/img/icons/general/contacts.svg" alt="" /> Contacts</a>
+      </li>
+    </ul>
 
-    <main class="app--content">
-      <article class="task-container">
-        <h1 class="input--title">Add Task</h1>
+    <div class="legal-section">
+      <a class="legal-section-link" href="#">Privacy Policy</a>
+      <a class="legal-section-link" href="#">Legal Notice</a>
+    </div>
+  </nav>
 
-        <form class="form-task form-columns" id="form_task">
-          <!-- Linke Spalte -->
-          <section class="column left">
-            <div class="input-section">
-              <label for="title" class="required">Title</label>
-              <input id="title" class="input" type="text" placeholder="Enter a title" required />
-              <span class="field-error">This field is required</span>
-            </div>
-            <div class="input-section">
-              <label for="description">Description</label>
-              <textarea id="description" class="input" placeholder="Enter a Description" rows="3"></textarea>
-            </div>
+  <main class="app--content">
+    <article class="task-container">
+      <h1 class="input--title">Add Task</h1>
 
-            <div class="input-section">
-              <label for="dueDate" class="required">Due date</label>
-              <input id="dueDate" class="input input-date" type="date" required />
-              <span class="field-error">This field is required</span>
-            </div>
-          </section>
+      <form class="form-task form-columns" id="form_task">
+        <!-- Linke Spalte -->
+        <section class="column left">
+          <div class="input-section">
+            <label for="title" class="required">Title</label>
+            <input id="title" class="input" type="text" placeholder="Enter a title" required />
+            <span class="field-error">This field is required</span>
+          </div>
+          <div class="input-section">
+            <label for="description">Description</label>
+            <textarea id="description" class="input" placeholder="Enter a Description" rows="3"></textarea>
+          </div>
 
-          <div class="divider"></div>
-
-          <!-- Rechte Spalte -->
-          <section class="column right">
-            <!-- priority -->
-            <div class="input-section">
-              <label for="priority">Priority</label>
-              <div class="priority-group">
-                <button type="button" id="btn_urgent" class="btn btn--prio" onclick="selectPriority('urgent')" value="urgent">
-                  Urgent
-                  <img class="img-prio urgent" src="../assets/img/icons/prio/urgent.svg" alt="" />
-                </button>
-                <button type="button" id="btn_medium" class="btn btn--prio medium-active" onclick="selectPriority('medium')" value="medium">
-                  Medium
-                  <img class="img-prio medium" src="../assets/img/icons/prio/medium.svg" alt="" />
-                </button>
-                <button type="button" id="btn_low" class="btn btn--prio" onclick="selectPriority('low')" value="low">
-                  Low
-                  <img class="img-prio low" src="../assets/img/icons/prio/low.svg" alt="" />
-                </button>
-              </div>
-            </div>
-            <!-- assignt to -->
-
-            <div class="input-section">
-              <label>Assigned to</label>
-
-              <div class="select-box" onclick="toggleDropdown()">
-                <span id="selectedText">Select contacts</span>
-                <span>▼</span>
-              </div>
-
-              <div id="dropdown" class="dropdown hidden"></div>
-            </div>
-
-            <!-- category -->
-            <div class="input-section">
-              <label for="category" class="required">Category</label>
-              <select id="category" class="input dropdown form--select" required>
-                <option value="" selected>Select task category</option>
-                <option value="Technical Task">Technical Task</option>
-                <option value="User Story">User Story</option>
-              </select>
-              <span class="field-error">This field is required</span>
-            </div>
-
-            <!-- subtask -->
-            <div class="input-section">
-              <label for="subtask_input">Subtasks</label>
-              <div class="input--section">
-                <input id="subtask_input" class="input" type="text" placeholder="Add subtask" />
-                <div class="subtask--btns">
-                  <button id="subtask-close" class="btn--subtask close"><img src="../assets/img/icons/subtask/close.svg" alt="x" /></button>
-                  <span class="div-vert"></span>
-                  <button id="subtask-save" class="btn--subtask check"><img src="../assets/img/icons/subtask/check.svg" alt="check" /></button>
-                </div>
-              </div>
-              <ul id="subtask_list" class="subtask-list"></ul>
-            </div>
-          </section>
-
-          <!-- info -->
-          <section class="form-info-section">
-            <p><b class="form-info">*</b> This field is required</p>
-          </section>
-        </form>
-        <section class="form-footer">
-          <div class="action-btns">
-            <button id="form_clear" type="reset" class="btn btn--secondary clear" form="form_task">Clear</button>
-            <button type="submit" class="btn btn--primary" form="form_task">Create Task</button>
+          <div class="input-section">
+            <label for="dueDate" class="required">Due date</label>
+            <input id="dueDate" class="input input-date" type="date" required />
+            <span class="field-error">This field is required</span>
           </div>
         </section>
-      </article>
-    </main>
 
-    <div id="toast" class="toast">Task added to board ✅</div>
-  </body>
+        <div class="divider"></div>
+
+        <!-- Rechte Spalte -->
+        <section class="column right">
+          <!-- priority -->
+          <div class="input-section">
+            <label for="priority">Priority</label>
+            <div class="priority-group">
+              <button type="button" id="btn_urgent" class="btn btn--prio" onclick="selectPriority('urgent')"
+                value="urgent">
+                Urgent
+                <img class="img-prio urgent" src="../assets/img/icons/prio/urgent.svg" alt="" />
+              </button>
+              <button type="button" id="btn_medium" class="btn btn--prio medium-active"
+                onclick="selectPriority('medium')" value="medium">
+                Medium
+                <img class="img-prio medium" src="../assets/img/icons/prio/medium.svg" alt="" />
+              </button>
+              <button type="button" id="btn_low" class="btn btn--prio" onclick="selectPriority('low')" value="low">
+                Low
+                <img class="img-prio low" src="../assets/img/icons/prio/low.svg" alt="" />
+              </button>
+            </div>
+          </div>
+          <!-- assignt to -->
+
+          <div class="input-section">
+            <label>Assigned to</label>
+
+            <div class="select-box" onclick="toggleDropdown()">
+              <span id="selectedText">Select contacts</span>
+              <span>▼</span>
+            </div>
+
+            <div id="dropdown" class="dropdown hidden"></div>
+          </div>
+
+          <!-- category -->
+          <div class="input-section">
+            <label for="category" class="required">Category</label>
+            <select id="category" class="input dropdown form--select" required>
+              <option value="" selected>Select task category</option>
+              <option value="Technical Task">Technical Task</option>
+              <option value="User Story">User Story</option>
+            </select>
+            <span class="field-error">This field is required</span>
+          </div>
+
+          <!-- subtask -->
+          <div class="input-section">
+            <label for="subtask_input">Subtasks</label>
+            <div class="input--section">
+              <input id="subtask_input" class="input" type="text" placeholder="Add subtask" />
+              <div class="subtask--btns">
+                <button id="subtask-close" class="btn--subtask close"><img src="../assets/img/icons/subtask/close.svg"
+                    alt="x" /></button>
+                <span class="div-vert"></span>
+                <button id="subtask-save" class="btn--subtask check"><img src="../assets/img/icons/subtask/check.svg"
+                    alt="check" /></button>
+              </div>
+            </div>
+            <ul id="subtask_list" class="subtask-list"></ul>
+          </div>
+        </section>
+
+        <!-- info -->
+        <section class="form-info-section">
+          <p><b class="form-info">*</b> This field is required</p>
+        </section>
+      </form>
+      <section class="form-footer">
+        <div class="action-btns">
+          <button id="form_clear" type="reset" class="btn btn--secondary clear" form="form_task">Clear</button>
+          <button type="submit" class="btn btn--primary" form="form_task">Create Task</button>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <div id="toast" class="toast">Task added to board ✅</div>
+</body>
+
 </html>
