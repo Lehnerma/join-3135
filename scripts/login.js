@@ -1,7 +1,6 @@
 let SHOW_SIGNUP = false;
 let USERS = [];
 
-
 const USERS_URL = (id = "") => "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/" + id + ".json";
 
 function init() {
@@ -143,7 +142,7 @@ async function loginUser(ev) {
   const ACTIV_USER = USERS.find((u) => u.email == EMAIL);
   if (ACTIV_USER.password === PW) {
     saveId(ACTIV_USER.id);
-    localStorage.setItem('activeUserName', ACTIV_USER.name);
+    sessionStorage.setItem("activeUserName", ACTIV_USER.name);
     window.location.href = "./html/summary.html";
   }
 }
