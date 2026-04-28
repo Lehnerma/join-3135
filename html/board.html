@@ -11,10 +11,13 @@
     <link rel="stylesheet" href="../styles/fonts.css" />
     <link rel="stylesheet" href="../styles/colors.css" />
     <link rel="stylesheet" href="../styles/sidebar.css" />
-    <!-- <link rel="stylesheet" href="../styles/board.css" /> -->
+    <link rel="stylesheet" href="../styles/board.css" />
+
+    <script src="../scripts/templates.js"></script>
+    <script src="../scripts/board.js"></script>
   </head>
 
-  <body class="app" onload="initUtilitys()">
+  <body class="app" onload="initBoard(), initUtilitys()">
     <header class="app--title">
       <h1 class="app--title-headline">Kanban Project Management Tool</h1>
       <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
@@ -40,50 +43,65 @@
           <a class="nav-category" href="./contacts.html"><img class="nav-category-img" src="../assets/img/icons/general/contacts.svg" alt="" /> Contacts</a>
         </li>
       </ul>
+
+      <div class="legal-section">
+        <a class="legal-section-link" href="../html/privacyPolicy.html">Privacy Policy</a>
+        <a class="legal-section-link" href="../html/legalNotice.html">Legal Notice</a>
+      </div>
     </nav>
     <main class="app--content">
-      <section class="board-header-section">
-        <div class="board-title-container">
+      <article class="header-section">
+        <section class="title-container">
           <h1>Board</h1>
           <div class="board-actions">
             <input type="text" id="search-task" placeholder="Find Task" />
-            <button class="btn-dark">Add task +</button>
+            <button class="btn btn--primary">Add task <img src="../assets/img/icons/subtask/add-white.svg" alt="+" /></button>
           </div>
-        </div>
-      </section>
+        </section>
+      </article>
 
-      <section class="kanban-columns">
-        <!-- TO DO -->
-        <div class="kanban-column">
+      <section class="kanban-columns" aria-label="Kanban Board">
+        <section class="kanban-column">
           <div class="column-title">
-            <span>To do</span>
+            <h2>To do</h2>
+            <button class="btn btn--add-task" aria-label="Add task to To do">
+              <img src="../assets/img/icons/subtask/add.svg" alt="" aria-hidden="true" />
+            </button>
           </div>
-          <div class="task-list" id="todo-list"></div>
-        </div>
+          <ul class="task-list" id="todo_list">
+            
+          </ul>
+        </section>
 
-        <!-- IN PROGRESS -->
-        <div class="kanban-column">
+        <section class="kanban-column">
           <div class="column-title">
-            <span>In progress</span>
+            <h2>In progress</h2>
+            <button class="btn btn--add-task" aria-label="Add task to In progress">
+              <img src="../assets/img/icons/subtask/add.svg" alt="" aria-hidden="true" />
+            </button>
           </div>
-          <div class="task-list" id="inprogress-list"></div>
-        </div>
+          <ul class="task-list" id="progress_list"></ul>
+        </section>
 
-        <!-- FEEDBACK -->
-        <div class="kanban-column">
+        <section class="kanban-column">
           <div class="column-title">
-            <span>Await feedback</span>
+            <h2>Await feedback</h2>
+            <button class="btn btn--add-task" aria-label="Add task to Await feedback">
+              <img src="../assets/img/icons/subtask/add.svg" alt="" aria-hidden="true" />
+            </button>
           </div>
-          <div class="task-list" id="feedback-list"></div>
-        </div>
+          <ul class="task-list" id="feedback_list"></ul>
+        </section>
 
-        <!-- DONE -->
-        <div class="kanban-column">
+        <section class="kanban-column">
           <div class="column-title">
-            <span>Done</span>
+            <h2>Done</h2>
+            <button class="btn btn--add-task" aria-label="Add task to Done">
+              <img src="../assets/img/icons/subtask/add.svg" alt="" aria-hidden="true" />
+            </button>
           </div>
-          <div class="task-list" id="done-list"></div>
-        </div>
+          <ul class="task-list" id="done_list"></ul>
+        </section>
       </section>
     </main>
   </body>

@@ -1,28 +1,32 @@
 /* --- Board Header & Suche --- */
-
-.board-header-section {
-    padding: 40px 60px;
+.app--content {
+  display: grid;
+  grid-template-rows: auto 1fr;
 }
 
-.board-title-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
+.header-section {
+  padding: 40px 60px;
 }
 
-.board-title-container h1 {
-    font-size: 61px;
-    margin: 0;
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+}
+
+.title-container h1 {
+  font-size: 61px;
+  margin: 0;
 }
 
 .board-actions {
-    display: flex;
-    align-items: center;
-    gap: 32px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
 }
 
-.search-container {
+/* .search-container {
     display: flex;
     align-items: center;
     background: white;
@@ -37,160 +41,181 @@
     outline: none;
     font-size: 20px;
     width: 200px;
-}
+} */
 
-.search-divider {
-    width: 1px;
-    height: 31px;
-    background-color: #D1D1D1;
-}
+/* .search-divider {
+  width: 1px;
+  height: 31px;
+  background-color: #d1d1d1;
+} */
 
-.btn-dark {
-    background-color: #2A3647;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 12px 16px;
-    font-size: 21px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.btn-dark:hover {
-    background-color: #29ABE2;
+.btn--primary {
+  padding: 12px 16px;
+  font-size: 21px;
+  font-weight: 700;
+  border-radius: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 /* --- Kanban Spalten Layout --- */
 .kanban-columns {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 60px;
-    gap: 20px;
-}
-
-.kanban-column {
-    width: 25%;
-    min-width: 250px;
+  justify-self: center;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(256px, 256px)); /* evtl max wert anpassen */
+  gap: 32px;
 }
 
 .column-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  h2 {
     font-size: 20px;
     font-weight: 700;
-    margin-bottom: 20px;
-    padding: 0 10px;
+    color: var(--board-title-col);
+  }
 }
 
-.column-title img {
-    cursor: pointer;
+.btn--add-task {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  border: solid 2px rgba(42, 54, 71, 1);
+
+  &:hover {
+    border-color: var(--secondary-color);
+    img {
+      filter: invert(62%) sepia(72%) saturate(400%) hue-rotate(163deg) brightness(95%) contrast(90%);
+    }
+  }
+
+  &:active {
+    border-color: var(--btn-click-color);
+    img {
+      filter: invert(11%) sepia(27%) saturate(59%) hue-rotate(204deg) brightness(95%) contrast(94%);
+    }
+  }
 }
 
-.task-list {
-    min-height: 80vh;
+.board-task{
+    list-style: none;
+}
+
+.no-task{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    background-color: rgba(231, 231, 231, 1);
+    color: var(--fourth-text-color);
+    border: solid 1px var(--fourth-text-color);
+    border-radius: 10px;
+    font-family: "Open Sans", sans-serif;
 }
 
 /* --- Task Cards --- */
 .task-card {
-    background: white;
-    border-radius: 24px;
-    padding: 16px;
-    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
-    margin-bottom: 16px;
-    cursor: pointer;
+  background: white;
+  border-radius: 24px;
+  padding: 16px;
+  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
+  margin-bottom: 16px;
+  cursor: pointer;
 }
 
 .category-label {
-    padding: 4px 16px;
-    border-radius: 8px;
-    color: rgb(0, 0, 0);
-    font-size: 20px;
-    font-weight: bold;
-    width: fit-content;
-    margin-bottom: 12px;
+  padding: 4px 16px;
+  border-radius: 8px;
+  color: rgb(0, 0, 0);
+  font-size: 20px;
+  font-weight: bold;
+  width: fit-content;
+  margin-bottom: 12px;
 }
 
 .user-story {
-    background-color: #0038FF;
+  background-color: #0038ff;
 }
 
 .task-title {
-    font-weight: 700;
-    font-size: 16px;
-    margin-bottom: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 8px;
 }
 
 .task-description {
-    color: #A8A8A8;
-    font-size: 16px;
-    margin-bottom: 12px;
+  color: #a8a8a8;
+  font-size: 16px;
+  margin-bottom: 12px;
 }
 
 /* --- Progress Bar --- */
 .subtask-progress {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
 .progress-bar-bg {
-    flex-grow: 1;
-    height: 8px;
-    background-color: #F4F4F4;
-    border-radius: 4px;
+  flex-grow: 1;
+  height: 8px;
+  background-color: #f4f4f4;
+  border-radius: 4px;
 }
 
 .progress-bar-fill {
-    height: 100%;
-    background-color: #4589FF;
-    border-radius: 4px;
+  height: 100%;
+  background-color: #4589ff;
+  border-radius: 4px;
 }
 
 .subtask-progress span {
-    font-size: 12px;
+  font-size: 12px;
 }
 
 /* --- Card Footer & Initialen --- */
 .task-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .assignees {
-    display: flex;
+  display: flex;
 }
 
 .initials-circle {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    border: 2px solid white;
-    margin-right: -8px;
-    /* Überlappung */
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  border: 2px solid white;
+  margin-right: -8px;
+  /* Überlappung */
 }
 
 .orange {
-    background-color: #FF7A00;
+  background-color: #ff7a00;
 }
 
 .turquoise {
-    background-color: #1FD7C1;
+  background-color: #1fd7c1;
 }
 
 .purple {
-    background-color: #462F8A;
+  background-color: #462f8a;
 }
 
 .prio-icon {
-    width: 17px;
-    height: 12px;
+  width: 17px;
+  height: 12px;
 }

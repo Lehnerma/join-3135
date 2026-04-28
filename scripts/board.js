@@ -1,96 +1,115 @@
-function loadTasks() {
-  return JSON.parse(localStorage.getItem("tasks")) || [];
+const TASK_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks" + ".json";
+const STATUS = ["todo", "progress", "feedback", "done"];
+
+function initBoard() {
+  NO_TASKS();
 }
 
-function renderBoard() {
-  let tasks = loadTasks();
+// function loadTasks() {
+//   return JSON.parse(localStorage.getItem("tasks")) || [];
+// }
 
-  let todo = document.getElementById("todo-list");
-  let inProgress = document.getElementById("inprogress-list");
-  let feedback = document.getElementById("feedback-list");
-  let done = document.getElementById("done-list");
+// function renderBoard() {
+//   let tasks = loadTasks();
 
-  todo.innerHTML = "";
-  inProgress.innerHTML = "";
-  feedback.innerHTML = "";
-  done.innerHTML = "";
+//   let todo = document.getElementById("todo-list");
+//   let inProgress = document.getElementById("inprogress-list");
+//   let feedback = document.getElementById("feedback-list");
+//   let done = document.getElementById("done-list");
 
-  function getProgress(subtasks) {
-    let done = subtasks.filter((s) => s.done).length;
-    let total = subtasks.length;
-    return { done, total };
-  }
+//   todo.innerHTML = "";
+//   inProgress.innerHTML = "";
+//   feedback.innerHTML = "";
+//   done.innerHTML = "";
 
-  for (let i = 0; i < tasks.length; i++) {
-    let task = tasks[i];
+//   function getProgress(subtasks) {
+//     let done = subtasks.filter((s) => s.done).length;
+//     let total = subtasks.length;
+//     return { done, total };
+//   }
 
-    let progress = getProgress(task.subtasks || []);
-    let percent = progress.total ? (progress.done / progress.total) * 100 : 0;
+//   for (let i = 0; i < tasks.length; i++) {
+//     let task = tasks[i];
 
-    let card = `
-                            <div class="task-card">
+//     let progress = getProgress(task.subtasks || []);
+//     let percent = progress.total ? (progress.done / progress.total) * 100 : 0;
+
+//     let card = `
+//                             <div class="task-card">
                             
-                                <div class="category-label">${task.category}</div>
-                                <div class="task-title">${task.title}</div>
-                                <div class="task-description">${task.description}</div>
+//                                 <div class="category-label">${task.category}</div>
+//                                 <div class="task-title">${task.title}</div>
+//                                 <div class="task-description">${task.description}</div>
                             
-                                ${
-                                  progress.total > 0
-                                    ? `
-                                <div class="subtask-progress" title="${progress.done} of ${progress.total} subtasks done">
-                                    <div class="progress-bar-bg">
-                                        <div class="progress-bar-fill" style="width:${percent}%"></div>
-                                    </div>
-                                    <span>${progress.done}/${progress.total} Subtasks</span>
-                                </div>
-                                `
-                                    : ""
-                                }
+//                                 ${
+//                                   progress.total > 0
+//                                     ? `
+//                                 <div class="subtask-progress" title="${progress.done} of ${progress.total} subtasks done">
+//                                     <div class="progress-bar-bg">
+//                                         <div class="progress-bar-fill" style="width:${percent}%"></div>
+//                                     </div>
+//                                     <span>${progress.done}/${progress.total} Subtasks</span>
+//                                 </div>
+//                                 `
+//                                     : ""
+//                                 }
                             
-                                <div class="subtask-list">
-                                    ${(task.subtasks || [])
-                                      .map(
-                                        (sub, subIndex) => `
-                                        <div class="subtask-item" onclick="toggleSubtask(${i}, ${subIndex})">
-                                            ${sub.done ? "✔" : "❌"} ${sub.title}
-                                        </div>
-                                    `,
-                                      )
-                                      .join("")}
-                                </div>
+//                                 <div class="subtask-list">
+//                                     ${(task.subtasks || [])
+//                                       .map(
+//                                         (sub, subIndex) => `
+//                                         <div class="subtask-item" onclick="toggleSubtask(${i}, ${subIndex})">
+//                                             ${sub.done ? "✔" : "❌"} ${sub.title}
+//                                         </div>
+//                                     `,
+//                                       )
+//                                       .join("")}
+//                                 </div>
                             
-                                <div class="task-footer">
-                                    <span>${task.priority}</span>
-                                </div>
+//                                 <div class="task-footer">
+//                                     <span>${task.priority}</span>
+//                                 </div>
                             
-                            </div>
-                            `;
+//                             </div>
+//                             `;
 
-    if (task.status === "todo") {
-      todo.innerHTML += card;
-    }
+//     if (task.status === "todo") {
+//       todo.innerHTML += card;
+//     }
 
-    if (task.status === "inProgress") {
-      inProgress.innerHTML += card;
-    }
+//     if (task.status === "inProgress") {
+//       inProgress.innerHTML += card;
+//     }
 
-    if (task.status === "feedback") {
-      feedback.innerHTML += card;
-    }
+//     if (task.status === "feedback") {
+//       feedback.innerHTML += card;
+//     }
 
-    if (task.status === "done") {
-      done.innerHTML += card;
-    }
-  }
+//     if (task.status === "done") {
+//       done.innerHTML += card;
+//     }
+//   }
+// }
+
+// renderBoard();
+
+// function toggleSubtask(taskIndex, subIndex) {
+//   let tasks = JSON.parse(localStorage.getItem("tasks"));
+
+//   tasks[taskIndex].subtasks[subIndex].done = !tasks[taskIndex].subtasks[subIndex].done;
+
+//   localStorage.setItem("tasks", JSON.stringify(tasks));
+//   renderBoard();
+// }
+
+function renderNoTasksElemt(status) {
+  let LIST = document.getElementById(status + "_list");
+  LIST.innerHTML = "";
+  LIST.innerHTML += getNoTasksTemplate(status);
 }
 
-renderBoard();
-
-function toggleSubtask(taskIndex, subIndex) {
-  let tasks = JSON.parse(localStorage.getItem("tasks"));
-
-  tasks[taskIndex].subtasks[subIndex].done = !tasks[taskIndex].subtasks[subIndex].done;
-
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-  renderBoard();
+function NO_TASKS() {
+  STATUS.forEach((s) => {
+    renderNoTasksElemt(s);
+  });
 }
