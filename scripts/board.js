@@ -14,17 +14,24 @@ async function loadTasksFromFirebase() {
       throw new Error(`loading task faild: ${RESPONSE.status}`);
     }
     const RESULT = await RESPONSE.json();
-    sessionStorage.setItem('tasks', JSON.stringify(RESULT))
-    renderBoard(RESULT)
+    const TASKS_ARRAY = Object.entries(RESULT).map(([id, values]) => ({
+      id,
+      ...values,
+    }));
+    sessionStorage.setItem("tasks", JSON.stringify(TASKS_ARRAY));
+    TASKS.push(TASKS_ARRAY);
+    renderBoard(TASKS_ARRAY);
   } catch (er) {
     console.error(er);
   }
 }
 
-
 const renderBoard = (tasks) => {
   STATUS.forEach((status) => {
-    renderColumn(status, tasks.filter((task) => task.status === status));
+    renderColumn(
+      status,
+      tasks.filter((task) => task.status === status),
+    );
   });
 };
 
@@ -42,9 +49,8 @@ function buildTaskCard(task) {
   const wrapper = document.createElement("div");
   wrapper.innerHTML = getTaskCardTemplet(task.title, task.description);
   const assigneesList = wrapper.querySelector(".task--assignees");
-  console.log(assigneesList);
-  
-  (task.assignee || []).forEach((name) => {
+
+  (task.assignedTo || []).forEach((name) => {
     assigneesList.innerHTML += getTaskAssignToTemplet(name, getInitials(name));
   });
   return wrapper.innerHTML;
@@ -56,10 +62,8 @@ function getInitials(name) {
   return parts[0].charAt(0).toUpperCase() + last;
 }
 
-
 function renderNoTasksElemt(status) {
   let LIST = document.getElementById(status + "_list");
   LIST.innerHTML = "";
   LIST.innerHTML += getNoTasksTemplate(status);
 }
-
