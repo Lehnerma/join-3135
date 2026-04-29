@@ -147,6 +147,12 @@
   }
 }
 
+.task--content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
 .task--title-wrapper {
   display: flex;
   flex-direction: column;
@@ -168,53 +174,87 @@
 }
 
 /* --- Progress Bar --- */
-.subtask-progress {
+.subtask--progress {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
+  justify-content: space-between;
 }
 
-.progress-bar-bg {
-  flex-grow: 1;
+.subtask--progressbar {
   height: 8px;
+  width: 50%;
+  appearance: none;
+  border: none;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* die psydoclass sind fur alle browser weil browser die progress anders rendern farblich. */
+
+.subtask--progress progress::-webkit-progress-bar {
   background-color: #f4f4f4;
   border-radius: 4px;
 }
 
-.progress-bar-fill {
-  height: 100%;
+.subtask--progress progress::-webkit-progress-value {
   background-color: #4589ff;
   border-radius: 4px;
 }
 
-.subtask-progress span {
-  font-size: 12px;
+.subtask--progress progress::-moz-progress-bar {
+  background-color: #4589ff;
+  border-radius: 4px;
 }
 
 /* --- Card Footer & Initialen --- */
-.task-footer {
+
+.task--footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.assignees {
+.task--assignees {
   display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  /* überlappung erzeugen */
+  padding-left: 0.5rem;
 }
 
-.initials-circle {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  color: white;
+.assignee {
+  /* negativer margin -> Kreise überlappen */
+  margin-left: -0.5rem;
+}
+
+.assignee--initials {
+  text-decoration: none;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
-  border: 2px solid white;
-  margin-right: -8px;
-  /* Überlappung */
+
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+
+  /* background-color: var(--assignee-color, #888); */
+  color: #fff;
+  border: 2px solid #fff;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  line-height: 1;
+  user-select: none;
+}
+
+/* optional: bei mehr als X Personen z.B. "+3" Anzeige */
+.assignee--more {
+  background-color: #e0e0e0;
+  color: #333;
 }
 
 .orange {
