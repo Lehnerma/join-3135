@@ -16,7 +16,6 @@
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 64px;
-  
 }
 
 .nav-logo {
@@ -49,6 +48,7 @@
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   /* padding-left: 56px; */
 }
@@ -70,7 +70,6 @@
   padding-bottom: 64px;
   transition: all 0.7s ease-in-out;
   width: 232px;
-
 }
 
 .legal-section-link {
