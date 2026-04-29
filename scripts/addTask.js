@@ -338,3 +338,26 @@ function saveSubtask(li) {
   li.classList.remove("editing");
   li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
 }
+
+
+
+async function postTask(task) {
+  await fetch(TASK_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(task),
+  });
+}
+
+
+async function getFormData(ev) {
+  ev.preventDefault();
+
+  const task = buildTaskObj();
+
+  await postTask(task);
+
+  console.log("Task gespeichert:", task);
+}
