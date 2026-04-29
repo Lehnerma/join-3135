@@ -16,18 +16,27 @@ function getSubtaskTemplate(title, index) {
     </div>`;
 }
 
+function getSubtaskProgressTemplate(done, total) {
+  if (total === 0) return "";
+  return `
+    <div class="subtask--progress">
+      <progress class="subtask--progressbar" max="${total}" value="${done}"></progress>
+      <span class="subtask--description">${done}/${total} Subtasks</span>
+    </div>`;
+}
+
 function getNoTasksTemplate(status) {
   return `
     <li class="board-task no-task">No tasks ${status}</li>
   `;
 }
 
-function getTaskCardTemplet(title, description) {
+function getTaskCardTemplet(title, description, category) {
   return `
 <li class="task" draggable="true">
   <article class="task--card">
     <header>
-      <span class="task--category-label user-story">User Story</span>
+      <span class="task--category-label ${category}">User Story</span>
     </header>
     <section class="task--content" aria-label="task content">
       <div class="task--title-wrapper">
@@ -35,10 +44,7 @@ function getTaskCardTemplet(title, description) {
         <p class="task--description">${description}</p>
       </div>
       
-      <div class="subtask--progress">
-        <progress class="subtask--progressbar" max="2" value="1"></progress>
-        <span class="subtask--description">1/2 Subtasks</span>
-      </div>
+      <div class="subtask--progress-container"></div>
     </section>
     <footer class="task--footer">
       <ul class="task--assignees" aria-label="Zugewiesene Personen">

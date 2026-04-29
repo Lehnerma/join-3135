@@ -46,14 +46,18 @@ function renderColumn(status, tasks) {
 }
 
 function buildTaskCard(task) {
-  const wrapper = document.createElement("div");
-  wrapper.innerHTML = getTaskCardTemplet(task.title, task.description);
-  const assigneesList = wrapper.querySelector(".task--assignees");
+  const WRAPPER = document.createElement("div");
+  WRAPPER.innerHTML = getTaskCardTemplet(task.title, task.description);
+  const SUBTASKS = task.subtasks || [];
+  const SUB_TOTAL = SUBTASKS.length;
+  const SUB_DONE = SUBTASKS.filter((s) => s.done === true).length;
+  WRAPPER.querySelector(".subtask--progress-container").innerHTML = getSubtaskProgressTemplate(SUB_DONE, SUB_TOTAL);
+  const ASSIGNEES_LIST = WRAPPER.querySelector(".task--assignees");
 
   (task.assignedTo || []).forEach((name) => {
-    assigneesList.innerHTML += getTaskAssignToTemplet(name, getInitials(name));
+    ASSIGNEES_LIST.innerHTML += getTaskAssignToTemplet(name, getInitials(name));
   });
-  return wrapper.innerHTML;
+  return WRAPPER.innerHTML;
 }
 
 function getInitials(name) {
