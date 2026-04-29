@@ -3,6 +3,7 @@
   display: grid;
   grid-template-rows: auto 1fr;
   max-width: var(--max-dp-width);
+  padding: 8px;
 }
 
 .header-section {
@@ -102,56 +103,68 @@
   }
 }
 
-.board-task{
-    list-style: none;
+.board-task {
+  list-style: none;
 }
 
-.no-task{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 48px;
-    background-color: rgba(231, 231, 231, 1);
-    color: var(--fourth-text-color);
-    border: solid 1px var(--fourth-text-color);
-    border-radius: 10px;
-    font-family: "Open Sans", sans-serif;
+.no-task {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 48px;
+  background-color: rgba(231, 231, 231, 1);
+  color: var(--fourth-text-color);
+  border: solid 1px var(--fourth-text-color);
+  border-radius: 10px;
+  font-family: "Open Sans", sans-serif;
 }
 
 /* --- Task Cards --- */
-.task-card {
+.task {
   background: white;
   border-radius: 24px;
-  padding: 16px;
-  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
-  margin-bottom: 16px;
+  padding: 24px;
+  box-shadow: 0px 0px 10px 3px #00000014;
+  /* margin-bottom: 16px; muss dann noch via gap hinzugefugt werden  */
   cursor: pointer;
+  list-style: none;
 }
 
-.category-label {
+.task--card {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 24px;
+}
+
+.task--category-label {
   padding: 4px 16px;
   border-radius: 8px;
   color: rgb(0, 0, 0);
-  font-size: 20px;
-  font-weight: bold;
-  width: fit-content;
-  margin-bottom: 12px;
+
+  &.user-story {
+    background-color: var(--task-userstory-bg);
+    color: white;
+  }
 }
 
-.user-story {
-  background-color: #0038ff;
+.task--title-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.task-title {
+.task--title {
   font-weight: 700;
   font-size: 16px;
-  margin-bottom: 8px;
 }
 
-.task-description {
+.task--description {
   color: #a8a8a8;
-  font-size: 16px;
-  margin-bottom: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2; /* reserve fur alte browser */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* --- Progress Bar --- */
