@@ -6,7 +6,7 @@
   grid-template-columns: 232px 1fr;
   grid-template-rows: 96px 1fr;
   height: 100vh;
-  
+  background-color: var(--third-background-color);
 }
 
 .sidebar {

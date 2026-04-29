@@ -2,6 +2,7 @@
 .app--content {
   display: grid;
   grid-template-rows: auto 1fr;
+  max-width: var(--max-dp-width);
 }
 
 .header-section {
