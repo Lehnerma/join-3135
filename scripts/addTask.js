@@ -107,7 +107,7 @@ function toggleUser(el) {
 
   checkbox.checked = !checkbox.checked;
   el.classList.toggle("active", checkbox.checked);
-} 
+}
 
 
 
@@ -355,9 +355,19 @@ async function postTask(task) {
 async function getFormData(ev) {
   ev.preventDefault();
 
-  const task = buildTaskObj();
+  try {
+    const task = buildTaskObj();
+    await postTask(task);
 
-  await postTask(task);
+    //  Toast bei erfolgreichem Speichern anzeigen
+    const toast = document.getElementById("toast");
+    toast.classList.add("show");
 
-  console.log("Task gespeichert:", task);
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2000);
+
+  } catch (error) {
+    console.error("Fehler beim Speichern:", error);
+  }
 }
