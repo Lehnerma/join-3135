@@ -136,6 +136,12 @@
   gap: 24px;
 }
 
+.task--list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .task--category-label {
   padding: 4px 16px;
   border-radius: 8px;

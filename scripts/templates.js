@@ -31,7 +31,7 @@ function getTaskCardTemplet(title, description) {
     </header>
     <section class="task--content" aria-label="task content">
       <div class="task--title-wrapper">
-        <h3 class="task--title">${title}}</h3>
+        <h3 class="task--title">${title}</h3>
         <p class="task--description">${description}</p>
       </div>
       

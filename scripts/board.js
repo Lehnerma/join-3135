@@ -21,20 +21,39 @@ async function loadTasksFromFirebase() {
   }
 }
 
-// function loadTasks() {
-//   return JSON.parse(sessionStorage.getItem("tasks")) || [];
-// }
 
-function renderBoard(tasks){
-  const TASKS = tasks;
-  // for (let t = 0; t < TASKS.length; t++) {
-  //   console.log(TASKS[t]);
-    
-  // }
-  TASKS.forEach((task) => {
-    
-    
-  })
+const renderBoard = (tasks) => {
+  STATUS.forEach((status) => {
+    renderColumn(status, tasks.filter((task) => task.status === status));
+  });
+};
+
+function renderColumn(status, tasks) {
+  const LIST = document.getElementById(status + "_list");
+  LIST.innerHTML = "";
+  if (tasks.length === 0) {
+    LIST.innerHTML = getNoTasksTemplate(status);
+    return;
+  }
+  tasks.forEach((task) => (LIST.innerHTML += buildTaskCard(task)));
+}
+
+function buildTaskCard(task) {
+  const wrapper = document.createElement("div");
+  wrapper.innerHTML = getTaskCardTemplet(task.title, task.description);
+  const assigneesList = wrapper.querySelector(".task--assignees");
+  console.log(assigneesList);
+  
+  (task.assignee || []).forEach((name) => {
+    assigneesList.innerHTML += getTaskAssignToTemplet(name, getInitials(name));
+  });
+  return wrapper.innerHTML;
+}
+
+function getInitials(name) {
+  const parts = name.trim().split(" ");
+  const last = parts.length > 1 ? parts[parts.length - 1].charAt(0).toUpperCase() : "";
+  return parts[0].charAt(0).toUpperCase() + last;
 }
 
 
