@@ -125,7 +125,6 @@
   border-radius: 24px;
   padding: 24px;
   box-shadow: 0px 0px 10px 3px #00000014;
-  /* margin-bottom: 16px; muss dann noch via gap hinzugefugt werden  */
   cursor: pointer;
   list-style: none;
 }
@@ -225,12 +224,10 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  /* überlappung erzeugen */
   padding-left: 0.5rem;
 }
 
 .assignee {
-  /* negativer margin -> Kreise überlappen */
   margin-left: -0.5rem;
 }
 
@@ -245,7 +242,7 @@
   height: 2rem;
   border-radius: 50%;
 
-  /* background-color: var(--assignee-color, #888); */
+  background-color: var(--assignee-color, #888);
   color: #fff;
   border: 2px solid #fff;
 

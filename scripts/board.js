@@ -63,11 +63,3 @@ function renderNoTasksElemt(status) {
   LIST.innerHTML += getNoTasksTemplate(status);
 }
 
-// only for programming
-function NO_TASKS() {
-  STATUS.forEach((s) => {
-    renderNoTasksElemt(s);
-  });
-}
-
-
