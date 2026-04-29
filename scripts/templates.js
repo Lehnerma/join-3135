@@ -36,7 +36,7 @@ function getTaskCardTemplet(title, description, category) {
 <li class="task" draggable="true">
   <article class="task--card">
     <header>
-      <span class="task--category-label ${category}">User Story</span>
+      <span class="task--category-label ${toClassName(category)}">${category}</span>
     </header>
     <section class="task--content" aria-label="task content">
       <div class="task--title-wrapper">

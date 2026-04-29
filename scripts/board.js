@@ -47,7 +47,7 @@ function renderColumn(status, tasks) {
 
 function buildTaskCard(task) {
   const WRAPPER = document.createElement("div");
-  WRAPPER.innerHTML = getTaskCardTemplet(task.title, task.description);
+  WRAPPER.innerHTML = getTaskCardTemplet(task.title, task.description, task.category);
   const SUBTASKS = task.subtasks || [];
   const SUB_TOTAL = SUBTASKS.length;
   const SUB_DONE = SUBTASKS.filter((s) => s.done === true).length;
@@ -59,6 +59,8 @@ function buildTaskCard(task) {
   });
   return WRAPPER.innerHTML;
 }
+
+
 
 function getInitials(name) {
   const parts = name.trim().split(" ");

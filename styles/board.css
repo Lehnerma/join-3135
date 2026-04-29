@@ -150,6 +150,11 @@
     background-color: var(--task-userstory-bg);
     color: white;
   }
+
+  &.technical-task{
+    background-color: var(--task-technicaltask-bg);
+    color: white;
+  }
 }
 
 .task--content {

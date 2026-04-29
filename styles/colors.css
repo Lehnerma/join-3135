@@ -64,5 +64,6 @@
   /* board */
   --board-title-col: rgba(66, 82, 110, 1);
   --task-userstory-bg: rgba(0, 56, 255, 1);
+  --task-technicaltask-bg: rgba(31, 215, 193, 1);
   --max-dp-width: 1440px;
 }
