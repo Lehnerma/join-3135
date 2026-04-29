@@ -203,7 +203,10 @@ function addSubtask(ev) {
   const title = INPUT.value.trim();
   if (!title) return;
   const INDEX = SUBTASKS.length;
-  SUBTASKS.push({ title });
+  SUBTASKS.push({
+    title: title,
+    done: false
+  });
   INPUT.value = "";
 
   renderSubtaskItem(INDEX, title);
