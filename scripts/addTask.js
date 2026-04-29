@@ -342,13 +342,22 @@ function saveSubtask(li) {
 
 
 async function postTask(task) {
-  await fetch(TASK_URL, {
+  const response = await fetch(TASK_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(task),
   });
+
+  if (!response.ok) {
+    throw new Error("Firebase speichern fehlgeschlagen");
+  }
+
+  const data = await response.json();
+  console.log("Firebase Response:", data);
+
+  return data;
 }
 
 
