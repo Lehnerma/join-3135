@@ -9,23 +9,27 @@
     "status": "done",
     "subtasks": [
       {
-        "task": "Subtask 1"
+        "task": "Subtask 1",
+        "done": true
       },
       {
-        "task": "Subtask 2"
+        "task": "Subtask 2",
+        "done": true
       },
       {
-        "task": "Subtask 3"
+        "task": "Subtask 3",
+        "done": false
       },
       {
-        "task": "Subtask 4"
+        "task": "Subtask 4",
+        "done": true
       }
     ],
     "title": "Name"
   },
   {
     "assignee": "Max Mustermann",
-    "category": "user_story",
+    "category": "user story",
     "date": "2024-06-30",
     "description": "beschreibung",
     "id": "2",
@@ -33,23 +37,27 @@
     "status": "progress",
     "subtasks": [
       {
-        "task": "Subtask 1"
+        "task": "Subtask 1",
+        "done": true
       },
       {
-        "task": "Subtask 2"
+        "task": "Subtask 2",
+        "done": false
       },
       {
-        "task": "Subtask 3"
+        "task": "Subtask 3",
+        "done": false
       },
       {
-        "task": "Subtask 4"
+        "task": "Subtask 4",
+        "done": false
       }
     ],
     "title": "Name"
   },
   {
     "assignee": "Max Mustermann",
-    "category": "user_story",
+    "category": "user story",
     "date": "2024-06-30",
     "description": "beschreibung",
     "id": "3",
@@ -57,16 +65,56 @@
     "status": "todo",
     "subtasks": [
       {
-        "task": "Subtask 1"
+        "task": "Subtask 1",
+        "done": false
       },
       {
-        "task": "Subtask 2"
+        "task": "Subtask 2",
+        "done": false
       },
       {
-        "task": "Subtask 3"
+        "task": "Subtask 3",
+        "done": false
       },
       {
-        "task": "Subtask 4"
+        "task": "Subtask 4",
+        "done": false
+      }
+    ],
+    "title": "Name"
+  },
+  {
+    "assignee": "Max Mustermann",
+    "category": "technical task",
+    "date": "2024-07-01",
+    "description": "beschreibung",
+    "id": "4",
+    "priority": "medium",
+    "status": "progress",
+    "subtasks": [
+      {
+        "task": "Subtask 1",
+        "done": true
+      },
+      {
+        "task": "Subtask 2",
+        "done": true
+      }
+    ],
+    "title": "Name"
+  },
+  {
+    "assignee": "Max Mustermann",
+    "category": "user story",
+    "date": "2024-07-02",
+    "description": "beschreibung",
+    "id": "5",
+    "priority": "urgent",
+    "status": "todo",
+    "subtasks": [
+      {
+        "task": "Subtask 1",
+        "done": false
       }
     ],
     "title": "Name"
