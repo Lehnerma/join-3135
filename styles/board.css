@@ -127,6 +127,19 @@
   box-shadow: 0px 0px 10px 3px #00000014;
   cursor: pointer;
   list-style: none;
+
+  &:active {
+    transition: transform 0.125s ease;
+    transform: rotate(5deg);
+  }
+}
+
+.drag-placeholder {
+  min-height: 80px;
+  border: 2px dashed #a8a8a8;
+  border-radius: 24px;
+  background: transparent;
+  list-style: none;
 }
 
 .task--card {
@@ -151,7 +164,7 @@
     color: white;
   }
 
-  &.technical-task{
+  &.technical-task {
     background-color: var(--task-technicaltask-bg);
     color: white;
   }
@@ -280,4 +293,13 @@
 .prio-icon {
   width: 17px;
   height: 12px;
+}
+
+/* --- Drag Placeholder --- */
+.drag-placeholder {
+  min-height: 80px;
+  border: 2px dashed #a8a8a8;
+  border-radius: 24px;
+  background: transparent;
+  list-style: none;
 }

@@ -61,7 +61,7 @@
       </article>
 
       <section class="kanban-columns" aria-label="Kanban Board">
-        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('todo')">
+        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('todo')" ondragenter="columnDragEnter(event, 'todo')" ondragleave="columnDragLeave(event)">
           <div class="column-title">
             <h2>To do</h2>
             <button class="btn btn--add-task" aria-label="Add task to To do">
@@ -71,7 +71,7 @@
           <ul class="task--list" id="todo_list"></ul>
         </section>
 
-        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('progress')">
+        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('progress')" ondragenter="columnDragEnter(event, 'progress')" ondragleave="columnDragLeave(event)">
           <div class="column-title">
             <h2>In progress</h2>
             <button class="btn btn--add-task" aria-label="Add task to In progress">
@@ -81,7 +81,7 @@
           <ul class="task--list" id="progress_list"></ul>
         </section>
 
-        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('feedback')">
+        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('feedback')" ondragenter="columnDragEnter(event, 'feedback')" ondragleave="columnDragLeave(event)">
           <div class="column-title">
             <h2>Await feedback</h2>
             <button class="btn btn--add-task" aria-label="Add task to Await feedback">
@@ -91,7 +91,7 @@
           <ul class="task--list" id="feedback_list"></ul>
         </section>
 
-        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('done')">
+        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('done')" ondragenter="columnDragEnter(event, 'done')" ondragleave="columnDragLeave(event)">
           <div class="column-title">
             <h2>Done</h2>
             <button class="btn btn--add-task" aria-label="Add task to Done">

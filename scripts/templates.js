@@ -49,9 +49,9 @@ function getNoTasksTemplate(status) {
   `;
 }
 
-function getTaskCardTemplet(title, description, category, id) {
+function getTaskCardTemplet(title, description, category, id, priority) {
   return `
-<li class="task" draggable="true" ondragstart="taskDragStart(${id})" data-id=${id}>
+<li class="task" draggable="true" ondragstart="taskDragStart(event, ${id})" data-id=${id}>
   <article class="task--card">
     <header>
       <span class="task--category-label ${toClassName(category)}">${category}</span>
@@ -61,14 +61,14 @@ function getTaskCardTemplet(title, description, category, id) {
         <h3 class="task--title">${title}</h3>
         <p class="task--description">${description}</p>
       </div>
-      
+
       <div class="subtask--progress-container"></div>
     </section>
     <footer class="task--footer">
       <ul class="task--assignees" aria-label="Zugewiesene Personen">
-        
+
       </ul>
-      <img src="../assets/img/icons/prio/low.svg" alt="low priority" class="prio-icon">
+      <img src="../assets/img/icons/prio/${priority}.svg" alt="${priority} priority" class="prio-icon">
     </footer>
   </article>
 </li>`;

@@ -1,10 +1,11 @@
 const TASK_URL = (key = "", section = "") => {
   return `https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks/${key ? key + "/" : ""}${section ? section + "/" : ""}.json`;
 };
-const STATUS = ["todo", "progress", "feedback", "done"];
+
 let TASKS = [];
 let DRAG_ID;
 let DRAG_OLD_STATUS;
+let DRAG_HEIGHT;
 
 function initBoard() {
   loadTasksFromFirebase();
@@ -37,7 +38,7 @@ function getArryFromResult(result) {
 
 async function updateTaskStatus(firebaseKey, status) {
   try {
-    await fetch(TASK_URL(firebaseKey,'status'), {
+    await fetch(TASK_URL(firebaseKey, "status"), {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(status),
@@ -48,6 +49,7 @@ async function updateTaskStatus(firebaseKey, status) {
 }
 
 function renderBoard(tasks) {
+  const STATUS = ["todo", "progress", "feedback", "done"];
   STATUS.forEach((status) => {
     renderColumn(
       status,
@@ -68,7 +70,7 @@ function renderColumn(status, tasks) {
 
 function buildTaskCard(task) {
   const WRAPPER = document.createElement("div");
-  WRAPPER.innerHTML = getTaskCardTemplet(task.title, task.description, task.category, task.id);
+  WRAPPER.innerHTML = getTaskCardTemplet(task.title, task.description, task.category, task.id, getPriority(task.priority));
 
   const SUBTASKS = task.subtasks || [];
   const SUB_TOTAL = SUBTASKS.length;
@@ -80,6 +82,11 @@ function buildTaskCard(task) {
     ASSIGNEES_LIST.innerHTML += getTaskAssignToTemplet(name, getInitials(name));
   });
   return WRAPPER.innerHTML;
+}
+
+function getPriority(priority) {
+  const VALID = ["low", "medium", "urgent"];
+  return VALID.includes(priority) ? priority : "low";
 }
 
 function getInitials(name) {
@@ -95,8 +102,9 @@ function renderNoTasksElemt(status) {
 }
 
 //drag start
-function taskDragStart(id) {
+function taskDragStart(ev, id) {
   DRAG_ID = id;
+  DRAG_HEIGHT = ev.currentTarget.offsetHeight;
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   DRAG_OLD_STATUS = ALL_TASKS.find((el) => el.id === id)?.status;
 }
@@ -106,11 +114,23 @@ function allowDrop(ev) {
   ev.preventDefault();
 }
 //drag enter
-
+function columnDragEnter(ev, status) {
+  ev.preventDefault();
+  const LIST = document.getElementById(status + "_list");
+  if (LIST.querySelector(".drag-placeholder")) return;
+  const PLACE_HOLDER = document.createElement("li"); //change the name of the variable
+  PLACE_HOLDER.classList.add("drag-placeholder");
+  if (DRAG_HEIGHT) PLACE_HOLDER.style.height = DRAG_HEIGHT + "px";
+  LIST.appendChild(PLACE_HOLDER);
+}
 //drag leave
-
+function columnDragLeave(ev) {
+  if (ev.currentTarget.contains(ev.relatedTarget)) return;
+  ev.currentTarget.querySelector(".drag-placeholder")?.remove();
+}
 //drag drop
 function taskDragDrop(status) {
+  document.querySelectorAll(".drag-placeholder").forEach((el) => el.remove());
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const CURRENT_TASK = ALL_TASKS.find((el) => el.id === DRAG_ID);
   if (!CURRENT_TASK || CURRENT_TASK.status === status) return;
