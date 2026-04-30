@@ -61,19 +61,17 @@
       </article>
 
       <section class="kanban-columns" aria-label="Kanban Board">
-        <section class="kanban-column">
+        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('todo')">
           <div class="column-title">
             <h2>To do</h2>
             <button class="btn btn--add-task" aria-label="Add task to To do">
               <img src="../assets/img/icons/subtask/add.svg" alt="" aria-hidden="true" />
             </button>
           </div>
-          <ul class="task--list" id="todo_list">
-
-          </ul>
+          <ul class="task--list" id="todo_list"></ul>
         </section>
 
-        <section class="kanban-column">
+        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('progress')">
           <div class="column-title">
             <h2>In progress</h2>
             <button class="btn btn--add-task" aria-label="Add task to In progress">
@@ -83,7 +81,7 @@
           <ul class="task--list" id="progress_list"></ul>
         </section>
 
-        <section class="kanban-column">
+        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('feedback')">
           <div class="column-title">
             <h2>Await feedback</h2>
             <button class="btn btn--add-task" aria-label="Add task to Await feedback">
@@ -93,7 +91,7 @@
           <ul class="task--list" id="feedback_list"></ul>
         </section>
 
-        <section class="kanban-column">
+        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('done')">
           <div class="column-title">
             <h2>Done</h2>
             <button class="btn btn--add-task" aria-label="Add task to Done">
