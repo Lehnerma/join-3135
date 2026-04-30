@@ -404,3 +404,164 @@ main {
     padding: 0 16px;
   }
 }
+
+/* ============================================================
+   CUSTOM DROPDOWN – Assigned To (Suche + Initialen + Checkbox)
+   ============================================================ */
+
+.custom-dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.custom-dropdown__trigger {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.custom-dropdown__input {
+  width: 100%;
+  padding-right: 48px;
+  cursor: pointer;
+}
+
+.custom-dropdown__toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-dropdown__arrow {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
+/* Pfeil dreht sich wenn Dropdown offen ist (JS fügt .open hinzu) */
+.custom-dropdown.open .custom-dropdown__arrow {
+  transform: rotate(-135deg);
+}
+
+.custom-dropdown__list {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid var(--input-default-main);
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  list-style: none;
+  margin: 0;
+  padding: 8px;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+/* Liste sichtbar wenn .open auf .custom-dropdown (per JS) */
+.custom-dropdown.open .custom-dropdown__list {
+  display: block;
+}
+
+.custom-dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.custom-dropdown__item:hover {
+  background-color: var(--background-color);
+}
+
+/* Ausgewählter Kontakt (JS fügt .selected hinzu) */
+.custom-dropdown__item.selected {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.custom-dropdown__item.selected:hover {
+  background-color: var(--third-color);
+}
+
+/* Kreis mit Initialen */
+.contact-badge {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.custom-dropdown__item.selected .contact-badge {
+  border: 2px solid white;
+}
+
+.custom-dropdown__name {
+  flex: 1;
+  font-size: 16px;
+}
+
+/* Custom Checkbox */
+.custom-dropdown__checkbox {
+  flex-shrink: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--input-default-main);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  background-color: white;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.custom-dropdown__checkbox:checked {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.custom-dropdown__checkbox:checked::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 6px;
+  height: 11px;
+  border: 2px solid white;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+.custom-dropdown__item.selected .custom-dropdown__checkbox {
+  border-color: white;
+}
+
+/* Gefilterte Items verstecken (JS fügt .hidden hinzu bei Suche) */
+.custom-dropdown__item.hidden {
+  display: none;
+}
