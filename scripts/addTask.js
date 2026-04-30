@@ -1,44 +1,17 @@
 const TASK_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks" + ".json";
-const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users" + ".json";
+
 let selectedPriority = "medium";
 let SUBTASKS = [];
 let USERS = [];
-
-const contactColors = {
-  A: 'rgba(147, 39, 255, 1)',
-  B: 'rgba(110, 82, 255, 1)',
-  C: 'rgba(252, 113, 255, 1)',
-  D: 'rgba(255, 187, 43, 1)',
-  E: 'rgba(31, 215, 193, 1)',
-  F: 'rgba(70, 47, 138, 1)',
-  G: 'rgba(255, 70, 70, 1)',
-  H: 'rgba(0, 190, 232, 1)',
-  I: 'rgba(42, 61, 89, 1)',
-  J: 'rgba(255, 94, 179, 1)',
-  K: 'rgba(255, 116, 94, 1)',
-  L: 'rgba(255, 163, 94, 1)',
-  M: 'rgba(255, 199, 1, 1)',
-  N: 'rgba(0, 56, 255, 1)',
-  O: 'rgba(195, 255, 43, 1)',
-  P: 'rgba(255, 230, 43, 1)',
-  Q: 'rgba(255, 70, 150, 1)',
-  R: 'rgba(0, 150, 130, 1)',
-  T: 'rgba(0, 120, 255, 1)',
-  U: 'rgba(180, 40, 40, 1)',
-  V: 'rgba(100, 200, 0, 1)',
-  W: 'rgba(150, 0, 255, 1)',
-  X: 'rgba(0, 255, 200, 1)',
-  Y: 'rgba(200, 150, 0, 1)',
-  Z: 'rgba(120, 120, 120, 1)'
-};
 
 function init() {
   console.log("INIT läuft");
   console.log("dropdown:", document.getElementById("dropdown"));
 
   btnInit();
+  subtaskInit();
   initDateInput();
-  loadUserFromFirebase();
+  loadUsers();
 }
 
 /**
@@ -74,13 +47,11 @@ function selectPriority(priority) {
   selectedPriority = priority;
 }
 
-
 /**
  *  User Assignment Dropdown functions
  */
 
 function loadUsers() {
-
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
   fetch(USER_URL)
@@ -90,9 +61,6 @@ function loadUsers() {
     })
     .catch((error) => console.error("Error fetching users:", error));
 }
-
-
-
 
 function fillUserDropdown(users) {
   // console.log("USERS DATA:", users);
@@ -121,7 +89,6 @@ function fillUserDropdown(users) {
               <input type="checkbox" value="${user.name}">
           </label>
     `;
-
   }
 
   container.innerHTML = html;
@@ -134,26 +101,18 @@ function toggleUser(el) {
   el.classList.toggle("active", checkbox.checked);
 }
 
-
-
-
-
 function getAssignedUsers() {
   const checkboxes = document.querySelectorAll("#dropdown input[type='checkbox']:checked");
-  return Array.from(checkboxes).map(cb => cb.value);
+  return Array.from(checkboxes).map((cb) => cb.value);
 }
-
 
 function toggleDropdown() {
   document.getElementById("dropdown").classList.toggle("hidden");
 }
 
-
 /**
  *  User Assignment Dropdown functions
  */
-
-
 
 /**
  * Initial all subtasks function after loading the body
@@ -181,6 +140,14 @@ function clearForm() {
   SUBTASKS = [];
   document.getElementById("subtask_list").innerHTML = "";
 }
+/**
+ * Clear the input of the Subtask
+ */
+const clearSubtaskInput = (ev) => {
+  ev.preventDefault();
+  let SUBTASK_INPUT = document.getElementById("subtask_input");
+  SUBTASK_INPUT.value = "";
+};
 
 /**
  * Get the Form inputs into a Object to put it into firebase
@@ -222,7 +189,7 @@ function addSubtask(ev) {
   const INDEX = SUBTASKS.length;
   SUBTASKS.push({
     title: title,
-    done: false
+    done: false,
   });
   INPUT.value = "";
 
@@ -359,8 +326,6 @@ function saveSubtask(li) {
   li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
 }
 
-
-
 async function postTask(task) {
   const response = await fetch(TASK_URL, {
     method: "POST",
@@ -380,7 +345,6 @@ async function postTask(task) {
   return data;
 }
 
-
 async function getFormData(ev) {
   ev.preventDefault();
 
@@ -395,7 +359,6 @@ async function getFormData(ev) {
     setTimeout(() => {
       toast.classList.remove("show");
     }, 2000);
-
   } catch (error) {
     console.error("Fehler beim Speichern:", error);
   }
