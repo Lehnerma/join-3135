@@ -16,7 +16,7 @@
 
 .dialog-content[open] {
     display: flex;
-    animation: slideIn 0.4s ease-out forwards;
+    animation: slideIn 0.3s ease-out forwards;
 }
 
 @keyframes slideIn {
@@ -31,7 +31,7 @@
 
 .dialog-content.hide {
     display: flex;
-    animation: slideOut 0.5s ease-in forwards;
+    animation: slideOut 0.3s ease-in forwards;
 }
 
 @keyframes slideOut {
@@ -59,39 +59,48 @@
     background-color: var(--primary-color);
     height: 100%;
     color: var(--input-text-color);
-    padding: 66px clamp(20px, 4vw, 48px);
+    padding: 66px 48px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     flex-shrink: 0;
-}
-
-.aside-h2 {
-    font-family: "Inter";
-    font-weight: 700;
-    font-size: clamp(24px, 5vw, 61px);
-    margin: 0;
-    white-space: nowrap;
 }
 
 .aside-text-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    margin: clamp(8px, 1.3vw, 16px) 0;
-}
-
-.aside-text-wrapper-edit {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin: clamp(8px, 1.3vw, 16px) 0;
+    padding-top: 88px;
 }
 
 .aside-logo {
     width: clamp(24px, 7vw, 57px);
     height: clamp(24px, 7vw, 66px);
-    margin-bottom: clamp(8px, 4.2vw, 10px);
+    margin-bottom: 8px;
+}
+
+.aside-h2 {
+    font-weight: 700;
+    font-size: clamp(47px, 5vw, 61px);
+    margin: 0;
+    white-space: nowrap;
+}
+
+.aside-h2-edit {
+    font-weight: 700;
+    font-size: clamp(47px, 5vw, 61px);
+    margin-top: 16px;
+    white-space: nowrap;
+}
+
+.aside-p {
+    font-weight: 400;
+    font-size: clamp(16px, 2.2vw, 27px);
+}
+
+.aside-headline {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .aside-logo-edit {
@@ -105,18 +114,27 @@
     height: clamp(2px, 0.25vw, 3px);
     background-color: var(--secondary-color);
     border-radius: clamp(1px, 0.16vw, 2px);
-    margin-top: clamp(8px, 1.3vw, 16px);
 }
 
 .close-btn-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
-    top: clamp(15px, 2.6vw, 32px);
-    right: clamp(15px, 2.6vw, 32px);
+    top: 48px;
+    right: 48px;
     background: none;
     border: none;
     font-size: clamp(18px, 2vw, 24px);
     cursor: pointer;
     z-index: 20;
+    width: 32px;
+    height: 32px;
+}
+
+.close-x {
+    width: 24px;
+    width: 24px;
 }
 
 .dialog-main {
@@ -124,21 +142,14 @@
     height: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
-}
-
-.dialog-main-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 10px;
+    margin-top: 0;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    margin-right: clamp(0px, 2vw, 32px);
+    margin-top: 137px;
+    margin-right: 48px;
 }
 
 .person-logo {
@@ -147,7 +158,6 @@ form {
 }
 
 .person-Logo-container {
-    flex-shrink: 0;
     width: clamp(40px, 9vw, 120px);
     height: clamp(40px, 9vw, 120px);
     background-color: var(--input-default-main);
@@ -155,7 +165,7 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: auto;
+    margin: 204px auto auto auto;
     flex-shrink: 0;
 }
 
@@ -164,6 +174,7 @@ form {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: clamp(10px, 2.6vw, 32px);
 }
 
@@ -175,50 +186,62 @@ form {
     height: clamp(35px, 4.1vw, 50px);
     border-radius: clamp(6px, 0.8vw, 10px);
     border: clamp(1px, 0.1vw, 1.5px) solid var(--input-default-main);
-
 }
 
 .dialog-input {
     width: 100%;
     height: 100%;
-    padding-left: clamp(10px, 1.7vw, 21px);
+    margin: 13px 0px 13px 21px;
     border: none;
     outline: none;
     font-family: "Inter";
-    font-size: clamp(16px, 1.6vw, 20px);
-    background: transparent;
+    font-size: 20px;
+}
+
+.dialog-input::placeholder {
+    color: var(--input-default-main);
 }
 
 .dialog-input-icon {
-    width: clamp(18px, 2vw, 24px);
-    height: auto;
-    margin-right: clamp(10px, 1.7vw, 21px);
+    width: 24px;
+    height: 24px;
+    margin: 13px 21px 13px 0;
+    color: var(--fourth-text-color);
 }
 
 .dialog-login-buttons {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    gap: clamp(8px, 1.3vw, 16px);
-    margin-top: clamp(10px, 3.3vw, 60px);
-
+    height: 56px;
+    gap:clamp(8px, 1.3vw, 24px);
+    margin-top: clamp(10px, 3.3vw, 49px);
 }
 
-.dialog-login-buttons button,
-.dialog-login-buttons div[onclick] {
-    border-radius: clamp(6px, 0.8vw, 10px);
-    border-radius: clamp(6px, 0.8vw, 10px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.btn-create,
+.btn-save {
+    height: 56px;
     white-space: nowrap;
-    font-size: clamp(14px, 1.4vw, 21px);
-    width: auto;
-    cursor: pointer;
+    font-weight: 700;
+    font-size: clamp(16px, 1.5vw, 21px);
+}
+
+.btn-delete {
+    height: 56px;
+    white-space: nowrap;
+    font-weight: 400;
+    font-size: clamp(16px, 1.5vw, 21px);
+}
+
+.btn-cancel {
+    height: 56px;
+    white-space: nowrap;
+    font-weight: 400;
+    font-size: clamp(16px, 1.5vw, 21px);
 }
 
 .img-check,
-.img-x {
+.cancel-img-x {
     width: clamp(16px, 2vw, 24px);
     height: clamp(16px, 2vw, 24px);
     margin-left: clamp(4px, 0.6vw, 8px);
@@ -228,46 +251,26 @@ form {
     filter: brightness(0) invert(1);
 }
 
-@media (max-width: 767px) {
+/*RESPONSIVE 1024px - 427px */
+
+@media (min-width: 320px) and (max-width: 1024px) {
     .dialog-content {
-        width: 95vw;
-        aspect-ratio: 1212 / 594;
-    }
-}
-
-
-/*RESPONSIVE 1024px - 768px */
-
-
-
-
-
-
-@media (min-width: 427px) and (max-width: 1024px) {
-
-    .dialog-content {
-        width: clamp(449px, 80vw, 1000px);
-        min-height: 90vh;
-        border-radius: 30px;
+        width: clamp(428px, 70vw, 1000px);
+        min-height: 760px;
     }
 
     .dialog-container {
         flex-direction: column;
-        position: relative;
-        height: 100%;
-        display: flex;
     }
 
     .aside-content {
         width: 100%;
-        min-height: 351px;
-        max-height: 4.5vh;
+        min-width: 396px;
+        min-height: 352px;
+        max-height: 4vh;
         padding: 66px 24px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
         align-items: flex-start;
-        box-sizing: border-box;
+        justify-content: center;
     }
 
     .aside-logo,
@@ -276,44 +279,33 @@ form {
     }
 
     .aside-h2 {
-        font-size: clamp(40px, 7vw, 64px);
+        font-size: clamp(47px, 7vw, 61px);
         margin: 0;
     }
 
+    .aside-p {
+        font-weight: 400;
+        font-size: clamp(20px, 3vw, 27px);
+    }
+
     .aside-text-wrapper {
-        margin: clamp(10px, 2vh, 20px) 0;
-        font-size: clamp(18px, 2.5vw, 26px);
+        padding: 0;
     }
 
     .blue-line-horizontal {
-        margin-top: 10px;
-        width: clamp(60px, 10vw, 100px);
-        height: 4px;
+        width: 90px;
+        height: 3px;
     }
 
     .close-btn-overlay {
-        top: clamp(20px, 3vw, 40px);
-        right: clamp(20px, 3vw, 40px);
-        font-size: clamp(24px, 3vw, 32px);
         color: var(--input-text-color);
+        top: 24px;
+        right: 14px;
     }
 
     .dialog-main {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding-top: clamp(70px, 10vw, 100px);
-        margin-top: 0;
+        height: 408px;
     }
-
-    .dialog-main-wrapper {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        gap: clamp(15px, 3vw, 30px);
-    }
-
 
     .person-Logo-container {
         position: absolute;
@@ -323,267 +315,58 @@ form {
         width: 120px;
         height: 120px;
         border: 4px solid var(--input-text-color);
+        margin: 0;
+    }
 
+    .initials-large-dialog {
+        width: 120px;
+        height: 120px;
+        font-size: 47px;
     }
 
     form {
         width: 100%;
+        display: flex;
         align-items: center;
-        margin: 0;
+        margin: 0 24px 0 24px;
     }
 
     .dialog-input-container {
+        width: 100%;
+        width: clamp(364px, 60vw, 550px);
         min-height: 153px;
-        width: clamp(364px, 65vw, 550px);
+        padding-top: 92px;
         gap: clamp(15px, 2vw, 25px);
     }
 
     .dialog-input-section {
-        height: clamp(45px, 5vw, 60px);
-        width: 100%;
+        width: clamp(364px, 60vw, 550px);
+        height: clamp(41px, 5vw, 60px);
     }
 
     .dialog-login-buttons {
-        margin-top: clamp(30px, 5vw, 60px);
-        justify-content: center;
+        height: 51px;
+        margin-top: 32px;
         gap: 20px;
+    
     }
 
-    .dialog-login-buttons button {
-        padding: clamp(10px, 1.5vw, 18px) clamp(25px, 3vw, 45px);
-        font-size: clamp(16px, 2vw, 22px);
-        border-radius: 10px;
+    .btn-create,
+    .btn-save,
+    .btn-delete {
+        font-size: 21px;
     }
 
-    .img-x {
+    .cancel-img-x,
+    .img-check {
         width: 24px;
         height: 24px;
-
     }
+
 }
 
-
-
-
-
-
-
-
-/* @media (min-width: 767px) and (max-width: 1024px) {
-    .dialog-content {
-        width: clamp(449px, 80vw, 1000px);
-        height: 850px;
-        min-height: 90vh;
-        border-radius: 30px;
-        overflow: hidden;
-    }
-
-    .dialog-container {
-        flex-direction: column;
-        position: relative;
-    }
-
-    .aside-h2 {
-        font-size: clamp(48px, 6vw, 64px);
-    }
-
-    .aside-content {
-        width: 100%;
-        height: 45vh;
-        padding: 66px 24px 66px 24px clamp(40px, 6vw, 60px);
-        justify-content: center;
-        border-radius: 30px 30px 0 0;
-    }
-
-    .aside-logo,
-    .aside-logo-edit {
+@media (max-width: 768px) {
+    .btn-cancel {
         display: none;
     }
-
-    .aside-h2 {
-        font-size: clamp(48px, 6vw, 64px);
-    }
-
-    .aside-text-wrapper {
-        margin: 15px 0;
-    }
-
-    .blue-line-horizontal {
-        margin-top: 20px;
-        width: 100px;
-        height: 4px;
-    }
-
-    .close-btn-overlay {
-        top: 35px;
-        right: 35px;
-        font-size: 28px;
-        color: var(--input-text-color);
-    }
-
-    .dialog-main {
-        width: 100%;
-        max-height: 45vh;
-        align-items: flex-start;
-        justify-content: center;
-        margin-top: -60px;
-        border-radius: 30px 30px 0 0;
-    }
-
-    .dialog-main-wrapper {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        gap: 45px;
-
-    }
-
-    .person-Logo-container {
-        margin: 0;
-        width: 120px;
-        height: 120px;
-    }
-
-    form {
-        width: 100%;
-        align-items: center;
-        margin: 0;
-    }
-
-    .dialog-input-container {
-        width: clamp(400px, 60vw, 600px);
-        gap: 2.5vw;
-    }
-
-    .dialog-input-section {
-        height: 4.8vw;
-        min-height: 5.5vw;
-    }
-
-    .dialog-login-buttons {
-        margin-top: 30px;
-        justify-content: center;
-        gap: 20px;
-    }
-
-    .dialog-login-buttons button {
-        padding: 15px 35px;
-        font-size: 20px;
-    }
-
-    .img-x {
-        width: 24px;
-        height: 24px;
-        margin: 0;
-    }
-} */
-
-/*RESPONSIVE 767px --320px  END */
-
-
-/* @media (max-width: 767px) {
-    .dialog-content {
-
-        width: clamp(320px, 95vw, 767px);
-        height: 760px;
-        max-height: 98vh;
-        aspect-ratio: auto;
-        overflow: hidden;
-    }
-
-    .dialog-container {
-        flex-direction: column;
-    }
-
-    .aside-content {
-        width: 100%;
-        height: 350px;
-        padding: 0 32px;
-        justify-content: center;
-        border-radius: 30px 30px 0px 0px;
-    }
-
-
-    .aside-logo,
-    .aside-logo-edit {
-        display: none;
-    }
-
-    .aside-h2 {
-        font-size: clamp(32px, 12vw, 48px);
-    }
-
-    .aside-text-wrapper {
-        margin: 8px 0;
-        align-items: flex-start;
-    }
-
-    .blue-line-horizontal {
-        margin-top: 12px;
-        width: 90px;
-        height: 3px;
-    }
-
-    .close-btn-overlay {
-        top: 35px;
-        right: 35px;
-        font-size: 28px;
-        color: var(--input-text-color);
-    }
-
-    .dialog-main {
-        width: 100%;
-        height: 410px;
-        align-items: flex-start;
-        padding-top: 80px;
-    }
-
-    .dialog-main-wrapper {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
-
-
-    .person-Logo-container {
-        position: absolute;
-        top: 350px;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 120px;
-        height: 120px;
-        z-index: 5;
-    }
-
-    form {
-        margin-right: 0;
-        width: 100%;
-        align-items: center;
-    }
-
-    .dialog-input-container {
-        width: clamp(280px, 85%, 380px);
-        gap: 15px;
-    }
-
-    .dialog-login-buttons {
-        margin-top: 32px;
-        justify-content: center;
-        width: 100%;
-    }
-
-    .dialog-login-buttons button {
-        background-color: var(--primary-color);
-
-        padding: 12px 24px;
-        border-radius: 10px;
-        font-weight: 700;
-    }
-    .img-x {
-        width: 24px;
-        height: 24px;
-        margin: 0;
-    }
-} */
-
-/*RESPONSIVE 767px - 320px * END /
+}

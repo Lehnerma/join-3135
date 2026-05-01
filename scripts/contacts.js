@@ -117,9 +117,9 @@ function openContactDialog() {
   dialogRef.classList.remove('hide');
   dialogRef.innerHTML = renderHtmlContactDialogTpl();
   dialogRef.showModal();
-}
+  }
 
-
+  
 function openEditDialog(editUserIndex, initials, color) {
   const dialogRef = document.getElementById('openNewDialog');
   dialogRef.classList.remove('hide');
@@ -128,7 +128,9 @@ function openEditDialog(editUserIndex, initials, color) {
   document.getElementById('editName').value = editName;
   document.getElementById('editEmail').value = editEmail;
   document.getElementById('editPhone').value = editPhone;
+
 }
+
 
 function addEditContactDetails(editUserIndex) {
   let user = USERS[editUserIndex];
@@ -136,13 +138,13 @@ function addEditContactDetails(editUserIndex) {
   let firstLetter = user.name.charAt(0).toUpperCase();
   let color = contactColors[firstLetter];
   openEditDialog(editUserIndex, initials, color);
-  
 }
+
 
 function openEditContactDialog() {
   addEditContactDetails(editUserIndex);
-  
 }
+
 
 function closeContactDialog() {
   const dialogRef = document.getElementById('openNewDialog');
@@ -192,15 +194,12 @@ function showDetails(user, isAlreadyActive, userSelectionID, i) {
 }
 
 
-
 function addShowDetails(user, i) {
   const initials = getInitials(user.name);
   const firstLetter = user.name.charAt(0).toUpperCase();
   const color = contactColors[firstLetter];
   return renderShowDetailsTpl(user, i, initials, color);
 }
-
-
 
 
 function createContact() {
@@ -217,9 +216,10 @@ function createContact() {
   addNewContact(newContact);
 }
 
+
 async function addNewContact(newContact) {
   USERS.push(newContact);
-  
+
   const contactIndex = USERS.findIndex(user => user.id === newContact.id);
   sortUserContactList();
   if (contactIndex == -1) {

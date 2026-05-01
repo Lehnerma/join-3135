@@ -12,7 +12,6 @@ button {
   height: calc(100vh - 96px);
   overflow: hidden;
   background-color: var(--input-text-color);
-
 }
 
 .left-content {
@@ -70,7 +69,6 @@ button {
   border: unset;
   padding-bottom: 16px;
   padding-top: 16px;
-
 }
 
 .add-button-size {
@@ -227,16 +225,7 @@ button {
 }
 
 
-
-
-
-
-
-
-
-
 /* SUCCESS OVERLAY */
-
 
 
 .contact-success-overlay {
@@ -262,8 +251,6 @@ button {
 .hide-overlay {
   transform: translateX(calc(100% + 100px));
 }
-
-
 
 
 
@@ -384,16 +371,13 @@ button {
   white-space: nowrap;
 }
 
-
 .edit-delete-container {
   display: flex;
   width: 100%;
   justify-content: flex-start;
   align-items: center;
-
   gap: clamp(6px, 1.1vw, 13px);
 }
-
 
 .edit-delete-button {
   display: flex;
@@ -430,7 +414,6 @@ li {
 
 
 @media (max-width: 1024px) {
-
   .main-content {
     height: calc(100vh - 192px);
   }
