@@ -6,12 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" href="../assets/img/favicon/favicon-join.svg" type="image/x-icon" />
   <title>Contacts</title>
-  <script src="../scripts/utilitys.js"></script>
-  
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="../styles/sidebar.css" />
+  
   <link rel="stylesheet" href="../styles/contacts.css" />
-  <link rel="stylesheet" href="../styles/fonts.css" />
+   <link rel="stylesheet" href="../styles/fonts.css" />
   <link rel="stylesheet" href="../styles/colors.css" />
   <script defer src="../scripts/contacts.js"></script>
   <script defer src="../scripts/contacts-template.js"></script>
@@ -28,20 +27,24 @@
   </header>
   <nav class="sidebar">
     <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
-      <ul>
-        <li class="">
-          <a class="nav-category" href="./summary.html"><img class="nav-category-img" src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
-        </li>
-        <li class="">
-          <a class="nav-category" href="./addTaskPage.html"><img class="nav-category-img" src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
-        </li>
-        <li class="">
-          <a class="nav-category" href="./board.html"><img class="nav-category-img" src="../assets/img/icons/general/board.svg" alt="" />Board</a>
-        </li>
-        <li class="active">
-          <a class="nav-category" href="./contacts.html"><img class="nav-category-img" src="../assets/img/icons/general/contacts.svg" alt="" /> Contacts</a>
-        </li>
-      </ul>
+    <ul>
+      <li class="">
+        <a class="nav-category" href="./summary.html"><img class="nav-category-img"
+            src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
+      </li>
+      <li class="">
+        <a class="nav-category" href="./addTaskPage.html"><img class="nav-category-img"
+            src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
+      </li>
+      <li class="">
+        <a class="nav-category" href="./board.html"><img class="nav-category-img"
+            src="../assets/img/icons/general/board.svg" alt="" />Board</a>
+      </li>
+      <li class="active">
+        <a class="nav-category" href="./contacts.html"><img class="nav-category-img"
+            src="../assets/img/icons/general/contacts.svg" alt="" /> Contacts</a>
+      </li>
+    </ul>
 
     <div class="legal-section">
       <a class="legal-section-link" href="../html/privacyPolicy.html">Privacy Policy</a>
@@ -50,17 +53,24 @@
   </nav>
 
   <main class="main-content">
+    
     <div class="left-content">
       <div class="add-button-container">
         <button type="button" class="btn btn--primary add-button-size" onclick="openContactDialog()">
           Add new contact
-          <img class="add-contact-icon" src="../assets/img/icons/general/person_add.svg" alt="add contact button">
+          <img class="add-contact-icon" src="../assets/img/icons/contacts/person_add.svg" alt="add contact button">
         </button>
       </div>
-      <div class="contact-list">
-        <div id="contactList" class="contact-data"></div>
+
+      <div id="contactList" class="contact-list">
+        <div id="singleContacts" class="single-contacts"></div>
       </div>
+      <div id="contactSuccessOverlay" class="contact-success-overlay hide-overlay">
+        <span>Contact successfully created</span>
+      </div>
+
     </div>
+
     <div class="right-content">
       <div class="headline">
         <h1 class="contacts-title">Contacts</h1>
@@ -76,3 +86,7 @@
 </body>
 
 </html>
+
+
+
+ 

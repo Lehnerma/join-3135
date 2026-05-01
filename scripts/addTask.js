@@ -2,6 +2,7 @@ const TASK_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.a
 
 let selectedPriority = "medium";
 let SUBTASKS = [];
+let USERS = [];
 
 function init() {
   console.log("INIT läuft");
@@ -11,7 +12,6 @@ function init() {
   subtaskInit();
   initDateInput();
   loadUsers();
-
 }
 
 /**
@@ -47,13 +47,11 @@ function selectPriority(priority) {
   selectedPriority = priority;
 }
 
-
 /**
  *  User Assignment Dropdown functions
  */
 
 function loadUsers() {
-
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
   fetch(USER_URL)
@@ -64,52 +62,57 @@ function loadUsers() {
     .catch((error) => console.error("Error fetching users:", error));
 }
 
-
-
-
 function fillUserDropdown(users) {
-
-  console.log("USERS DATA:", users);
-
+  // console.log("USERS DATA:", users);
   const container = document.getElementById("dropdown");
 
   let html = "";
 
   for (const userId in users) {
     const user = users[userId];
+    let firstLetter = user.name.charAt(0).toUpperCase();
+    let color = contactColors[firstLetter];
+    let initials = user.name.charAt(0);
 
     html += `
-            <label class="user-item">
-              <div class="initials">${user.name.charAt(0)}</div>
-              <span>${user.name}</span>
+          <label  class="user-item user-Selection assignedTo" onclick="toggleUser(this)">
+            <div class="logoNameField">
+              <div class="initials" style="background-color: ${color};">
+                ${initials}
+              </div>
+            
+              <div class="contact-info-text">
+                <span>${user.name}</span>
+              </div>
+            </div>
+            
               <input type="checkbox" value="${user.name}">
-            </label>
-        `;
+          </label>
+    `;
   }
 
   container.innerHTML = html;
 }
 
+function toggleUser(el) {
+  const checkbox = el.querySelector("input");
 
-
-
+  checkbox.checked = !checkbox.checked;
+  el.classList.toggle("active", checkbox.checked);
+}
 
 function getAssignedUsers() {
   const checkboxes = document.querySelectorAll("#dropdown input[type='checkbox']:checked");
-  return Array.from(checkboxes).map(cb => cb.value);
+  return Array.from(checkboxes).map((cb) => cb.value);
 }
-
 
 function toggleDropdown() {
   document.getElementById("dropdown").classList.toggle("hidden");
 }
 
-
 /**
  *  User Assignment Dropdown functions
  */
-
-
 
 /**
  * Initial all subtasks function after loading the body
@@ -184,7 +187,10 @@ function addSubtask(ev) {
   const title = INPUT.value.trim();
   if (!title) return;
   const INDEX = SUBTASKS.length;
-  SUBTASKS.push({ title });
+  SUBTASKS.push({
+    title: title,
+    done: false,
+  });
   INPUT.value = "";
 
   renderSubtaskItem(INDEX, title);
@@ -318,4 +324,42 @@ function saveSubtask(li) {
 
   li.classList.remove("editing");
   li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
+}
+
+async function postTask(task) {
+  const response = await fetch(TASK_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(task),
+  });
+
+  if (!response.ok) {
+    throw new Error("Firebase speichern fehlgeschlagen");
+  }
+
+  const data = await response.json();
+  console.log("Firebase Response:", data);
+
+  return data;
+}
+
+async function getFormData(ev) {
+  ev.preventDefault();
+
+  try {
+    const task = buildTaskObj();
+    await postTask(task);
+
+    //  Toast bei erfolgreichem Speichern anzeigen
+    const toast = document.getElementById("toast");
+    toast.classList.add("show");
+
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 2000);
+  } catch (error) {
+    console.error("Fehler beim Speichern:", error);
+  }
 }

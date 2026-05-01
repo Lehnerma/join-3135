@@ -17,6 +17,7 @@ const contactColors = {
   P: 'rgba(255, 230, 43, 1)',
   Q: 'rgba(255, 70, 150, 1)',
   R: 'rgba(0, 150, 130, 1)',
+  S: 'rgba(255, 120, 0, 1)',
   T: 'rgba(0, 120, 255, 1)',
   U: 'rgba(180, 40, 40, 1)',
   V: 'rgba(100, 200, 0, 1)',
@@ -26,18 +27,34 @@ const contactColors = {
   Z: 'rgba(120, 120, 120, 1)'
 };
 
+const alphabet = [
+  "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+  "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+];
+
 let USERS = [];
-let userContent = [];
+let newContact = "";
+let editName = '';
+let editEmail = '';
+let editPhone = '';
+let editUserIndex = '';
+let USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+
 
 function init() {
   getUsers();
 }
 
+
 async function getUsers() {
-  const USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
   const RESPONSE = await fetch(USERS_URL);
-  const RESULT = await RESPONSE.json();
-  USERS = Object.values(RESULT);
+  let RESULT = await RESPONSE.json();
+  USERS = [];
+  for (let key in RESULT) {
+    let person = RESULT[key];
+    person.firebaseKey = key;
+    USERS.push(person);
+  }
   sortUserContactList();
 }
 
@@ -50,47 +67,42 @@ function sortUserContactList() {
     if (x > y) { return 1; }
     return 0;
   })
-  UserContectList();
+  addAlphabetTable();
 }
 
 
-function UserContectList() {
-  let contactList = document.getElementById('contactList');
-  contactList.innerHTML = '';
-  userContent = [];
-  for (let i = 0; i < USERS.length; i++) {
-    userContent.push(USERS[i]);
-    contactList.innerHTML += renderContectListTpl(USERS[i], i);
+function addAlphabetTable() {
+  let singleContacts = document.getElementById('singleContacts');
+  singleContacts.innerHTML = '';
+  for (let i = 0; i < alphabet.length; i++) {
+    singleContacts.innerHTML += renderAlphabetTableTpl(alphabet[i]);
   }
-  console.log(userContent);
+  userContectList();
 }
 
 
-function renderContectListTpl(user, i) {
-  let firstLetter = user.name.charAt(0).toUpperCase();
-  let userID = user.id
+function userContectList() {
+  for (let i = 0; i < USERS.length; i++) {
+    let user = USERS[i];
+    let firstLetter = user.name.charAt(0).toUpperCase();
+    let targetContainer = document.getElementById(firstLetter);
+    if (targetContainer) {
+      targetContainer.innerHTML += getSingleUser(user, i);
+    }
+  }
+}
 
+
+function getSingleUser(user, i) {
   let initials = getInitials(user.name);
-  let color = contactColors[firstLetter];
-
-  return /*html*/ `
-   <p class="first-letter">${firstLetter}</p>
-    <div class="letter-divider"></div>
-       <div id="${userID}" class="user-Selection" onclick="getUserDetails(${i}, ${userID})">
-        <div class="initials" style="background-color: ${color}">
-            ${initials}
-        </div>
-        <div class="contact-info-text">
-            <div class="name">${user.name}</div>
-            <a href="mailto:${user.email}" class="email">${user.email}</a>
-        </div>
-    </div>`;
+  const firstLetter = user.name.charAt(0).toUpperCase();
+  let scolor = contactColors[firstLetter];
+  return renderSingleUserHtml(user, i, initials, color);
 }
 
 
 function getInitials(name) {
-  let splitNames = name.split(' ');
-  console.log(splitNames);
+  let splitNames = name.trim().split(' ');
   let currentInitial = '';
   currentInitial += splitNames[0].charAt(0).toUpperCase();
   if (splitNames.length > 1) {
@@ -105,25 +117,38 @@ function openContactDialog() {
   dialogRef.classList.remove('hide');
   dialogRef.innerHTML = renderHtmlContactDialogTpl();
   dialogRef.showModal();
-
 }
 
-function showEditDialog() {
+
+function openEditDialog(editUserIndex, initials, color) {
   const dialogRef = document.getElementById('openNewDialog');
   dialogRef.classList.remove('hide');
-  dialogRef.innerHTML = renderHtmlEditContactDialogTpl();
+  dialogRef.innerHTML = renderHtmlEditContactDialogTpl(editUserIndex, initials, color);
   dialogRef.showModal();
-
+  document.getElementById('editName').value = editName;
+  document.getElementById('editEmail').value = editEmail;
+  document.getElementById('editPhone').value = editPhone;
 }
 
+function addEditContactDetails(editUserIndex) {
+  let user = USERS[editUserIndex];
+  let initials = getInitials(user.name);
+  let firstLetter = user.name.charAt(0).toUpperCase();
+  let color = contactColors[firstLetter];
+  openEditDialog(editUserIndex, initials, color);
+  
+}
 
+function openEditContactDialog() {
+  addEditContactDetails(editUserIndex);
+  
+}
 
 function closeContactDialog() {
   const dialogRef = document.getElementById('openNewDialog');
   dialogRef.close();
   dialogRef.classList.add('hide');
   const formRef = document.getElementById('formRef');
-
   if (formRef) {
     formRef.reset();
   }
@@ -135,82 +160,136 @@ function closeDialogOutsite(event) {
 }
 
 
-function getUserDetails(index) {
-  let user = userContent[index];
-  let currentUserID = user.id;
-  const userSelectionID = document.getElementById(currentUserID);
+function getUserDetails(userIndex) {
+  editUserIndex = userIndex;
+  user = USERS[userIndex];
+  editName = user.name;
+  editEmail = user.email;
+  editPhone = user.phone;
+  const userSelectionID = document.getElementById(userIndex);
   const isAlreadyActive = userSelectionID.classList.contains('bg-color-active');
-  removeAllBgColors(user, isAlreadyActive, userSelectionID);
+  removeAllBgColors(user, isAlreadyActive, userSelectionID, userIndex);
 }
 
 
-function removeAllBgColors(user, isAlreadyActive, userSelectionID) {
+function removeAllBgColors(user, isAlreadyActive, userSelectionID, i) {
   const allSelections = document.querySelectorAll('.user-Selection');
   allSelections.forEach(element => {
     element.classList.remove('bg-color-active');
   });
-  showDetails(user, isAlreadyActive, userSelectionID);
+  showDetails(user, isAlreadyActive, userSelectionID, i);
 }
 
 
-function showDetails(user, isAlreadyActive, userSelectionID) {
+function showDetails(user, isAlreadyActive, userSelectionID, i) {
   const dialogRef = document.getElementById('contactDetailsDialog');
   if (!isAlreadyActive) {
     userSelectionID.classList.add('bg-color-active');
-    dialogRef.innerHTML = renderShowDetailsTpl(user);
+    dialogRef.innerHTML = addShowDetails(user, i);
   } else {
     dialogRef.innerHTML = '';
   }
 }
 
 
-function renderShowDetailsTpl(user) {
-  let initials = getInitials(user.name);
-  let firstLetter = user.name.charAt(0).toUpperCase();
-  let color = contactColors[firstLetter];
-  return /*html*/ `<div class="contact-details-box">
-  <header class="header-contect-details">
-    <div class="initials-large" style="background-color:${color}">
-      ${initials}
-    </div>
-    <div class="name-and-buttons">
-      <h1 class="h1-contact-details">${user.name}</h1>
-      <div class="edit-delete-container">
-        <button type="button" class="edit-delete-button" onclick="openEditContactDialog()"><svg class="edit-svg"><use
-            href="../assets/img/icons/general/edit-contacts.svg"></use></svg>Edit</button>
-        <button type="button" class="edit-delete-button"><svg class="delete-svg">
-            <use href="../assets/img/icons/general/trash-contact.svg"></use></svg>Delete</button>
-      </div>
-    </div>
-  </header>
-  <main class="main-contact-details">
-    <div class="contact-information">
-      Contact Information</div>
-    <ul class="email-and-phone">
-      <li class="contact-email">Email</li>
-      <li><a href="mailto:${user.email}" class="email">${user.email}</a></li>
-      <li class="contact-phone">Phone</li>
-      <li>${user.phone}</li>
-    </ul>
-  </main>
-</div>`;
+
+function addShowDetails(user, i) {
+  const initials = getInitials(user.name);
+  const firstLetter = user.name.charAt(0).toUpperCase();
+  const color = contactColors[firstLetter];
+  return renderShowDetailsTpl(user, i, initials, color);
 }
 
-function openEditContactDialog() {
-  showEditDialog();
-}
+
 
 
 function createContact() {
+  const name = document.getElementById('createName').value;
+  const email = document.getElementById('createEmail').value;
+  const phone = document.getElementById('createPhone').value;
+  const id = Math.floor(1000 + Math.random() * 9000);
+  newContact = ({
+    name: name,
+    email: email,
+    phone: phone,
+    id: id
+  });
+  addNewContact(newContact);
+}
 
+async function addNewContact(newContact) {
+  USERS.push(newContact);
+  
+  const contactIndex = USERS.findIndex(user => user.id === newContact.id);
+  sortUserContactList();
+  if (contactIndex == -1) {
+    getUserDetails(newContact);
+  }
+  closeContactDialog();
+  syncNewContact(newContact);
+  showSuccessBanner();
 }
 
 
-function deleteContact() {
-
+async function syncNewContact(newContact) {
+  const response = await fetch(USERS_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newContact)
+  });
+  if (response.ok) {
+    const RESULT = await response.json();
+    const generatedKey = await RESULT.name;
+    newContact.firebaseKey = generatedKey;
+  }
 }
 
 
-function saveContact() {
-
+async function deleteContact(index) {
+  const userKey = USERS[index].firebaseKey;
+  const success = await deleteUserFromDatabase(userKey);
+  if (success) {
+    document.getElementById(index).remove();
+    document.getElementById('contactDetailsDialog').innerHTML = '';
+    await getUsers();
+    closeContactDialog();
+  } else {
+    console.error('Fehler beim Löschen des Kontakts');
+  }
 }
+
+
+async function deleteUserFromDatabase(firebaseKey) {
+  const url = `https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/${firebaseKey}.json`;
+  try {
+    const response = await fetch(url, { method: 'DELETE' });
+    return response.ok;
+  } catch (error) {
+    console.error("Fetch-Fehler:", error);
+    return false;
+  }
+}
+
+
+function getSingleUser(user, i) {
+  const initials = getInitials(user.name);
+  const firstLetter = user.name.charAt(0).toUpperCase();
+  const color = contactColors[firstLetter];
+  return renderSingleUserHtml(user, i, initials, color);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

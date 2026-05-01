@@ -1,6 +1,8 @@
 :root {
-  --primary-color: rgba(42, 54, 71, 1); /*btn main,*/
-  --secondary-color: rgba(41, 171, 226, 1); /*btn secondary, input activ*/
+  --primary-color: rgba(42, 54, 71, 1);
+  /*btn main,*/
+  --secondary-color: rgba(41, 171, 226, 1);
+  /*btn secondary, input activ*/
   --third-color: rgba(9, 25, 49, 1);
   --fourth-color: rgba(0, 56, 255, 1);
   --fifth-color: rgba(31, 215, 193, 1);
@@ -16,7 +18,8 @@
   --third-text-color: rgba(255, 255, 255, 1);
   --fourth-text-color: rgba(168, 168, 168, 1);
   --fifth-text-color: rgba(205, 205, 205, 1);
-  --faulty-entry-color: rgba(230, 0, 38, 1); /*input faulty entry*/
+  --faulty-entry-color: rgba(230, 0, 38, 1);
+  /*input faulty entry*/
   --contact-color-1: rgba(255, 122, 0, 1);
   --contact-color-2: rgba(147, 39, 255, 1);
   --contact-color-3: rgba(110, 82, 255, 1);
@@ -34,6 +37,7 @@
   --contact-color-15: rgba(0, 56, 255, 1);
   --contact-color-16: rgba(195, 255, 43, 1);
   --contact-color-17: rgba(255, 230, 43, 1);
+  --contact-color-email: rgba(0, 124, 238, 1);
 
   --main-bg: rgba(246, 247, 248, 1);
   /* buttons */
@@ -45,7 +49,8 @@
   --btn-user-hover: rgba(12, 46, 98, 0.12);
 
   /* input */
-  --input-text-color: rgba(255, 255, 255, 1); /*input text color*/
+  --input-text-color: rgba(255, 255, 255, 1);
+  /*input text color*/
   --input-default-main: rgba(209, 209, 209, 1);
   --input-required: rgba(255, 129, 144, 1);
   --subtask-edit-border: rgba(151, 71, 255, 1);
@@ -53,6 +58,12 @@
   /* shadows */
   --shadow-app-title: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
   --shadow-app-sidebar: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
-
+  --contact-shadow-initials: 0px 0px 0px 1px rgba(0, 0, 0, 0.1);
+  --shadow-succsessfull-contect: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  --shadow-leftside-contact: 4px 0px 4px 0px rgba(0, 0, 0, 0.1);
+  /* board */
+  --board-title-col: rgba(66, 82, 110, 1);
+  --task-userstory-bg: rgba(0, 56, 255, 1);
+  --task-technicaltask-bg: rgba(31, 215, 193, 1);
   --max-dp-width: 1440px;
 }
