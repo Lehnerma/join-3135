@@ -2,8 +2,8 @@
  * The template for the subtasks
  * @returns the html code for creat a subtask
  */
-function getSubtaskTemplate(title, index){
-    return `
+function getSubtaskTemplate(title, index) {
+  return `
     <span id="subtask${index}" class="subtask-text">${escapeHtml(title)}</span>
     <div class="subtask-item--btns">
       <button type="button" class="btn--subtask btn--delete">
@@ -13,11 +13,100 @@ function getSubtaskTemplate(title, index){
       <button type="button" class="btn--subtask btn--edit">
         <img src="../assets/img/icons/subtask/edit.svg" alt="edit" />
       </button>
-    </div>`
+    </div>`;
 }
 
-function getNoTasksTemplate(status){
+/**
+ * Template for a single contact row in the "Assigned To" dropdown.
+ * @param {string|number} id     - Unique contact id (used for data-value)
+ * @param {string}        name   - Full name of the contact
+ * @param {string}        initials - Two-letter initials, e.g. "MA"
+ * @param {string}        color  - CSS color value, e.g. "var(--contact-color-1)" or "#ff7a00"
+ * @param {boolean}       checked - Whether the contact is already assigned
+ * @returns {string} HTML string for one <li> item
+ */
+function getAssignedToItemTemplate(id, name, initials, color, checked = false) {
+    return `
+    <li class="custom-dropdown__item${checked ? ' selected' : ''}" data-value="${id}" data-name="${name}">
+      <span class="contact-badge" style="background-color: ${color}">${initials}</span>
+      <span class="custom-dropdown__name">${name}</span>
+      <input type="checkbox" class="custom-dropdown__checkbox"${checked ? ' checked' : ''} />
+    </li>`;
+}
+
+function getSubtaskProgressTemplate(done, total) {
+  if (total === 0) return "";
+  return `
+    <div class="subtask--progress">
+      <progress class="subtask--progressbar" max="${total}" value="${done}"></progress>
+      <span class="subtask--description">${done}/${total} Subtasks</span>
+    </div>`;
+}
+
+function getNoTasksTemplate(status) {
   return `
     <li class="board-task no-task">No tasks ${status}</li>
-  `
+  `;
 }
+
+function getTaskCardTemplet(title, description, category, id, priority) {
+  return `
+<li class="task" draggable="true" ondragstart="taskDragStart(event, ${id})" data-id=${id}>
+  <article class="task--card">
+    <header>
+      <span class="task--category-label ${toClassName(category)}">${category}</span>
+    </header>
+    <section class="task--content" aria-label="task content">
+      <div class="task--title-wrapper">
+        <h3 class="task--title">${title}</h3>
+        <p class="task--description">${description}</p>
+      </div>
+
+      <div class="subtask--progress-container"></div>
+    </section>
+    <footer class="task--footer">
+      <ul class="task--assignees" aria-label="Zugewiesene Personen">
+
+      </ul>
+      <img src="../assets/img/icons/prio/${priority}.svg" alt="${priority} priority" class="prio-icon">
+    </footer>
+  </article>
+</li>`;
+}
+
+function getTaskAssignToTemplet(fullName, initials) {
+  const color = contactColors[initials[0].toUpperCase()] || '#888';
+  return `
+<li class="assignee">
+  <abbr class="assignee--initials" style="--assignee-color: ${color}" title="${fullName}">${initials}</abbr>
+</li>`;
+}
+
+const contactColors = {
+  A: 'rgba(147, 39, 255, 1)',
+  B: 'rgba(110, 82, 255, 1)',
+  C: 'rgba(252, 113, 255, 1)',
+  D: 'rgba(255, 187, 43, 1)',
+  E: 'rgba(31, 215, 193, 1)',
+  F: 'rgba(70, 47, 138, 1)',
+  G: 'rgba(255, 70, 70, 1)',
+  H: 'rgba(0, 190, 232, 1)',
+  I: 'rgba(42, 61, 89, 1)',
+  J: 'rgba(255, 94, 179, 1)',
+  K: 'rgba(255, 116, 94, 1)',
+  L: 'rgba(255, 163, 94, 1)',
+  M: 'rgba(255, 199, 1, 1)',
+  N: 'rgba(0, 56, 255, 1)',
+  O: 'rgba(195, 255, 43, 1)',
+  P: 'rgba(255, 230, 43, 1)',
+  Q: 'rgba(255, 70, 150, 1)',
+  R: 'rgba(0, 150, 130, 1)',
+  S: 'rgba(255, 120, 0, 1)',
+  T: 'rgba(0, 120, 255, 1)',
+  U: 'rgba(180, 40, 40, 1)',
+  V: 'rgba(100, 200, 0, 1)',
+  W: 'rgba(150, 0, 255, 1)',
+  X: 'rgba(0, 255, 200, 1)',
+  Y: 'rgba(200, 150, 0, 1)',
+  Z: 'rgba(120, 120, 120, 1)'
+};

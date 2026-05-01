@@ -1,74 +1,130 @@
 [
   {
-    "assignee": "Max Mustermann",
+    "assignee": "Max Mustermann, Sarah Schmidt",
     "category": "technical task",
     "date": "2024-06-30",
-    "description": "beschreibung",
+    "description": "Implement authentication module",
     "id": "1",
     "priority": "urgent",
     "status": "done",
     "subtasks": [
       {
-        "task": "Subtask 1"
+        "task": "Setup OAuth provider",
+        "done": true
       },
       {
-        "task": "Subtask 2"
+        "task": "Create login form",
+        "done": true
       },
       {
-        "task": "Subtask 3"
+        "task": "Add password reset",
+        "done": true
       },
       {
-        "task": "Subtask 4"
+        "task": "Write unit tests",
+        "done": true
       }
     ],
-    "title": "Name"
+    "title": "Authentication System"
   },
   {
-    "assignee": "Max Mustermann",
-    "category": "user_story",
+    "assignee": "Max Mustermann, John Doe, Lisa Müller",
+    "category": "user story",
     "date": "2024-06-30",
-    "description": "beschreibung",
+    "description": "User dashboard redesign",
     "id": "2",
-    "priority": "low",
+    "priority": "medium",
     "status": "progress",
     "subtasks": [
       {
-        "task": "Subtask 1"
+        "task": "Design mockups",
+        "done": true
       },
       {
-        "task": "Subtask 2"
+        "task": "Frontend implementation",
+        "done": true
       },
       {
-        "task": "Subtask 3"
+        "task": "Backend integration",
+        "done": false
       },
       {
-        "task": "Subtask 4"
+        "task": "Performance testing",
+        "done": false
       }
     ],
-    "title": "Name"
+    "title": "Dashboard Redesign"
   },
   {
-    "assignee": "Max Mustermann",
-    "category": "user_story",
+    "assignee": "Anna Weber, Michael Schmidt, Peter Klein, David Wagner",
+    "category": "user story",
     "date": "2024-06-30",
-    "description": "beschreibung",
+    "description": "Payment gateway integration",
     "id": "3",
-    "priority": "medium",
+    "priority": "urgent",
     "status": "todo",
     "subtasks": [
       {
-        "task": "Subtask 1"
+        "task": "API documentation review",
+        "done": false
       },
       {
-        "task": "Subtask 2"
+        "task": "Sandbox testing",
+        "done": false
       },
       {
-        "task": "Subtask 3"
+        "task": "Security audit",
+        "done": false
       },
       {
-        "task": "Subtask 4"
+        "task": "Production deployment",
+        "done": false
       }
     ],
-    "title": "Name"
+    "title": "Payment Integration"
+  },
+  {
+    "assignee": "Max Mustermann, Sarah Schmidt, Julia Fischer, Thomas Bauer, Christine König",
+    "category": "technical task",
+    "date": "2024-07-01",
+    "description": "Database optimization",
+    "id": "4",
+    "priority": "low",
+    "status": "feedback",
+    "subtasks": [
+      {
+        "task": "Query analysis",
+        "done": true
+      },
+      {
+        "task": "Index optimization",
+        "done": true
+      }
+    ],
+    "title": "Database Performance"
+  },
+  {
+    "assignee": "John Doe, Emma Wilson, Robert Brown",
+    "category": "user story",
+    "date": "2024-07-02",
+    "description": "Mobile app notification system",
+    "id": "5",
+    "priority": "medium",
+    "status": "progress",
+    "subtasks": [
+      {
+        "task": "Push notification setup",
+        "done": true
+      },
+      {
+        "task": "Email notifications",
+        "done": false
+      },
+      {
+        "task": "In-app notifications",
+        "done": true
+      }
+    ],
+    "title": "Notifications Feature"
   }
 ]

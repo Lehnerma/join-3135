@@ -37,6 +37,16 @@ async function checkUserId(id) {
   }
 }
 
+/**
+ * Converts a display name to a CSS-compatible class name.
+ * Example: 'Technical Task' => 'technical-task'
+ * @param {string} name
+ * @returns {string}
+ */
+function toClassName(name) {
+  return name.trim().toLowerCase().replace(" ", "-");
+}
+
 function renderHeadInitals() {
   const USER_NAME = sessionStorage.getItem("activeUserName");
   const USER_INITIALS = document.getElementById("user_menu_button");

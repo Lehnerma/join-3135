@@ -1,108 +1,99 @@
-const TASK_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks" + ".json";
-const STATUS = ["todo", "progress", "feedback", "done"];
+const TASK_URL = (key = "", section = "") => {
+  return `https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks/${key ? key + "/" : ""}${section ? section + "/" : ""}.json`;
+};
+
 let TASKS = [];
+let DRAG_ID;
+let DRAG_OLD_STATUS;
+let DRAG_HEIGHT;
 
 function initBoard() {
-  NO_TASKS();
-  loadTasksFirebase();
+  loadTasksFromFirebase();
 }
 
-// function loadTasks() {
-//   return JSON.parse(localStorage.getItem("tasks")) || [];
-// }
+async function loadTasksFromFirebase() {
+  try {
+    const RESPONSE = await fetch(TASK_URL());
+    if (!RESPONSE.ok) {
+      throw new Error(`loading task faild: ${RESPONSE.status}`);
+    }
+    const RESULT = await RESPONSE.json();
+    const TASKS_ARRAY = getArryFromResult(RESULT);
+    sessionStorage.setItem("tasks", JSON.stringify(TASKS_ARRAY));
+    TASKS.push(TASKS_ARRAY);
+    renderBoard(TASKS_ARRAY);
+  } catch (er) {
+    console.error(er);
+  }
+}
 
-// function renderBoard() {
-//   let tasks = loadTasks();
+//get ids into the tasks array for the dragging functions
+function getArryFromResult(result) {
+  return Object.entries(result).map(([key, values], index) => ({
+    id: index,
+    firebaseKey: key,
+    ...values,
+  }));
+}
 
-//   let todo = document.getElementById("todo-list");
-//   let inProgress = document.getElementById("inprogress-list");
-//   let feedback = document.getElementById("feedback-list");
-//   let done = document.getElementById("done-list");
+async function updateTaskStatus(firebaseKey, status) {
+  try {
+    await fetch(TASK_URL(firebaseKey, "status"), {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(status),
+    });
+  } catch (er) {
+    console.error(er);
+  }
+}
 
-//   todo.innerHTML = "";
-//   inProgress.innerHTML = "";
-//   feedback.innerHTML = "";
-//   done.innerHTML = "";
+function renderBoard(tasks) {
+  const STATUS = ["todo", "progress", "feedback", "done"];
+  STATUS.forEach((status) => {
+    renderColumn(
+      status,
+      tasks.filter((task) => task.status === status),
+    );
+  });
+}
 
-//   function getProgress(subtasks) {
-//     let done = subtasks.filter((s) => s.done).length;
-//     let total = subtasks.length;
-//     return { done, total };
-//   }
+function renderColumn(status, tasks) {
+  const LIST = document.getElementById(status + "_list");
+  LIST.innerHTML = "";
+  if (tasks.length === 0) {
+    LIST.innerHTML = getNoTasksTemplate(status);
+    return;
+  }
+  tasks.forEach((task) => (LIST.innerHTML += buildTaskCard(task)));
+}
 
-//   for (let i = 0; i < tasks.length; i++) {
-//     let task = tasks[i];
+function buildTaskCard(task) {
+  const WRAPPER = document.createElement("div");
+  WRAPPER.innerHTML = getTaskCardTemplet(task.title, task.description, task.category, task.id, getPriority(task.priority));
 
-//     let progress = getProgress(task.subtasks || []);
-//     let percent = progress.total ? (progress.done / progress.total) * 100 : 0;
+  const SUBTASKS = task.subtasks || [];
+  const SUB_TOTAL = SUBTASKS.length;
+  const SUB_DONE = SUBTASKS.filter((s) => s.done === true).length;
+  WRAPPER.querySelector(".subtask--progress-container").innerHTML = getSubtaskProgressTemplate(SUB_DONE, SUB_TOTAL);
 
-let card = `
-                            <div class="task-card">
-                            
-                                <div class="category-label">${task.category}</div>
-                                <div class="task-title">${task.title}</div>
-                                <div class="task-description">${task.description}</div>
-                            
-                                ${
-                                  progress.total > 0
-                                    ? `
-                                <div class="subtask-progress" title="${progress.done} of ${progress.total} subtasks done">
-                                    <div class="progress-bar-bg">
-                                        <div class="progress-bar-fill" style="width:${percent}%"></div>
-                                    </div>
-                                    <span>${progress.done}/${progress.total} Subtasks</span>
-                                </div>
-                                `
-                                    : ""
-                                }
-                            
-                                <div class="subtask-list">
-                                    ${(task.subtasks || [])
-                                      .map(
-                                        (sub, subIndex) => `
-                                        <div class="subtask-item" onclick="toggleSubtask(${i}, ${subIndex})">
-                                            ${sub.done ? "✔" : "❌"} ${sub.title}
-                                        </div>
-                                    `,
-                                      )
-                                      .join("")}
-                                </div>
-                            
-                                <div class="task-footer">
-                                    <span>${task.priority}</span>
-                                </div>
-                            
-                            </div>
-                            `;
+  const ASSIGNEES_LIST = WRAPPER.querySelector(".task--assignees");
+  (task.assignedTo || []).forEach((name) => {
+    ASSIGNEES_LIST.innerHTML += getTaskAssignToTemplet(name, getInitials(name));
+  });
+  return WRAPPER.innerHTML;
+}
 
-//     if (task.status === "todo") {
-//       todo.innerHTML += card;
-//     }
+function getPriority(priority) {
+  const VALID = ["low", "medium", "urgent"];
+  return VALID.includes(priority) ? priority : "low";
+}
 
-//     if (task.status === "inProgress") {
-//       inProgress.innerHTML += card;
-//     }
-
-//     if (task.status === "feedback") {
-//       feedback.innerHTML += card;
-//     }
-
-//     if (task.status === "done") {
-//       done.innerHTML += card;
-//     }
-//   }
-// }
-
-// renderBoard();
-
-// function toggleSubtask(taskIndex, subIndex) {
-//   let tasks = JSON.parse(localStorage.getItem("tasks"));
-
-//   tasks[taskIndex].subtasks[subIndex].done = !tasks[taskIndex].subtasks[subIndex].done;
-
-//   localStorage.setItem("tasks", JSON.stringify(tasks));
-//   renderBoard();
-// }
+function getInitials(name) {
+  const parts = name.trim().split(" ");
+  const last = parts.length > 1 ? parts[parts.length - 1].charAt(0).toUpperCase() : "";
+  return parts[0].charAt(0).toUpperCase() + last;
+}
 
 function renderNoTasksElemt(status) {
   let LIST = document.getElementById(status + "_list");
@@ -110,22 +101,48 @@ function renderNoTasksElemt(status) {
   LIST.innerHTML += getNoTasksTemplate(status);
 }
 
-// only for programming
-function NO_TASKS() {
-  STATUS.forEach((s) => {
-    renderNoTasksElemt(s);
-  });
+//drag start
+function taskDragStart(ev, id) {
+  DRAG_ID = id;
+  DRAG_HEIGHT = ev.currentTarget.offsetHeight;
+  const ALL_TASKS = JSON.parse(sessionStorage.tasks);
+  DRAG_OLD_STATUS = ALL_TASKS.find((el) => el.id === id)?.status;
 }
 
-async function loadTasksFirebase() {
-  try {
-    const RESPONSE = await fetch(TASK_URL);
-    if (!RESPONSE.ok) {
-      throw new Error(`loading task faild: ${RESPONSE.status}`);
-    }
-    const RESULT = await RESPONSE.json();
-    TASKS.push(RESULT);
-  } catch (er) {
-    console.error(er);
-  }
+//drag over
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+//drag enter
+function columnDragEnter(ev, status) {
+  ev.preventDefault();
+  const LIST = document.getElementById(status + "_list");
+  if (LIST.querySelector(".drag-placeholder")) return;
+  const PLACE_HOLDER = document.createElement("li"); //change the name of the variable
+  PLACE_HOLDER.classList.add("drag-placeholder");
+  if (DRAG_HEIGHT) PLACE_HOLDER.style.height = DRAG_HEIGHT + "px";
+  LIST.appendChild(PLACE_HOLDER);
+}
+//drag leave
+function columnDragLeave(ev) {
+  if (ev.currentTarget.contains(ev.relatedTarget)) return;
+  ev.currentTarget.querySelector(".drag-placeholder")?.remove();
+}
+//drag drop
+function taskDragDrop(status) {
+  document.querySelectorAll(".drag-placeholder").forEach((el) => el.remove());
+  const ALL_TASKS = JSON.parse(sessionStorage.tasks);
+  const CURRENT_TASK = ALL_TASKS.find((el) => el.id === DRAG_ID);
+  if (!CURRENT_TASK || CURRENT_TASK.status === status) return;
+  CURRENT_TASK.status = status;
+  sessionStorage.setItem("tasks", JSON.stringify(ALL_TASKS));
+  renderColumn(
+    DRAG_OLD_STATUS,
+    ALL_TASKS.filter((t) => t.status === DRAG_OLD_STATUS),
+  );
+  renderColumn(
+    status,
+    ALL_TASKS.filter((t) => t.status === status),
+  );
+  updateTaskStatus(CURRENT_TASK.firebaseKey, status);
 }

@@ -17,7 +17,7 @@
     <script src="../scripts/board.js"></script>
   </head>
 
-  <body class="app" onload="initBoard(), initUtilitys()">
+  <body class="app" onload="(initBoard(), initUtilitys())">
     <header class="app--title">
       <h1 class="app--title-headline">Kanban Project Management Tool</h1>
       <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
@@ -33,10 +33,10 @@
         <li class="">
           <a class="nav-category" href="./summary.html"><img class="nav-category-img" src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
         </li>
-        <li class="active">
+        <li class="">
           <a class="nav-category" href="./addTaskPage.html"><img class="nav-category-img" src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
         </li>
-        <li class="">
+        <li class="active">
           <a class="nav-category" href="./board.html"><img class="nav-category-img" src="../assets/img/icons/general/board.svg" alt="" />Board</a>
         </li>
         <li class="">
@@ -61,46 +61,44 @@
       </article>
 
       <section class="kanban-columns" aria-label="Kanban Board">
-        <section class="kanban-column">
+        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('todo')" ondragenter="columnDragEnter(event, 'todo')" ondragleave="columnDragLeave(event)">
           <div class="column-title">
             <h2>To do</h2>
             <button class="btn btn--add-task" aria-label="Add task to To do">
               <img src="../assets/img/icons/subtask/add.svg" alt="" aria-hidden="true" />
             </button>
           </div>
-          <ul class="task-list" id="todo_list">
-            
-          </ul>
+          <ul class="task--list" id="todo_list"></ul>
         </section>
 
-        <section class="kanban-column">
+        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('progress')" ondragenter="columnDragEnter(event, 'progress')" ondragleave="columnDragLeave(event)">
           <div class="column-title">
             <h2>In progress</h2>
             <button class="btn btn--add-task" aria-label="Add task to In progress">
               <img src="../assets/img/icons/subtask/add.svg" alt="" aria-hidden="true" />
             </button>
           </div>
-          <ul class="task-list" id="progress_list"></ul>
+          <ul class="task--list" id="progress_list"></ul>
         </section>
 
-        <section class="kanban-column">
+        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('feedback')" ondragenter="columnDragEnter(event, 'feedback')" ondragleave="columnDragLeave(event)">
           <div class="column-title">
             <h2>Await feedback</h2>
             <button class="btn btn--add-task" aria-label="Add task to Await feedback">
               <img src="../assets/img/icons/subtask/add.svg" alt="" aria-hidden="true" />
             </button>
           </div>
-          <ul class="task-list" id="feedback_list"></ul>
+          <ul class="task--list" id="feedback_list"></ul>
         </section>
 
-        <section class="kanban-column">
+        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('done')" ondragenter="columnDragEnter(event, 'done')" ondragleave="columnDragLeave(event)">
           <div class="column-title">
             <h2>Done</h2>
             <button class="btn btn--add-task" aria-label="Add task to Done">
               <img src="../assets/img/icons/subtask/add.svg" alt="" aria-hidden="true" />
             </button>
           </div>
-          <ul class="task-list" id="done_list"></ul>
+          <ul class="task--list" id="done_list"></ul>
         </section>
       </section>
     </main>
