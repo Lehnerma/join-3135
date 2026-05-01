@@ -1,126 +1,133 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="../assets/img/favicon/favicon-join.svg" type="image/x-icon" />
-    <title>Summary</title>
-    <script src="../scripts/utilitys.js"></script>
-    <script src="../scripts/summary.js"></script>
 
-    <link rel="stylesheet" href="../style.css" />
-    <link rel="stylesheet" href="../styles/sidebar.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="../assets/img/favicon/favicon-join.svg" type="image/x-icon" />
+  <title>Summary</title>
+  <script src="../scripts/utilitys.js"></script>
+  <script src="../scripts/summary.js" defer></script>
 
-    <link rel="stylesheet" href="../styles/fonts.css" />
-    <link rel="stylesheet" href="../styles/colors.css" />
-    <link rel="stylesheet" href="../styles/summary.css" />
-  </head>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="../styles/sidebar.css" />
 
-  <body class="app" onload="initUtilitys()">
-    <header class="app--title">
-      <h1 class="app--title-headline">Kanban Project Management Tool</h1>
-      <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
-      <div class="app--icons">
-        <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="help" class="app--icon" /></a>
-        <button id="user_menu_button" class="btn btn--user"></button>
+  <link rel="stylesheet" href="../styles/fonts.css" />
+  <link rel="stylesheet" href="../styles/colors.css" />
+  <link rel="stylesheet" href="../styles/summary.css" />
+</head>
+
+<body class="app" onload="initUtilitys(), loggedInUserName(), showGreeting()">
+  <header class="app--title">
+    <h1 class="app--title-headline">Kanban Project Management Tool</h1>
+    <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
+    <div class="app--icons">
+      <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="help" class="app--icon" /></a>
+      <button id="user_menu_button" class="btn btn--user"></button>
+    </div>
+  </header>
+  <nav class="sidebar">
+    <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
+    <ul>
+      <li class="active">
+        <a class="nav-category" href="./summary.html"><img class="nav-category-img"
+            src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
+      </li>
+      <li class="">
+        <a class="nav-category" href="./addTaskPage.html"><img class="nav-category-img"
+            src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
+      </li>
+      <li class="">
+        <a class="nav-category" href="./board.html"><img class="nav-category-img"
+            src="../assets/img/icons/general/board.svg" alt="" />Board</a>
+      </li>
+      <li class="">
+        <a class="nav-category" href="./contacts.html"><img class="nav-category-img"
+            src="../assets/img/icons/general/contacts.svg" alt="" /> Contacts</a>
+      </li>
+    </ul>
+
+    <div class="legal-section">
+      <a class="legal-section-link" href="../html/privacyPolicy.html">Privacy Policy</a>
+      <a class="legal-section-link" href="../html/legalNotice.html">Legal Notice</a>
+    </div>
+  </nav>
+
+  <main class="app--content">
+    <section class="summary">
+      <div id="summary-headline" class="summary-headline d-none">
+        <h1>Join 360</h1>
+        <div class="vl-1"></div>
+        <span>Key Metrics at a Glance</span>
+        <div class="vl-2"></div>
       </div>
-    </header>
-    <nav class="sidebar">
-      <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
-      <ul>
-        <li class="active">
-          <a class="nav-category" href="./summary.html"><img class="nav-category-img" src="../assets/img/icons/general/summary.svg" alt="" />Summary</a>
-        </li>
-        <li class="">
-          <a class="nav-category" href="./addTaskPage.html"><img class="nav-category-img" src="../assets/img/icons/general/add-task.svg" alt="" />Add Task</a>
-        </li>
-        <li class="">
-          <a class="nav-category" href="./board.html"><img class="nav-category-img" src="../assets/img/icons/general/board.svg" alt="" />Board</a>
-        </li>
-        <li class="">
-          <a class="nav-category" href="./contacts.html"><img class="nav-category-img" src="../assets/img/icons/general/contacts.svg" alt="" /> Contacts</a>
-        </li>
-      </ul>
 
-      <div class="legal-section">
-        <a class="legal-section-link" href="../html/privacyPolicy.html">Privacy Policy</a>
-        <a class="legal-section-link" href="../html/legalNotice.html">Legal Notice</a>
-      </div>
-    </nav>
-
-    <main class="app--content">
-      <section class="summary">
-        <div class="summary-headline">
-          <h1>Join 360</h1>
-          <div class="vl-1"></div>
-          <span>Key Metrics at a Glance</span>
-          <div class="vl-2"></div>
-        </div>
-
-        <div class="summary-main">
-          <div class="summary-overview">
-            <div class="summary-overview-1">
-              <div class="summary-todo">
-                <div class="summary-todo-icon">
-                  <img src="../assets/img/icons/summary/edit-dark.svg" alt="To-do" />
-                </div>
-                <div class="summary-todo-content">
-                  <span class="summary-todo-amount">1</span>
-                  <span class="summary-todo-text">To-do</span>
-                </div>
+      <div class="summary-main">
+        <div id="summary-overview" class="summary-overview d-none">
+          <div class="summary-overview-1">
+            <div class="summary-todo">
+              <div class="summary-todo-icon">
+                <img src="../assets/img/icons/summary/edit-dark.svg" alt="To-do" />
               </div>
-
-              <div class="summary-todo">
-                <div class="summary-todo-icon">
-                  <img src="../assets/img/icons/summary/done-dark.svg" alt="Done" />
-                </div>
-                <div class="summary-todo-content">
-                  <span class="summary-todo-amount">1</span>
-                  <span class="summary-todo-text">Done</span>
-                </div>
+              <div class="summary-todo-content">
+                <span class="summary-todo-amount">1</span>
+                <span class="summary-todo-text">To-do</span>
               </div>
             </div>
 
-            <div class="summary-overview-2">
-              <div class="summary-urgent">
-                <img src="../assets/img/icons/summary/urgent.svg" alt="Urgent" />
-                <div class="summary-todo-content">
-                  <span class="summary-todo-amount">1</span>
-                  <span class="summary-overview-text">Urgent</span>
-                </div>
-
-                <div class="vl-3"></div>
-
-                <div class="summary-urgent-content">
-                  <span class="summary-urgent-date">April 29, 2026</span>
-                  <span class="summary-urgent-text">Upcoming Deadline</span>
-                </div>
+            <div class="summary-todo">
+              <div class="summary-todo-icon">
+                <img src="../assets/img/icons/summary/done-dark.svg" alt="Done" />
               </div>
-            </div>
-
-            <div class="summary-overview-1">
-              <div class="summary-overview-small-tabs">
-                <span class="summary-todo-amount">5</span>
-                <span class="summary-todo-text">Tasks in<br />Board</span>
-              </div>
-
-              <div class="summary-overview-small-tabs">
-                <span class="summary-todo-amount">2</span>
-                <span class="summary-todo-text">Tasks in<br />Progress</span>
-              </div>
-
-              <div class="summary-overview-small-tabs">
-                <span class="summary-todo-amount">2</span>
-                <span class="summary-todo-text">Awaiting<br />Feedback</span>
+              <div class="summary-todo-content">
+                <span class="summary-todo-amount">1</span>
+                <span class="summary-todo-text">Done</span>
               </div>
             </div>
           </div>
+
+          <div class="summary-overview-2">
+            <div class="summary-urgent">
+              <img src="../assets/img/icons/summary/urgent.svg" alt="Urgent" />
+              <div class="summary-todo-content">
+                <span class="summary-todo-amount">1</span>
+                <span class="summary-overview-text">Urgent</span>
+              </div>
+
+              <div class="vl-3"></div>
+
+              <div class="summary-urgent-content">
+                <span class="summary-urgent-date">April 29, 2026</span>
+                <span class="summary-urgent-text">Upcoming Deadline</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary-overview-1">
+            <div class="summary-overview-small-tabs">
+              <span class="summary-todo-amount">5</span>
+              <span class="summary-todo-text">Tasks in<br />Board</span>
+            </div>
+
+            <div class="summary-overview-small-tabs">
+              <span class="summary-todo-amount">2</span>
+              <span class="summary-todo-text">Tasks in<br />Progress</span>
+            </div>
+
+            <div class="summary-overview-small-tabs">
+              <span class="summary-todo-amount">2</span>
+              <span class="summary-todo-text">Awaiting<br />Feedback</span>
+            </div>
+          </div>
         </div>
-        <div class="summary-greeting">
-          <span class="summary-greeting-text">Good morning,</span>
-          <span id="greeting-name" class="summary-greeting-name">Sofia Müller</span>
+        <div id="summary-greeting" class="summary-greeting d-none">
+          <span id="greeting-text" class="summary-greeting-text"></span>
+          <span id="greeting-name" class="summary-greeting-name"></span>
         </div>
-      </section>
-    </main>
-  </body>
+      </div>
+
+    </section>
+  </main>
+</body>
+
 </html>

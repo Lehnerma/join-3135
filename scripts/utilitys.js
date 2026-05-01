@@ -47,4 +47,7 @@ function renderHeadInitals() {
   }
   INITIALS = INITIALS.toUpperCase();
   USER_INITIALS.innerText = INITIALS;
+  if (USER_NAME === "Guest") {
+    USER_INITIALS.innerText = "G";
+  }
 }
