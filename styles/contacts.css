@@ -419,3 +419,54 @@ li {
   }
 
 }
+
+@media(max-width:768px){
+
+
+ .left-content {
+    width: 100%;
+    z-index: 0;
+}
+.left-content::-webkit-scrollbar-button:vertical:decrement {
+  display: none;
+  /* background-image: url("../assets/img/icons/contacts/Vector_12.svg");
+  background-position: center; */
+}
+
+.left-content::-webkit-scrollbar-button:vertical:increment {
+ display: none;
+}
+
+  .contact-list {
+  margin-top:0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: clamp(400px, 80vw, 600px);
+  border: none;
+  padding: 32px 24px 32px 24px;
+}
+
+
+.user-Selection {
+  width: clamp(352px, 50vw, 500px);
+  height: clamp(50px, 5.4vw, 78px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(15px, 2.4vw, 35px);
+  padding: clamp(8px, 1vw, 15px) clamp(12px, 1.6vw, 24px) clamp(8px, 1vw, 15px) clamp(12px, 1.6vw, 24px);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+  .right-content{
+    display: none;
+  }
+
+.add-button-container {
+  display: none;
+}
+
+
+}
