@@ -23,6 +23,8 @@
   align-items: center;
   padding: 8px 16px;
   gap: 32px;
+  width: 100%;
+  max-width: 1056px;
 
   h1 {
     grid-area: head-title;
@@ -92,7 +94,6 @@
     grid-template-areas:
       "head-title head-add"
       "head-search head-search";
-    align-items: flex-end;
 
     h1 {
       font-size: 47px;
@@ -119,15 +120,24 @@
 
 .kanban-columns {
   display: grid;
-  grid-template-columns: repeat(4, minmax(250px, 252px)); /* evtl max wert anpassen */
+  grid-template-columns: repeat(4, 270px); /* evtl max wert anpassen */
   gap: 24px;
-  padding: 8px 16px;
+  padding: 0 16px;
+  overflow-x: auto;
+
+.kanban-column{
+  overflow: auto;
+  scrollbar-width: none;
+}
 
   .column-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    background-color: var(--main-bg);
 
     h2 {
       font-size: 20px;
@@ -162,6 +172,7 @@
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
     width: 100%;
+    overflow: none;
 
     .column-title h2 {
       font-size: 27px;
@@ -212,13 +223,16 @@
 }
 
 .task--list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: repeat(autofill, minmax(80px, auto));
   gap: 16px;
+  overflow-y: auto;
+  justify-content: center;
 
   @media (max-width: 900px) {
     flex-direction: row;
     padding: 8px 0;
+    overflow-x: auto;
   }
 }
 
@@ -319,7 +333,7 @@
 .assignee {
   margin-left: -0.5rem;
 
-  &--initials {
+  & .assignee--initials {
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -339,7 +353,7 @@
   }
 
   /* "+3"-Anzeige bei vielen Personen */
-  &--more {
+  & .assignee--more {
     background-color: #e0e0e0;
     color: #333;
   }
@@ -348,20 +362,6 @@
 .prio-icon {
   width: 17px;
   height: 12px;
-}
-
-/* =============================================
-   ASSIGNEE FARBEN
-   ============================================= */
-
-.orange {
-  background-color: #ff7a00;
-}
-.turquoise {
-  background-color: #1fd7c1;
-}
-.purple {
-  background-color: #462f8a;
 }
 
 /* =============================================
