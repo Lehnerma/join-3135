@@ -1,125 +1,178 @@
-/* --- Board Header & Suche --- */
+/* =============================================
+   BOARD LAYOUT
+   ============================================= */
+
 .app--content {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: 232px 1fr;
+  justify-content: center;
   max-width: var(--max-dp-width);
-  padding: 8px;
+
+  @media (max-width: 900px) {
+    grid-template-rows: auto 1fr;
+    justify-content: normal;
+  }
 }
+
+/* --- Header & Suche --- */
 
 .header-section {
-  padding: 40px 60px;
-}
-
-.title-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-}
-
-.title-container h1 {
-  font-size: 61px;
-  margin: 0;
-}
-
-.board-actions {
-  display: flex;
-  align-items: center;
-  gap: 32px;
-}
-
-.search-container {
-  display: flex;
-  align-items: center;
-  background: white;
-  border: 1px solid #a8a8a8;
-  border-radius: 10px;
-  padding: 8px 16px;
-  gap: 10px;
-
-  input {
-    border: none;
-    outline: none;
-    font-size: 20px;
-    width: 200px;
-    cursor: pointer;
-  }
-
-  .search-divider {
-    width: 1px;
-    height: 31px;
-    background-color: #d1d1d1;
-  }
-
-  button {
-    width: 32px;
-    height: 32px;
-    .search-icon {
-      object-fit: contain;
-      &:hover {
-        background-color: var(--btn-arrow-hover);
-        border-radius: 50%;
-      }
-      &:active {
-        background-color: transparent;
-        filter: brightness(0) saturate(100%) invert(62%) sepia(49%) saturate(600%) hue-rotate(163deg) brightness(98%);
-        border-radius: 50%;
-      }
-    }
-  }
-}
-
-.btn--primary {
-  padding: 12px 16px;
-  font-size: 21px;
-  font-weight: 700;
-  border-radius: 10px;
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-/* --- Kanban Spalten Layout --- */
-.kanban-columns {
-  justify-self: center;
   display: grid;
-  grid-template-columns: repeat(4, minmax(256px, 256px)); /* evtl max wert anpassen */
-  gap: 32px;
-}
-
-.column-title {
-  display: flex;
-  justify-content: space-between;
+  grid-template-columns: 1fr auto auto;
+  grid-template-areas: "head-title head-search head-add";
   align-items: center;
-  margin-bottom: 20px;
+  padding: 8px 16px;
+  gap: 32px;
 
-  h2 {
-    font-size: 20px;
+  h1 {
+    grid-area: head-title;
+    font-size: 61px;
+  }
+
+  .search-container {
+    grid-area: head-search;
+    max-width: 312px;
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #a8a8a8;
+    border-radius: 10px;
+    padding: 8px 16px;
+    gap: 10px;
+
+    input {
+      border: none;
+      outline: none;
+      font-size: 20px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .search-divider {
+      width: 1px;
+      height: 31px;
+      background-color: #d1d1d1;
+    }
+
+    button {
+      width: 32px;
+      height: 32px;
+
+      .search-icon {
+        object-fit: contain;
+
+        &:hover {
+          background-color: var(--btn-arrow-hover);
+          border-radius: 50%;
+        }
+
+        &:active {
+          background-color: transparent;
+          filter: brightness(0) saturate(100%) invert(62%) sepia(49%) saturate(600%) hue-rotate(163deg) brightness(98%);
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  .btn--primary {
+    grid-area: head-add;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 8px;
+    font-size: 21px;
     font-weight: 700;
-    color: var(--board-title-col);
+    border-radius: 10px;
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 112px auto;
+    grid-template-areas:
+      "head-title head-add"
+      "head-search head-search";
+    align-items: flex-end;
+
+    h1 {
+      font-size: 47px;
+    }
+
+    .btn--primary {
+      width: 40px;
+      height: 40px;
+
+      .btn--primary-text {
+        display: none;
+      }
+    }
+
+    .search-container {
+      max-width: 100%;
+    }
   }
 }
 
-.btn--add-task {
-  width: 24px;
-  height: 24px;
-  border-radius: 8px;
-  border: solid 2px rgba(42, 54, 71, 1);
+/* =============================================
+   KANBAN COLUMNS
+   ============================================= */
 
-  &:hover {
-    border-color: var(--secondary-color);
-    img {
-      filter: invert(62%) sepia(72%) saturate(400%) hue-rotate(163deg) brightness(95%) contrast(90%);
+.kanban-columns {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(250px, 252px)); /* evtl max wert anpassen */
+  gap: 24px;
+  padding: 8px 16px;
+
+  .column-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--board-title-col);
     }
   }
 
-  &:active {
-    border-color: var(--btn-click-color);
-    img {
-      filter: invert(11%) sepia(27%) saturate(59%) hue-rotate(204deg) brightness(95%) contrast(94%);
+  .btn--add-task {
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    border: solid 2px rgba(42, 54, 71, 1);
+
+    &:hover {
+      border-color: var(--secondary-color);
+
+      img {
+        filter: invert(62%) sepia(72%) saturate(400%) hue-rotate(163deg) brightness(95%) contrast(90%);
+      }
+    }
+
+    &:active {
+      border-color: var(--btn-click-color);
+
+      img {
+        filter: invert(11%) sepia(27%) saturate(59%) hue-rotate(204deg) brightness(95%) contrast(94%);
+      }
+    }
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    width: 100%;
+
+    .column-title h2 {
+      font-size: 27px;
+      color: var(--primary-color);
     }
   }
 }
+
+/* =============================================
+   TASK CARDS
+   ============================================= */
 
 .board-task {
   list-style: none;
@@ -137,7 +190,6 @@
   font-family: "Open Sans", sans-serif;
 }
 
-/* --- Task Cards --- */
 .task {
   background: white;
   border-radius: 24px;
@@ -145,19 +197,12 @@
   box-shadow: 0px 0px 10px 3px #00000014;
   cursor: pointer;
   list-style: none;
+  width: 252px;
 
   &:active {
     transition: transform 0.125s ease;
     transform: rotate(5deg);
   }
-}
-
-.drag-placeholder {
-  min-height: 80px;
-  border: 2px dashed #a8a8a8;
-  border-radius: 24px;
-  background: transparent;
-  list-style: none;
 }
 
 .task--card {
@@ -170,6 +215,11 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+
+  @media (max-width: 900px) {
+    flex-direction: row;
+    padding: 8px 0;
+  }
 }
 
 .task--category-label {
@@ -209,45 +259,49 @@
   color: #a8a8a8;
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  line-clamp: 2; /* reserve fur alte browser */
+  line-clamp: 2; /* Fallback für ältere Browser */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* --- Progress Bar --- */
+/* =============================================
+   PROGRESS BAR
+   ============================================= */
+
 .subtask--progress {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  .subtask--progressbar {
+    height: 8px;
+    width: 50%;
+    appearance: none;
+    border: none;
+    border-radius: 4px;
+    overflow: hidden;
+
+    /* Pseudoklassen für alle Browser */
+    &::-webkit-progress-bar {
+      background-color: #f4f4f4;
+      border-radius: 4px;
+    }
+
+    &::-webkit-progress-value {
+      background-color: #4589ff;
+      border-radius: 4px;
+    }
+
+    &::-moz-progress-bar {
+      background-color: #4589ff;
+      border-radius: 4px;
+    }
+  }
 }
 
-.subtask--progressbar {
-  height: 8px;
-  width: 50%;
-  appearance: none;
-  border: none;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-/* die psydoclass sind fur alle browser weil browser die progress anders rendern farblich. */
-
-.subtask--progress progress::-webkit-progress-bar {
-  background-color: #f4f4f4;
-  border-radius: 4px;
-}
-
-.subtask--progress progress::-webkit-progress-value {
-  background-color: #4589ff;
-  border-radius: 4px;
-}
-
-.subtask--progress progress::-moz-progress-bar {
-  background-color: #4589ff;
-  border-radius: 4px;
-}
-
-/* --- Card Footer & Initialen --- */
+/* =============================================
+   CARD FOOTER & ASSIGNEES
+   ============================================= */
 
 .task--footer {
   display: flex;
@@ -258,54 +312,37 @@
 .task--assignees {
   display: flex;
   list-style: none;
-  padding: 0;
+  padding: 0 0 0 0.5rem;
   margin: 0;
-  padding-left: 0.5rem;
 }
 
 .assignee {
   margin-left: -0.5rem;
-}
 
-.assignee--initials {
-  text-decoration: none;
+  &--initials {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: var(--assignee-color, #888);
+    color: #fff;
+    border: 2px solid #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    line-height: 1;
+    user-select: none;
+  }
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-
-  background-color: var(--assignee-color, #888);
-  color: #fff;
-  border: 2px solid #fff;
-
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  line-height: 1;
-  user-select: none;
-}
-
-/* optional: bei mehr als X Personen z.B. "+3" Anzeige */
-.assignee--more {
-  background-color: #e0e0e0;
-  color: #333;
-}
-
-.orange {
-  background-color: #ff7a00;
-}
-
-.turquoise {
-  background-color: #1fd7c1;
-}
-
-.purple {
-  background-color: #462f8a;
+  /* "+3"-Anzeige bei vielen Personen */
+  &--more {
+    background-color: #e0e0e0;
+    color: #333;
+  }
 }
 
 .prio-icon {
@@ -313,9 +350,27 @@
   height: 12px;
 }
 
-/* --- Drag Placeholder --- */
+/* =============================================
+   ASSIGNEE FARBEN
+   ============================================= */
+
+.orange {
+  background-color: #ff7a00;
+}
+.turquoise {
+  background-color: #1fd7c1;
+}
+.purple {
+  background-color: #462f8a;
+}
+
+/* =============================================
+   DRAG & DROP
+   ============================================= */
+
 .drag-placeholder {
   min-height: 80px;
+  width: 252px;
   border: 2px dashed #a8a8a8;
   border-radius: 24px;
   background: transparent;

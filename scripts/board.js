@@ -32,7 +32,7 @@ function getArryFromResult(result) {
   return Object.entries(result).map(([key, values], index) => ({
     id: index,
     firebaseKey: key,
-    ...values,
+    ...values, 
   }));
 }
 
