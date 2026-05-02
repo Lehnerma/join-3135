@@ -92,16 +92,15 @@ function renderAmountOfTasks() {
     const BOARD_AMOUNT = document.getElementById('board-amount');
     const PROGRESS_AMOUNT = document.getElementById('progress-amount');
     const FEEDBACK_AMOUNT = document.getElementById('feedback-amount');
-    const URGENT_DATE_DISPLAY = document.getElementById('urgent-date-display');
+    const URGENT_TEXT = document.getElementById('summary-urgent-text');
     TODO_AMOUNT.innerHTML = showAmountOfTasks(tasksData, 'todo');
     DONE_AMOUNT.innerHTML = showAmountOfTasks(tasksData, 'done');
-    URGENT_AMOUNT.innerHTML = showAmountOfUrgentTasks(tasksData, 'urgent');
+    URGENT_AMOUNT.innerHTML = showAmountOfUrgentTasks(tasksData, "urgent");
     BOARD_AMOUNT.innerHTML = showAmountOnBoard(tasksData);
     PROGRESS_AMOUNT.innerHTML = showAmountOfTasks(tasksData, 'progress');
     FEEDBACK_AMOUNT.innerHTML = showAmountOfTasks(tasksData, 'feedback');
-    URGENT_DATE_DISPLAY.innerHTML = showDeadlineOfUrgentTasks(tasksData);
+    showDeadlineOfUrgentTasks(tasksData, URGENT_TEXT);
   });
-  
 }
 
 
@@ -116,8 +115,8 @@ function showAmountOnBoard(data) {
   return amountOnBoard;
 }
 
-function showAmountOfUrgentTasks(data, status) {
-  let amountUrgent = Object.values(data).filter(task => task.priority === status && task.status !== 'done').length;
+function showAmountOfUrgentTasks(data, priority) {
+  let amountUrgent = Object.values(data).filter(task => task.priority === priority && task.status !== 'done').length;
   return amountUrgent;
 }
 
@@ -125,31 +124,36 @@ function openBoard() {
   window.location.href = './board.html';
 }
 
-function showDeadlineOfUrgentTasks(data) {
+function showDeadlineOfUrgentTasks(data, URGENT_TEXT) {
+  console.log("Daten in Deadline-Funktion:", data);
   const URGENT_DATE = document.getElementById('summary-urgent-date');
-  const URGENT_TEXT = document.getElementById('summary-urgent-text');
   const TASKS = Object.values(data);
-  const URGENT_TASKS = TASKS.filter(task => task.priority === 'urgent' && task.status !== 'done');
+  console.log("Gefundene Tasks:", TASKS);
+  const URGENT_TASKS = TASKS.filter(task => {
+    if (task.priority !== 'urgent' || task.status === 'done' || !task.dueDate) {
+      return false;
+    }
+    const taskDate = new Date(task.dueDate);
+    return !isNaN(taskDate.getTime());
+  });
+  console.log("Gefundene Urgent-Tasks nach Filter:", URGENT_TASKS);
   if (URGENT_TASKS.length === 0) {
     URGENT_DATE.innerHTML = "";
     URGENT_TEXT.innerHTML = "No upcoming deadlines";
   } else {
     URGENT_TASKS.sort((a, b) => {
-      return new Date(a.date) - new Date(b.date);
+      return new Date(a.dueDate) - new Date(b.dueDate);
     });
-    URGENT_DATE.innerHTML = formatDate(URGENT_TASKS[0].date);
+    URGENT_DATE.innerHTML = formatDate(URGENT_TASKS[0].dueDate);
+    URGENT_TEXT.innerHTML = "Upcoming deadline";
   }
 }
 
 function formatDate(dateString) {
-  if (!dateString || dateString === "No upcoming deadlines") {
-        return "No upcoming deadline";
-    }
-    const DATE = new Date(dateString);
-    const OPTIONS = { 
-        month: 'long', 
-        day: 'numeric', 
-        year: 'numeric' 
-    };
-    return DATE.toLocaleDateString('en-US', OPTIONS);
+  if (!dateString) return "";
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return "";
+
+  const options = { month: 'long', day: 'numeric', year: 'numeric' };
+  return date.toLocaleDateString('en-US', options);
 }

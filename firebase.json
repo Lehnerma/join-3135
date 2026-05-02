@@ -2,7 +2,7 @@
   {
     "assignee": "Max Mustermann, Sarah Schmidt",
     "category": "technical task",
-    "date": "2024-06-30",
+    "date": "2026-06-30",
     "description": "Implement authentication module",
     "id": "1",
     "priority": "urgent",
@@ -30,7 +30,7 @@
   {
     "assignee": "Max Mustermann, John Doe, Lisa Müller",
     "category": "user story",
-    "date": "2024-06-30",
+    "date": "2026-06-30",
     "description": "User dashboard redesign",
     "id": "2",
     "priority": "medium",
@@ -58,7 +58,7 @@
   {
     "assignee": "Anna Weber, Michael Schmidt, Peter Klein, David Wagner",
     "category": "user story",
-    "date": "2024-06-30",
+    "date": "2026-05-30",
     "description": "Payment gateway integration",
     "id": "3",
     "priority": "urgent",
@@ -86,7 +86,7 @@
   {
     "assignee": "Max Mustermann, Sarah Schmidt, Julia Fischer, Thomas Bauer, Christine König",
     "category": "technical task",
-    "date": "2024-07-01",
+    "date": "2026-07-01",
     "description": "Database optimization",
     "id": "4",
     "priority": "low",
@@ -106,7 +106,7 @@
   {
     "assignee": "John Doe, Emma Wilson, Robert Brown",
     "category": "user story",
-    "date": "2024-07-02",
+    "date": "2026-07-02",
     "description": "Mobile app notification system",
     "id": "5",
     "priority": "medium",
