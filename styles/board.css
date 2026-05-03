@@ -120,7 +120,7 @@
 
 .kanban-columns {
   display: grid;
-  grid-template-columns: repeat(4, 270px); /* evtl max wert anpassen */
+  grid-template-columns: repeat(4, clamp(252px, 100%, 280px)); /* evtl max wert anpassen */
   gap: 24px;
   padding: 0 16px;
   overflow-x: auto;
@@ -172,7 +172,7 @@
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
     overflow: visible;
-    
+
     .kanban-column {
       overflow: hidden;
     }
@@ -206,7 +206,6 @@
     overflow: auto;
     align-items: flex-start;
     justify-content: flex-start;
-
   }
 }
 
@@ -215,6 +214,7 @@
   justify-content: center;
   align-items: center;
   height: 48px;
+  min-width: 252px;
   background-color: rgba(231, 231, 231, 1);
   color: var(--fourth-text-color);
   border: solid 1px var(--fourth-text-color);
