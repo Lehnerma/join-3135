@@ -125,16 +125,16 @@
   padding: 0 16px;
   overflow-x: auto;
 
-.kanban-column{
-  overflow: auto;
-  scrollbar-width: none;
-}
+  .kanban-column {
+    overflow: auto;
+    scrollbar-width: none;
+  }
 
   .column-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    padding: 20px 10px;
     position: sticky;
     top: 0;
     background-color: var(--main-bg);
@@ -171,9 +171,11 @@
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
-    width: 100%;
-    overflow: none;
-
+    overflow: visible;
+    
+    .kanban-column {
+      overflow: hidden;
+    }
     .column-title h2 {
       font-size: 27px;
       color: var(--primary-color);
@@ -187,6 +189,25 @@
 
 .board-task {
   list-style: none;
+}
+
+.task--list {
+  display: grid;
+  grid-template-rows: repeat(auto-fit, minmax(80px, auto));
+  align-items: center;
+  gap: 16px;
+  overflow-y: auto;
+  justify-content: center;
+  padding: 8px 16px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(auto-fit, minmax(250px, auto));
+    grid-auto-flow: column;
+    overflow: auto;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+  }
 }
 
 .no-task {
@@ -220,20 +241,6 @@
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 24px;
-}
-
-.task--list {
-  display: grid;
-  grid-template-rows: repeat(autofill, minmax(80px, auto));
-  gap: 16px;
-  overflow-y: auto;
-  justify-content: center;
-
-  @media (max-width: 900px) {
-    flex-direction: row;
-    padding: 8px 0;
-    overflow-x: auto;
-  }
 }
 
 .task--category-label {
