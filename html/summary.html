@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="../styles/summary.css" />
 </head>
 
-<body class="app" onload="initUtilitys(), loggedInUserName(), showGreeting()">
+<body class="app" onload="initUtilitys(), initSummary()">
   <header class="app--title">
     <h1 class="app--title-headline">Kanban Project Management Tool</h1>
     <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
@@ -65,57 +65,59 @@
       <div class="summary-main">
         <div id="summary-overview" class="summary-overview d-none">
           <div class="summary-overview-1">
-            <div class="summary-todo">
+            <div class="summary-todo" onclick="openBoard()">
               <div class="summary-todo-icon">
                 <img src="../assets/img/icons/summary/edit-dark.svg" alt="To-do" />
               </div>
               <div class="summary-todo-content">
-                <span class="summary-todo-amount">1</span>
+                <span class="summary-todo-amount" id="todo-amount"></span>
                 <span class="summary-todo-text">To-do</span>
               </div>
             </div>
 
-            <div class="summary-todo">
+            <div class="summary-todo" onclick="openBoard()">
               <div class="summary-todo-icon">
                 <img src="../assets/img/icons/summary/done-dark.svg" alt="Done" />
               </div>
               <div class="summary-todo-content">
-                <span class="summary-todo-amount">1</span>
+                <span class="summary-todo-amount" id="done-amount"></span>
                 <span class="summary-todo-text">Done</span>
               </div>
             </div>
           </div>
 
           <div class="summary-overview-2">
-            <div class="summary-urgent">
-              <img src="../assets/img/icons/summary/urgent.svg" alt="Urgent" />
-              <div class="summary-todo-content">
-                <span class="summary-todo-amount">1</span>
-                <span class="summary-overview-text">Urgent</span>
+            <div class="summary-urgent" onclick="openBoard()">
+              <div class="summary-urgent-overview">
+                <img src="../assets/img/icons/summary/urgent.svg" alt="Urgent" />
+                <div class="summary-todo-content">
+                  <span class="summary-todo-amount" id="urgent-amount"></span>
+                  <span class="summary-overview-text">Urgent</span>
+                </div>
               </div>
 
               <div class="vl-3"></div>
 
-              <div class="summary-urgent-content">
-                <span class="summary-urgent-date">April 29, 2026</span>
-                <span class="summary-urgent-text">Upcoming Deadline</span>
+              <div class="summary-urgent-content" onclick="openBoard()">
+                <span class="summary-urgent-date" id="summary-urgent-date"></span>
+                <span class="summary-urgent-text" id="summary-urgent-text"></span>
               </div>
             </div>
           </div>
 
           <div class="summary-overview-1">
-            <div class="summary-overview-small-tabs">
-              <span class="summary-todo-amount">5</span>
+            <div class="summary-overview-small-tabs" onclick="openBoard()">
+              <span class="summary-todo-amount" id="board-amount"></span>
               <span class="summary-todo-text">Tasks in<br />Board</span>
             </div>
 
-            <div class="summary-overview-small-tabs">
-              <span class="summary-todo-amount">2</span>
+            <div class="summary-overview-small-tabs" onclick="openBoard()">
+              <span class="summary-todo-amount" id="progress-amount"></span>
               <span class="summary-todo-text">Tasks in<br />Progress</span>
             </div>
 
-            <div class="summary-overview-small-tabs">
-              <span class="summary-todo-amount">2</span>
+            <div class="summary-overview-small-tabs" onclick="openBoard()">
+              <span class="summary-todo-amount" id="feedback-amount"></span>
               <span class="summary-todo-text">Awaiting<br />Feedback</span>
             </div>
           </div>
