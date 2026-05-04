@@ -47,72 +47,84 @@ function selectPriority(priority) {
   selectedPriority = priority;
 }
 
-/**
- *  User Assignment Dropdown functions
- */
+  /**
+   *  User Assignment Dropdown functions
+   */
 
-function loadUsers() {
-  const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+  function loadUsers() {
+    console.log("🔥 loadUsers wurde gestartet");
+    const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
-  fetch(USER_URL)
-    .then((response) => response.json())
-    .then((data) => {
-      fillUserDropdown(data);
-    })
-    .catch((error) => console.error("Error fetching users:", error));
-}
+    fetch(USER_URL)
+      .then((response) => response.json())
+      .then((data) => {
+          console.log("🔥 Firebase USERS:", data);
+        fillUserDropdown(data);
+      })
+      .catch((error) => console.error("Error fetching users:", error));
+  }
 
-function fillUserDropdown(users) {
-  // console.log("USERS DATA:", users);
-  const container = document.getElementById("dropdown");
+  function fillUserDropdown(users) {
+  console.log("fillUserDropdown läuft");
+
+  const container = document.getElementById("assignedToList");
+
+  if (!container) {
+    console.error("❌ assignedToList Element nicht gefunden!");
+    return;
+  }
 
   let html = "";
 
   for (const userId in users) {
     const user = users[userId];
-    let firstLetter = user.name.charAt(0).toUpperCase();
-    let color = contactColors[firstLetter];
-    let initials = user.name.charAt(0);
+
+    if (!user || !user.name) continue;
+
+    const firstLetter = user.name.charAt(0).toUpperCase();
+    const color = contactColors?.[firstLetter] || "#ccc";
+    const initials = user.name.charAt(0);
 
     html += `
-          <label  class="user-item user-Selection assignedTo" onclick="toggleUser(this)">
-            <div class="logoNameField">
-              <div class="initials" style="background-color: ${color};">
-                ${initials}
-              </div>
-            
-              <div class="contact-info-text">
-                <span>${user.name}</span>
-              </div>
-            </div>
-            
-              <input type="checkbox" value="${user.name}">
-          </label>
+      <label class="user-item assignedTo" onclick="toggleUser(this)">
+        <div class="logoNameField">
+          <div class="initials" style="background-color:${color}">
+            ${initials}
+          </div>
+
+          <div class="contact-info-text">
+            <span>${user.name}</span>
+          </div>
+        </div>
+
+        <input type="checkbox" value="${user.name}">
+      </label>
     `;
   }
 
   container.innerHTML = html;
 }
 
-function toggleUser(el) {
-  const checkbox = el.querySelector("input");
+  function toggleUser(el) {
+    const checkbox = el.querySelector("input");
 
-  checkbox.checked = !checkbox.checked;
-  el.classList.toggle("active", checkbox.checked);
+    checkbox.checked = !checkbox.checked;
+    el.classList.toggle("active", checkbox.checked);
+  }
+
+  function getAssignedUsers() {
+    const checkboxes = document.querySelectorAll("#assignedToList input[type='checkbox']:checked");
+    return Array.from(checkboxes).map((cb) => cb.value);
+  }
+
+  function toggleDropdown() {
+  const dropdown = document.getElementById("assignedToDropdown");
+  dropdown.classList.toggle("open");
 }
 
-function getAssignedUsers() {
-  const checkboxes = document.querySelectorAll("#dropdown input[type='checkbox']:checked");
-  return Array.from(checkboxes).map((cb) => cb.value);
-}
-
-function toggleDropdown() {
-  document.getElementById("dropdown").classList.toggle("hidden");
-}
-
-/**
- *  User Assignment Dropdown functions
- */
+  /**
+   *  User Assignment Dropdown functions
+   */
 
 /**
  * Initial all subtasks function after loading the body
