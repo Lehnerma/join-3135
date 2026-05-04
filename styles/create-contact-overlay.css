@@ -57,7 +57,7 @@
 
 .aside-content {
     background-color: var(--primary-color);
-    height: 100%;
+
     color: var(--input-text-color);
     padding: 66px 48px;
     display: flex;
@@ -248,14 +248,14 @@ form {
         flex-direction: column;
     }
 
-    .aside-content {
+     .aside-content {
         position: relative;
-        min-width:clamp(280px, 100%, 396px);
-        max-height: 39.7dvh;
+        min-width: clamp(280px, 100%, 396px);
+        height: clamp(27vh, 37vw, 39.7dvh);
         align-items: flex-start;
         justify-content: center;
-        padding:24px;
-    }
+        padding: 24px;
+    } 
 
     .aside-logo,
     .aside-logo-edit {
@@ -309,7 +309,7 @@ form {
         align-items: center;
         justify-content: flex-start;
         width: 100%;
-        height: 80vh;
+
     }
 
     form {
@@ -359,11 +359,16 @@ form {
     }
 }
 
-@media (max-width: 427px) {
+@media (max-width: 430px) {
     .aside-h2 {
         font-size: clamp(40px, 7vw, 50px);
         margin: 0;
     }
+
+    .aside-content {
+        height: clamp(3vh, 80vw, 39.7dvh);
+    }
+
 
     .aside-p {
         font-weight: 400;
