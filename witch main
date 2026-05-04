@@ -1,0 +1,1724 @@
+[33mcommit 6231c79e3fc870dad57a8ac09abd1d371ee3c173[m[33m ([m[1;36mHEAD[m[33m)[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 30 14:55:24 2026 +0200
+
+    feat drag and drop possible - with sync to firebase
+
+[33mcommit 56659693301504970772954fdea41920cbd3636c[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 30 09:12:37 2026 +0200
+
+    delet the collor scene and copied into the utilitys
+
+[33mcommit 15404c0761c37072cb2ffdd88b4a289fd5130857[m
+Merge: c32aa38 f4d9bdc
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 30 08:59:36 2026 +0200
+
+    Merge branch 'main' into board
+
+[33mcommit c32aa38ece1f017da991da3bbffad1e3887ebc0d[m
+Merge: f7be48f 3fb7ef6
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 30 08:56:56 2026 +0200
+
+    Merge branch 'add-task' into board
+
+[33mcommit f7be48f066a1faeaf192fc00d155034ea2fac6cd[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 29 22:41:58 2026 +0200
+
+    fix the rendering of the category
+
+[33mcommit f4d9bdcb49cc7bdf342df7cbe1a894600f73b215[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Wed Apr 29 22:29:19 2026 +0200
+
+    feat: add toast notification after successful task creation
+
+[33mcommit 61b8c729056fbebe0220f3c2ebee966ba9b84b18[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 29 22:28:43 2026 +0200
+
+    Add a function to render the subtask.
+
+[33mcommit 8f0834b3ad7821ddb0a63930bd4cd829a7580157[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 29 21:55:33 2026 +0200
+
+    fix the code for the createt task from the addTask side
+
+[33mcommit a76640888faa2e780bec7422cb188411ce46a3e5[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Wed Apr 29 21:36:19 2026 +0200
+
+    feat: add toast notification after successful task creation
+
+[33mcommit 76426236b8bdb3ffe6808392136e1baeb6bd8970[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Wed Apr 29 21:32:57 2026 +0200
+
+    feat: add toast notification after successful task creation
+
+[33mcommit aa0bc094fdc64cf86354677d9752eaf57f5f41e1[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Wed Apr 29 21:24:10 2026 +0200
+
+    feat: add Firebase POST to save new tasks
+
+[33mcommit af5d09d090803cbb87370e8c189bd5d20ea8b3b9[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 29 21:13:29 2026 +0200
+
+    Fixed the rendering of the initial buttons in the footer of the task cards and gave them the color. The color array is copied from contacts.js to templates.js. The color array was created by Radek.
+
+[33mcommit 2675f0b8f08dd88c81c680b8891457db9c9071db[m
+Merge: ec22957 6cb395e
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 29 20:52:00 2026 +0200
+
+    Merge branch 'main' into board
+
+[33mcommit ec22957b8140fee02ae93f5d9ffdbf569a2ad9c5[m
+Merge: ea5a618 9d2574b
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 29 20:51:43 2026 +0200
+
+    Merge branch 'contacts' into board
+
+[33mcommit 6cb395e6996d72d9057e50c35e32fbf836be2a40[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 29 20:50:51 2026 +0200
+
+    fix the sidebar a links
+
+[33mcommit 9d2574b1e5092862d86b7116c442167631ee1f97[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Wed Apr 29 20:40:03 2026 +0200
+
+    responsive 1024
+
+[33mcommit ea5a618adc3ef4c90ca14f407bcaa97563acb2af[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 29 20:39:01 2026 +0200
+
+    fix the task render func
+
+[33mcommit d99f2922d90250176e52a632302314643b1efa46[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 29 11:41:55 2026 +0200
+
+    beginn renderBoard function to change it to a arrow function for cleaner code
+
+[33mcommit 9d37788a830c0d30a3015c79e450f835a9c27210[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 29 10:52:23 2026 +0200
+
+    Finish the styling for the task cards and begin implementing the logic to nics code
+
+[33mcommit e8083ebb4e05ce7cce90a3b14b2f975d1717011d[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 29 10:15:29 2026 +0200
+
+    feat semantik to nics layout
+
+[33mcommit 425782aabdbeef7b3a2609a76ed58943be5c966d[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 29 08:58:36 2026 +0200
+
+    - fix the bg color in the content area of the sidebar. also make little improvements in the board functions.
+
+[33mcommit d03e68c8ecc6bdd99d3143cb3dd4287a17df8910[m
+Merge: 77663fa 1918c08
+Author: radek-ops <radek.network@gmail.com>
+Date:   Tue Apr 28 22:52:18 2026 +0200
+
+    Merge branch 'main' into contacts file update contact-radek
+
+[33mcommit 77663fad89f1774630060a5b122ac096c31ea50b[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Tue Apr 28 22:49:17 2026 +0200
+
+    many changes to the contact page
+
+[33mcommit 1918c089c2edc6a61cdb55c6140429b868a5b5a6[m
+Merge: 56fe700 d850489
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 28 21:26:31 2026 +0200
+
+    creat branch board, add opensans to the fonts
+
+[33mcommit d850489b83a6f08b7f400b32b3edf8b19a09b51f[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 28 21:25:23 2026 +0200
+
+    - Change the styling from flex to grid in the columns view. Implemented the add task short button in the category section. Changed the styling of the add task button in the headline. Created the render node tasks fields.
+
+[33mcommit 56fe70085393ddd351fdc986bd6d4c0c0cd5c03a[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Tue Apr 28 18:22:42 2026 +0200
+
+    feat: add dropdown user selection with active state Styling
+
+[33mcommit e7319bd4339138c687cd83230dcf05ce2a4a76ae[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Tue Apr 28 18:12:19 2026 +0200
+
+    feat: add dropdown user selection with active state Styling
+
+[33mcommit ebeddec562cb80e5f75910938dd9683f87130414[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Tue Apr 28 16:02:06 2026 +0200
+
+    feat: assign color according to first name letter
+
+[33mcommit 507e2b921677c98990f084245c033a22524c73cc[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Tue Apr 28 12:11:31 2026 +0200
+
+    fix html scroll bar by fade in
+
+[33mcommit 931e7ea845374305cea6a6471a6346dccfbb65f7[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 28 11:35:32 2026 +0200
+
+    fix the headline display
+
+[33mcommit 29b607a85d06ea30cf8305196a58b8b671fc4d81[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 28 11:34:51 2026 +0200
+
+    fix the headline
+
+[33mcommit 44c69776ad0f20b19a1c46c711d7f314850a6533[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 28 10:38:01 2026 +0200
+
+    add the activ link to legal and privacy
+
+[33mcommit b123911609bd82e4eccc76f7d8ad7b193d7d9fe5[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 28 10:26:04 2026 +0200
+
+    fix the strings in the privacy
+
+[33mcommit cfb016c9293131e186e774551fa4d2295302f7e8[m
+Merge: 8bcc0ed 5050210
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 28 10:21:45 2026 +0200
+
+    Merge pull request #10 from Lehnerma/Lehnerma/issue7
+    
+    Sidebar: Display Initials from Session Storage and Set on Login
+    fix also the links in the sidebar for the diffrent pages.
+    fix the initals rendering the head
+
+[33mcommit 5050210a52521ce842ad4e746a45b4575d5823b1[m[33m ([m[1;31morigin/Lehnerma/issue7[m[33m)[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 28 10:19:30 2026 +0200
+
+    Sidebar: Display Initials from Session Storage and Set on Login
+    Fixes #7
+    
+    fix the initials in the head - also fixed all links in all pages hopfully
+    
+    Co-authored-by: Copilot <copilot@github.com>
+
+[33mcommit 8bcc0ed8a8a95b8d6db8ad8b8ee8ab0f7e279dce[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 28 08:44:17 2026 +0200
+
+    delet the how sheet
+
+[33mcommit 05d4ed55aa056266ff8e19c68fcf2dd7fe373583[m
+Merge: 24fb3d6 782db5e
+Author: radek-ops <radek.network@gmail.com>
+Date:   Mon Apr 27 21:57:33 2026 +0200
+
+    Merge branch 'main' into contacts update new files
+
+[33mcommit 24fb3d65dad86a0be0f4c0c74c5e028a47321e2f[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Mon Apr 27 21:52:11 2026 +0200
+
+    edit contact, create contact, delete contact, save contact,  succssefull ovarlay,  finshed includit .js  code responsive bis 1024px  includet all dialogs and overlays
+
+[33mcommit 782db5e004083140b822df927ed4c1a504a5518f[m
+Merge: 8d3c2a4 f14cf6c
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Mon Apr 27 21:52:02 2026 +0200
+
+    Add assigned users loading from Firebase into task form dropdown system
+
+[33mcommit 8d3c2a48d2e4c61a71ffe658dbec51d7197e8d32[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Mon Apr 27 21:51:00 2026 +0200
+
+    Add assigned users loading from Firebase into task form dropdown system
+
+[33mcommit f14cf6cfed07312362d929e9b2eca0f8883ae503[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 27 19:58:30 2026 +0200
+
+    add the utilitys to all sides
+
+[33mcommit 53dc9f573cd855380d8d8cc5ed832689e0a9c48b[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 27 19:54:13 2026 +0200
+
+    fix all links in the nav section for all sides
+
+[33mcommit 1b40b1012cf58e41e880716e9a126ac22b78a21d[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 27 19:51:15 2026 +0200
+
+    - fix to all sides the inital btn right headline
+
+[33mcommit bf9d4e9651274dfe67c5939d721e5aa1bbf9cc99[m
+Merge: e9365f9 89e83cf
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 27 19:43:08 2026 +0200
+
+    Merge branch 'main' of https://github.com/Lehnerma/join-3135
+
+[33mcommit 89e83cfa42126765d6eeca4ece85d9459f7e9d09[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Mon Apr 27 19:43:04 2026 +0200
+
+    Add assigned users loading from Firebase into task form dropdown system
+
+[33mcommit e9365f9f99a9bda9f1bf8a831471d8fcef48e44a[m
+Merge: 8417fa6 b40481c
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 27 19:43:04 2026 +0200
+
+    Merge branch 'summary-branch'
+
+[33mcommit 8417fa61f562aee60900a79cd3972fd698626b8c[m
+Merge: 8eab19d cf91801
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 27 19:01:20 2026 +0200
+
+    Merge branch 'summary-branch'
+
+[33mcommit 8eab19de550fe67804f629978b020e63bb4a44a4[m
+Merge: 61ceb5d fe278c7
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 27 18:55:57 2026 +0200
+
+    Merge pull request #9 from Lehnerma/Lehnerma/issue8
+    
+    Add Guest Login to Auth Function in utilitys.js
+
+[33mcommit fe278c793f03758991a12c9ceff5ad45eafe23dd[m[33m ([m[1;31morigin/Lehnerma/issue8[m[33m)[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 27 18:55:18 2026 +0200
+
+    Add Guest Login to Auth Function in utilitys.js
+    Fixes #8 - fix it.
+
+[33mcommit 61ceb5d050c5140a0b1414643a435eaf7cd8a9f8[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Mon Apr 27 17:53:38 2026 +0200
+
+    Add assigned users loading from Firebase into task form dropdown system
+
+[33mcommit b40481cb42b240c486e73085b9bb4eb8fe0f998c[m
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Mon Apr 27 17:32:33 2026 +0200
+
+    add function for initial-btn
+
+[33mcommit 77bfcacad51bb154a49cc58f780410d6d5e34efb[m
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Mon Apr 27 16:11:19 2026 +0200
+
+    add responsive
+
+[33mcommit 3fb7ef6dec6cee6f95baca86d57962369002f197[m[33m ([m[1;31morigin/add-task[m[33m)[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 27 06:21:17 2026 +0200
+
+    beginn with the assignt to function and loading from the firebase the users. also changed the input/dropdown so a serchfield with dropdown - and creat the template for the users-dropdown
+
+[33mcommit f60800e4bed56a6dd87029ed78b639c085924adb[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Sun Apr 26 22:47:47 2026 +0200
+
+    savepoint
+
+[33mcommit c232326fc5688431ebadab0dd9127138eea65d9c[m
+Merge: 41765d5 9267e80
+Author: radek-ops <radek.network@gmail.com>
+Date:   Sun Apr 26 22:46:30 2026 +0200
+
+    Merge branch 'main' into contacts update current main files
+
+[33mcommit fe95e6b1845a6cbdc21063b25a7dab5b478ff67c[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sun Apr 26 22:43:09 2026 +0200
+
+    split the addTask.js into subtask.js
+
+[33mcommit 41765d5f460f0eb686f186fa4ba7b83cbfbe9e00[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Sun Apr 26 22:29:07 2026 +0200
+
+    work in progress  first breakpoint, desktop and dialogs  values ​​adjusted
+
+[33mcommit e32188fa18985a5720e4dc756b9b2707b8285886[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Sun Apr 26 00:40:01 2026 +0200
+
+    fix scrollbar width,  and create new save point
+
+[33mcommit 9267e8034493d5207d9580857f7b13ee08e39742[m
+Merge: 842d91e 379b546
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sat Apr 25 22:27:33 2026 +0200
+
+    Merge branch 'add-task'
+    
+    Co-authored-by: Copilot <copilot@github.com>
+
+[33mcommit 379b546a00085c875b50330f9f5852c0e93736c7[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sat Apr 25 22:26:19 2026 +0200
+
+    add the jsdoc to the addTask.js file
+
+[33mcommit a8e659b73e449579143cf3f1fdbd8efbfcb0d7cb[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sat Apr 25 22:22:50 2026 +0200
+
+    split the addTask.css to subtasks.css
+
+[33mcommit d8801949a52914c00b34c115e100a0c296aa2845[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sat Apr 25 22:12:25 2026 +0200
+
+    fix the subtask btns in the existing btns. and creat the function for editing and save and delet, beginn with the styling of the existing subtask editing display
+
+[33mcommit e51a00af84093e844146a00676fe538e9cc050fd[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sat Apr 25 20:52:43 2026 +0200
+
+    fix the prio btn size in resp mode
+
+[33mcommit 0ac5f47b4683585797c347bd12cb4ab905780467[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sat Apr 25 20:42:52 2026 +0200
+
+    change the breakpoint to 1 col to 950px
+
+[33mcommit 3be262098c31b9856cf62ab0e44193c8e23faa6f[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sat Apr 25 20:17:41 2026 +0200
+
+    break up
+    
+    Co-authored-by: Copilot <copilot@github.com>
+
+[33mcommit 9ef4466758e4ae2999bcf7504c1920595111188f[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Sat Apr 25 12:50:47 2026 +0200
+
+    .js create contact  work in progress
+
+[33mcommit 7c135fd94392cd651117d4a438c738eedcbb39ce[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Fri Apr 24 17:44:25 2026 +0200
+
+    js.create Contect work in progress saveponit
+
+[33mcommit 0c852bec3d24fca37c7ce6f3c9b9fd2e9d59a670[m
+Merge: a5ade46 842d91e
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Fri Apr 24 15:53:52 2026 +0200
+
+    Merge remote-tracking branch 'origin/main' into summary-branch
+
+[33mcommit a5ade46a85bb7b62795724b56e0df836045966f0[m
+Merge: adea885 cf91801
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Fri Apr 24 15:36:45 2026 +0200
+
+    Merge branch 'summary-branch' of https://github.com/Lehnerma/join-3135 into summary-branch
+
+[33mcommit adea885d1e2963d8c15b520b4181866309244e65[m
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Fri Apr 24 15:36:39 2026 +0200
+
+    add hover to summary page
+
+[33mcommit 842d91e4862a6118b95f7954cd3e12efa3ab7c2b[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Fri Apr 24 12:49:25 2026 +0200
+
+    add svg in  contact-template
+
+[33mcommit cdb2729aeaf83506dc2efeef1c870d2b50ff5937[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Fri Apr 24 12:27:49 2026 +0200
+
+    fix  in  Contacts-Page  shadows and change close x-text  to .svg;  edited  trash. svg, edit.svg, close-white.svg  for :hover,   HTML code adapted
+
+[33mcommit 64596ce8ae7cbe12952e7ba2159104d4a8816d57[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Fri Apr 24 12:27:49 2026 +0200
+
+    change close  x   in . svg  icon,  edit svg content for :hover - trash-contact.svg, edit svg, close-white.svg ;  fix shadows bug  in Contacts CSS.
+
+[33mcommit 186d90b92d0695295ac4afc8a84990a9e83cb556[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Fri Apr 24 09:33:16 2026 +0200
+
+    add new Inter fonts, edit html tags
+
+[33mcommit 8079ff4f4836feb7b07ddb71ba26cc93f705ebab[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 24 05:25:43 2026 +0200
+
+    add some js docs to the addTask.js
+    
+    Co-authored-by: Copilot <copilot@github.com>
+
+[33mcommit 2a6d4dd54f367bc991df86847babb5f113c1b8ad[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 24 04:56:38 2026 +0200
+
+    creat the template fix the render function and beginn with creating the date picer to set it on the actual day and to only can pick today and days in the future
+
+[33mcommit 41d90272db50058b0cf7719ec4d073eb42f661f6[m
+Merge: 30c493c 053c1e4
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 23 21:18:32 2026 +0200
+
+    Merge branch 'add-task'
+
+[33mcommit 053c1e4d292ff97366f88878174b415e16929ea8[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 23 21:17:48 2026 +0200
+
+    begin fixing the subtask display and the inline inputs
+
+[33mcommit 30c493c0c1488c125689a013b0b7dcc13ef57a23[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 23 18:32:44 2026 +0200
+
+    save
+
+[33mcommit 485743475748c951d321f966c49b1ce1a8a91f69[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 23 18:22:37 2026 +0200
+
+    little changes in the stzling
+    
+    Co-authored-by: Copilot <copilot@github.com>
+
+[33mcommit 465838f1357ea0112f626f90b6a2a2883838c3e7[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 23 05:05:26 2026 +0200
+
+    update these brance with main
+
+[33mcommit c31cf083ab64b98de95a3d5c76dee34576dd6031[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 23 05:01:39 2026 +0200
+
+    delet the white button - fix them with css filter invert
+
+[33mcommit 528925bc58b5bdd21221736d3263cd63499cf651[m
+Merge: bfee6bb 7089006
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 23 05:00:59 2026 +0200
+
+    Merge branch 'add-task' - fix the prio buttons and right icons
+
+[33mcommit 708900652752fb0f5c466f0defb39df54b0227f4[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 23 05:00:08 2026 +0200
+
+    fix the styling of the Prio button for the icons
+
+[33mcommit 39a548097dae19510ca29d947fe12a265654ea9e[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 23 04:41:14 2026 +0200
+
+    fix the red border for the requiered input.
+
+[33mcommit cf91801fa717ebafb5fd87e97928bbd9ba689fa6[m
+Merge: eb9bba7 bfee6bb
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 22 21:09:39 2026 +0200
+
+    Merge branch 'main' into summary-branch
+
+[33mcommit bfee6bbe3879bcad4c45cefa7040e08fecb3f30e[m[33m ([m[1;31morigin/sidebar[m[33m, [m[1;31morigin/legal_section[m[33m)[m
+Merge: 9ed256d 96a4bff
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 22 21:07:47 2026 +0200
+
+    Merge branch 'add-task'
+
+[33mcommit 96a4bfff9e40f0617382ba226f0b47330fa820b5[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 22 21:03:42 2026 +0200
+
+    fix the btns in the smallest possible view
+
+[33mcommit 9ed256dce70358018596700f2068f0ce25946406[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Wed Apr 22 20:50:06 2026 +0200
+
+    add contact page  in all  .html  files
+
+[33mcommit 702062325a702b2a040159ca701b8195bf7667ae[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Wed Apr 22 20:40:57 2026 +0200
+
+    savepoint
+
+[33mcommit 7317798d57df83c319481f3551ac9741eaf815f4[m
+Merge: 42b4023 f8182c5
+Author: radek-ops <radek.network@gmail.com>
+Date:   Wed Apr 22 20:33:46 2026 +0200
+
+    Merge branch 'main' into contacts-
+
+[33mcommit 42b40239f43343ba6af2acf50710ef43090a4a12[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Wed Apr 22 20:31:33 2026 +0200
+
+    WIP:  savepoint
+
+[33mcommit 32ede86f8446d11c3ee4f465487317b566691287[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 21 21:27:11 2026 +0200
+
+    fix the prio button for resp. design for shrinking and growing
+
+[33mcommit 6d8e446eab501b706aad6e315f26d8937f31a95c[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Tue Apr 21 17:35:16 2026 +0200
+
+    WIP: add cotact Dialog finsched . add contac t details in progress
+
+[33mcommit f8182c5a8768491a5d63d0812acd5f76d391e360[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Tue Apr 21 16:56:11 2026 +0200
+
+    feat: Fixed priority UI, toast, and CSS issues
+
+[33mcommit eb9bba743fdd07603ef44821b435284df1cc844b[m
+Merge: a6f3c46 92dedfd
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Tue Apr 21 14:33:57 2026 +0200
+
+    Merge branch 'main' into summary-branch
+
+[33mcommit a6f3c462647a7bb524b777e6f08b52854246e74e[m
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Tue Apr 21 14:30:23 2026 +0200
+
+    fix fonts on sidebar.css
+
+[33mcommit 92dedfd8f85784fecabf408f72bf778ef24f917f[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 21 12:45:20 2026 +0200
+
+    fix the design of the wrong merge by max
+
+[33mcommit 7211228e035a70baabca61b8492525bae71b7287[m
+Merge: 88ece40 0d76624
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 21 12:43:03 2026 +0200
+
+    Merge branch 'add-task'
+
+[33mcommit 0d766242326f588620fc12b28c2daf248d11fa0f[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 21 12:41:22 2026 +0200
+
+    feat resp design finish
+
+[33mcommit 0831e6ffc7201bad3ef29c9d1e387c9fa3584870[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 21 08:23:35 2026 +0200
+
+    fix the subtask btns right position and richt display.
+
+[33mcommit 0c1e69e359be2a1330151858ae7e5389bd1f1f65[m
+Merge: 7a6fae4 486b84d
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 20 20:15:34 2026 +0200
+
+    Merge branch 'contacts' into summary-branch
+
+[33mcommit 7a6fae44afefb1e6bba65a272d6842a6640fa6a1[m
+Merge: c821e95 0fa14fa
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 20 20:15:07 2026 +0200
+
+    Merge branch 'add-task' into summary-branch
+
+[33mcommit 88ece401f1000b8133270af740f6222d5c10c491[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Mon Apr 20 20:07:18 2026 +0200
+
+    feat: Add assigned users with initials and colors to add task page
+
+[33mcommit 0fa14fa3c64a14cc9e733c69aa3c924585429ac0[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 20 20:04:12 2026 +0200
+
+    beginn with the subtask styling
+
+[33mcommit 5798efb4645621cdf2eed46fae91e995befda366[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Mon Apr 20 19:18:06 2026 +0200
+
+    WIP: savepoint
+
+[33mcommit 593518a61c5f5cab191ba16ab871491a8a37b190[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 20 18:24:03 2026 +0200
+
+    fix the syntax
+
+[33mcommit 3d02385b928a7d919d5a3a17fcffc1fa6b987c4b[m
+Merge: b8bc326 5355d80
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 20 18:20:12 2026 +0200
+
+    set  add-task uptodate
+
+[33mcommit b8bc326790ad798ea40d76eb2b37f8e693d4d4e0[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 20 18:15:22 2026 +0200
+
+    make some changes in the layout
+
+[33mcommit c821e95ee71aaa3fe74c0a027a33adf5880e81df[m
+Merge: b7dd7da 5355d80
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Mon Apr 20 16:44:11 2026 +0200
+
+    Merge remote-tracking branch 'origin/main' into summary-branch
+
+[33mcommit b7dd7da1158753ac31702529b311a3e1b1fe5dc9[m
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Mon Apr 20 16:33:13 2026 +0200
+
+    styling summary.html
+
+[33mcommit e7b7144c434be5073b36af2d74aaa6530cfa44ce[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Sun Apr 19 22:47:10 2026 +0200
+
+    WIP. savepoint Dialog  Contact
+
+[33mcommit 5355d80c0d494ce8d5ab2ea698fb676fe3bda62b[m
+Merge: 5f51043 1d1e195
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sun Apr 19 20:52:46 2026 +0200
+
+    Merge branch 'add-task'
+
+[33mcommit 1d1e195890dfb7e19231beb22a1f6d5951d3a23d[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sun Apr 19 20:51:33 2026 +0200
+
+    update the styling of the add-task page
+
+[33mcommit 52ec309d41a6d827424d2b9a93cd00511788078a[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sun Apr 19 16:14:14 2026 +0200
+
+    update the fonts for the right one in diffrent weights.
+
+[33mcommit 5f51043937977e5f3f7218a319cebcc5f6a727cb[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Sun Apr 19 16:00:20 2026 +0200
+
+    feat: Add user selection display in Assigned to dropdown for task assignment feature.
+
+[33mcommit d4348222df71127972761bb8d97d5fff0b3abe91[m
+Merge: 486b84d f488fe4
+Author: radek-ops <radek.network@gmail.com>
+Date:   Sun Apr 19 15:36:14 2026 +0200
+
+    files update, Merge branch 'main' into contacts
+
+[33mcommit cdb75e89193fb095a14e94ef8423521a1a6e0fa2[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sun Apr 19 15:28:15 2026 +0200
+
+    fix the styling of the add task
+
+[33mcommit 66456f840461a269c6cd83145d3820d0e0f76837[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sun Apr 19 09:23:24 2026 +0200
+
+    fix the header for resp design
+
+[33mcommit d7d31eecf6809455143041dd0ff6aaf245dd1e9d[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sun Apr 19 07:06:13 2026 +0200
+
+    fix the sidebar and content in mobile version.
+
+[33mcommit a9794909bfa18cef79281606f11e1edc168779b7[m
+Merge: 323ba1c 1f48560
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sat Apr 18 17:21:52 2026 +0200
+
+    Merge branch 'sidebar' into add-task
+
+[33mcommit 1f485609c03e76b9208cb94d66129049406d8adf[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sat Apr 18 17:17:24 2026 +0200
+
+    little fixes in the sidebar syntax
+
+[33mcommit 323ba1c7a3b83a2bec1a80b789835879451de44b[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sat Apr 18 15:46:55 2026 +0200
+
+    trying grid layout
+
+[33mcommit 9d38b2242a20b0af89adc1d9c0b67b6cd1a05566[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sat Apr 18 14:51:02 2026 +0200
+
+    update the sidebar for RWD.
+
+[33mcommit 3956e22707d764e3260a89e6a62230ee40964f9c[m
+Merge: 51ac834 f488fe4
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sat Apr 18 14:29:07 2026 +0200
+
+    Merge branch 'main' into add-task set uptodate
+
+[33mcommit f488fe4e1b52632b9916850cd6e0b254a616ccd2[m
+Merge: fad3029 9c517a4
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sat Apr 18 14:28:21 2026 +0200
+
+    Merge branch 'sidebar'
+
+[33mcommit 9c517a4f01359dee25bc6d931df5c2a567bc573f[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sat Apr 18 12:46:56 2026 +0200
+
+    feat resp sidebar. - link the right pages to the nav elements and also includ the help button.
+
+[33mcommit ccf08f53a086b12c3ac1b2a69c1471c894534f3b[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sat Apr 18 07:15:10 2026 +0200
+
+    beginn with styling for resp. design.
+
+[33mcommit 51ac83491d8e93a6a705e201acfaa83b5bcaf8ee[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sat Apr 18 06:44:09 2026 +0200
+
+    fix the syntax in the html file
+
+[33mcommit 486b84d41636dbd21091ed359168ed8445098370[m
+Merge: a0d7d9a fad3029
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 17 22:05:06 2026 +0200
+
+    Merge branch 'main' into contacts
+
+[33mcommit fad30295f98fbbc2ccf2cff16d88cf05c7d6ef13[m[33m ([m[1;31morigin/login[m[33m)[m
+Merge: 1ec5e23 d7a8711
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 17 21:59:43 2026 +0200
+
+    Merge branch 'main' of https://github.com/Lehnerma/join-3135
+
+[33mcommit 1ec5e23b1cf39f1c5107cee26d765e5bc57f5130[m
+Merge: 70604be bafe53a
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 17 21:59:41 2026 +0200
+
+    Merge branch 'login'
+
+[33mcommit bafe53aa9a4b1ab23bfe32f1c9721d2a96217b5a[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 17 21:59:16 2026 +0200
+
+    clean code
+
+[33mcommit d7a871161735a206ea8d00a21fbe7312a184dd07[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Fri Apr 17 21:37:23 2026 +0200
+
+    feat: add subtask creation, rendering, toggle, and delete functionality in add task and board views
+
+[33mcommit 70604bebbf47069bc595a9488725b3680d5255fb[m
+Merge: 08936ca 2ff242c
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 17 21:33:42 2026 +0200
+
+    Merge branch 'main' of https://github.com/Lehnerma/join-3135
+
+[33mcommit 08936cad2b2fbdaf83901cb17e17876ab824af91[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 17 21:33:20 2026 +0200
+
+    fix the auth function
+
+[33mcommit 2ff242cc44460383e5ea5c6a19a5ffcf838814b2[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Fri Apr 17 21:01:32 2026 +0200
+
+    feat: Added subtasks progress tracking and toggle functionality to kanban board tasks.
+
+[33mcommit fac4e342aec55d255dcb6292ca603e19e63b7f54[m
+Merge: b0b8a76 26a9348
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Fri Apr 17 20:57:39 2026 +0200
+
+    feat: Added subtasks progress tracking and toggle functionality to kanban board tasks.
+
+[33mcommit b0b8a7606ef4240f2336d0b4ecf0a509505438ed[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Fri Apr 17 20:55:40 2026 +0200
+
+    feat: Added subtasks progress tracking and toggle functionality to kanban board tasks.
+
+[33mcommit 26a93484b7d87506573f3fdd4c81ca64fe49556b[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 17 20:52:04 2026 +0200
+
+    fix the help button on alle pages
+
+[33mcommit a0d7d9ad615bc1c460f6a15142022d692f3a0d19[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 17 20:20:17 2026 +0200
+
+    Merge branch 'main' into contacts
+
+[33mcommit e1ed308a072015ba7a676caf7cd122a26be4ca2b[m
+Merge: 7ce231a 30699a0
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 17 20:20:06 2026 +0200
+
+    Merge branch 'main' into contacts
+
+[33mcommit 30699a014437b1f32d6de999883f60160a7c6a59[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 17 20:18:52 2026 +0200
+
+    update the grid in the body of the index.html
+
+[33mcommit 7ce231a82c49b1cdc780e63ed5d9d6ade08b7e4e[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Fri Apr 17 18:50:26 2026 +0200
+
+    WIP: Dialog layout adjustment for add contact form
+
+[33mcommit 0e2a7ee225c9485946ca9725282ba44fae653604[m
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Fri Apr 17 16:03:58 2026 +0200
+
+    add summary.html and summary.css
+
+[33mcommit d5972c3696a156a4ec1bc02925c02086f9fe465a[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Fri Apr 17 11:44:59 2026 +0200
+
+    WIP: layout adjustments for contact list, render users  in contactList
+
+[33mcommit fb993dc41ee9c090b7e7be6a8125716065845790[m
+Merge: a6ac661 de29572
+Author: radek-ops <radek.network@gmail.com>
+Date:   Fri Apr 17 05:20:33 2026 +0200
+
+    Reload current files - Merge branch 'main' into contacts
+
+[33mcommit 3a92448a7ac1d4e0898ec4dcd853c0a0d7ef9b8c[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 17 04:42:38 2026 +0200
+
+    fixing some little styling for resp view.
+
+[33mcommit dbcb6cd391bed14387cb330ebfd5df1cd1d7c3ce[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 17 03:43:58 2026 +0200
+
+    change from grid to flex for better resp design in the forms.
+
+[33mcommit 53be218dc5b08e70dc474d4a4488a98a45cc9082[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 17 00:27:15 2026 +0200
+
+    add docs to the utilitys.js
+
+[33mcommit 63b4a56d0707a5298344c0bd56d8701388e44fc1[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 16 23:22:44 2026 +0200
+
+    updatet the auth funciton - to fetch the actual user ids in the firebase - to check iif the user id exist.
+
+[33mcommit de295721224bd76eec27eec092e4642876df73fe[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 16 03:41:05 2026 +0200
+
+    fix the checkAuth function
+
+[33mcommit 000aedcbebffe634e0741e4ba3a9fbf6254f0e54[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 16 03:36:20 2026 +0200
+
+    add a validatioin function in the utilitiys.js to have a little guard
+
+[33mcommit f3dbc78dfd9320441c519c2469cfb66dbf93e9dc[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 16 03:26:07 2026 +0200
+
+    beginn with the js docs
+
+[33mcommit 52da5197fddeeacfea2f9e49be57fc0950ff331e[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 16 02:51:04 2026 +0200
+
+    Merge branch 'login'
+
+[33mcommit 8e21c99e8bb7184272371bd7c5ec7a6fe369d9c5[m
+Merge: 769c579 88f1c71
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 16 02:48:59 2026 +0200
+
+    Merge branch 'login' - add signup and login prozess
+
+[33mcommit 88f1c710d175fb305c3ce9e20aa37180f297dbee[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 16 02:48:23 2026 +0200
+
+    little fixings in the login prozess
+
+[33mcommit 89af5441178d04dc5583b0b22d30a927ce1db366[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 16 02:37:08 2026 +0200
+
+    feat login function and direct to summary - get session storage.
+
+[33mcommit 770355f343aa324fe9dcd91e3d861616939b510d[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 16 02:26:57 2026 +0200
+
+    feat - up function with storage in the firebase.
+
+[33mcommit 4fd58144bc73a118b72ee5ace35e321aaa86bd39[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 16 01:31:44 2026 +0200
+
+    creat the signup function with the firebase and creation of an user-id for validation.
+
+[33mcommit 769c579d54efa243da003879f1d436d6e5de344d[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 15 20:51:49 2026 +0200
+
+    Merge branch 'login'
+
+[33mcommit 5996d5746f12cee0fe11e29ef2a5d3666e6c729c[m
+Merge: 968d1ad 80eb30e
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 15 20:35:18 2026 +0200
+
+    Merge branch 'login' add guestlogin function and link the leagl html
+
+[33mcommit 80eb30ec4a7b57a935d089f1badc9a955fd99992[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 15 20:34:32 2026 +0200
+
+    fix the guestlogin - and creat a function for the direct.
+
+[33mcommit 365e38dc7ea96ae785c254ac338a42b8d6923c9c[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 15 20:21:12 2026 +0200
+
+    fix the legal link.
+
+[33mcommit 968d1ad28db3db6d53a45dc83f8771a4ab158087[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 15 20:13:44 2026 +0200
+
+    add the firebase.json for the Firbase backend
+
+[33mcommit 8ac36d534f2795eed20afc65569713720122837f[m[33m ([m[1;31morigin/fix-sidebar.css[m[33m)[m
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Wed Apr 15 15:14:25 2026 +0200
+
+    fix scrollbar appearance
+
+[33mcommit c960b0df8e531352b16419821c7aa105de78e472[m
+Merge: a139ba1 737f48c
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Wed Apr 15 14:28:21 2026 +0200
+
+    Merge branch 'legal_section'
+
+[33mcommit a139ba133ee342647ae9692166a592f55093007d[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 14 22:50:50 2026 +0200
+
+    delet signup.html and signup.css file
+
+[33mcommit 737f48c45471ae0705f277fca220ebd5ee96c310[m
+Merge: 5d644a1 960ee1b
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 14 22:50:00 2026 +0200
+
+    Merge branch 'legal_section' of https://github.com/Lehnerma/join-3135 into legal_section
+
+[33mcommit 5d644a1e29f5d9f3dedb3aad4fb303f615f90cce[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 14 22:49:00 2026 +0200
+
+    fix the merge
+
+[33mcommit edd45702a6b818683713fdd8e1a6911382f3d85e[m
+Merge: e1d4d43 fed7b82
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 14 22:44:02 2026 +0200
+
+    Merge branch 'login'
+
+[33mcommit fed7b8285b8e97e0acb4f4442069db810d888126[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 14 22:42:49 2026 +0200
+
+    finish the styling of the login and sigup
+
+[33mcommit a6ac661571b17f1edbb4d97b538f182246dd0544[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Tue Apr 14 22:23:50 2026 +0200
+
+    add url  Privacy Policy, Legal Notice in sidebar
+
+[33mcommit 480a6f71e96fa5cc32897eeb5b2000f8e05a4fa4[m
+Merge: 4b75cbb 960ee1b
+Author: radek-ops <radek.network@gmail.com>
+Date:   Tue Apr 14 22:13:17 2026 +0200
+
+    Merge branch 'legal_section' into contacts
+
+[33mcommit fe205fae50d89b6edaf7134c4288a46a5f48072a[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 14 21:33:31 2026 +0200
+
+    beginn with the logic
+
+[33mcommit 691f70040db17b86a1469607971f4144f06b9ebc[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 14 21:19:19 2026 +0200
+
+    fix the styling for the index.html in the login.css file complete like in the figma
+
+[33mcommit 4b75cbbb57c46d43d92bcb2d052b3098a3e95a39[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Tue Apr 14 20:48:02 2026 +0200
+
+    "Intermediate save"
+
+[33mcommit f6c840de09d09ac6ee0729c1d2b57ac10a1ee50b[m
+Author: radek-ops <radek.network@gmail.com>
+Date:   Tue Apr 14 20:47:53 2026 +0200
+
+    "Intermediate save"
+
+[33mcommit 204ad89189cc5107e373ebf2ff05ecfbab08faa3[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 14 20:30:18 2026 +0200
+
+    get the signup form into the index side.
+
+[33mcommit 2ddbbe4455f38e7b22543b8f698afa6891f49cea[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Tue Apr 14 17:55:37 2026 +0200
+
+    All size specifications changed to VW, now responsive until 1024px
+
+[33mcommit 5bc8acb557014bb8753f916bf89b36f7c885d465[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Tue Apr 14 16:03:40 2026 +0200
+
+    add Button, Headline,  vertical-divider, letter-divider, background, shadow right  and add contact.js
+
+[33mcommit 960ee1bf64f79e7c5d8223709b35b8a58a4ad0ec[m
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Tue Apr 14 15:09:23 2026 +0200
+
+    add return button on help.html; fix styling privacyPolicy.html, legalNotice.html, sidebar.html
+
+[33mcommit e1d4d4333a0eb97a5fdfa60b2a57fd4902a555e3[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Tue Apr 14 12:01:11 2026 +0200
+
+    feat: add localStorage task system, board rendering, toast notification and layout styling fixes
+
+[33mcommit cb89e7a6121826188fd317b562ed983b50366c61[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Tue Apr 14 10:01:03 2026 +0200
+
+    feat: Tasks saved in localStorage and displayed dynamically on board.
+
+[33mcommit 19c25ad5222c7d1b647dcfb43c3c738e0fcb3194[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 14 09:38:53 2026 +0200
+
+    - beginn with the integration of the signup into the login
+
+[33mcommit 998a352ff245339f2d37d66e3e87c7d267e2e2fa[m
+Merge: 54dbec6 3f24df6
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Tue Apr 14 08:35:36 2026 +0200
+
+    Merge branch 'legal_section'
+
+[33mcommit 54dbec61342ad5ae13b0c67b9308dd1031b9fc44[m
+Merge: 30906d9 9354ec4
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 13 22:13:48 2026 +0200
+
+    Merge branch 'login'
+
+[33mcommit 9354ec4c2afe5e9d02cbe9e9f275c0696b888a66[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 13 22:09:34 2026 +0200
+
+    in the figma the login and sign up page seams the same - checking with the team
+
+[33mcommit 09b96300c6b37f6ed7a1a6b50d494fea6206dd61[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 13 21:51:52 2026 +0200
+
+    fix the login animation of the logo to other keyframes - and the structure of the form and grid system - change the footer to the right styling
+
+[33mcommit e8485ca12ad7c77a7f6671e2571cff95949db1cb[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 13 20:42:32 2026 +0200
+
+    fix the keyframe for the index
+
+[33mcommit 30906d902234e5bf277f2b01bcfc5154876404b1[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 13 20:01:31 2026 +0200
+
+    beginn fixing the layout of the signup and login
+
+[33mcommit 3f24df64b8fff298e9fe09f6ceccf269eda6e1a5[m
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Mon Apr 13 15:50:30 2026 +0200
+
+    fix legal section, add help.html, delete standard.css
+
+[33mcommit d9c7f38c6d90e4469357bc69ccb20efb360c5060[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Mon Apr 13 13:24:29 2026 +0200
+
+    responsive Login SIgnUp first steps
+
+[33mcommit 2372bb3f7105e3631240ea354486ee4d5163751d[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 13 12:29:54 2026 +0200
+
+    underline for Sign Up to 150px, and change id for the form
+
+[33mcommit 3138be080f1ad8ff92315b9a1109ad3bd7463596[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Mon Apr 13 10:40:51 2026 +0200
+
+    SignUp arrow add cursor pointer
+
+[33mcommit e4f933dd254ccb4bfc44d504556b2f5063821c2e[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Mon Apr 13 10:29:55 2026 +0200
+
+    SignUp arrow fixed
+
+[33mcommit f7975c6787ecc385528bc7249315af879f4f967b[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Mon Apr 13 10:03:57 2026 +0200
+
+    Sign In button  hover
+
+[33mcommit 082eb45fabd94f9571c5bf57188d4f6dba284078[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Mon Apr 13 09:50:21 2026 +0200
+
+    signUp back arrow
+
+[33mcommit 2db05b09dd619f46e01960fb648ce9d84b863196[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Mon Apr 13 09:25:27 2026 +0200
+
+    Privacy an Legal links  add hover
+
+[33mcommit d38c839e39806e8e834c893119c821fb55b51083[m
+Merge: c04a42e 142ea34
+Author: radCode <radekgnych1@gmail.com>
+Date:   Mon Apr 13 09:23:12 2026 +0200
+
+    Merge branch 'main' into radek
+
+[33mcommit c04a42ea4e51ae2c8b505d594e247ab1915a5127[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Mon Apr 13 09:20:47 2026 +0200
+
+    savePoint
+
+[33mcommit 227761383db6da3659197f130f86921b6e11439b[m
+Merge: cdfc3a5 6aaabaa
+Author: radCode <radekgnych1@gmail.com>
+Date:   Mon Apr 13 08:49:28 2026 +0200
+
+    Savepoint merge main in radek branch
+
+[33mcommit 142ea348d10351db217ea91a86c042ba80a5f41e[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 13 08:44:21 2026 +0200
+
+    change with from % to 150px like in figma
+
+[33mcommit cdfc3a5a1bd75c52cf88bf608e97db843adf2383[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Mon Apr 13 08:43:21 2026 +0200
+
+    savePoint jsDoc  and out folder
+
+[33mcommit 6aaabaae1fe7d53dce987a3084805cd8b7d35e06[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 13 08:24:13 2026 +0200
+
+    change the position of the logo in the keyframe to % to get better responsiv design
+
+[33mcommit 40b5514dc36d5395eceff90b63a8b55bd2a2ada3[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 13 07:18:06 2026 +0200
+
+    change the active status
+
+[33mcommit ac02abca65f36ba9f989ab2f3b67e3f7bd4d764c[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 13 07:10:37 2026 +0200
+
+    add the favicon to the sidebar, add the sidebar to the contacts page
+
+[33mcommit 6215869218ffd133122ff4216e94fd5b89fb53ea[m
+Merge: 94bb65c cac8fbc
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Mon Apr 13 06:05:07 2026 +0200
+
+    Merge branch 'main' into contacts
+
+[33mcommit cac8fbce122eb8f00e6c0a98e985d08c8cb08319[m
+Merge: 85adbfb e246a60
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sun Apr 12 20:57:11 2026 +0200
+
+    Merge branch 'legal_section'
+
+[33mcommit e246a60e05ee2b79b8b53983b01b9c6a177ded4b[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sun Apr 12 20:46:09 2026 +0200
+
+    fix the sidebare for legal and privacy sides
+
+[33mcommit 85adbfb0416dccbff1c4dd36e2f1db78d0515742[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Sun Apr 12 10:43:08 2026 +0200
+
+    feat: create board html and css date
+
+[33mcommit e9dcfe6e2556739b0b1a963040e43dc2776c08b3[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Sun Apr 12 10:08:17 2026 +0200
+
+    feat: style contact field page
+
+[33mcommit 8c82b5bb28bc6dbac2fcd02b7428e4fb3f7d8375[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Sun Apr 12 10:00:49 2026 +0200
+
+    feat:  uptodate sidebar
+
+[33mcommit 4785fa5b20a7fcfdada2c069464916755eb41c03[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sun Apr 12 08:13:19 2026 +0200
+
+    fix the sidebar in the legalNotice, implementing the scroll effekt for the content section.
+
+[33mcommit ff4e51bf9b612719ee3843a79a4ca5f9994348a7[m
+Merge: bfadf13 51de27d
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sun Apr 12 07:06:59 2026 +0200
+
+    Merge branch 'main' into legal_section
+
+[33mcommit bfadf13b3cbd3c781f29c04a86cb0fd2207c6403[m
+Merge: 3bdad0b ff46978
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Sun Apr 12 07:04:19 2026 +0200
+
+    Merge branch 'sidebar' into legal_section
+
+[33mcommit 51de27dc2a604d7b0932c5e9ab372f801d9609cb[m
+Merge: 5f4310a 4dfe493
+Author: radCode <radekgnych1@gmail.com>
+Date:   Fri Apr 10 23:45:00 2026 +0200
+
+    Merge branch 'radek'
+
+[33mcommit 5f4310ab661e91f2a2bb2cb08661f099d21e047b[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Fri Apr 10 23:38:35 2026 +0200
+
+    login, content FadeIn bug fix , signUp.indenx and .css  page uplod ,  img folder +  arrow-left-line
+
+[33mcommit 4dfe493c2c3019e70b204f1554b879260b1543f8[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Fri Apr 10 23:20:39 2026 +0200
+
+    change  class names for my branch : )
+
+[33mcommit 4887393ae7463d288cd88336e1052fbc91b2c7ec[m
+Merge: 21e0a97 ff46978
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 10 23:10:14 2026 +0200
+
+    Merge branch 'sidebar' change the style to use it on evry html side. - change from tag styling to class styling and switcht to grid-templet-area
+
+[33mcommit ff46978629bf867c89aeef68c985137a08698459[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 10 23:08:34 2026 +0200
+
+    fix the help button in the title section
+
+[33mcommit 0f5e1a9932a8f03113a90814d9cbb0da1fc4fa98[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 10 23:06:02 2026 +0200
+
+    fix the styling of the sidebar for evry side to use - just only add the html code to the main section
+
+[33mcommit fabb2356ce7bc9379ea488d09bd135e562efe089[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 10 22:13:17 2026 +0200
+
+    add grid area to be consitent. and have on evry useage the same look
+
+[33mcommit 21e0a977f751e0e4d26d76cbcdfd7e737d772750[m
+Merge: 97ba97d c35fa8f
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Fri Apr 10 21:21:22 2026 +0200
+
+    Merge branch 'main' of https://github.com/Lehnerma/join-3135
+
+[33mcommit 97ba97d5c784a4e953a7ce9a56cef41a30e82e6d[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Fri Apr 10 21:19:44 2026 +0200
+
+    feat: feater uptodate.
+
+[33mcommit 9222838eca735b15b2fa1ef0639734a6650dd921[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 10 21:04:09 2026 +0200
+
+    make some changes to use the sidebar on evry page
+
+[33mcommit 94bb65c6630f67e708cf7e679d07b575ab648560[m
+Merge: 41d1f67 c35fa8f
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 10 19:43:29 2026 +0200
+
+    Merge branch 'main' into contacts
+
+[33mcommit c35fa8fee6215b9c8c4d72835902b56b777c9b58[m
+Merge: bfb82f1 24e5601
+Author: radCode <radekgnych1@gmail.com>
+Date:   Fri Apr 10 17:37:12 2026 +0200
+
+    Merge branch 'radek'
+
+[33mcommit 24e560155789318fbfd2c789184cfd1078b73290[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Fri Apr 10 17:34:51 2026 +0200
+
+    add favicon, add backgroundcolor =  body & login-content
+
+[33mcommit bfb82f1646a6fb8c9de72a481e7ead99ec9f0138[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Fri Apr 10 17:23:04 2026 +0200
+
+    feat: style contact field page
+
+[33mcommit 11f4d378be97b181299b97af12fd1fac563c50c8[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Fri Apr 10 17:09:51 2026 +0200
+
+    remove  login-img folder
+
+[33mcommit d5ff262c53119d3dd8c82fa794b6a726c6c4ea89[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Fri Apr 10 16:50:20 2026 +0200
+
+    feat: add sidebar
+
+[33mcommit 3bdad0b273bcf346288438022ad32b0d6c326ef7[m
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Fri Apr 10 16:50:04 2026 +0200
+
+    add legalNotice.html and privacyPolicy.html. fix sidebar.html
+
+[33mcommit 6b4685464b503302adbaf308bb450a80d0090e86[m
+Merge: 9361ce8 a86c5a8
+Author: radCode <radekgnych1@gmail.com>
+Date:   Fri Apr 10 16:42:13 2026 +0200
+
+    Merge branch 'main' into radek savepoint
+
+[33mcommit a86c5a883d7fdee40c4dd942a67f3fd7d39420d8[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Fri Apr 10 16:36:48 2026 +0200
+
+    feat: style the add task
+
+[33mcommit 9361ce84c3bf4985347969c9048b6e56eec249e2[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Fri Apr 10 16:27:19 2026 +0200
+
+    login page finished
+
+[33mcommit 41d1f67702544dbd45c13b7346ce20cd8dc7747f[m
+Merge: fef5152 8ef0cda
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 10 12:56:00 2026 +0200
+
+    Merge branch 'main' into contacts
+
+[33mcommit 39e3283e9c276129a0f7ba031144919714a80ba2[m
+Merge: 10197ef 8ef0cda
+Author: radCode <radekgnych1@gmail.com>
+Date:   Fri Apr 10 12:55:37 2026 +0200
+
+    save Changes login
+
+[33mcommit 10197efa0e433cb6475af44fd78324bcbc0fdc01[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Fri Apr 10 12:34:10 2026 +0200
+
+     rename  page1.css in Login.css , Login.css rename in  login.css.
+
+[33mcommit 7a07611eaab27d7a040193e34e611f913619050d[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Fri Apr 10 12:25:34 2026 +0200
+
+    savepoint-login
+
+[33mcommit 8ef0cdaa148e79d01107635d4b8fc55d03edcba2[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Fri Apr 10 12:07:28 2026 +0200
+
+    set up new structure to the project, to use the classes more often.
+
+[33mcommit 6250f8d69e223e8e11677ae52fadfa50c5dae784[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 9 22:15:32 2026 +0200
+
+    change the layout of the login
+
+[33mcommit d6a3dd9c54ec2c0eb9a2546580d5bd65f85f8428[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 9 21:27:41 2026 +0200
+
+    add the btn classes for primary button with .btn and .btn--primary
+
+[33mcommit 9c5226c6ca5564e8f3a625088013dadec64d3053[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 9 21:06:17 2026 +0200
+
+    edit the buttons to right displaz
+
+[33mcommit 2e1fe4d55cd684b17d61553d8b10ce5f145566e4[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 9 20:40:26 2026 +0200
+
+    structure the project
+
+[33mcommit f0664907c617771e5d87ad3508b58e23389627c3[m
+Merge: f425da0 09f6575
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 9 20:19:27 2026 +0200
+
+    Merge branch 'main' into sidebar
+
+[33mcommit fef5152ca07fd4e9a49e44cc271102d25050de0c[m
+Merge: 8ec0fc3 09f6575
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 9 20:14:51 2026 +0200
+
+    Merge branch 'main' into contacts
+
+[33mcommit f425da00e990363db003499c96ddf86c6c65718a[m
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Thu Apr 9 17:26:24 2026 +0200
+
+    add sidebar.html
+
+[33mcommit 09f65757cceb37f9e8668be469681e119f61fc1a[m
+Merge: a62e0e6 d02c8ca
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 9 16:54:40 2026 +0200
+
+    Merge branch 'main' into radek
+
+[33mcommit a62e0e603c8d7e1b4564191ab423a346f2eb4180[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Thu Apr 9 16:05:11 2026 +0200
+
+    next-savepoint
+
+[33mcommit dd0eb907018ea79abe06e5a86e2f1ca34510120d[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Thu Apr 9 14:43:58 2026 +0200
+
+    Savepoint-login
+
+[33mcommit 8ec0fc36da68bb1530bb221a6b7b020919e44836[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 9 14:41:45 2026 +0200
+
+    some changes in html for cleaner code
+
+[33mcommit d02c8cae1e421aab4d3d988802004b27aeec0b5e[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Thu Apr 9 08:17:42 2026 +0200
+
+    change the structure of the dialogs
+
+[33mcommit 520768530ac198d508399d6b9b2aff5d18ddc9ae[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Thu Apr 9 07:08:26 2026 +0200
+
+    savepoint-page1
+
+[33mcommit fe989c529a36cb0cc4650029fdd878649062129c[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 8 21:27:47 2026 +0200
+
+    beginn with the dialog of the contacts - becaus wait of a main css file.
+
+[33mcommit d582cb8c2ec3ce7f93884c38cd53f271b41d39f6[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 8 20:21:01 2026 +0200
+
+    add spacing var to the standard.css
+
+[33mcommit 8f12c510f69c9678144dcdba9c959274dd8a61f8[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Wed Apr 8 19:38:13 2026 +0200
+
+    feat: add sidebar
+
+[33mcommit 65baa1260ae9a66ac4c3ec6cbbd93ab48bf879b7[m
+Merge: cfb1ada 2172523
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Wed Apr 8 19:15:39 2026 +0200
+
+    Merge branch 'main' of https://github.com/Lehnerma/join-3135
+
+[33mcommit cfb1adaa95e3c30ac05259e0f2c89d8b1654f480[m
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Wed Apr 8 19:15:30 2026 +0200
+
+    add colors and fonts
+
+[33mcommit 2172523d9b6bbd482551f294e59dc5bc3d2c2066[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Wed Apr 8 18:55:50 2026 +0200
+
+    feat: add Task content
+
+[33mcommit d3c947ffdb99c60b4491eddd45bd6d9fa7558b53[m
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Wed Apr 8 18:31:11 2026 +0200
+
+    add fonts.css
+
+[33mcommit d6d8f68e73258336f27014dbd69eb9f52d7480fb[m
+Merge: 2d3ae41 f8f5941
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 8 18:16:19 2026 +0200
+
+    Merge pull request #2 from Lehnerma/add_assets
+    
+    Add all assets to the project
+
+[33mcommit f8f5941f6710e8b0cfe9190fd46dd497977f7dd9[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 8 18:12:45 2026 +0200
+
+    add all icons to the project
+
+[33mcommit 888795f933ff0e78014618939c366fe400ef3c96[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 8 17:48:13 2026 +0200
+
+    add the first assets for the project
+
+[33mcommit 2d3ae4171c66898503b54b083ada3258c0f7d354[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Wed Apr 8 17:47:19 2026 +0200
+
+    feat: add date field for tasks
+
+[33mcommit af39fe8d82874b6bdde9b1b4933bbeaf535df977[m
+Merge: 5831c1b 6b43f95
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 8 17:26:17 2026 +0200
+
+    Merge branch 'file-structure'
+
+[33mcommit b133b00f6ad191082cf8a9f1ced47b628def179c[m
+Author: radCode <radekgnych1@gmail.com>
+Date:   Wed Apr 8 17:20:38 2026 +0200
+
+    savepoint
+
+[33mcommit 6b43f9599054ca43bcc0fbe6e440a78952c4ad27[m
+Author: Monika We <mail.mw.dev@web.de>
+Date:   Wed Apr 8 15:54:55 2026 +0200
+
+    Add file structure
+
+[33mcommit 5831c1b68fb12f5daa89b55afd187f20d8416270[m
+Author: Nick Ezenwa <nickezenwa38@gmail.com>
+Date:   Wed Apr 8 15:53:20 2026 +0200
+
+    Initial commit
+
+[33mcommit 42cc16098b76b98de02fd90fe36b1235c12283fb[m
+Merge: 279a040 3e0ed00
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 8 15:33:01 2026 +0200
+
+    Merge pull request #1 from Lehnerma/test-branch
+    
+    erstellen der style.css
+
+[33mcommit 3e0ed00cd33b4a960f8ba8e147c180257ee53269[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 8 15:30:25 2026 +0200
+
+    erstellen der style.css
+
+[33mcommit 279a0405e221048368b5be57b39ac80a9338192f[m
+Author: Max Lehner <150380803+Lehnerma@users.noreply.github.com>
+Date:   Wed Apr 8 14:50:24 2026 +0200
+
+    first commit

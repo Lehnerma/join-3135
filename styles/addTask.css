@@ -148,7 +148,7 @@ main {
   background: white;
 }
 
-.dropdown {
+/* .dropdown {
   border: 1px solid #ccc;
   border-radius: 8px;
   margin-top: 5px;
@@ -157,11 +157,11 @@ main {
   background: white;
   display: flex;
   flex-direction: column;
-}
+} */
 
-.hidden {
+/* .hidden {
   display: none;
-}
+} */
 
 .assignedTo {
   display: flex;
@@ -169,6 +169,7 @@ main {
   align-items: center;
 
 }
+
 .logoNameField {
   display: flex;
   align-items: center;
@@ -197,7 +198,7 @@ main {
 .user-item.active {
   background-color: #2a3647;
   color: white;
-} 
+}
 
 
 
@@ -409,6 +410,7 @@ main {
    CUSTOM DROPDOWN – Assigned To (Suche + Initialen + Checkbox)
    ============================================================ */
 
+
 .custom-dropdown {
   position: relative;
   width: 100%;
@@ -470,6 +472,7 @@ main {
   max-height: 220px;
   overflow-y: auto;
 }
+
 
 /* Liste sichtbar wenn .open auf .custom-dropdown (per JS) */
 .custom-dropdown.open .custom-dropdown__list {
