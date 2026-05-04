@@ -127,7 +127,7 @@
 
   .kanban-column {
     overflow: auto;
-    scrollbar-width: none;
+    scrollbar-width: thin;
   }
 
   .column-title {

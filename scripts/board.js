@@ -8,6 +8,7 @@ let DRAG_OLD_STATUS;
 let DRAG_HEIGHT;
 
 function initBoard() {
+  initBoardTask();
   loadTasksFromFirebase();
 }
 
@@ -32,7 +33,7 @@ function getArryFromResult(result) {
   return Object.entries(result).map(([key, values], index) => ({
     id: index,
     firebaseKey: key,
-    ...values, 
+    ...values,
   }));
 }
 
@@ -78,7 +79,7 @@ function buildTaskCard(task) {
   WRAPPER.querySelector(".subtask--progress-container").innerHTML = getSubtaskProgressTemplate(SUB_DONE, SUB_TOTAL);
 
   const ASSIGNEES_LIST = WRAPPER.querySelector(".task--assignees");
-  (task.assignedTo || []).forEach((name) => {
+  (task.assignedTo || []).filter(Boolean).forEach((name) => {
     ASSIGNEES_LIST.innerHTML += getTaskAssignToTemplet(name, getInitials(name));
   });
   return WRAPPER.innerHTML;

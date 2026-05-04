@@ -12,12 +12,15 @@
     <link rel="stylesheet" href="../styles/colors.css" />
     <link rel="stylesheet" href="../styles/sidebar.css" />
     <link rel="stylesheet" href="../styles/board.css" />
+    <link rel="stylesheet" href="../styles/board-dialog.css" />
 
     <script src="../scripts/templates.js"></script>
+    <script src="../scripts/utilitys.js"></script>
+    <script src="../scripts/board-dialog.js"></script>
     <script src="../scripts/board.js"></script>
   </head>
 
-  <body class="app" onload="(initBoard(), initUtilitys())">
+  <body class="app" onload="(initUtilitys(), initBoard())">
     <header class="app--title">
       <h1 class="app--title-headline">Kanban Project Management Tool</h1>
       <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
@@ -60,7 +63,7 @@
         </sectioin>
 
         <button class="btn btn--primary">
-          <span class="btn--primary-text">Add task</span>
+          <span class="btn--primary-text" id="add_task_head">Add task</span>
           <img src="../assets/img/icons/subtask/add-white.svg" alt="+" />
         </button>
       </article>
@@ -106,6 +109,12 @@
           <ul class="task--list" id="done_list"></ul>
         </section>
       </section>
+      <dialog id="add_task_dialog" class="task-dialog">
+        <header></header>
+        <article aria-label="add task dialog">
+          <form></form>
+        </article>
+      </dialog>
     </main>
   </body>
 </html>

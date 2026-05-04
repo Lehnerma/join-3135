@@ -26,11 +26,11 @@ function getSubtaskTemplate(title, index) {
  * @returns {string} HTML string for one <li> item
  */
 function getAssignedToItemTemplate(id, name, initials, color, checked = false) {
-    return `
-    <li class="custom-dropdown__item${checked ? ' selected' : ''}" data-value="${id}" data-name="${name}">
+  return `
+    <li class="custom-dropdown__item${checked ? " selected" : ""}" data-value="${id}" data-name="${name}">
       <span class="contact-badge" style="background-color: ${color}">${initials}</span>
       <span class="custom-dropdown__name">${name}</span>
-      <input type="checkbox" class="custom-dropdown__checkbox"${checked ? ' checked' : ''} />
+      <input type="checkbox" class="custom-dropdown__checkbox"${checked ? " checked" : ""} />
     </li>`;
 }
 
@@ -75,7 +75,7 @@ function getTaskCardTemplet(title, description, category, id, priority) {
 }
 
 function getTaskAssignToTemplet(fullName, initials) {
-  const color = contactColors[initials[0].toUpperCase()] || '#888';
+  const color = contactColors[(initials?.[0] ?? "").toUpperCase()] || "#888";
   return `
 <li class="assignee">
   <abbr class="assignee--initials" style="--assignee-color: ${color}" title="${fullName}">${initials}</abbr>
@@ -83,30 +83,30 @@ function getTaskAssignToTemplet(fullName, initials) {
 }
 
 const contactColors = {
-  A: 'rgba(147, 39, 255, 1)',
-  B: 'rgba(110, 82, 255, 1)',
-  C: 'rgba(252, 113, 255, 1)',
-  D: 'rgba(255, 187, 43, 1)',
-  E: 'rgba(31, 215, 193, 1)',
-  F: 'rgba(70, 47, 138, 1)',
-  G: 'rgba(255, 70, 70, 1)',
-  H: 'rgba(0, 190, 232, 1)',
-  I: 'rgba(42, 61, 89, 1)',
-  J: 'rgba(255, 94, 179, 1)',
-  K: 'rgba(255, 116, 94, 1)',
-  L: 'rgba(255, 163, 94, 1)',
-  M: 'rgba(255, 199, 1, 1)',
-  N: 'rgba(0, 56, 255, 1)',
-  O: 'rgba(195, 255, 43, 1)',
-  P: 'rgba(255, 230, 43, 1)',
-  Q: 'rgba(255, 70, 150, 1)',
-  R: 'rgba(0, 150, 130, 1)',
-  S: 'rgba(255, 120, 0, 1)',
-  T: 'rgba(0, 120, 255, 1)',
-  U: 'rgba(180, 40, 40, 1)',
-  V: 'rgba(100, 200, 0, 1)',
-  W: 'rgba(150, 0, 255, 1)',
-  X: 'rgba(0, 255, 200, 1)',
-  Y: 'rgba(200, 150, 0, 1)',
-  Z: 'rgba(120, 120, 120, 1)'
+  A: "rgba(147, 39, 255, 1)",
+  B: "rgba(110, 82, 255, 1)",
+  C: "rgba(252, 113, 255, 1)",
+  D: "rgba(255, 187, 43, 1)",
+  E: "rgba(31, 215, 193, 1)",
+  F: "rgba(70, 47, 138, 1)",
+  G: "rgba(255, 70, 70, 1)",
+  H: "rgba(0, 190, 232, 1)",
+  I: "rgba(42, 61, 89, 1)",
+  J: "rgba(255, 94, 179, 1)",
+  K: "rgba(255, 116, 94, 1)",
+  L: "rgba(255, 163, 94, 1)",
+  M: "rgba(255, 199, 1, 1)",
+  N: "rgba(0, 56, 255, 1)",
+  O: "rgba(195, 255, 43, 1)",
+  P: "rgba(255, 230, 43, 1)",
+  Q: "rgba(255, 70, 150, 1)",
+  R: "rgba(0, 150, 130, 1)",
+  S: "rgba(255, 120, 0, 1)",
+  T: "rgba(0, 120, 255, 1)",
+  U: "rgba(180, 40, 40, 1)",
+  V: "rgba(100, 200, 0, 1)",
+  W: "rgba(150, 0, 255, 1)",
+  X: "rgba(0, 255, 200, 1)",
+  Y: "rgba(200, 150, 0, 1)",
+  Z: "rgba(120, 120, 120, 1)",
 };
