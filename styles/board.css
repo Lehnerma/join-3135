@@ -5,7 +5,7 @@
 .app--content {
   display: grid;
   grid-template-rows: 232px 1fr;
-  justify-content: center;
+  /* justify-content: center; */
   max-width: var(--max-dp-width);
 
   @media (max-width: 900px) {
@@ -196,7 +196,7 @@
   grid-template-rows: repeat(auto-fit, minmax(80px, auto));
   align-items: center;
   gap: 16px;
-  overflow-y: auto;
+
   justify-content: center;
   padding: 8px 16px;
 
