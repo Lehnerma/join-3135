@@ -94,6 +94,8 @@ function setRequired(condition) {
 function guestLogin() {
   window.location.href = "./html/summary.html";
   sessionStorage.setItem("user_id", "guest");
+  sessionStorage.setItem("activeUserName", "Guest");
+  sessionStorage.setItem('justLoggedIn', 'true');
 }
 
 /**
@@ -143,6 +145,7 @@ async function loginUser(ev) {
   if (ACTIV_USER.password === PW) {
     saveId(ACTIV_USER.id);
     sessionStorage.setItem("activeUserName", ACTIV_USER.name);
+    sessionStorage.setItem('justLoggedIn', 'true');
     window.location.href = "./html/summary.html";
   }
 }

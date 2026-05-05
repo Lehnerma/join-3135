@@ -111,7 +111,7 @@
 /* only for testing */
 .app--content {
   grid-area: content;
-  overflow: auto;
+  overflow-y: auto;
   background-color: var(--third-background-color);
 }
 
