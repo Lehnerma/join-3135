@@ -324,6 +324,10 @@
         width: 100%;
     }
 
+.summary-greeting{
+    display: none;
+}
+
     .summary-main {
         gap: 0;
     }

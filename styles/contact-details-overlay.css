@@ -1,0 +1,297 @@
+.contact-details-box {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.9vw, 21px);
+  height: clamp(200px, 33vw, 364px);
+  width: clamp(300px, 51vw, 561px);
+  border: none;
+  top: clamp(80px, 17.5vw, 250px);
+  left: clamp(8px, 2.5vw, 55px);
+  background-color: transparent;
+  z-index: 5;
+  animation: slideInDetailBox 0.4s ease-out forwards;
+}
+
+@keyframes slideInDetailBox {
+  from {
+    transform: translate(100vw);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate(0);
+    opacity: 1;
+  }
+}
+
+.header-contect-details {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: clamp(90px, 9vw, 120px);
+  gap: 54px;
+}
+
+@media (max-width: 1124px) {
+  .header-contect-details {
+    gap: clamp(10px, 3vw, 54px);
+  }
+}
+
+
+@media (max-width: 1024px) {
+  .header-contect-details {
+    gap: 15px;
+  }
+}
+
+.initials-large {
+  width: clamp(70px, 8vw, 120px);
+  height: clamp(70px, 8vw, 120px);
+  border-radius: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--input-text-color);
+  font-size: clamp(16px, 4vw, 47px);
+  font-weight: 500;
+  border-style: solid;
+  border-width: 3px;
+  border-color: var(--input-text-color);
+  box-shadow: var(--contact-shadow-initials);
+}
+
+.main-contact-details {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.contact-information {
+  font-family: "Inter";
+  font-size: clamp(16px, 1.9vw, 21px);
+  font-weight: 400;
+  padding-top: clamp(20px, 5.3vw, 59px);
+  padding-bottom: clamp(20px, 5.3vw, 59px);
+}
+
+.email-and-phone {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.3vw, 15px);
+}
+
+.h1-contact-details {
+  font-family: "Inter";
+  font-size: clamp(27px, 3vw, 47px);
+  font-weight: 500;
+  margin-bottom: clamp(4px, 0.7vw, 8px);
+  white-space: nowrap;
+}
+
+.edit-delete-container {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  gap: clamp(6px, 1.1vw, 13px);
+}
+
+.edit-delete-button {
+  display: flex;
+  align-items: center;
+  font-family: "Inter";
+  font-size: clamp(16px, 1.4vw, 16px);
+  font-weight: 400;
+  color: var(--primary-color);
+  border: none;
+  cursor: pointer;
+}
+
+.edit-delete-button:hover {
+  color: var(--secondary-color);
+  font-weight: 700;
+  transform: scale(1.05);
+}
+
+.edit-delete-button svg {
+  fill: currentColor;
+}
+
+.edit-svg,
+.delete-svg {
+  width: clamp(21px, 2.1vw, 24px);
+  height: clamp(21px, 2.1vw, 24px);
+  margin-right: clamp(4px, 0.7vw, 8px);
+}
+
+li {
+  list-style-type: none;
+}
+
+/* DETAILS DIALOG*/
+
+.initials-large-dialog {
+  width: clamp(40px, 9vw, 120px);
+  height: clamp(40px, 9vw, 120px);
+  border-radius: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--input-text-color);
+  font-size: clamp(16px, 4vw, 47px);
+  font-weight: 500;
+  border-style: solid;
+  border-width: 3px;
+  border-color: var(--input-text-color);
+  box-shadow: var(--contact-shadow-initials);
+  flex-shrink: 0;
+}
+
+.aside-h2-edit {
+  font-weight: 700;
+  font-size: clamp(47px, 5vw, 61px);
+  margin-top: 16px;
+  white-space: nowrap;
+}
+
+.aside-logo-edit {
+  width: clamp(24px, 7vw, 57px);
+  height: clamp(24px, 7vw, 66px);
+  margin-bottom: clamp(12px, 4.2vw, 16px);
+}
+
+
+
+@media(max-width: 650px){ 
+
+
+  .contact-details-box {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.9vw, 21px);
+  height: clamp(200px, 33vw, 364px);
+  width: clamp(300px, 51vw, 561px);
+  border: none;
+  top: clamp(80px, 17.5vw, 250px);
+  left: clamp(8px, 2.5vw, 55px);
+  background-color: transparent;
+  z-index: 5;
+  animation: slideInDetailBox 0.4s ease-out forwards;
+}
+
+
+.header-contect-details {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: clamp(90px, 9vw, 120px);
+  gap: 54px;
+}
+
+.initials-large {
+  width: clamp(70px, 8vw, 120px);
+  height: clamp(70px, 8vw, 120px);
+  border-radius: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--input-text-color);
+  font-size: clamp(16px, 4vw, 47px);
+  font-weight: 500;
+  border-style: solid;
+  border-width: 3px;
+  border-color: var(--input-text-color);
+  box-shadow: var(--contact-shadow-initials);
+}
+
+.main-contact-details {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.contact-information {
+  font-family: "Inter";
+  font-size: clamp(16px, 1.9vw, 21px);
+  font-weight: 400;
+  padding-top: clamp(20px, 5.3vw, 59px);
+  padding-bottom: clamp(20px, 5.3vw, 59px);
+}
+
+.email-and-phone {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.3vw, 15px);
+}
+
+.h1-contact-details {
+  font-family: "Inter";
+  font-size: clamp(27px, 3vw, 47px);
+  font-weight: 500;
+  margin-bottom: clamp(4px, 0.7vw, 8px);
+  white-space: nowrap;
+}
+
+.edit-delete-container {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  gap: clamp(6px, 1.1vw, 13px);
+}
+
+.edit-delete-button {
+  display: flex;
+  align-items: center;
+  font-family: "Inter";
+  font-size: clamp(16px, 1.4vw, 16px);
+  font-weight: 400;
+  color: var(--primary-color);
+  border: none;
+  cursor: pointer;
+}
+
+.edit-delete-button:hover {
+  color: var(--secondary-color);
+  font-weight: 700;
+  transform: scale(1.05);
+}
+
+.edit-delete-button svg {
+  fill: currentColor;
+}
+
+.edit-svg,
+.delete-svg {
+  width: clamp(21px, 2.1vw, 24px);
+  height: clamp(21px, 2.1vw, 24px);
+  margin-right: clamp(4px, 0.7vw, 8px);
+}
+
+li {
+  list-style-type: none;
+}
+
+
+
+
+}
+
+
+@media(max-width: 427px) {
+  .aside-h2-edit {
+    font-size: clamp(40px, 12.5vw, 61px);
+  }
+}
+

@@ -8,8 +8,10 @@
   <title>Contacts</title>
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="../styles/sidebar.css" />
-  
+   
   <link rel="stylesheet" href="../styles/contacts.css" />
+  <link rel="stylesheet" href="../styles/contact-details-overlay.css">
+  <link rel="stylesheet" href="../styles/create-contact-overlay.css">
    <link rel="stylesheet" href="../styles/fonts.css" />
   <link rel="stylesheet" href="../styles/colors.css" />
   <script defer src="../scripts/contacts.js"></script>
@@ -17,7 +19,7 @@
   <!-- <script defer src="../scripts/utilitys.js"></script> -->
 </head>
 
-<body class="app" onload="init(), initUtilitys()">
+<body class="app" onload="init()">
   <header class="app--title">
     <h1 class="app--title-headline">Kanban Project Management Tool</h1>
     <div class="app--icons">
@@ -56,8 +58,8 @@
     
     <div class="left-content">
       <div class="add-button-container">
-        <button type="button" class="btn btn--primary add-button-size" onclick="openContactDialog()">
-          Add new contact
+        <button id="addButton" type="button" class="btn btn--primary add-button-size btn-add-contact" onclick="openContactDialog()">
+          <span class="add-button-text">Add new contact</span>
           <img class="add-contact-icon" src="../assets/img/icons/contacts/person_add.svg" alt="add contact button">
         </button>
       </div>

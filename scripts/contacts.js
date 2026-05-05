@@ -43,6 +43,8 @@ let USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.ap
 
 function init() {
   getUsers();
+  changeButton();
+  window.addEventListener('resize', changeButton);
 }
 
 
@@ -128,7 +130,9 @@ function openEditDialog(editUserIndex, initials, color) {
   document.getElementById('editName').value = editName;
   document.getElementById('editEmail').value = editEmail;
   document.getElementById('editPhone').value = editPhone;
+
 }
+
 
 function addEditContactDetails(editUserIndex) {
   let user = USERS[editUserIndex];
@@ -136,13 +140,13 @@ function addEditContactDetails(editUserIndex) {
   let firstLetter = user.name.charAt(0).toUpperCase();
   let color = contactColors[firstLetter];
   openEditDialog(editUserIndex, initials, color);
-  
 }
+
 
 function openEditContactDialog() {
   addEditContactDetails(editUserIndex);
-  
 }
+
 
 function closeContactDialog() {
   const dialogRef = document.getElementById('openNewDialog');
@@ -192,15 +196,12 @@ function showDetails(user, isAlreadyActive, userSelectionID, i) {
 }
 
 
-
 function addShowDetails(user, i) {
   const initials = getInitials(user.name);
   const firstLetter = user.name.charAt(0).toUpperCase();
   const color = contactColors[firstLetter];
   return renderShowDetailsTpl(user, i, initials, color);
 }
-
-
 
 
 function createContact() {
@@ -217,9 +218,10 @@ function createContact() {
   addNewContact(newContact);
 }
 
+
 async function addNewContact(newContact) {
   USERS.push(newContact);
-  
+
   const contactIndex = USERS.findIndex(user => user.id === newContact.id);
   sortUserContactList();
   if (contactIndex == -1) {
@@ -273,6 +275,42 @@ async function deleteUserFromDatabase(firebaseKey) {
 }
 
 
+function showSuccessBanner() {
+  const banner = document.getElementById('contactSuccessOverlay');
+  banner.classList.remove('hide-overlay');
+  setTimeout(() => {
+    banner.classList.add('hide-overlay');
+  }, 800);
+}
+
+
+async function saveNewContactData(index) {
+  let user = USERS[index];
+  let key = user.firebaseKey;
+
+  let updatedData = {
+    name: document.getElementById('editName').value,
+    email: document.getElementById('editEmail').value,
+    phone: document.getElementById('editPhone').value,
+
+  };
+
+  const response = await fetch(`https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedData)
+  });
+
+  if (response.ok) {
+    await getUsers();
+    await closeEditDialog();
+  } else {
+    console.error('Fehler beim Updaten');
+  }
+}
+
 function getSingleUser(user, i) {
   const initials = getInitials(user.name);
   const firstLetter = user.name.charAt(0).toUpperCase();
@@ -280,6 +318,16 @@ function getSingleUser(user, i) {
   return renderSingleUserHtml(user, i, initials, color);
 }
 
+function changeButton() {
+  let addButton = document.getElementById('addButton');
+  if (window.innerWidth <= 650) {
+    addButton.classList.remove('btn', 'btn--primary', 'add-button-size');
+    addButton.classList.add('btn--addPerson');
+  }else {
+        addButton.classList.add('btn', 'btn--primary', 'add-button-size');
+        addButton.classList.remove('btn--addPerson');
+  }
+}
 
 
 
