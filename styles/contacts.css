@@ -374,9 +374,9 @@ button {
     width: clamp(100px, 90vw, 550px);
   }
 
-  .right-content {
+  /* .right-content {
     display: none;
-  }
+  } */
 
   .add-contact-icon {
     width: 32px;

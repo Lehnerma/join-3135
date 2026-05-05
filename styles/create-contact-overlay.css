@@ -235,10 +235,31 @@ form {
 }
 
 
+
 @media (max-width: 1024px) {
     .dialog-content {
         width: clamp(428px, 70vw, 1000px);
         min-height: clamp(75vh, 95%, 800px);
+    }
+    
+ @keyframes slideIn {
+        from {
+            transform: translate(-50%, 100vh);
+        }
+
+        to {
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    @keyframes slideOut {
+        from {
+            transform: translate(-50%, -50%);
+        }
+
+        to {
+            transform: translate(-50%, 100vh);
+        }
     }
 
     .dialog-container {
@@ -347,31 +368,6 @@ form {
         width: 24px;
         height: 24px;
     }
-}
-
-@media (max-width: 650px) {
-
-    @keyframes slideIn {
-        from {
-            transform: translate(-50%, 100vh);
-        }
-
-        to {
-            transform: translate(-50%, -50%);
-        }
-    }
-
-    @keyframes slideOut {
-        from {
-            transform: translate(-50%, -50%);
-        }
-
-        to {
-            transform: translate(-50%, 100vh);
-        }
-    }
-
-
 }
 
 @media (max-width: 768px) {

@@ -173,6 +173,7 @@ function getUserDetails(userIndex) {
   const userSelectionID = document.getElementById(userIndex);
   const isAlreadyActive = userSelectionID.classList.contains('bg-color-active');
   removeAllBgColors(user, isAlreadyActive, userSelectionID, userIndex);
+
 }
 
 
@@ -193,6 +194,14 @@ function showDetails(user, isAlreadyActive, userSelectionID, i) {
   } else {
     dialogRef.innerHTML = '';
   }
+    if (window.innerWidth <= 650) {
+        document.body.classList.add('show-mobile-details');
+    }
+}
+
+function closeDetails() {
+    
+    document.body.classList.remove('show-mobile-details');
 }
 
 
@@ -262,6 +271,9 @@ async function deleteContact(index) {
   }
 }
 
+function closeDetails() {
+    document.body.classList.remove('show-mobile-details');
+}
 
 async function deleteUserFromDatabase(firebaseKey) {
   const url = `https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/${firebaseKey}.json`;

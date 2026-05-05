@@ -283,9 +283,12 @@ li {
   list-style-type: none;
 }
 
+}
 
 
 
+@media (max-width: 650px) {
+  
 }
 
 

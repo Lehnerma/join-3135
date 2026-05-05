@@ -137,6 +137,7 @@ function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
 function renderShowDetailsTpl(user, i, initials, color) {
   return /*html*/ `
     <div class="contact-details-box show">
+    
       <header class="header-contect-details">
         <div class="initials-large" style="background-color: ${color}">
           ${initials}

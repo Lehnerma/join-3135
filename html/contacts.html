@@ -8,22 +8,22 @@
   <title>Contacts</title>
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="../styles/sidebar.css" />
-   
   <link rel="stylesheet" href="../styles/contacts.css" />
   <link rel="stylesheet" href="../styles/contact-details-overlay.css">
   <link rel="stylesheet" href="../styles/create-contact-overlay.css">
-   <link rel="stylesheet" href="../styles/fonts.css" />
+  <link rel="stylesheet" href="../styles/fonts.css" />
   <link rel="stylesheet" href="../styles/colors.css" />
   <script defer src="../scripts/contacts.js"></script>
   <script defer src="../scripts/contacts-template.js"></script>
-  <!-- <script defer src="../scripts/utilitys.js"></script> -->
+  <script defer src="../scripts/utilitys.js"></script>
 </head>
 
-<body class="app" onload="init()">
+<body class="app" onload="init(); initUtilitys()">
   <header class="app--title">
     <h1 class="app--title-headline">Kanban Project Management Tool</h1>
+     <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
     <div class="app--icons">
-      <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="?" class="app--icon" /></a>
+      <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="help" class="app--icon" /></a>
       <button id="user_menu_button" class="btn btn--user"></button>
     </div>
   </header>
@@ -55,10 +55,11 @@
   </nav>
 
   <main class="main-content">
-    
+
     <div class="left-content">
       <div class="add-button-container">
-        <button id="addButton" type="button" class="btn btn--primary add-button-size btn-add-contact" onclick="openContactDialog()">
+        <button id="addButton" type="button" class="btn btn--primary add-button-size btn-add-contact"
+          onclick="openContactDialog()">
           <span class="add-button-text">Add new contact</span>
           <img class="add-contact-icon" src="../assets/img/icons/contacts/person_add.svg" alt="add contact button">
         </button>
@@ -74,12 +75,13 @@
     </div>
 
     <div class="right-content">
-      <div class="headline">
-        <h1 class="contacts-title">Contacts</h1>
-        <div class="vertical-divider"></div>
-        <span class="contacts-subtitle">Better with a team</span>
-      </div>
+       <div class="headline">
+         <h1 class="contacts-title">Contacts</h1>
+         <div class="vertical-divider"></div>
+         <span class="contacts-subtitle">Better with a team</span>
+       </div>
       <div id="contactDetailsDialog"></div>
+    </div>
   </main>
 
   <dialog class="dialog-content" id="openNewDialog" onclick="closeContactDialog()">
@@ -88,7 +90,3 @@
 </body>
 
 </html>
-
-
-
- 
