@@ -20,7 +20,7 @@ async function loadTasksFromFirebase() {
     const RESULT = await RESPONSE.json();
     const TASKS_ARRAY = getArryFromResult(RESULT);
     sessionStorage.setItem("tasks", JSON.stringify(TASKS_ARRAY));
-    TASKS.push(TASKS_ARRAY);
+    TASKS = TASKS_ARRAY;
     renderBoard(TASKS_ARRAY);
   } catch (er) {
     console.error(er);
@@ -72,15 +72,19 @@ function buildTaskCard(task) {
   const WRAPPER = document.createElement("div");
   WRAPPER.innerHTML = getTaskCardTemplet(task.title, task.description, task.category, task.id, getPriority(task.priority));
 
-  const SUBTASKS = task.subtasks || [];
+  const SUBTASKS = Array.isArray(task.subtasks) ? task.subtasks : [];
   const SUB_TOTAL = SUBTASKS.length;
   const SUB_DONE = SUBTASKS.filter((s) => s.done === true).length;
   WRAPPER.querySelector(".subtask--progress-container").innerHTML = getSubtaskProgressTemplate(SUB_DONE, SUB_TOTAL);
 
   const ASSIGNEES_LIST = WRAPPER.querySelector(".task--assignees");
-  (task.assignedTo || []).forEach((name) => {
+
+  (Array.isArray(task.assignedTo) ? task.assignedTo : []).forEach((name) => {
+    if (!name) return;
     ASSIGNEES_LIST.innerHTML += getTaskAssignToTemplet(name, getInitials(name));
   });
+
+
   return WRAPPER.innerHTML;
 }
 
@@ -89,9 +93,14 @@ function getPriority(priority) {
   return VALID.includes(priority) ? priority : "low";
 }
 
-function getInitials(name) {
+function getInitials(name = "") {
+  if (typeof name !== "string") return "";
   const parts = name.trim().split(" ");
-  const last = parts.length > 1 ? parts[parts.length - 1].charAt(0).toUpperCase() : "";
+  if (!parts[0]) return "";
+  const last =
+    parts.length > 1
+      ? parts[parts.length - 1].charAt(0).toUpperCase()
+      : "";
   return parts[0].charAt(0).toUpperCase() + last;
 }
 
@@ -146,3 +155,9 @@ function taskDragDrop(status) {
   );
   updateTaskStatus(CURRENT_TASK.firebaseKey, status);
 }
+
+
+
+
+
+

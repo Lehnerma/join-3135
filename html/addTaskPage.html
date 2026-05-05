@@ -108,14 +108,16 @@
           <!-- assignt to -->
           <div class="input-section">
             <label for="assignedToSearch">Assigned to</label>
-            <div class="custom-dropdown" id="assignedToDropdown" onclick="toggleDropdown()">
+            <div class="custom-dropdown" id="assignedToDropdown" >
               <div class="custom-dropdown__trigger">
-                <input type="text" id="assignedToSearch" class="input custom-dropdown__input"
+                <input type="text" id="assignedToSearch" class="input custom-dropdown__input" onclick="toggleDropdown(event)"
                   placeholder="Select contacts to assign" autocomplete="off" />
                 <button type="button" class="custom-dropdown__toggle" aria-label="Toggle dropdown" >
                   <span class="custom-dropdown__arrow"></span>
                 </button>
+                
               </div>
+              <div id="assignedPreview"></div>
               <ul class="custom-dropdown__list" id="assignedToList">
                 <li class="custom-dropdown__item" data-value="1" data-name="Max Mustermann">
                   <span class="contact-badge" style="background-color: var(--contact-color-1)">MA</span>
