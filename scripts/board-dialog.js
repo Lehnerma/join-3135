@@ -7,6 +7,10 @@ function initBoardTask() {
 
   const SEARCH_TASKS_BTN = document.getElementById("search_tasks_btn");
   SEARCH_TASKS_BTN.addEventListener("click", () => searchTasks());
+
+  const SEARCH_INPUT = document.getElementById("search_tasks");
+  SEARCH_INPUT.addEventListener("input",searchTasks);
+
 }
 
 function openAddTaskDialog() {
@@ -32,7 +36,7 @@ function searchTasks() {
   const SEARCH_INPUT = document.getElementById("search_tasks").value;
   const TEST_ARRAY = [];
 
-  ALL_TASKS.filter((task) => {
+    ALL_TASKS.filter((task) => {
     const TITLE = String(task.title || "").toLowerCase();
     const DESCRIPTION = String(task.description || "").toLowerCase();
     const SEARCH_LOWER = SEARCH_INPUT.trim().toLowerCase();
@@ -42,5 +46,5 @@ function searchTasks() {
     }
     //end of testing
   });
-  console.log(TEST_ARRAY);
+  renderBoard(TEST_ARRAY);
 }
