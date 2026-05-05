@@ -9,7 +9,7 @@ function initBoardTask() {
   SEARCH_TASKS_BTN.addEventListener("click", () => searchTasks());
 
   const SEARCH_INPUT = document.getElementById("search_tasks");
-  SEARCH_INPUT.addEventListener("input",searchTasks);
+  SEARCH_INPUT.addEventListener("change",searchTasks); //check if input or change is better for the search function.
 
 }
 
@@ -30,7 +30,6 @@ function addStatusTask(status) {
 }
 
 //search function.
-
 function searchTasks() {
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const SEARCH_INPUT = document.getElementById("search_tasks").value;
