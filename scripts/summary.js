@@ -57,6 +57,7 @@ function showGreeting() {
 }
 
 function showMobileWithGreeting() {
+  GREETING.classList.remove('summary-greeting');
   GREETING.classList.add('summary-greeting-mobile');
   GREETING.classList.remove('d-none');
   setTimeout(() => {
