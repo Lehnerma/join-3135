@@ -98,6 +98,14 @@
   background-color: var(--btn-user-hover);
 }
 
+.btn--addPerson{
+ width: 56px;
+ height: 56px;
+ border: solid 1px var(--primary-color);
+ border-radius: 46px;
+ background-color: var(--primary-color);
+}
+
 .btn--subtask {
   background-color: transparent;
   border: none;

@@ -43,6 +43,8 @@ let USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.ap
 
 function init() {
   getUsers();
+  changeButton();
+  window.addEventListener('resize', changeButton);
 }
 
 
@@ -117,9 +119,9 @@ function openContactDialog() {
   dialogRef.classList.remove('hide');
   dialogRef.innerHTML = renderHtmlContactDialogTpl();
   dialogRef.showModal();
-  }
+}
 
-  
+
 function openEditDialog(editUserIndex, initials, color) {
   const dialogRef = document.getElementById('openNewDialog');
   dialogRef.classList.remove('hide');
@@ -273,6 +275,42 @@ async function deleteUserFromDatabase(firebaseKey) {
 }
 
 
+function showSuccessBanner() {
+  const banner = document.getElementById('contactSuccessOverlay');
+  banner.classList.remove('hide-overlay');
+  setTimeout(() => {
+    banner.classList.add('hide-overlay');
+  }, 800);
+}
+
+
+async function saveNewContactData(index) {
+  let user = USERS[index];
+  let key = user.firebaseKey;
+
+  let updatedData = {
+    name: document.getElementById('editName').value,
+    email: document.getElementById('editEmail').value,
+    phone: document.getElementById('editPhone').value,
+
+  };
+
+  const response = await fetch(`https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedData)
+  });
+
+  if (response.ok) {
+    await getUsers();
+    await closeEditDialog();
+  } else {
+    console.error('Fehler beim Updaten');
+  }
+}
+
 function getSingleUser(user, i) {
   const initials = getInitials(user.name);
   const firstLetter = user.name.charAt(0).toUpperCase();
@@ -280,6 +318,16 @@ function getSingleUser(user, i) {
   return renderSingleUserHtml(user, i, initials, color);
 }
 
+function changeButton() {
+  let addButton = document.getElementById('addButton');
+  if (window.innerWidth <= 650) {
+    addButton.classList.remove('btn', 'btn--primary', 'add-button-size');
+    addButton.classList.add('btn--addPerson');
+  }else {
+        addButton.classList.add('btn', 'btn--primary', 'add-button-size');
+        addButton.classList.remove('btn--addPerson');
+  }
+}
 
 
 

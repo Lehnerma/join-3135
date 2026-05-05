@@ -52,12 +52,10 @@
     width: 100%;
     height: 100vh;
     display: flex;
-
 }
 
 .aside-content {
     background-color: var(--primary-color);
-
     color: var(--input-text-color);
     padding: 66px 48px;
     display: flex;
@@ -69,18 +67,18 @@
 .aside-text-wrapper {
     display: flex;
     flex-direction: column;
-    padding-top: 88px;
+    padding-top: 24.5%;
 }
 
 .aside-logo {
-    width: clamp(24px, 7vw, 57px);
-    height: clamp(24px, 7vw, 66px);
+    width: clamp(14px, 5vw, 57px);
+    height: clamp(14px, 5vw, 66px);
     margin-bottom: 8px;
 }
 
 .aside-h2 {
     font-weight: 700;
-    font-size: clamp(47px, 5vw, 61px);
+    font-size: clamp(47px, 1vw, 61px);
     margin: 0;
     white-space: nowrap;
 }
@@ -150,7 +148,7 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 204px auto auto auto;
+    margin: clamp(102px, 17vw, 204px) auto auto auto;
     flex-shrink: 0;
 }
 
@@ -236,26 +234,25 @@ form {
     filter: brightness(0) invert(1);
 }
 
-/*RESPONSIVE*/
 
 @media (max-width: 1024px) {
     .dialog-content {
         width: clamp(428px, 70vw, 1000px);
-        height: clamp(550px, 95%, 800px);
+        min-height: clamp(75vh, 95%, 800px);
     }
 
     .dialog-container {
         flex-direction: column;
     }
 
-     .aside-content {
+    .aside-content {
         position: relative;
         min-width: clamp(280px, 100%, 396px);
-        height: clamp(27vh, 37vw, 39.7dvh);
+        height: clamp(40vh, 37vw, 39.7dvh);
         align-items: flex-start;
         justify-content: center;
         padding: 24px;
-    } 
+    }
 
     .aside-logo,
     .aside-logo-edit {
@@ -309,7 +306,6 @@ form {
         align-items: center;
         justify-content: flex-start;
         width: 100%;
-
     }
 
     form {
@@ -353,6 +349,31 @@ form {
     }
 }
 
+@media (max-width: 650px) {
+
+    @keyframes slideIn {
+        from {
+            transform: translate(-50%, 100vh);
+        }
+
+        to {
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    @keyframes slideOut {
+        from {
+            transform: translate(-50%, -50%);
+        }
+
+        to {
+            transform: translate(-50%, 100vh);
+        }
+    }
+
+
+}
+
 @media (max-width: 768px) {
     .btn-cancel {
         display: none;
@@ -366,7 +387,7 @@ form {
     }
 
     .aside-content {
-        height: clamp(3vh, 80vw, 39.7dvh);
+        height: clamp(40vh, 80vw, 39.7dvh);
     }
 
 
