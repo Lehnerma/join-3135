@@ -21,7 +21,7 @@ async function loadTasksFromFirebase() {
     const RESULT = await RESPONSE.json();
     const TASKS_ARRAY = getArryFromResult(RESULT);
     sessionStorage.setItem("tasks", JSON.stringify(TASKS_ARRAY));
-    TASKS.push(TASKS_ARRAY);
+    TASKS.push(...TASKS_ARRAY);
     renderBoard(TASKS_ARRAY);
   } catch (er) {
     console.error(er);
