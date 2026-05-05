@@ -179,11 +179,24 @@ main {
 
 .user-item {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
   padding: 8px;
   border-radius: 8px;
+  cursor: pointer;
+  transition: background 100ms ease;
 }
+
+.user-item:hover {
+  background: #f0f0f0;
+}
+
+.user-item.selected {
+  background: #2a3647;
+  color: white;
+}
+
+
 
 .user-item .initials {
   width: 30px;
@@ -198,6 +211,24 @@ main {
 .user-item.active {
   background-color: #2a3647;
   color: white;
+}
+
+
+.assigned-wrapper {
+  display: flex;
+  gap: 4px;
+}
+
+.assigned-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #2a3647;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
 }
 
 
