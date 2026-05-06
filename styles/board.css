@@ -4,7 +4,7 @@
 
 .app--content {
   display: grid;
-  grid-template-rows: 232px 1fr;
+  grid-template-rows: 210px 1fr;
   /* justify-content: center; */
   max-width: var(--max-dp-width);
 
@@ -120,7 +120,7 @@
 
 .kanban-columns {
   display: grid;
-  grid-template-columns: repeat(4, clamp(252px, 100%, 280px)); /* evtl max wert anpassen */
+  grid-template-columns: repeat(4, minmax(252px, 300px)); /* evtl max wert anpassen */
   gap: 24px;
   padding: 0 16px;
   overflow-x: auto;
@@ -197,7 +197,6 @@
   align-items: center;
   gap: 16px;
 
-  justify-content: center;
   padding: 8px 16px;
 
   @media (max-width: 900px) {
@@ -214,7 +213,8 @@
   justify-content: center;
   align-items: center;
   height: 48px;
-  min-width: 252px;
+  width: 100%;
+  max-width: 252px;
   background-color: rgba(231, 231, 231, 1);
   color: var(--fourth-text-color);
   border: solid 1px var(--fourth-text-color);
@@ -229,7 +229,7 @@
   box-shadow: 0px 0px 10px 3px #00000014;
   cursor: pointer;
   list-style: none;
-  width: 252px;
+  width: clamp(200px, 100%, 252px);
 
   &:active {
     transition: transform 0.125s ease;
