@@ -12,12 +12,15 @@
     <link rel="stylesheet" href="../styles/colors.css" />
     <link rel="stylesheet" href="../styles/sidebar.css" />
     <link rel="stylesheet" href="../styles/board.css" />
+    <link rel="stylesheet" href="../styles/board-dialog.css" />
 
     <script src="../scripts/templates.js"></script>
+    <script src="../scripts/utilitys.js"></script>
+    <script src="../scripts/board-dialog.js"></script>
     <script src="../scripts/board.js"></script>
   </head>
 
-  <body class="app" onload="(initBoard(), initUtilitys())">
+  <body class="app" onload="(initUtilitys(), initBoard())">
     <header class="app--title">
       <h1 class="app--title-headline">Kanban Project Management Tool</h1>
       <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
@@ -51,20 +54,25 @@
     </nav>
     <main class="app--content">
       <article class="header-section">
-        <section class="title-container">
-          <h1>Board</h1>
-          <div class="board-actions">
-            <input type="text" id="search-task" placeholder="Find Task" />
-            <button class="btn btn--primary">Add task <img src="../assets/img/icons/subtask/add-white.svg" alt="+" /></button>
-          </div>
-        </section>
+        <h1>Board</h1>
+
+        <sectioin class="search-container">
+          <input type="text" id="search_tasks" class="task-search-input" placeholder="Find Task" />
+          <span class="search-divider"></span>
+          <button id="search_tasks_btn" class="btn" role="search"><img src="../assets/img/icons/input/search.svg" alt="🔍search" class="search-icon" /></button>
+        </sectioin>
+
+        <button class="btn btn--primary">
+          <span class="btn--primary-text" id="add_task_head">Add task</span>
+          <img src="../assets/img/icons/subtask/add-white.svg" alt="+" />
+        </button>
       </article>
 
       <section class="kanban-columns" aria-label="Kanban Board">
         <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('todo')" ondragenter="columnDragEnter(event, 'todo')" ondragleave="columnDragLeave(event)">
           <div class="column-title">
             <h2>To do</h2>
-            <button class="btn btn--add-task" aria-label="Add task to To do">
+            <button class="btn btn--add-task" aria-label="Add task to To do" onclick="addStatusTask('todo')">
               <img src="../assets/img/icons/subtask/add.svg" alt="" aria-hidden="true" />
             </button>
           </div>
@@ -74,7 +82,7 @@
         <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('progress')" ondragenter="columnDragEnter(event, 'progress')" ondragleave="columnDragLeave(event)">
           <div class="column-title">
             <h2>In progress</h2>
-            <button class="btn btn--add-task" aria-label="Add task to In progress">
+            <button class="btn btn--add-task" aria-label="Add task to In progress" onclick="addStatusTask('progress')">
               <img src="../assets/img/icons/subtask/add.svg" alt="" aria-hidden="true" />
             </button>
           </div>
@@ -84,7 +92,7 @@
         <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('feedback')" ondragenter="columnDragEnter(event, 'feedback')" ondragleave="columnDragLeave(event)">
           <div class="column-title">
             <h2>Await feedback</h2>
-            <button class="btn btn--add-task" aria-label="Add task to Await feedback">
+            <button class="btn btn--add-task" aria-label="Add task to Await feedback" onclick="addStatusTask('feedback')">
               <img src="../assets/img/icons/subtask/add.svg" alt="" aria-hidden="true" />
             </button>
           </div>
@@ -94,13 +102,19 @@
         <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('done')" ondragenter="columnDragEnter(event, 'done')" ondragleave="columnDragLeave(event)">
           <div class="column-title">
             <h2>Done</h2>
-            <button class="btn btn--add-task" aria-label="Add task to Done">
+            <button class="btn btn--add-task" aria-label="Add task to Done" onclick="addStatusTask('done')">
               <img src="../assets/img/icons/subtask/add.svg" alt="" aria-hidden="true" />
             </button>
           </div>
           <ul class="task--list" id="done_list"></ul>
         </section>
       </section>
+      <dialog id="add_task_dialog" class="task-dialog">
+        <header></header>
+        <article aria-label="add task dialog">
+          <form></form>
+        </article>
+      </dialog>
     </main>
   </body>
 </html>

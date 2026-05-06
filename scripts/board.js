@@ -8,6 +8,7 @@ let DRAG_OLD_STATUS;
 let DRAG_HEIGHT;
 
 function initBoard() {
+  initBoardTask();
   loadTasksFromFirebase();
 }
 
@@ -20,7 +21,7 @@ async function loadTasksFromFirebase() {
     const RESULT = await RESPONSE.json();
     const TASKS_ARRAY = getArryFromResult(RESULT);
     sessionStorage.setItem("tasks", JSON.stringify(TASKS_ARRAY));
-    TASKS = TASKS_ARRAY;
+    TASKS.push(...TASKS_ARRAY);
     renderBoard(TASKS_ARRAY);
   } catch (er) {
     console.error(er);
@@ -78,9 +79,7 @@ function buildTaskCard(task) {
   WRAPPER.querySelector(".subtask--progress-container").innerHTML = getSubtaskProgressTemplate(SUB_DONE, SUB_TOTAL);
 
   const ASSIGNEES_LIST = WRAPPER.querySelector(".task--assignees");
-
-  (Array.isArray(task.assignedTo) ? task.assignedTo : []).forEach((name) => {
-    if (!name) return;
+  (task.assignedTo || []).filter(Boolean).forEach((name) => {
     ASSIGNEES_LIST.innerHTML += getTaskAssignToTemplet(name, getInitials(name));
   });
 
