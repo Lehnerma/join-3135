@@ -234,8 +234,6 @@ form {
     filter: brightness(0) invert(1);
 }
 
-
-
 @media (max-width: 1024px) {
     .dialog-content {
         width: clamp(428px, 70vw, 1000px);
@@ -336,7 +334,6 @@ form {
     }
 
     .dialog-input-container {
-        width: 100%;
         width: clamp(364px, 60vw, 550px);
         min-height: 153px;
         gap: clamp(15px, 2vw, 25px);
@@ -385,7 +382,6 @@ form {
     .aside-content {
         height: clamp(40vh, 80vw, 39.7dvh);
     }
-
 
     .aside-p {
         font-weight: 400;

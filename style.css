@@ -98,12 +98,16 @@
   background-color: var(--btn-user-hover);
 }
 
-.btn--addPerson{
- width: 56px;
- height: 56px;
- border: solid 1px var(--primary-color);
- border-radius: 46px;
- background-color: var(--primary-color);
+.btn--addPerson {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border: solid 1px var(--primary-color);
+  border-radius: 46px;
+  background-color: var(--primary-color);
+  box-shadow: var(--contact-menu-shadow);
 }
 
 .btn--subtask {

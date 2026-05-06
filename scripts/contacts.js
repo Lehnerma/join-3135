@@ -173,7 +173,23 @@ function getUserDetails(userIndex) {
   const userSelectionID = document.getElementById(userIndex);
   const isAlreadyActive = userSelectionID.classList.contains('bg-color-active');
   removeAllBgColors(user, isAlreadyActive, userSelectionID, userIndex);
+  let leftContent = document.getElementById('leftContent');
+  let backArrow = document.getElementById('backArrow');
+  let editMenu = document.getElementById('editMenu');
 
+  if (window.innerWidth <= 650 && userIndex) {
+    leftContent.classList.remove('left-content');
+    leftContent.classList.add('contact-list-off');
+    backArrow.classList.add('back-arrow-box');
+    editMenu.classList.add('edit-menu-box','btn--addPerson');
+
+  } else {
+    leftContent.classList.add('left-content');
+    leftContent.classList.remove('contact-list-off');
+    backArrow.classList.remove('back-arrow-box');
+    editMenu.classList.remove('edit-menu-box','btn--addPerson');
+
+  }
 }
 
 
@@ -194,16 +210,8 @@ function showDetails(user, isAlreadyActive, userSelectionID, i) {
   } else {
     dialogRef.innerHTML = '';
   }
-    if (window.innerWidth <= 650) {
-        document.body.classList.add('show-mobile-details');
-    }
-}
 
-function closeDetails() {
-    
-    document.body.classList.remove('show-mobile-details');
 }
-
 
 function addShowDetails(user, i) {
   const initials = getInitials(user.name);
@@ -271,9 +279,6 @@ async function deleteContact(index) {
   }
 }
 
-function closeDetails() {
-    document.body.classList.remove('show-mobile-details');
-}
 
 async function deleteUserFromDatabase(firebaseKey) {
   const url = `https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/${firebaseKey}.json`;
@@ -335,12 +340,17 @@ function changeButton() {
   if (window.innerWidth <= 650) {
     addButton.classList.remove('btn', 'btn--primary', 'add-button-size');
     addButton.classList.add('btn--addPerson');
-  }else {
-        addButton.classList.add('btn', 'btn--primary', 'add-button-size');
-        addButton.classList.remove('btn--addPerson');
+  } else {
+    addButton.classList.add('btn', 'btn--primary', 'add-button-size');
+    addButton.classList.remove('btn--addPerson');
   }
 }
 
+
+function backToContactlist() {
+
+  
+}
 
 
 

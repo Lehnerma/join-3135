@@ -3,8 +3,9 @@
   display: flex;
   flex-direction: column;
   gap: clamp(10px, 1.9vw, 21px);
-  height: clamp(200px, 33vw, 364px);
-  width: clamp(300px, 51vw, 561px);
+  width: 100%;
+  ;
+  height: auto;
   border: none;
   top: clamp(80px, 17.5vw, 250px);
   left: clamp(8px, 2.5vw, 55px);
@@ -29,32 +30,19 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  height: clamp(90px, 9vw, 120px);
-  gap: 54px;
-}
 
-@media (max-width: 1124px) {
-  .header-contect-details {
-    gap: clamp(10px, 3vw, 54px);
-  }
-}
-
-
-@media (max-width: 1024px) {
-  .header-contect-details {
-    gap: 15px;
-  }
+  gap: clamp(20px, 1vw, 54px);
 }
 
 .initials-large {
-  width: clamp(70px, 8vw, 120px);
-  height: clamp(70px, 8vw, 120px);
+  width: clamp(80px, 8vw, 120px);
+  height: clamp(80px, 8vw, 120px);
   border-radius: 70%;
   display: flex;
   justify-content: center;
   align-items: center;
   color: var(--input-text-color);
-  font-size: clamp(16px, 4vw, 47px);
+  font-size: clamp(27px, 3vw, 47px);
   font-weight: 500;
   border-style: solid;
   border-width: 3px;
@@ -71,8 +59,7 @@
 }
 
 .contact-information {
-  font-family: "Inter";
-  font-size: clamp(16px, 1.9vw, 21px);
+  font-size: 20px;
   font-weight: 400;
   padding-top: clamp(20px, 5.3vw, 59px);
   padding-bottom: clamp(20px, 5.3vw, 59px);
@@ -87,11 +74,10 @@
 }
 
 .h1-contact-details {
-  font-family: "Inter";
   font-size: clamp(27px, 3vw, 47px);
   font-weight: 500;
   margin-bottom: clamp(4px, 0.7vw, 8px);
-  white-space: nowrap;
+
 }
 
 .edit-delete-container {
@@ -110,7 +96,7 @@
   font-weight: 400;
   color: var(--primary-color);
   border: none;
-  cursor: pointer;
+
 }
 
 .edit-delete-button:hover {
@@ -166,135 +152,139 @@ li {
   margin-bottom: clamp(12px, 4.2vw, 16px);
 }
 
+@media(max-width: 650px) { 
 
+  .details-off {
+    display: none;
+  }
 
-@media(max-width: 650px){ 
-
+  .contact-list-off {
+    display: none;
+  }
 
   .contact-details-box {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(10px, 1.9vw, 21px);
-  height: clamp(200px, 33vw, 364px);
-  width: clamp(300px, 51vw, 561px);
-  border: none;
-  top: clamp(80px, 17.5vw, 250px);
-  left: clamp(8px, 2.5vw, 55px);
-  background-color: transparent;
-  z-index: 5;
-  animation: slideInDetailBox 0.4s ease-out forwards;
-}
+    top: clamp(200px, 17.5vw, 400px);
+    gap: 21px;
+    padding: 0;
+  }
 
+  .contact-details-box {
+    animation: none;
+  }
 
-.header-contect-details {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  height: clamp(90px, 9vw, 120px);
-  gap: 54px;
-}
+  .header-contect-details {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+  }
 
-.initials-large {
-  width: clamp(70px, 8vw, 120px);
-  height: clamp(70px, 8vw, 120px);
-  border-radius: 70%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--input-text-color);
-  font-size: clamp(16px, 4vw, 47px);
-  font-weight: 500;
-  border-style: solid;
-  border-width: 3px;
-  border-color: var(--input-text-color);
-  box-shadow: var(--contact-shadow-initials);
-}
+  .contact-information,
+  .main-contact-details,
+  .email-and-phone {
+    padding: 0;
+    gap: 21px;
+  }
 
-.main-contact-details {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+  .h1-contact-details {
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0;
+  }
 
-.contact-information {
-  font-family: "Inter";
-  font-size: clamp(16px, 1.9vw, 21px);
-  font-weight: 400;
-  padding-top: clamp(20px, 5.3vw, 59px);
-  padding-bottom: clamp(20px, 5.3vw, 59px);
-}
+  .edit-delete-container {
+    display: none;
+  }
 
-.email-and-phone {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(8px, 1.3vw, 15px);
-}
+  .edit-delete-button {
+    display: flex;
+    align-items: center;
+    font-family: "Inter";
+    font-size: clamp(16px, 1.4vw, 16px);
+    font-weight: 400;
+    color: var(--primary-color);
+    border: none;
 
-.h1-contact-details {
-  font-family: "Inter";
-  font-size: clamp(27px, 3vw, 47px);
-  font-weight: 500;
-  margin-bottom: clamp(4px, 0.7vw, 8px);
-  white-space: nowrap;
-}
+  }
 
-.edit-delete-container {
-  display: flex;
-  width: 100%;
-  justify-content: flex-start;
-  align-items: center;
-  gap: clamp(6px, 1.1vw, 13px);
-}
+  .edit-delete-button:hover {
+    color: var(--secondary-color);
+    font-weight: 700;
+    transform: scale(1.05);
+  }
 
-.edit-delete-button {
-  display: flex;
-  align-items: center;
-  font-family: "Inter";
-  font-size: clamp(16px, 1.4vw, 16px);
-  font-weight: 400;
-  color: var(--primary-color);
-  border: none;
-  cursor: pointer;
-}
+  .edit-delete-button svg {
+    fill: currentColor;
+  }
 
-.edit-delete-button:hover {
-  color: var(--secondary-color);
-  font-weight: 700;
-  transform: scale(1.05);
-}
+  .edit-svg,
+  .delete-svg {
+    width: clamp(21px, 2.1vw, 24px);
+    height: clamp(21px, 2.1vw, 24px);
+    margin-right: clamp(4px, 0.7vw, 8px);
+  }
 
-.edit-delete-button svg {
-  fill: currentColor;
-}
+  .edit-menu-box {
+    display: flex;
+    position: fixed;
+    border: none;
+    bottom: 112px;
+    right: 12px;
+    z-index: 20;
+    width: 56px;
+    height: 56px;
+      }
 
-.edit-svg,
-.delete-svg {
-  width: clamp(21px, 2.1vw, 24px);
-  height: clamp(21px, 2.1vw, 24px);
-  margin-right: clamp(4px, 0.7vw, 8px);
-}
+  .edit-menu{
+    width: 32px;
+    height: 32px;
+  }
 
-li {
-  list-style-type: none;
-}
+  .back-arrow-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    position: fixed;
+    border: none;
+    top: 128px;
+    right: 12px;
+    z-index: 20;
+    width: 32px;
+    height: 32px;
+  }
+
+  .back-arrow {
+    width: 24.6px;
+    height: 23.92px;
+  }
+
 
 }
-
-
-
-@media (max-width: 650px) {
-  
-}
-
 
 @media(max-width: 427px) {
+
   .aside-h2-edit {
     font-size: clamp(40px, 12.5vw, 61px);
   }
+
+  .initials-large {
+    font-size: clamp(16px, 7vw, 27px);
+  }
+
+  .h1-contact-details {
+    font-size: clamp(27px, 7vw, 36px);
+    overflow-wrap: break-word;
+  }
+
 }
 
+@media(max-width: 400px) {
+
+  .header-contect-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+}

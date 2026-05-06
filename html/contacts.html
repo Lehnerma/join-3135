@@ -21,7 +21,7 @@
 <body class="app" onload="init(); initUtilitys()">
   <header class="app--title">
     <h1 class="app--title-headline">Kanban Project Management Tool</h1>
-     <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
+    <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
     <div class="app--icons">
       <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="help" class="app--icon" /></a>
       <button id="user_menu_button" class="btn btn--user"></button>
@@ -56,7 +56,7 @@
 
   <main class="main-content">
 
-    <div class="left-content">
+    <div id="leftContent" class="left-content">
       <div class="add-button-container">
         <button id="addButton" type="button" class="btn btn--primary add-button-size btn-add-contact"
           onclick="openContactDialog()">
@@ -74,12 +74,18 @@
 
     </div>
 
-    <div class="right-content">
-       <div class="headline">
-         <h1 class="contacts-title">Contacts</h1>
-         <div class="vertical-divider"></div>
-         <span class="contacts-subtitle">Better with a team</span>
-       </div>
+    <div id="rightContent" class="right-content">
+      <div class="headline">
+        <h1 class="contacts-title">Contacts</h1>
+        <div class="vertical-divider"></div>
+        <span class="contacts-subtitle">Better with a team</span>
+        <button id="backArrow" type="button"  onclick="backToContactlist()">
+          <img class="back-arrow" src="../assets/img/icons/contacts/Vector.svg">
+        </button>
+        <button id="editMenu" type="button" onclick="openEditMenu()">
+          <img  src="../assets/img/icons/contacts/more_vert.svg">
+        </button>
+      </div>
       <div id="contactDetailsDialog"></div>
     </div>
   </main>
