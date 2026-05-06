@@ -215,6 +215,7 @@
     flex-direction: row;
     align-items: flex-start;
     overflow-x: scroll;
+    height: auto;
   }
 }
 
@@ -239,7 +240,10 @@
   box-shadow: 0px 0px 10px 3px #00000014;
   cursor: pointer;
   list-style: none;
-  /* width: clamp(200px, 100%, 252px); */
+
+  /* width: clamp(200px, 30vw, 300px); */
+  min-width: 252px;
+  width: 100%;
 
   &:active {
     transition: transform 0.125s ease;
@@ -247,11 +251,11 @@
   }
 }
 
-@media (min-width: 900px){
+@media (min-width: 900px) {
   .task:last-child {
-  position: sticky;
-  top: 64px;
-}
+    position: sticky;
+    top: 64px;
+  }
 }
 
 .task--card {
