@@ -82,6 +82,65 @@ function getTaskAssignToTemplet(fullName, initials) {
 </li>`;
 }
 
+function getTaskAssignToTempletWithName(fullName, initials) {
+  const color = contactColors[(initials?.[0] ?? "").toUpperCase()] || "#888";
+  return `
+<li class="assignee">
+  <abbr class="assignee--initials" style="--assignee-color: ${color}" title="${fullName}">${initials}</abbr>
+  <p class="assignee--name">${fullName}</p>
+</li>`;
+}
+
+function getDetailTaskTemplate(task) {
+  return `
+    <header class="detail-task--header">
+      <div>
+        <span class="task--category-label ${toClassName(task.category)}">${task.category}</span>
+        <button type="button" class=" btn btn--close">
+          <img src="../assets/img/icons/close.svg" alt="close" />
+        </button>
+      </div>
+      <h2 class="detail-task--title">${task.title}</h2>
+    </header>
+
+    <article class="detail-task--content" aria-label="detailed information of the task">
+      <section class="detail-task--basic-info">
+        <div class="detail-task--description">${task.description}</div>
+      </section>
+
+      <section class="detail-task--assign">
+        <div class="detail-task--date">
+          <h4>Due date:</h4>
+          <p>${task.dueDate}</p>
+        </div>
+
+        <div class="detail-task--prio">
+          <h4>Priority:</h4>
+          <p>${task.priority}</p>
+        </div>
+      </section>
+
+      <section class="detail-task--assignees">
+        <h4>Assigned to:</h4>
+        <ul id="detail_task_assignees" class="detail-task--assignees-list" aria-label="assigned contacts">
+        </ul>
+      </section>
+
+      <section class="detail-task--subtasks">
+
+      </section>
+    </article>
+
+    <footer class="detail-task--footer">
+      <button type="button" class="btn--delete-task">
+        <img src="../assets/img/icons/subtask/bin.svg" alt="delete" />
+      </button>
+      <button type="button" class="btn--edit-task">
+        <img src="../assets/img/icons/subtask/edit.svg" alt="edit" />
+      </button>
+    </footer>`;
+}
+
 const contactColors = {
   A: "rgba(147, 39, 255, 1)",
   B: "rgba(110, 82, 255, 1)",
@@ -110,3 +169,4 @@ const contactColors = {
   Y: "rgba(200, 150, 0, 1)",
   Z: "rgba(120, 120, 120, 1)",
 };
+

@@ -50,13 +50,16 @@ function searchTasks() {
 
 function openTaskDetailDialog(taskId) {
   const TASK_DETAIL_DIALOG = document.getElementById("task_detail_dialog");
+  TASK_DETAIL_DIALOG.innerHTML = ""; // Clear previous content
+
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const TASK = ALL_TASKS.find((task) => task.id === taskId);
-
   if (TASK) {
     // Store task data in dialog's dataset for reference
     TASK_DETAIL_DIALOG.dataset.taskId = TASK.id;
+    TASK_DETAIL_DIALOG.innerHTML = buildTaskDetailDialog(TASK);
     TASK_DETAIL_DIALOG.showModal();
+    
   }
 }
 
@@ -66,4 +69,16 @@ function closeTaskDetailDialogOnBackdropClick(event) {
   if (event.target === TASK_DETAIL_DIALOG) {
     TASK_DETAIL_DIALOG.close();
   }
+}
+
+
+function buildTaskDetailDialog(task) {
+  const WRAPPER = document.createElement("div");
+  WRAPPER.innerHTML = getDetailTaskTemplate(task);
+
+  const ASSIGNEES_LIST = WRAPPER.querySelector("#detail_task_assignees");
+  (task.assignedTo || []).filter(Boolean).forEach((name) => {
+    ASSIGNEES_LIST.innerHTML += getTaskAssignToTempletWithName(name, getInitials(name));
+  });
+  return WRAPPER.innerHTML;
 }
