@@ -13,9 +13,10 @@
   <link rel="stylesheet" href="../styles/create-contact-overlay.css">
   <link rel="stylesheet" href="../styles/fonts.css" />
   <link rel="stylesheet" href="../styles/colors.css" />
+  <script defer src="../scripts/utilitys.js"></script>
   <script defer src="../scripts/contacts.js"></script>
   <script defer src="../scripts/contacts-template.js"></script>
-  <script defer src="../scripts/utilitys.js"></script>
+
 </head>
 
 <body class="app" onload="init(); initUtilitys()">
@@ -79,11 +80,11 @@
         <h1 class="contacts-title">Contacts</h1>
         <div class="vertical-divider"></div>
         <span class="contacts-subtitle">Better with a team</span>
-        <button id="backArrow" type="button"  onclick="backToContactlist()">
-          <img class="back-arrow" src="../assets/img/icons/contacts/Vector.svg">
+        <button id="backArrowButton" type="button" onclick="backToContactlist()">
+          <img id="backArrowIcon" class="back-arrow" src="../assets/img/icons/contacts/Vector.svg">
         </button>
-        <button id="editMenu" type="button" onclick="openEditMenu()">
-          <img  src="../assets/img/icons/contacts/more_vert.svg">
+        <button id="editMenuButton" type="button" onclick="openEditMenu()">
+          <img id="editMenuIcon" class="edit-menu" src="../assets/img/icons/contacts/more_vert.svg">
         </button>
       </div>
       <div id="contactDetailsDialog"></div>

@@ -159,7 +159,6 @@ button {
 }
 
 .name {
-  font-family: "Inter";
   font-weight: 400;
   font-size: clamp(16px, 1.3vw, 20px);
 }
@@ -191,7 +190,6 @@ button {
 }
 
 .contacts-title {
-  font-family: "Inter";
   font-size: clamp(32px, 4.2vw, 61px);
   font-weight: 700;
   margin: 0;
@@ -205,19 +203,24 @@ button {
 }
 
 .contacts-subtitle {
-  font-family: "Inter";
   font-weight: 400;
   font-size: clamp(16px, 1.8vw, 27px);
   white-space: nowrap;
 }
 
-/* .edit-menu-box,
+.edit-menu-box,
 .back-arrow-box,
 .back-arrow,
 .edit-menu {
-
   display: none;
-} */
+}
+
+.mobile-buttons-on {
+  display: flex;
+}
+
+
+
 
 /* SUCCESS OVERLAY */
 

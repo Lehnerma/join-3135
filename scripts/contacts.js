@@ -27,10 +27,12 @@ const contactColors = {
   Z: 'rgba(120, 120, 120, 1)'
 };
 
+
 const alphabet = [
   "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
 ];
+
 
 let USERS = [];
 let newContact = "";
@@ -38,6 +40,14 @@ let editName = '';
 let editEmail = '';
 let editPhone = '';
 let editUserIndex = '';
+let user = {};
+let userSelectionID = {};
+let colorIsAlreadyActive;
+const leftContent = document.getElementById('leftContent');
+const backArrowButton = document.getElementById('backArrowButton');
+const editMenuButton = document.getElementById('editMenuButton');
+const editMenuIcon = document.getElementById('editMenuIcon');
+const backArrowIcon = document.getElementById('backArrowIcon');
 let USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
 
@@ -45,6 +55,7 @@ function init() {
   getUsers();
   changeButton();
   window.addEventListener('resize', changeButton);
+  window.addEventListener('resize', mobileDetails);
 }
 
 
@@ -170,54 +181,82 @@ function getUserDetails(userIndex) {
   editName = user.name;
   editEmail = user.email;
   editPhone = user.phone;
-  const userSelectionID = document.getElementById(userIndex);
-  const isAlreadyActive = userSelectionID.classList.contains('bg-color-active');
-  removeAllBgColors(user, isAlreadyActive, userSelectionID, userIndex);
-  let leftContent = document.getElementById('leftContent');
-  let backArrow = document.getElementById('backArrow');
-  let editMenu = document.getElementById('editMenu');
-
-  if (window.innerWidth <= 650 && userIndex) {
-    leftContent.classList.remove('left-content');
-    leftContent.classList.add('contact-list-off');
-    backArrow.classList.add('back-arrow-box');
-    editMenu.classList.add('edit-menu-box','btn--addPerson');
-
+  if (window.innerWidth >= 651) {
+    userSelectionID = document.getElementById(userIndex);
+    colorIsAlreadyActive = userSelectionID.classList.contains('bg-color-active');
+    removeAllBgColors();
   } else {
-    leftContent.classList.add('left-content');
-    leftContent.classList.remove('contact-list-off');
-    backArrow.classList.remove('back-arrow-box');
-    editMenu.classList.remove('edit-menu-box','btn--addPerson');
-
+    mobileDetails();
   }
 }
 
 
-function removeAllBgColors(user, isAlreadyActive, userSelectionID, i) {
+function mobileDetails() {
+  const isMobileView = window.innerWidth <= 650 && editUserIndex;
+
+  if (isMobileView) {
+    activateMobileView();
+  } else {
+    deactivateMobileView();
+  }
+  showDetails();
+}
+
+
+function activateMobileView() {
+  leftContent.classList.add('contact-list-off');
+  backArrowButton.classList.add('back-arrow-box', 'mobile-buttons-on');
+  editMenuButton.classList.add('edit-menu-box', 'btn--addPerson', 'mobile-buttons-on');
+  [editMenuIcon, backArrowIcon].forEach(el => el.classList.add('mobile-buttons-on'));
+  removeAllBgColors();
+}
+
+
+function deactivateMobileView() {
+  leftContent.classList.remove('contact-list-off');
+  backArrowButton.classList.remove('back-arrow-box', 'mobile-buttons-on');
+  editMenuButton.classList.remove('edit-menu-box', 'btn--addPerson', 'mobile-buttons-on');
+  [editMenuIcon, backArrowIcon].forEach(el => el.classList.remove('mobile-buttons-on'));
+}
+
+
+function backToContactlist() {
+  leftContent.classList.remove('contact-list-off');
+  backArrowButton.classList.remove('back-arrow-box');
+  editMenuButton.classList.remove('edit-menu-box', 'btn--addPerson');
+}
+
+
+function removeAllBgColors() {
   const allSelections = document.querySelectorAll('.user-Selection');
   allSelections.forEach(element => {
     element.classList.remove('bg-color-active');
   });
-  showDetails(user, isAlreadyActive, userSelectionID, i);
+  showDetails();
 }
 
 
-function showDetails(user, isAlreadyActive, userSelectionID, i) {
+function showDetails() {
   const dialogRef = document.getElementById('contactDetailsDialog');
-  if (!isAlreadyActive) {
+  if (!colorIsAlreadyActive && window.innerWidth >= 651) {
     userSelectionID.classList.add('bg-color-active');
-    dialogRef.innerHTML = addShowDetails(user, i);
-  } else {
-    dialogRef.innerHTML = '';
+    dialogRef.innerHTML = addShowDetails();
   }
 
+  else if (window.innerWidth <= 650) {
+    dialogRef.innerHTML = addShowDetails();
+  }
+  else {
+    dialogRef.innerHTML = '';
+  }
 }
 
-function addShowDetails(user, i) {
+
+function addShowDetails() {
   const initials = getInitials(user.name);
   const firstLetter = user.name.charAt(0).toUpperCase();
   const color = contactColors[firstLetter];
-  return renderShowDetailsTpl(user, i, initials, color);
+  return renderShowDetailsTpl(user, editUserIndex, initials, color);
 }
 
 
@@ -238,11 +277,10 @@ function createContact() {
 
 async function addNewContact(newContact) {
   USERS.push(newContact);
-
-  const contactIndex = USERS.findIndex(user => user.id === newContact.id);
   sortUserContactList();
-  if (contactIndex == -1) {
-    getUserDetails(newContact);
+  const addNewContactUser = USERS.findIndex(user => user.id === newContact.id);
+  if (addNewContactUser !== -1) {
+    getUserDetails(addNewContactUser);
   }
   closeContactDialog();
   syncNewContact(newContact);
@@ -304,21 +342,13 @@ function showSuccessBanner() {
 async function saveNewContactData(index) {
   let user = USERS[index];
   let key = user.firebaseKey;
-
   let updatedData = {
     name: document.getElementById('editName').value,
     email: document.getElementById('editEmail').value,
     phone: document.getElementById('editPhone').value,
-
   };
 
-  const response = await fetch(`https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(updatedData)
-  });
+  const response = await updateFirebaseContact(key, updatedData);
 
   if (response.ok) {
     await getUsers();
@@ -326,7 +356,19 @@ async function saveNewContactData(index) {
   } else {
     console.error('Fehler beim Updaten');
   }
+} addNewContactUser
+
+
+async function updateFirebaseContact(key, updatedData) {
+  return await fetch(`https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedData)
+  });
 }
+
 
 function getSingleUser(user, i) {
   const initials = getInitials(user.name);
@@ -335,22 +377,17 @@ function getSingleUser(user, i) {
   return renderSingleUserHtml(user, i, initials, color);
 }
 
+
 function changeButton() {
   let addButton = document.getElementById('addButton');
-  if (window.innerWidth <= 650) {
-    addButton.classList.remove('btn', 'btn--primary', 'add-button-size');
-    addButton.classList.add('btn--addPerson');
-  } else {
-    addButton.classList.add('btn', 'btn--primary', 'add-button-size');
-    addButton.classList.remove('btn--addPerson');
-  }
+  const isMobile = window.innerWidth <= 650;
+  isMobile ? addButton.classList.remove('btn', 'btn--primary', 'add-button-size')
+    : addButton.classList.add('btn', 'btn--primary', 'add-button-size');
+  isMobile ? addButton.classList.add('btn--addPerson')
+    : addButton.classList.remove('btn--addPerson');
 }
 
 
-function backToContactlist() {
-
-  
-}
 
 
 

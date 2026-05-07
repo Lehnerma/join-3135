@@ -4,7 +4,6 @@
   flex-direction: column;
   gap: clamp(10px, 1.9vw, 21px);
   width: 100%;
-  ;
   height: auto;
   border: none;
   top: clamp(80px, 17.5vw, 250px);
@@ -30,7 +29,6 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-
   gap: clamp(20px, 1vw, 54px);
 }
 
@@ -77,7 +75,6 @@
   font-size: clamp(27px, 3vw, 47px);
   font-weight: 500;
   margin-bottom: clamp(4px, 0.7vw, 8px);
-
 }
 
 .edit-delete-container {
@@ -96,7 +93,6 @@
   font-weight: 400;
   color: var(--primary-color);
   border: none;
-
 }
 
 .edit-delete-button:hover {
@@ -152,11 +148,8 @@ li {
   margin-bottom: clamp(12px, 4.2vw, 16px);
 }
 
-@media(max-width: 650px) { 
-
-  .details-off {
-    display: none;
-  }
+/* RESPONSIVE */
+@media(max-width: 650px) {
 
   .contact-list-off {
     display: none;
@@ -204,7 +197,6 @@ li {
     font-weight: 400;
     color: var(--primary-color);
     border: none;
-
   }
 
   .edit-delete-button:hover {
@@ -233,11 +225,13 @@ li {
     z-index: 20;
     width: 56px;
     height: 56px;
-      }
+    cursor: pointer;
+  }
 
-  .edit-menu{
+  .edit-menu {
     width: 32px;
     height: 32px;
+    cursor: pointer;
   }
 
   .back-arrow-box {
@@ -252,18 +246,18 @@ li {
     z-index: 20;
     width: 32px;
     height: 32px;
+    cursor: pointer;
   }
 
   .back-arrow {
     width: 24.6px;
     height: 23.92px;
+    cursor: pointer;
   }
-
-
 }
 
 @media(max-width: 427px) {
-
+ 
   .aside-h2-edit {
     font-size: clamp(40px, 12.5vw, 61px);
   }
@@ -280,7 +274,7 @@ li {
 }
 
 @media(max-width: 400px) {
-
+ 
   .header-contect-details {
     display: flex;
     flex-direction: column;
