@@ -242,7 +242,6 @@ function showDetails() {
     userSelectionID.classList.add('bg-color-active');
     dialogRef.innerHTML = addShowDetails();
   }
-
   else if (window.innerWidth <= 650) {
     dialogRef.innerHTML = addShowDetails();
   }
@@ -281,12 +280,20 @@ async function addNewContact(newContact) {
   const addNewContactUser = USERS.findIndex(user => user.id === newContact.id);
   if (addNewContactUser !== -1) {
     getUserDetails(addNewContactUser);
+    scrollToUser(addNewContactUser);
   }
   closeContactDialog();
   syncNewContact(newContact);
   showSuccessBanner();
 }
 
+
+function scrollToUser(index) {
+      let id = document.getElementById(index); 
+  if (id) {
+    id.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
 
 async function syncNewContact(newContact) {
   const response = await fetch(USERS_URL, {
@@ -356,7 +363,7 @@ async function saveNewContactData(index) {
   } else {
     console.error('Fehler beim Updaten');
   }
-} addNewContactUser
+} 
 
 
 async function updateFirebaseContact(key, updatedData) {
