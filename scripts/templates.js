@@ -51,7 +51,7 @@ function getNoTasksTemplate(status) {
 
 function getTaskCardTemplet(title, description, category, id, priority) {
   return `
-<li class="task" draggable="true" ondragstart="taskDragStart(event, ${id})" data-id=${id}>
+<li class="task" onclick="openTaskDetailDialog(${id})" draggable="true" ondragstart="taskDragStart(event, ${id})" data-id=${id}>
   <article class="task--card">
     <header>
       <span class="task--category-label ${toClassName(category)}">${category}</span>

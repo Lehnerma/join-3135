@@ -7,18 +7,29 @@
   }
 }
 
-.task-dialog {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.dialog-slide-in {
+  animation: slideFromRight 175ms ease-in-out forwards;
+}
+
+/* only for testing */
+.test-dialog {
   width: 60%;
   height: 70%;
+}
+
+.dialog {
   background-color: white;
   border: none;
   border-radius: 30px;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
+  z-index: 11;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dialog .slide-in {
   animation: slideFromRight 175ms ease-in-out forwards;
 }
 

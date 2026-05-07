@@ -9,8 +9,10 @@ function initBoardTask() {
   SEARCH_TASKS_BTN.addEventListener("click", () => searchTasks());
 
   const SEARCH_INPUT = document.getElementById("search_tasks");
-  SEARCH_INPUT.addEventListener("input",searchTasks); //check if input or change is better for the search function.
+  SEARCH_INPUT.addEventListener("input", searchTasks); //check if input or change is better for the search function.
 
+  const TASK_DETAIL_DIALOG = document.getElementById("task_detail_dialog");
+  TASK_DETAIL_DIALOG.addEventListener("click", closeDialogOnBackdropClick);
 }
 
 function openAddTaskDialog() {
@@ -33,17 +35,35 @@ function addStatusTask(status) {
 function searchTasks() {
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const SEARCH_INPUT = document.getElementById("search_tasks").value;
-  const TEST_ARRAY = [];
+  const SEARCH_VALUE = [];
 
-    ALL_TASKS.filter((task) => {
+  ALL_TASKS.filter((task) => {
     const TITLE = String(task.title || "").toLowerCase();
     const DESCRIPTION = String(task.description || "").toLowerCase();
     const SEARCH_LOWER = SEARCH_INPUT.trim().toLowerCase();
-    // only for testing.
     if (TITLE.includes(SEARCH_LOWER) || DESCRIPTION.includes(SEARCH_LOWER)) {
-      TEST_ARRAY.push(task);
+      SEARCH_VALUE.push(task);
     }
-    //end of testing
   });
-  renderBoard(TEST_ARRAY);
+  renderBoard(SEARCH_VALUE);
+}
+
+function openTaskDetailDialog(taskId) {
+  const TASK_DETAIL_DIALOG = document.getElementById("task_detail_dialog");
+  const ALL_TASKS = JSON.parse(sessionStorage.tasks);
+  const TASK = ALL_TASKS.find((task) => task.id === taskId);
+
+  if (TASK) {
+    // Store task data in dialog's dataset for reference
+    TASK_DETAIL_DIALOG.dataset.taskId = TASK.id;
+    TASK_DETAIL_DIALOG.showModal();
+  }
+}
+
+// Close task detail dialog on backdrop click
+function closeTaskDetailDialogOnBackdropClick(event) {
+  const TASK_DETAIL_DIALOG = document.getElementById("task_detail_dialog");
+  if (event.target === TASK_DETAIL_DIALOG) {
+    TASK_DETAIL_DIALOG.close();
+  }
 }
