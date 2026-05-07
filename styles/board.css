@@ -90,7 +90,7 @@
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr auto;
-    grid-template-rows: 112px auto;
+    grid-template-rows: 80px auto;
     grid-template-areas:
       "head-title head-add"
       "head-search head-search";
@@ -171,10 +171,10 @@
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
-    overflow: visible;
+    /* overflow: visible; */
 
     .kanban-column {
-      overflow: hidden;
+      overflow: visible;
     }
     .column-title h2 {
       font-size: 27px;
@@ -210,12 +210,17 @@
     width: 100%;
     align-items: flex-start;
   } */
+
   @media (max-width: 900px) {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     overflow-x: scroll;
     height: auto;
+
+    .task{
+        width: 252px;
+    }
   }
 }
 
@@ -242,7 +247,7 @@
   list-style: none;
 
   /* width: clamp(200px, 30vw, 300px); */
-  min-width: 252px;
+  min-width: 220px;
   width: 100%;
 
   &:active {
