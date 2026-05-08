@@ -44,7 +44,7 @@ let USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.ap
 function init() {
   getUsers();
   changeButton();
-  window.addEventListener('resize', changeButton);
+ 
 }
 
 
@@ -200,8 +200,7 @@ function showDetails(user, isAlreadyActive, userSelectionID, i) {
 }
 
 function closeDetails() {
-    
-    document.body.classList.remove('show-mobile-details');
+        document.body.classList.remove('show-mobile-details');
 }
 
 
