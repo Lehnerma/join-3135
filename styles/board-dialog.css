@@ -44,7 +44,6 @@
 }
 
 .detail-task--header {
-
   .detail-task--category {
     display: flex;
     align-items: center;
@@ -60,29 +59,30 @@
 .detail-task--content {
   gap: 24px;
 
-  .detail-task--infos{
+  .detail-task--infos {
     gap: 24px;
 
-    .detail-task--date, .detail-task--prio{
+    .detail-task--date,
+    .detail-task--prio {
       gap: 25px;
     }
-    .detail-task--prio-content{
+    .detail-task--prio-content {
       gap: 10px;
     }
   }
 }
 
-.detail-task--assignees{
+.detail-task--assignees {
   gap: 8px;
-  
-  .detail-task--assignees-list{
-    list-style: none;
 
-    li{
-      display: flex;
-      align-items: center;;
-      gap: 16px;
-      padding: 8px 16px;
-    }
+  .detail-task--assignees-list {
+    list-style: none;
   }
+}
+
+.detail-task--subtask-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px;
 }

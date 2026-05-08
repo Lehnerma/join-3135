@@ -148,7 +148,7 @@ function getDetailTaskTemplate(task) {
 
 function getDetailSubtaskTemplate(title, checked = false) {
   return `
-    <li class="detail-task--subtask-item">
+    <li class="detail-task--subtask-item f-row">
       <input type="checkbox" class="detail-task--subtask-checkbox"${checked ? " checked" : ""} />
       <p class="detail-task--subtask-text">${title}</p>
     </li>`;
