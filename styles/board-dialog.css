@@ -71,3 +71,18 @@
     }
   }
 }
+
+.detail-task--assignees{
+  gap: 8px;
+  
+  .detail-task--assignees-list{
+    list-style: none;
+
+    li{
+      display: flex;
+      align-items: center;;
+      gap: 16px;
+      padding: 8px 16px;
+    }
+  }
+}

@@ -122,7 +122,7 @@ function getDetailTaskTemplate(task) {
         </div>
       </section>
 
-      <section class="detail-task--assignees">
+      <section class="detail-task--assignees f-col">
         <h4>Assigned to:</h4>
         <ul id="detail_task_assignees" class="detail-task--assignees-list" aria-label="assigned contacts">
         </ul>
