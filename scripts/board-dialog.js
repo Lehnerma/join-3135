@@ -13,8 +13,72 @@ function initBoardTask() {
 
 }
 
-function openAddTaskDialog() {
-  document.getElementById("add_task_dialog").showModal();
+function openAddTaskDialog(status = 'todo') {
+  const dialog = document.getElementById('add_task_dialog');
+  dialog.innerHTML = getAddTaskDialogTemplate();
+
+  dialog.showModal();
+
+  // Diese Funktionen müssen in deiner addTask.js definiert sein
+  initDateInput();
+  selectPriority('medium');
+  subtaskInit(); // Wichtig für Subtask-Buttons
+  loadUsers(); // Lädt Kontakte in die Liste
+  initDropdownOutsideClick(); // Aktiviert das Schließen des Dropdowns
+
+  // Formular-Submit für den Dialog
+  const form = document.getElementById('form_task');
+  if (form) {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      await createTask(status); // Wir übergeben den Status
+    });
+  }
+}
+
+
+async function createTask(status = 'todo') {
+  const task = buildTaskObj(); // Holt Daten aus dem Dialog-Formular
+  task.status = status; // Setzt den Status (todo, progress, etc.)
+
+  try {
+    // WICHTIG: Nutze ADDTASK_URL (den neuen Namen aus deiner addTask.js)
+    const response = await fetch(ADDTASK_URL, { 
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(task)
+    });
+
+    if (response.ok) {
+      closeAddTaskDialog(); // Schließt das Fenster
+      await loadTasksFromFirebase(); // Lädt das Board neu, damit der Task erscheint
+    }
+  } catch (error) {
+    console.error("Fehler beim Erstellen im Dialog:", error);
+  }
+}
+
+
+
+
+
+function closeAddTaskDialog() {
+  const dialog = document.getElementById('add_task_dialog');
+  dialog.close();
+}
+
+function initAddTaskDialog() {
+  initDateInput();
+  selectPriority('medium');
+  subtaskInit();
+  // Listener für das neue Formular im Dialog setzen
+  const form = document.getElementById('form_task_dialog');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      createTask(); // Nutzt deine Speicher-Logik
+    });
+  }
 }
 
 function closeDialogOnBackdropClick(event) {
@@ -47,3 +111,5 @@ function searchTasks() {
   });
   renderBoard(TEST_ARRAY);
 }
+
+

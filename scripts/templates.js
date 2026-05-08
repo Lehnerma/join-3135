@@ -133,3 +133,106 @@ const contactColors = {
   Y: "rgba(200, 150, 0, 1)",
   Z: "rgba(120, 120, 120, 1)",
 };
+
+
+
+
+function getAddTaskDialogTemplate() {
+  return /*html*/ `
+    <div class="task-container-dialog">
+      <!-- Schließbutton oben rechts -->
+      <button class="close-dialog-btn" onclick="closeAddTaskDialog()">
+        <img src="../assets/img/icons/subtask/close.svg" alt="X">
+      </button>
+
+      <h1 class="input--title">Add Task</h1>
+
+      <form class="form-task form-columns" id="form_task">
+        <!-- Linke Spalte -->
+        <section class="column left">
+          <div class="input-section">
+            <label for="title" class="required">Title</label>
+            <input id="title" class="input" type="text" placeholder="Enter a title" required />
+            <span class="field-error">This field is required</span>
+          </div>
+          <div class="input-section">
+            <label for="description">Description</label>
+            <textarea id="description" class="input" placeholder="Enter a Description" rows="3"></textarea>
+          </div>
+          <div class="input-section">
+            <label for="dueDate" class="required">Due date</label>
+            <input id="dueDate" class="input input-date" type="date" required />
+            <span class="field-error">This field is required</span>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Rechte Spalte -->
+        <section class="column right">
+          <div class="input-section">
+            <label for="priority">Priority</label>
+            <div class="priority-group">
+              <button type="button" id="btn_urgent" class="btn btn--prio" onclick="selectPriority('urgent')">
+                Urgent <img class="img-prio urgent" src="../assets/img/icons/prio/urgent.svg">
+              </button>
+              <button type="button" id="btn_medium" class="btn btn--prio medium-active" onclick="selectPriority('medium')">
+                Medium <img class="img-prio medium" src="../assets/img/icons/prio/medium.svg">
+              </button>
+              <button type="button" id="btn_low" class="btn btn--prio" onclick="selectPriority('low')">
+                Low <img class="img-prio low" src="../assets/img/icons/prio/low.svg">
+              </button>
+            </div>
+          </div>
+
+          <div class="input-section">
+            <label for="assignedToSearch">Assigned to</label>
+            <div class="custom-dropdown" id="assignedToDropdown">
+              <div class="custom-dropdown__trigger">
+                <input type="text" id="assignedToSearch" onkeyup="filterUsers()" class="input custom-dropdown__input" onclick="toggleDropdown(event)" placeholder="Select contacts to assign" autocomplete="off" />
+                <button type="button" class="custom-dropdown__toggle" onclick="toggleDropdown(event)">
+                  <span class="custom-dropdown__arrow"></span>
+                </button>
+              </div>
+              <div id="assignedPreview"></div>
+              <ul class="custom-dropdown__list" id="assignedToList"></ul>
+            </div>
+          </div>
+
+          <div class="input-section">
+            <label for="category" class="required">Category</label>
+            <select id="category" class="input dropdown form--select" required>
+              <option value="" selected disabled>Select task category</option>
+              <option value="Technical Task">Technical Task</option>
+              <option value="User Story">User Story</option>
+            </select>
+          </div>
+
+          <div class="input-section">
+            <label for="subtask_input">Subtasks</label>
+            <div class="input--section">
+              <input id="subtask_input" class="input" type="text" placeholder="Add subtask" />
+              <div class="subtask--btns">
+                <button type="button" id="subtask-close" class="btn--subtask close" onclick="clearSubtaskInput(event)"><img src="../assets/img/icons/subtask/close.svg"></button>
+                <span class="div-vert"></span>
+                <button type="button" id="subtask-save" class="btn--subtask check" onclick="addSubtask(event)"><img src="../assets/img/icons/subtask/check.svg"></button>
+              </div>
+            </div>
+            <ul id="subtask_list" class="subtask-list"></ul>
+          </div>
+        </section>
+
+        <section class="form-info-section">
+          <p><b class="form-info">*</b> This field is required</p>
+        </section>
+      </form>
+
+      <section class="form-footer">
+        <div class="action-btns">
+          <button id="form_clear" type="button" class="btn btn--secondary clear" onclick="clearForm()">Clear</button>
+          <button type="submit" form="form_task" class="btn btn--primary">Create Task</button>
+        </div>
+      </section>
+    </div>
+  `;
+}

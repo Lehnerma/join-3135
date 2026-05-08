@@ -1,8 +1,8 @@
-const TASK_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks" + ".json";
+const ADDTASK_URL  = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks" + ".json";
 
 let selectedPriority = "medium";
-let SUBTASKS = [];
-let USERS = [];
+let subtasksList  = [];
+let remoteUsers  = [];
 
 function init() {
   btnInit();
@@ -69,8 +69,8 @@ function loadUsers() {
   fetch(USER_URL)
     .then((response) => response.json())
     .then((data) => {
-      USERS = Object.values(data);
-      console.log("Firebase USERS:", data);
+      remoteUsers  = Object.values(data);
+      console.log("Firebase remoteUsers :", data);
       fillUserDropdown(data);
     })
     .catch((error) => console.error("Error fetching users:", error));
@@ -101,7 +101,7 @@ function filterUsers() {
   let container = document.getElementById("assignedToList");
 
   // Filtere das USERS-Array (das du bereits in loadUsers befüllst)
-  let filteredUsers = USERS.filter(user =>
+  let filteredUsers = remoteUsers .filter(user =>
     user.name.toLowerCase().includes(search)
   );
 
@@ -226,7 +226,7 @@ function renderAssignedUsers(users = []) {
  */
 
 /**
- * Initial all subtasks function after loading the body
+ * Initial all addSubtask function after loading the body
  */
 function subtaskInit() {
   const SUBTASK_SAVE = document.getElementById("subtask-save");
@@ -265,12 +265,12 @@ function buildTaskObj() {
     assignedTo: getAssignedUsers() || [],
     priority: selectedPriority,
     status: "todo",
-    subtasks: SUBTASKS,
+    subtasks: subtasksList ,
   };
 }
 
 /**
- * Adds the subtask to the array (SUBTASKS) and render the subtasks
+ * Adds the subtask to the array (addSubtask) and render the subtasks
  * @returns a savety point to get out of the funktion if no title is in it. or it`s length is shorter than 5 letters.
  */
 function addSubtask(ev) {
@@ -278,8 +278,8 @@ function addSubtask(ev) {
   const INPUT = document.getElementById("subtask_input");
   const title = INPUT.value.trim();
   if (!title) return;
-  const INDEX = SUBTASKS.length;
-  SUBTASKS.push({
+  const INDEX = subtasksList .length;
+  subtasksList .push({
     title: title,
     done: false,
   });
@@ -292,7 +292,7 @@ function addSubtask(ev) {
  * Creates a subtask list item and appends it to the subtask list in the DOM.
  * Sets the element's index via dataset and id, renders its HTML via template,
  * and attaches all required event listeners.
- * @param {number} index - The position of the subtask in the SUBTASKS array.
+ * @param {number} index - The position of the subtask in the addSubtask array.
  * @param {string} title - The display text of the subtask.
  */
 function renderSubtaskItem(index, title) {
@@ -373,24 +373,24 @@ function cancelEditSubtask(li) {
 
   const span = document.createElement("span");
   span.className = "subtask-text";
-  span.textContent = SUBTASKS[parseInt(li.dataset.index)].title;
+  span.textContent = subtasksList [parseInt(li.dataset.index)].title;
 
   li.replaceChild(span, input);
 }
 
 /**
- * Removes a subtask from the SUBTASKS array and from the DOM.
+ * Removes a subtask from the addSubtask array and from the DOM.
  * Re-indexes all remaining subtask items after deletion.
  * @param {HTMLLIElement} li - The subtask list item to delete.
  */
 function deleteSubtask(li) {
-  SUBTASKS.splice(parseInt(li.dataset.index), 1);
+  addSubtask.splice(parseInt(li.dataset.index), 1);
   li.remove();
 }
 
 /**
  * Saves the edited subtask title and exits inline edit mode.
- * Updates the SUBTASKS array and replaces the input with a text span.
+ * Updates the addSubtask array and replaces the input with a text span.
  * @param {HTMLLIElement} li - The subtask list item being edited.
  */
 function saveSubtask(li) {
@@ -400,7 +400,7 @@ function saveSubtask(li) {
   const newTitle = input.value.trim();
   if (!newTitle) return;
 
-  SUBTASKS[parseInt(li.dataset.index)].title = newTitle;
+  subtasksList [parseInt(li.dataset.index)].title = newTitle;
 
   const span = document.createElement("span");
   span.className = "subtask-text";
@@ -417,7 +417,7 @@ async function createTask() {
   const task = buildTaskObj(); 
 
   try {
-    const response = await fetch(TASK_URL, {
+    const response = await fetch(ADDTASK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(task)
@@ -438,9 +438,9 @@ async function createTask() {
 
 
 
-// 2. Die fehlende Brücke zu Firebase (WICHTIG!)
+
 async function postTask(task) {
-  const response = await fetch(TASK_URL, {
+  const response = await fetch(ADDTASK_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(task),
@@ -462,8 +462,8 @@ function clearForm() {
   initDateInput();
   selectPriority("medium");
   document.getElementById("assignedPreview").innerHTML = "";
-  fillUserDropdown(USERS);
-  SUBTASKS = [];
+  fillUserDropdown(remoteUsers );
+  subtasksList  = [];
   document.getElementById("subtask_list").innerHTML = "";
 }
 
@@ -475,3 +475,7 @@ const clearSubtaskInput = (ev) => {
   let SUBTASK_INPUT = document.getElementById("subtask_input");
   SUBTASK_INPUT.value = "";
 };
+
+
+
+
