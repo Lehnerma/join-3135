@@ -19,11 +19,19 @@ function btnInit() {
   const FORM = document.getElementById("form_task");
   const CLEAR_FORM = document.getElementById("form_clear");
 
-  FORM.addEventListener("submit", (event) => {  
-    event.preventDefault();
-    createTask();
-  });
+  if (FORM) {
+    FORM.addEventListener("submit", (event) => {
+      event.preventDefault();
+      createTask();
+    });
+  }
+  if (CLEAR_FORM) {
+    CLEAR_FORM.addEventListener("click", () => {
+      clearForm();
+    });
+  }
 }
+
 
 /**
  * Get the actuall Date - and set the default value of the date input to today.
@@ -69,31 +77,40 @@ function loadUsers() {
 }
 
 function fillUserDropdown(users) {
-  console.log("fillUserDropdown läuft");
-
   const container = document.getElementById("assignedToList");
 
   if (!container) {
     console.error(" assignedToList Element nicht gefunden!");
     return;
   }
-
   let html = "";
 
   for (const userId in users) {
     const user = users[userId];
-
     if (!user || !user.name) continue;
-
     const firstLetter = user.name.charAt(0).toUpperCase();
     const color = contactColors?.[firstLetter] || "#ccc";
     const initials = user.name.charAt(0);
-
     html += getFillUserDropown(color, initials, user);
   }
-
   container.innerHTML = html;
 }
+
+function filterUsers() {
+  let search = document.getElementById('assignedToSearch').value.toLowerCase(); // Eingabe in Kleinbuchstaben
+  let container = document.getElementById("assignedToList");
+
+  // Filtere das USERS-Array (das du bereits in loadUsers befüllst)
+  let filteredUsers = USERS.filter(user =>
+    user.name.toLowerCase().includes(search)
+  );
+
+  // Das Dropdown mit den gefilterten Ergebnissen neu befüllen
+  fillUserDropdown(filteredUsers);
+}
+
+
+
 
 
 function toggleUser(el) {
@@ -150,6 +167,8 @@ function updateAssignedPreview() {
   const selected = getAssignedUsers();
 
   container.innerHTML = renderAssignedUsers(selected);
+
+
 }
 
 
@@ -168,8 +187,8 @@ function buildTaskCard(task) {
 
 
 function renderAssignedUsers(users = []) {
-  
-  
+
+
 
   if (!Array.isArray(users) || users.length === 0) return "";
 
@@ -182,7 +201,7 @@ function renderAssignedUsers(users = []) {
 
     const parts = name.trim().split(" ");
     let initials = "";
-    
+
 
     if (parts.length > 1) {
       initials = (parts[0][0] + parts[1][0]).toUpperCase();
@@ -222,24 +241,7 @@ function subtaskInit() {
   });
 }
 
-/**
- * Resets the task form to its default state and clears all subtasks.
- */
-function clearForm() {
-  document.getElementById("form_task").reset();
-  initDateInput();
-  selectPriority("medium");
-  SUBTASKS = [];
-  document.getElementById("subtask_list").innerHTML = "";
-}
-/**
- * Clear the input of the Subtask
- */
-const clearSubtaskInput = (ev) => {
-  ev.preventDefault();
-  let SUBTASK_INPUT = document.getElementById("subtask_input");
-  SUBTASK_INPUT.value = "";
-};
+
 
 /**
  * Get the Form inputs into a Object to put it into firebase
@@ -260,7 +262,7 @@ function buildTaskObj() {
     description: val("description"),
     dueDate: val("dueDate"),
     category: val("category"),
-    assignedTo: getAssignedUsers() ||[],
+    assignedTo: getAssignedUsers() || [],
     priority: selectedPriority,
     status: "todo",
     subtasks: SUBTASKS,
@@ -410,42 +412,25 @@ function saveSubtask(li) {
   li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
 }
 
-async function postTask(task) {
-  const response = await fetch(TASK_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(task),
-  });
 
-  if (!response.ok) {
-    throw new Error("Firebase speichern fehlgeschlagen");
-  }
-
-  const data = await response.json();
-  console.log("Firebase Response:", data);
-
-  return data;
-}
-
-
-
-async function getFormData(ev) {
-  ev.preventDefault();
+async function createTask() {
+  const task = buildTaskObj(); 
 
   try {
-    const task = buildTaskObj();
-    await postTask(task);
-    clearForm();
+    const response = await fetch(TASK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(task)
+    });
 
-    //  Toast bei erfolgreichem Speichern anzeigen
-    const toast = document.getElementById("toast");
-    toast.classList.add("show");
+    if (response.ok) {
+      const toast = document.getElementById("toast");
+      if (toast) toast.classList.add("show");
 
-    setTimeout(() => {
-      toast.classList.remove("show");
-    }, 2000);
+      setTimeout(() => {
+        window.location.href = "board.html";
+      }, 2000);
+    }
   } catch (error) {
     console.error("Fehler beim Speichern:", error);
   }
@@ -453,9 +438,40 @@ async function getFormData(ev) {
 
 
 
-async function createTask() {
-  const task = buildTaskObj();
-  await postTask(task);
-  clearForm();
-  showToast();
+// 2. Die fehlende Brücke zu Firebase (WICHTIG!)
+async function postTask(task) {
+  const response = await fetch(TASK_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(task),
+  });
+  return response.json();
 }
+
+
+
+
+
+
+
+/**
+ * Resets the task form to its default state and clears all subtasks.
+ */
+function clearForm() {
+  document.getElementById("form_task").reset();
+  initDateInput();
+  selectPriority("medium");
+  document.getElementById("assignedPreview").innerHTML = "";
+  fillUserDropdown(USERS);
+  SUBTASKS = [];
+  document.getElementById("subtask_list").innerHTML = "";
+}
+
+/**
+ * Clear the input of the Subtask
+ */
+const clearSubtaskInput = (ev) => {
+  ev.preventDefault();
+  let SUBTASK_INPUT = document.getElementById("subtask_input");
+  SUBTASK_INPUT.value = "";
+};

@@ -14,7 +14,7 @@ function getFillUserDropown(color, initials, user) {
 
         <input type="checkbox" value="${user.name}">
       </label>
-    `;
+    `; 
 }
 
 
