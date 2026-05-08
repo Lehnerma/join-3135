@@ -7,9 +7,9 @@ function renderAlphabetTableTpl(alphabet) {
 }
 
 
-function renderSingleUserHtml(user, i, initials, color) {
+function renderSingleUserHtmlTpl(user, i, initials, color) {
   return /*html*/`
-    <div id="${i}" class="user-Selection" onclick="getUserDetails(${i})">
+    <div id="${i}" class="user-Selection desktop-only" onclick="getUserDetails(${i})">
         <div class="initials" style="background-color: ${color}">
             ${initials}
         </div>
@@ -17,7 +17,17 @@ function renderSingleUserHtml(user, i, initials, color) {
             <div class="name">${user.name}</div>
             <p class="email">${user.email}</p>
         </div>
-    </div>`;
+    </div>
+
+    // <div id="${i}" class="user-Selection mobile-only " onclick="getMobileDetails(${i})">
+    //     <div class="initials" style="background-color: ${color}">
+    //         ${initials}
+    //     </div>
+    //     <div class="contact-info-text">
+    //         <div class="name">${user.name}</div>
+    //         <p class="email">${user.email}</p>
+    //     </div>
+    // </div>`;
 }
 
 
@@ -136,7 +146,7 @@ function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
 
 function renderShowDetailsTpl(user, i, initials, color) {
   return /*html*/ `
-    <div class="contact-details-box">
+    <div class="contact-details-box" onclick="closeDialogOutsite(event)">
     
       <header class="header-contect-details">
         <div class="initials-large" style="background-color: ${color}">
@@ -171,7 +181,7 @@ function renderShowDetailsTpl(user, i, initials, color) {
 }
 
 
-function renderSingleUserHtml(user, i, initials, color) {
+function renderSingleUserHtmlTpl(user, i, initials, color) {
   return /*html*/`
     <div id="${i}" class="user-Selection" onclick="getUserDetails(${i})">
       <div class="initials" style="background-color: ${color}">

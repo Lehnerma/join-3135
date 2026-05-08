@@ -43,6 +43,7 @@ let editUserIndex = '';
 let user = {};
 let userSelectionID = {};
 let colorIsAlreadyActive;
+let detailAnimation = false;
 const leftContent = document.getElementById('leftContent');
 const backArrowButton = document.getElementById('backArrowButton');
 const editMenuButton = document.getElementById('editMenuButton');
@@ -53,9 +54,8 @@ let USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.ap
 
 function init() {
   getUsers();
-  changeButton();
-  window.addEventListener('resize', changeButton);
-  window.addEventListener('resize', mobileDetails);
+ 
+  
 }
 
 
@@ -109,8 +109,8 @@ function userContectList() {
 function getSingleUser(user, i) {
   let initials = getInitials(user.name);
   const firstLetter = user.name.charAt(0).toUpperCase();
-  let scolor = contactColors[firstLetter];
-  return renderSingleUserHtml(user, i, initials, color);
+  let color = contactColors[firstLetter];
+  return renderSingleUserHtmlTpl(user, i, initials, color);
 }
 
 
@@ -169,7 +169,6 @@ function closeContactDialog() {
   }
 }
 
-
 function closeDialogOutsite(event) {
   event.stopPropagation();
 }
@@ -197,14 +196,14 @@ function mobileDetails() {
   if (isMobileView) {
     activateMobileView();
   } else {
-    deactivateMobileView();
+    deactivateMobileView();s
   }
   showDetails();
 }
 
 
 function activateMobileView() {
-  leftContent.classList.add('contact-list-off');
+  leftContent.classList.add('contact-list-off', 'mobile-only');
   backArrowButton.classList.add('back-arrow-box', 'mobile-buttons-on');
   editMenuButton.classList.add('edit-menu-box', 'btn--addPerson', 'mobile-buttons-on');
   [editMenuIcon, backArrowIcon].forEach(el => el.classList.add('mobile-buttons-on'));
@@ -213,7 +212,7 @@ function activateMobileView() {
 
 
 function deactivateMobileView() {
-  leftContent.classList.remove('contact-list-off');
+  leftContent.classList.remove('contact-list-off', 'mobile-only');
   backArrowButton.classList.remove('back-arrow-box', 'mobile-buttons-on');
   editMenuButton.classList.remove('edit-menu-box', 'btn--addPerson', 'mobile-buttons-on');
   [editMenuIcon, backArrowIcon].forEach(el => el.classList.remove('mobile-buttons-on'));
@@ -248,6 +247,19 @@ function showDetails() {
   else {
     dialogRef.innerHTML = '';
   }
+  checkDetailAnimation();
+}
+
+
+function checkDetailAnimation() {
+  const dialogRef = document.getElementById('contactDetailsDialog');
+  const detailBox = dialogRef.querySelector('.contact-details-box');
+  if (detailAnimation && detailBox) {
+    if (detailBox) {
+      detailBox.classList.add('no-animation');
+    }
+    detailAnimation = false;
+  }
 }
 
 
@@ -279,6 +291,7 @@ async function addNewContact(newContact) {
   sortUserContactList();
   const addNewContactUser = USERS.findIndex(user => user.id === newContact.id);
   if (addNewContactUser !== -1) {
+    detailAnimation = true;
     getUserDetails(addNewContactUser);
     scrollToUser(addNewContactUser);
   }
@@ -289,11 +302,12 @@ async function addNewContact(newContact) {
 
 
 function scrollToUser(index) {
-      let id = document.getElementById(index); 
+  let id = document.getElementById(index);
   if (id) {
     id.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 }
+
 
 async function syncNewContact(newContact) {
   const response = await fetch(USERS_URL, {
@@ -363,7 +377,7 @@ async function saveNewContactData(index) {
   } else {
     console.error('Fehler beim Updaten');
   }
-} 
+}
 
 
 async function updateFirebaseContact(key, updatedData) {
@@ -381,21 +395,23 @@ function getSingleUser(user, i) {
   const initials = getInitials(user.name);
   const firstLetter = user.name.charAt(0).toUpperCase();
   const color = contactColors[firstLetter];
-  return renderSingleUserHtml(user, i, initials, color);
+  return renderSingleUserHtmlTpl(user, i, initials, color);
 }
 
 
-function changeButton() {
-  let addButton = document.getElementById('addButton');
-  const isMobile = window.innerWidth <= 650;
-  isMobile ? addButton.classList.remove('btn', 'btn--primary', 'add-button-size')
-    : addButton.classList.add('btn', 'btn--primary', 'add-button-size');
-  isMobile ? addButton.classList.add('btn--addPerson')
-    : addButton.classList.remove('btn--addPerson');
+// function changeButton() {
+//   let addButton = document.getElementById('addButton');
+//   const isMobile = window.innerWidth <= 650;
+//   isMobile ? addButton.classList.remove('btn', 'btn--primary', 'add-button-size')
+//     : addButton.classList.add('btn', 'btn--primary', 'add-button-size');
+//   isMobile ? addButton.classList.add('btn--addPerson')
+//     : addButton.classList.remove('btn--addPerson');
+// }
+
+function openEditMenu() {
+  const menu = document.querySelector('.edit-delete-container');
+  menu.classList.toggle('show');
 }
-
-
-
 
 
 
