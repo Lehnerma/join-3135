@@ -1,3 +1,26 @@
+
+function getFillUserDropown(color, initials, user) {
+  return`
+      <label class="user-item assignedTo" onclick="toggleUser(this)">
+        <div class="logoNameField">
+          <div class="initials" style="background-color:${color}">
+            ${initials}
+          </div>
+
+          <div class="contact-info-text">
+            <span>${user.name}</span>
+          </div>
+        </div>
+
+        <input type="checkbox" value="${user.name}">
+      </label>
+    `;
+}
+
+
+
+
+
 /**
  * The template for the subtasks
  * @returns the html code for creat a subtask

@@ -89,21 +89,7 @@ function fillUserDropdown(users) {
     const color = contactColors?.[firstLetter] || "#ccc";
     const initials = user.name.charAt(0);
 
-    html += `
-      <label class="user-item assignedTo" onclick="toggleUser(this)">
-        <div class="logoNameField">
-          <div class="initials" style="background-color:${color}">
-            ${initials}
-          </div>
-
-          <div class="contact-info-text">
-            <span>${user.name}</span>
-          </div>
-        </div>
-
-        <input type="checkbox" value="${user.name}">
-      </label>
-    `;
+    html += getFillUserDropown(color, initials, user);
   }
 
   container.innerHTML = html;
