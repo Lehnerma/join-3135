@@ -36,3 +36,38 @@
 .task-dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.4);
 }
+
+.detail-task {
+  width: 100%;
+  max-width: 525px;
+  padding: 48px 40px;
+}
+
+.detail-task--header {
+
+  .detail-task--category {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  h2 {
+    font-size: 61px;
+    font-weight: 700;
+  }
+}
+
+.detail-task--content {
+  gap: 24px;
+
+  .detail-task--infos{
+    gap: 24px;
+
+    .detail-task--date, .detail-task--prio{
+      gap: 25px;
+    }
+    .detail-task--prio-content{
+      gap: 10px;
+    }
+  }
+}

@@ -93,30 +93,32 @@ function getTaskAssignToTempletWithName(fullName, initials) {
 
 function getDetailTaskTemplate(task) {
   return `
-    <header class="detail-task--header">
-      <div>
+    <header class="detail-task--header f-col">
+      <div class="detail-task--category">
         <span class="task--category-label ${toClassName(task.category)}">${task.category}</span>
-        <button type="button" class=" btn btn--close">
-          <img src="../assets/img/icons/close.svg" alt="close" />
+        <button type="button" class=" btn btn--close" onclick="closeTaskDetailDialog()">
+          <img src="../assets/img/icons/general/close-dark.svg" alt="close" />
         </button>
       </div>
       <h2 class="detail-task--title">${task.title}</h2>
     </header>
 
-    <article class="detail-task--content" aria-label="detailed information of the task">
-      <section class="detail-task--basic-info">
-        <div class="detail-task--description">${task.description}</div>
-      </section>
+    <article class="detail-task--content f-col" aria-label="detailed information of the task">
 
-      <section class="detail-task--assign">
-        <div class="detail-task--date">
+      <div class="detail-task--description">${task.description}</div>
+
+      <section class="detail-task--infos f-col">
+        <div class="detail-task--date f-row">
           <h4>Due date:</h4>
           <p>${task.dueDate}</p>
         </div>
 
-        <div class="detail-task--prio">
-          <h4>Priority:</h4>
-          <p>${task.priority}</p>
+        <div class="detail-task--prio f-row">
+          <h4 class="detail-task--subheading">Priority:</h4>
+          <div class="detail-task--prio-content f-row">
+            <p>${task.priority}</p>
+            <img src="../assets/img/icons/prio/${task.priority}.svg" alt="${task.priority} priority" class="prio-icon">
+          </div>
         </div>
       </section>
 
@@ -127,7 +129,10 @@ function getDetailTaskTemplate(task) {
       </section>
 
       <section class="detail-task--subtasks">
+        <h4>Subtasks</h4>
+        <ul id="detail_subtask_list" class="detail-task--subtasks-list" aria-label="list of subtasks">
 
+        </ul>
       </section>
     </article>
 
@@ -139,6 +144,14 @@ function getDetailTaskTemplate(task) {
         <img src="../assets/img/icons/subtask/edit.svg" alt="edit" />
       </button>
     </footer>`;
+}
+
+function getDetailSubtaskTemplate(title, checked = false) {
+  return `
+    <li class="detail-task--subtask-item">
+      <input type="checkbox" class="detail-task--subtask-checkbox"${checked ? " checked" : ""} />
+      <p class="detail-task--subtask-text">${title}</p>
+    </li>`;
 }
 
 const contactColors = {
@@ -169,4 +182,3 @@ const contactColors = {
   Y: "rgba(200, 150, 0, 1)",
   Z: "rgba(120, 120, 120, 1)",
 };
-

@@ -59,7 +59,6 @@ function openTaskDetailDialog(taskId) {
     TASK_DETAIL_DIALOG.dataset.taskId = TASK.id;
     TASK_DETAIL_DIALOG.innerHTML = buildTaskDetailDialog(TASK);
     TASK_DETAIL_DIALOG.showModal();
-    
   }
 }
 
@@ -71,6 +70,11 @@ function closeTaskDetailDialogOnBackdropClick(event) {
   }
 }
 
+// Close task detail dialog with button
+function closeTaskDetailDialog() {
+  const TASK_DETAIL_DIALOG = document.getElementById("task_detail_dialog");
+  TASK_DETAIL_DIALOG.close();
+}
 
 function buildTaskDetailDialog(task) {
   const WRAPPER = document.createElement("div");
@@ -80,5 +84,15 @@ function buildTaskDetailDialog(task) {
   (task.assignedTo || []).filter(Boolean).forEach((name) => {
     ASSIGNEES_LIST.innerHTML += getTaskAssignToTempletWithName(name, getInitials(name));
   });
+
+  const SUBTASKS = task.subtasks || [];
+  const SUB_TOTAL = SUBTASKS.length;
+  const SUBTASK_LIST = WRAPPER.querySelector("#detail_subtask_list");
+  if (SUB_TOTAL > 0) {
+    SUBTASKS.forEach((subtask) => {
+      SUBTASK_LIST.innerHTML += getDetailSubtaskTemplate(subtask.title, subtask.done);
+    });
+  }
+
   return WRAPPER.innerHTML;
 }

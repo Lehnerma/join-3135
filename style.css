@@ -156,3 +156,14 @@
   justify-content: center;
   gap: 40px;
 }
+
+.f-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.f-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
