@@ -6,7 +6,7 @@ let USERS = [];
 
 function init() {
   btnInit();
-  subtaskInit() ;
+  subtaskInit();
   initDateInput();
   loadUsers();
   initDropdownOutsideClick();
@@ -23,7 +23,6 @@ function btnInit() {
     event.preventDefault();
     createTask();
   });
-
 }
 
 /**
@@ -63,7 +62,7 @@ function loadUsers() {
     .then((response) => response.json())
     .then((data) => {
       USERS = Object.values(data);
-      console.log("🔥 Firebase USERS:", data);
+      console.log("Firebase USERS:", data);
       fillUserDropdown(data);
     })
     .catch((error) => console.error("Error fetching users:", error));
@@ -110,6 +109,7 @@ function fillUserDropdown(users) {
   container.innerHTML = html;
 }
 
+
 function toggleUser(el) {
   const checkbox = el.querySelector("input");
 
@@ -130,6 +130,7 @@ function getAssignedUsers() {
   const checkboxes = document.querySelectorAll("#assignedToList input[type='checkbox']:checked");
   return Array.from(checkboxes).map((cb) => cb.value);
 }
+
 
 function toggleDropdown(e) {
   e.stopPropagation();
@@ -165,6 +166,7 @@ function updateAssignedPreview() {
   container.innerHTML = renderAssignedUsers(selected);
 }
 
+
 function buildTaskCard(task) {
   return `
     <div class="task-card">
@@ -180,15 +182,21 @@ function buildTaskCard(task) {
 
 
 function renderAssignedUsers(users = []) {
+  
+  
+
   if (!Array.isArray(users) || users.length === 0) return "";
 
   let html = "";
 
   users.forEach((name) => {
+    const firstLetter = name.charAt(0).toUpperCase();
+    const color = contactColors?.[firstLetter] || "#ccc";
     if (!name) return;
 
     const parts = name.trim().split(" ");
     let initials = "";
+    
 
     if (parts.length > 1) {
       initials = (parts[0][0] + parts[1][0]).toUpperCase();
@@ -197,7 +205,7 @@ function renderAssignedUsers(users = []) {
     }
 
     html += `
-      <div class="assigned-circle" title="${name}">
+      <div class="assigned-circle" style="background-color:${color}" title="${name}">
         ${initials}
       </div>
     `;
