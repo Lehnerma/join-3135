@@ -121,7 +121,8 @@ function showAmountOfUrgentTasks(data, priority) {
   return amountUrgent;
 }
 
-function openBoard() {
+function openBoard(currentTab) {
+  document.getElementById(currentTab).classList.add('is-loading');
   window.location.href = './board.html';
 }
 
