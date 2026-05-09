@@ -24,6 +24,7 @@
   padding-top: 64px;
   justify-self: center;
 }
+
 .nav-category-img {
   width: 25px;
   height: auto;
@@ -55,6 +56,14 @@
 
 .sidebar ul li:hover {
   background-color: var(--sixth-color);
+}
+
+#view-external li a {
+  color: var(--fifth-text-color);
+}
+
+#view-external li {
+  margin-top: clamp(8px, calc(-18.286px + 8.214vw), 100px);
 }
 
 .active {
@@ -108,6 +117,7 @@
   font-weight: 400;
   color: var(--primary-text-color);
 }
+
 /* only for testing */
 .app--content {
   grid-area: content;
@@ -122,6 +132,7 @@
   padding-right: 16px;
   transition: transform 0.7s ease-in-out;
 }
+
 .app--icon {
   width: 20px;
   height: 20px;
@@ -137,7 +148,7 @@
   height: 56px;
 }
 
-@media screen and (width <= 1024px) {
+@media screen and (width <=1024px) {
   .app {
     grid-template-rows: 80px 1fr 80px;
     grid-template-columns: 1fr;
