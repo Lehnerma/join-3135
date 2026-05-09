@@ -85,7 +85,7 @@ function getTaskAssignToTemplet(fullName, initials) {
 function getTaskAssignToTempletWithName(fullName, initials) {
   const color = contactColors[(initials?.[0] ?? "").toUpperCase()] || "#888";
   return `
-<li class="assignee">
+<li class="assignee f-row">
   <abbr class="assignee--initials" style="--assignee-color: ${color}" title="${fullName}">${initials}</abbr>
   <p class="assignee--name">${fullName}</p>
 </li>`;
@@ -105,26 +105,26 @@ function getDetailTaskTemplate(task) {
 
     <article class="detail-task--content f-col" aria-label="detailed information of the task">
 
-      <div class="detail-task--description">${task.description}</div>
+      <div class="detail-task--description detail-task--text">${task.description}</div>
 
       <section class="detail-task--infos f-col">
         <div class="detail-task--date f-row">
-          <h4>Due date:</h4>
-          <p>${task.dueDate}</p>
+          <h4 class="detail-task--subheading">Due date:</h4>
+          <p class="detail-task--text">${task.dueDate}</p>
         </div>
 
         <div class="detail-task--prio f-row">
           <h4 class="detail-task--subheading">Priority:</h4>
           <div class="detail-task--prio-content f-row">
-            <p>${task.priority}</p>
+            <p class="detail-task--text">${capitalizeFirstLetter(task.priority)}</p>
             <img src="../assets/img/icons/prio/${task.priority}.svg" alt="${task.priority} priority" class="prio-icon">
           </div>
         </div>
       </section>
 
       <section class="detail-task--assignees f-col">
-        <h4>Assigned to:</h4>
-        <ul id="detail_task_assignees" class="detail-task--assignees-list" aria-label="assigned contacts">
+        <h4 class="detail-task--subheading">Assigned to:</h4>
+        <ul id="detail_task_assignees" class="detail-task--assignees-list " aria-label="assigned contacts">
         </ul>
       </section>
 
@@ -136,13 +136,16 @@ function getDetailTaskTemplate(task) {
       </section>
     </article>
 
-    <footer class="detail-task--footer">
-      <button type="button" class="btn--delete-task">
-        <img src="../assets/img/icons/subtask/bin.svg" alt="delete" />
-      </button>
-      <button type="button" class="btn--edit-task">
-        <img src="../assets/img/icons/subtask/edit.svg" alt="edit" />
-      </button>
+    <footer class="detail-task--footer f-row">
+        <button type="button" class="btn btn--delete-task f-row">
+          <img src="../assets/img/icons/subtask/bin.svg" alt="delete" />
+          Delete
+        </button>
+        <button type="button" class="btn btn--edit-task f-row">
+          <img src="../assets/img/icons/subtask/edit.svg" alt="edit" />
+          Edit
+        </button>
+
     </footer>`;
 }
 
