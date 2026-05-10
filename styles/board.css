@@ -171,10 +171,12 @@
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
-    /* overflow: visible; */
+    overflow-x: visible;
+    padding-bottom: 64px;
 
     .kanban-column {
-      overflow: visible;
+      overflow-x: hidden;
+      overflow-y: visible;
     }
     .column-title h2 {
       font-size: 27px;
@@ -217,9 +219,12 @@
     align-items: flex-start;
     overflow-x: scroll;
     height: auto;
+    .task {
+      width: 252px;
+    }
 
-    .task{
-        width: 252px;
+    .no-task {
+      max-width: 100%;
     }
   }
 }
