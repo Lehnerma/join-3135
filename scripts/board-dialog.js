@@ -3,7 +3,7 @@ function initBoardTask() {
   ADD_BTN_HEAD.addEventListener("click", openAddTaskDialog);
 
   const TASK_DIALOG = document.getElementById("add_task_dialog");
-  TASK_DIALOG.addEventListener("click", closeDialogOnBackdropClick);
+  TASK_DIALOG.addEventListener("click", closeDialogOnBackdropClick); 
 
   const SEARCH_TASKS_BTN = document.getElementById("search_tasks_btn");
   SEARCH_TASKS_BTN.addEventListener("click", () => searchTasks());

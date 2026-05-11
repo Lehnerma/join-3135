@@ -4,6 +4,9 @@ let selectedPriority = "medium";
 let subtasksList  = [];
 let remoteUsers  = [];
 
+/** 
+ * The Main Boss .
+ */
 function init() {
   btnInit();
   subtaskInit();
