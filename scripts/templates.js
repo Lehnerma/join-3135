@@ -1,6 +1,6 @@
 
 function getFillUserDropown(color, initials, user) {
-  return`
+  return `
       <label class="user-item assignedTo" onclick="toggleUser(this)">
         <div class="logoNameField">
           <div class="initials" style="background-color:${color}">
@@ -14,7 +14,7 @@ function getFillUserDropown(color, initials, user) {
 
         <input type="checkbox" value="${user.name}">
       </label>
-    `; 
+    `;
 }
 
 
@@ -74,8 +74,8 @@ function getNoTasksTemplate(status) {
 
 function getTaskCardTemplet(title, description, category, id, priority) {
   return `
-<li class="task" draggable="true" ondragstart="taskDragStart(event, ${id})" data-id=${id}>
-  <article class="task--card">
+<li class="task" draggable="true" ondragstart="taskDragStart(event, ${id})" data-id=${id} >
+  <article class="task--card" onclick="openTaskDialog(${id})">
     <header>
       <span class="task--category-label ${toClassName(category)}">${category}</span>
     </header>
