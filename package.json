@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Lehnerma/join-3135/issues"
   },
-  "homepage": "https://github.com/Lehnerma/join-3135#readme"
+  "homepage": "https://github.com/Lehnerma/join-3135#readme",
+  "devDependencies": {
+    "jsdoc": "^4.0.5"
+  }
 }

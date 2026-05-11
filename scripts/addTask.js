@@ -243,11 +243,11 @@ function subtaskInit() {
 
 
 
-/**
- * Get the Form inputs into a Object to put it into firebase
- * @param {event} ev - the browser knows where we click
- * @returns
- */
+// /**
+//  * Get the Form inputs into a Object to put it into firebase
+//  * @param {event} ev - the browser knows where we click
+//  * @returns
+//  */
 
 
 /**

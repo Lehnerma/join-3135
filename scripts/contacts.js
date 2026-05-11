@@ -407,7 +407,7 @@ async function deleteContact(index) {
 /**
  * Sends a DELETE request to Firebase to permanently remove a user.
  * @param {string} firebaseKey - The user's unique Firebase key.
- * @returns {boolean>} Returns true if the deletion was successful.
+ * @returns {boolean} Returns true if the deletion was successful.
  */
 async function deleteUserFromDatabase(firebaseKey) {
   const url = `https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/${firebaseKey}.json`;
