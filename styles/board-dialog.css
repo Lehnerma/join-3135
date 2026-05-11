@@ -11,19 +11,16 @@
   animation: slideFromRight 175ms ease-in-out forwards;
 }
 
-/* only for testing */
-.test-dialog {
-  width: 60%;
-  height: 70%;
-}
-
 .dialog {
   background-color: white;
   border: none;
   border-radius: 30px;
+  width: 100%;
+  max-width: 525px;
+  padding: 48px 40px;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
   z-index: 11;
-  position: fixed;
+  /* position: fixed; */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -33,15 +30,8 @@
   animation: slideFromRight 175ms ease-in-out forwards;
 }
 
-.task-dialog::backdrop {
+.dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.4);
-}
-
-.detail-task {
-  width: 100%;
-  max-width: 525px;
-  padding: 48px 40px;
-  gap: 24px;
 }
 
 .detail-task--category {
@@ -164,4 +154,77 @@
 .btn--delete:hover img,
 .btn--edit:hover img {
   filter: brightness(0) saturate(100%) invert(67%) sepia(67%) saturate(1234%) hue-rotate(170deg) brightness(102%) contrast(102%);
+}
+
+/* ── Edit Task Dialog ─────────────────────────────────── */
+
+/* .edit-task-dialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 48px 40px 32px;
+  overflow-y: auto;
+} */
+
+.edit-task-dialog .form-task {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.edit-task-dialog__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-task-dialog__close img {
+  width: 24px;
+  height: 24px;
+}
+
+.label--bold {
+  font-weight: 700;
+  color: var(--primary-color);
+  font-size: 16px;
+}
+
+.edit-task-dialog__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+
+.btn--ok {
+  background-color: var(--primary-color);
+  color: var(--third-text-color);
+  border: none;
+  border-radius: 10px;
+  padding: 14px 28px;
+  font-size: 18px;
+  font-weight: 400;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--btn-shadow-main);
+}
+
+.btn--ok img {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1);
+}
+
+.btn--ok:hover {
+  background-color: var(--third-color);
+  box-shadow: var(--btn-shadow-hover);
 }

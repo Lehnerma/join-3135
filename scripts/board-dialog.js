@@ -174,13 +174,106 @@ function deleteTask(taskId) {
   }
 }
 
+function openEditTaskDialog(taskId) {
+  const ALL_TASKS = JSON.parse(sessionStorage.tasks);
+  const task = ALL_TASKS.find((t) => t.id === taskId);
+  if (!task) return;
+
+  closeTaskDetailDialog();
+
+  const dialog = document.getElementById("add_task_dialog");
+  dialog.innerHTML = getEditTaskDialogTemplate();
+  dialog.showModal();
+
+  document.getElementById("title").value = task.title || "";
+  document.getElementById("description").value = task.description || "";
+  document.getElementById("category").value = task.category || "";
+
+  const dueDateInput = document.getElementById("dueDate");
+  dueDateInput.min = new Date().toISOString().split("T")[0];
+  dueDateInput.value = task.dueDate || "";
+
+  selectPriority(task.priority || "medium");
+
+  subtasksList = (task.subtasks || []).map((s) => ({ title: s.title, done: s.done }));
+  subtaskInit();
+  subtasksList.forEach((sub, i) => renderSubtaskItem(i, sub.title));
+
+  loadUsersForEdit(task.assignedTo || []);
+  initDropdownOutsideClick();
+
+  const form = document.getElementById("form_edit_task");
+  if (form) {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      await saveEditedTask(task);
+    });
+  }
+}
+
+function closeEditTaskDialog() {
+  document.getElementById("add_task_dialog").close();
+}
+
+function loadUsersForEdit(assignedTo) {
+  const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+  fetch(USER_URL)
+    .then((r) => r.json())
+    .then((data) => {
+      remoteUsers = Object.values(data);
+      fillUserDropdown(data);
+      document.querySelectorAll("#assignedToList label.user-item").forEach((label) => {
+        const checkbox = label.querySelector("input[type='checkbox']");
+        if (checkbox && assignedTo.includes(checkbox.value)) {
+          checkbox.checked = true;
+          label.classList.add("selected");
+        }
+      });
+      updateAssignedPreview();
+    })
+    .catch((err) => console.error("Error loading users for edit:", err));
+}
+
+async function saveEditedTask(task) {
+  const updated = buildTaskObj();
+  updated.id = task.id;
+  updated.status = task.status;
+  updated.firebaseKey = task.firebaseKey;
+
+  const ALL_TASKS = JSON.parse(sessionStorage.tasks);
+  const idx = ALL_TASKS.findIndex((t) => t.id === task.id);
+  if (idx !== -1) ALL_TASKS[idx] = updated;
+  sessionStorage.tasks = JSON.stringify(ALL_TASKS);
+
+  try {
+    await fetch(getBoardTaskURL(task.firebaseKey), {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: updated.title,
+        description: updated.description,
+        dueDate: updated.dueDate,
+        category: updated.category,
+        assignedTo: updated.assignedTo,
+        priority: updated.priority,
+        subtasks: updated.subtasks,
+      }),
+    });
+  } catch (err) {
+    console.error("Error saving edited task:", err);
+  }
+
+  renderBoard(ALL_TASKS);
+  closeEditTaskDialog();
+  openTaskDetailDialog(task.id);
+}
+
 function syncSessionStorageWithFirebase(taskId) {
   try {
     const response = fetch(DELETETASK_URL + taskId, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
     });
-
     if (response.ok) {
       loadTasksFromFirebase();
     }
