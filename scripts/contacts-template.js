@@ -29,20 +29,22 @@ function renderHtmlContactDialogTpl() {
      
         <section class="aside-text-wrapper">
            <img class="aside-logo" src="../assets/img/icons/contacts/Capa_1.svg" alt="logo-join" />
+           <div class="aside-headline">
           <h2 class="aside-h2">Add contact</h2>
           <p class="aside-p">Tasks are better with a team!</p>
           <div class="blue-line-horizontal"></div>
+          </div>
         </section>
       </aside> 
 
       <header class="dialog-header">
-        <button type="button" id="close-btn" class="close-btn-overlay" onclick="closeContactDialog()"><svg class="img-x"><use href="../assets/img/icons/contacts/close-white.svg"></use></svg></button>
+        <button type="button" id="close-btn" class="close-btn-overlay" onclick="closeContactDialog()"><svg class="close-x"><use href="../assets/img/icons/contacts/close-white.svg"></use></svg></button>
       </header>
 
       <main class="dialog-main">
-         <div class="dialog-main-wrapper">
+        
         <div class="person-Logo-container">
-          <img class="person-logo" src="../assets/img/icons/input/person.svg" alt="Profile" class="large-profile-icon">
+          <img class="person-logo" src="../assets/img/icons/contacts/person.svg" alt="Profile" class="large-profile-icon">
         </div>
 
         <form id="formRef">
@@ -64,13 +66,13 @@ function renderHtmlContactDialogTpl() {
             </div>
           </section>
           <section class="dialog-login-buttons">
-            <button type="button" class="btn btn--secondary btn--login btn-cancel-text "
-              onclick="closeContactDialog()">Cancel<svg class="img-x"><use href="../assets/img/icons/contacts/close-white.svg"></use></svg></button>
-            <button type="button" class="btn btn--primary btn--login" onclick="createContact()">Create contact<img class="img-check"
+            <button id="cancelButton" type="button" class="btn btn--secondary btn--login btn-cancel" 
+              onclick="closeContactDialog()">Cancel<svg class="cancel-img-x"><use href="../assets/img/icons/contacts/close-white.svg"></use></svg></button>
+            <button type="button" class="btn btn--primary btn--login btn-create " onclick="createContact()">Create contact<img class="img-check"
                 src="../assets/img/icons/contacts/check.svg" alt="create check"></button>
           </section>
         </form>
-        </div>
+        
       </main>
     </div>`;
 }
@@ -80,28 +82,25 @@ function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
   return /*html*/ `
     <div class="dialog-container" onclick="closeDialogOutsite(event)">
       <aside class="aside-content">
-        <img class="aside-logo-edit" src="../assets/img/icons/contacts/Capa_1.svg" alt="logo-join" />
-        <section class="aside-text-wrapper">
-          <h2 class="aside-h2">Edit contact</h2>
+      <section class="aside-text-wrapper">
+           <img class="aside-logo" src="../assets/img/icons/contacts/Capa_1.svg" alt="logo-join" />
+           <div class="aside-headline">
+          <h2 class="aside-h2-edit">Edit contact</h2>
           <div class="blue-line-horizontal"></div>
+          </div>
         </section>
       </aside>
 
-      <header class="dialog-header">
-        <button type="button" id="close-btn" class="close-btn-overlay" onclick="closeContactDialog()">
-          <svg class="img-x">
-            <use href="../assets/img/icons/contacts/close-white.svg"></use>
-          </svg>
-        </button>
+       <header class="dialog-header">
+        <button type="button" id="close-btn" class="close-btn-overlay" onclick="closeContactDialog()"><svg class="close-x"><use href="../assets/img/icons/contacts/close-white.svg"></use></svg></button>
       </header>
 
+
       <main class="dialog-main">
-        <div class="dialog-main-wrapper">
+        
           <div class="person-Logo-container">
-           <div class="initials-large-dialog" style="background-color: ${color}">
-          ${initials}
-        </div>
-          </div>
+           <div class="initials-large-dialog" style="background-color: ${color}">${initials}</div>
+           </div>
 
           <form>
             <section class="dialog-input-container">
@@ -120,10 +119,10 @@ function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
             </section>
 
             <section class="dialog-login-buttons">
-              <button type="button" class="btn btn--secondary btn--login" onclick="deleteContact(${editUserIndex})">
+              <button  type="button" class="btn btn--secondary btn--login btn-delete" onclick="deleteContact(${editUserIndex})">
                 Delete
               </button>
-              <button type="submit" class="btn btn--primary btn--login" onclick="saveNewContactData(${editUserIndex})">
+              <button type="submit" class="btn btn--primary btn--login btn-save" onclick="saveNewContactData(${editUserIndex})">
                 Save
                 <img class="img-check" src="../assets/img/icons/contacts/check.svg" alt="create check">
               </button>
@@ -138,6 +137,7 @@ function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
 function renderShowDetailsTpl(user, i, initials, color) {
   return /*html*/ `
     <div class="contact-details-box show">
+    
       <header class="header-contect-details">
         <div class="initials-large" style="background-color: ${color}">
           ${initials}

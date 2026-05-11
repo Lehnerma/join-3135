@@ -1,0 +1,416 @@
+.dialog-content {
+    display: none;
+    border: none;
+    border-radius: 30px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(700px, 90vw, 1212px);
+    aspect-ratio: 1212 / 594;
+    max-height: 95vh;
+    background-color: var(--input-text-color);
+    z-index: 10;
+    overflow: hidden;
+}
+
+.dialog-content[open] {
+    display: flex;
+    animation: slideIn 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translate(100vw, -50%);
+    }
+
+    to {
+        transform: translate(-50%, -50%);
+    }
+}
+
+.dialog-content.hide {
+    display: flex;
+    animation: slideOut 0.3s ease-in forwards;
+}
+
+@keyframes slideOut {
+    from {
+        transform: translate(-50%, -50%);
+    }
+
+    to {
+        transform: translate(100vw, -50%);
+    }
+}
+
+.dialog-content::backdrop {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.dialog-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+.aside-content {
+    background-color: var(--primary-color);
+    color: var(--input-text-color);
+    padding: 66px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-shrink: 0;
+}
+
+.aside-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding-top: 24.5%;
+}
+
+.aside-logo {
+    width: clamp(14px, 5vw, 57px);
+    height: clamp(14px, 5vw, 66px);
+    margin-bottom: 8px;
+}
+
+.aside-h2 {
+    font-weight: 700;
+    font-size: clamp(47px, 1vw, 61px);
+    margin: 0;
+    white-space: nowrap;
+}
+
+.aside-p {
+    font-weight: 400;
+    font-size: clamp(16px, 2.2vw, 27px);
+}
+
+.aside-headline {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.blue-line-horizontal {
+    width: clamp(45px, 7.4vw, 90px);
+    height: clamp(2px, 0.25vw, 3px);
+    background-color: var(--secondary-color);
+    border-radius: clamp(1px, 0.16vw, 2px);
+}
+
+.close-btn-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 48px;
+    right: 48px;
+    background: none;
+    border: none;
+    font-size: clamp(18px, 2vw, 24px);
+    cursor: pointer;
+    z-index: 20;
+    width: 32px;
+    height: 32px;
+}
+
+.close-x {
+    width: 24px;
+    width: 24px;
+}
+
+.dialog-main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 137px;
+    margin-right: 48px;
+}
+
+.person-logo {
+    width: 53%;
+    height: auto;
+}
+
+.person-Logo-container {
+    width: clamp(40px, 9vw, 120px);
+    height: clamp(40px, 9vw, 120px);
+    background-color: var(--input-default-main);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: clamp(102px, 17vw, 204px) auto auto auto;
+    flex-shrink: 0;
+}
+
+.dialog-input-container {
+    width: clamp(300px, 32.8vw, 422px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(10px, 2.6vw, 32px);
+}
+
+.dialog-input-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: clamp(35px, 4.1vw, 50px);
+    border-radius: clamp(6px, 0.8vw, 10px);
+    border: clamp(1px, 0.1vw, 1.5px) solid var(--input-default-main);
+}
+
+.dialog-input {
+    width: 100%;
+    height: 100%;
+    margin: 13px 0px 13px 21px;
+    border: none;
+    outline: none;
+    font-family: "Inter";
+    font-size: 20px;
+}
+
+.dialog-input::placeholder {
+    color: var(--input-default-main);
+}
+
+.dialog-input-icon {
+    width: 24px;
+    height: 24px;
+    margin: 13px 21px 13px 0;
+    color: var(--fourth-text-color);
+}
+
+.dialog-login-buttons {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 56px;
+    gap: clamp(8px, 1.3vw, 24px);
+    margin-top: clamp(10px, 3.3vw, 49px);
+}
+
+.btn-create,
+.btn-save {
+    height: 56px;
+    white-space: nowrap;
+    font-weight: 700;
+    font-size: clamp(16px, 1.5vw, 21px);
+}
+
+.btn-delete {
+    height: 56px;
+    white-space: nowrap;
+    font-weight: 400;
+    font-size: clamp(16px, 1.5vw, 21px);
+}
+
+.btn-cancel {
+    height: 56px;
+    white-space: nowrap;
+    font-weight: 400;
+    font-size: clamp(16px, 1.5vw, 21px);
+}
+
+.img-check,
+.cancel-img-x {
+    width: clamp(16px, 2vw, 24px);
+    height: clamp(16px, 2vw, 24px);
+    margin-left: clamp(4px, 0.6vw, 8px);
+}
+
+.img-check {
+    filter: brightness(0) invert(1);
+}
+
+
+
+@media (max-width: 1024px) {
+    .dialog-content {
+        width: clamp(428px, 70vw, 1000px);
+        min-height: clamp(75vh, 95%, 800px);
+    }
+    
+ @keyframes slideIn {
+        from {
+            transform: translate(-50%, 100vh);
+        }
+
+        to {
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    @keyframes slideOut {
+        from {
+            transform: translate(-50%, -50%);
+        }
+
+        to {
+            transform: translate(-50%, 100vh);
+        }
+    }
+
+    .dialog-container {
+        flex-direction: column;
+    }
+
+    .aside-content {
+        position: relative;
+        min-width: clamp(280px, 100%, 396px);
+        height: clamp(40vh, 37vw, 39.7dvh);
+        align-items: flex-start;
+        justify-content: center;
+        padding: 24px;
+    }
+
+    .aside-logo,
+    .aside-logo-edit {
+        display: none;
+    }
+
+    .aside-h2 {
+        font-size: clamp(47px, 7vw, 61px);
+        margin: 0;
+    }
+
+    .aside-p {
+        font-size: clamp(20px, 3vw, 27px);
+    }
+
+    .aside-text-wrapper {
+        padding: 0;
+    }
+
+    .blue-line-horizontal {
+        width: 90px;
+        height: 3px;
+    }
+
+    .close-btn-overlay {
+        color: var(--input-text-color);
+        top: 24px;
+        right: 14px;
+    }
+
+    .person-Logo-container {
+        position: sticky;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 120px;
+        height: 120px;
+        border: 4px solid var(--input-text-color);
+        margin: 0;
+        margin-bottom: -32px;
+    }
+
+    .initials-large-dialog {
+        width: 120px;
+        height: 120px;
+        font-size: 47px;
+    }
+
+    .dialog-main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    form {
+        align-items: center;
+        margin: 0 24px 0 24px;
+        padding: 0;
+    }
+
+    .dialog-input-container {
+        width: 100%;
+        width: clamp(364px, 60vw, 550px);
+        min-height: 153px;
+        gap: clamp(15px, 2vw, 25px);
+    }
+
+    .dialog-input-section {
+        width: clamp(364px, 60vw, 550px);
+        height: clamp(41px, 5vw, 60px);
+    }
+
+    .dialog-input {
+        font-size: clamp(16px, 5vw, 21px);
+    }
+
+    .dialog-login-buttons {
+        height: 51px;
+        margin-top: 32px;
+        gap: 20px;
+    }
+
+    .btn-create,
+    .btn-save,
+    .btn-delete {
+        font-size: clamp(16px, 5vw, 21px);
+    }
+
+    .cancel-img-x,
+    .img-check {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .btn-cancel {
+        display: none;
+    }
+}
+
+@media (max-width: 430px) {
+    .aside-h2 {
+        font-size: clamp(40px, 7vw, 50px);
+        margin: 0;
+    }
+
+    .aside-content {
+        height: clamp(40vh, 80vw, 39.7dvh);
+    }
+
+
+    .aside-p {
+        font-weight: 400;
+        font-size: clamp(16px, 3vw, 24px);
+    }
+
+    .blue-line-horizontal {
+        width: 70px;
+        height: 3px;
+    }
+
+    .dialog-input-container {
+        width: 100%;
+        min-height: 153px;
+        gap: 25px;
+    }
+
+    .dialog-input-section {
+        width: 100%;
+        height: 41px;
+    }
+
+    .dialog-login-buttons {
+        height: 51px;
+        margin-top: 32px;
+        gap: 15px;
+    }
+}

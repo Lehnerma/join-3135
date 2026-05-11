@@ -57,6 +57,7 @@ function showGreeting() {
 }
 
 function showMobileWithGreeting() {
+  GREETING.classList.remove('summary-greeting');
   GREETING.classList.add('summary-greeting-mobile');
   GREETING.classList.remove('d-none');
   setTimeout(() => {
@@ -120,7 +121,8 @@ function showAmountOfUrgentTasks(data, priority) {
   return amountUrgent;
 }
 
-function openBoard() {
+function openBoard(currentTab) {
+  document.getElementById(currentTab).classList.add('is-loading');
   window.location.href = './board.html';
 }
 

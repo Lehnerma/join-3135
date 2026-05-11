@@ -148,7 +148,7 @@ main {
   background: white;
 }
 
-.dropdown {
+/* .dropdown {
   border: 1px solid #ccc;
   border-radius: 8px;
   margin-top: 5px;
@@ -157,11 +157,11 @@ main {
   background: white;
   display: flex;
   flex-direction: column;
-}
+} */
 
-.hidden {
+/* .hidden {
   display: none;
-}
+} */
 
 .assignedTo {
   display: flex;
@@ -169,6 +169,7 @@ main {
   align-items: center;
 
 }
+
 .logoNameField {
   display: flex;
   align-items: center;
@@ -178,11 +179,24 @@ main {
 
 .user-item {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
   padding: 8px;
   border-radius: 8px;
+  cursor: pointer;
+  transition: background 100ms ease;
 }
+
+.user-item:hover {
+  background: #f0f0f0;
+}
+
+.user-item.selected {
+  background: #2a3647;
+  color: white;
+}
+
+
 
 .user-item .initials {
   width: 30px;
@@ -197,7 +211,27 @@ main {
 .user-item.active {
   background-color: #2a3647;
   color: white;
-} 
+}
+
+
+.assigned-wrapper {
+  display: flex;
+  gap: 4px;
+  padding-top: 10px;
+  
+}
+
+.assigned-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #1053af;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
 
 
 
@@ -409,6 +443,7 @@ main {
    CUSTOM DROPDOWN – Assigned To (Suche + Initialen + Checkbox)
    ============================================================ */
 
+
 .custom-dropdown {
   position: relative;
   width: 100%;
@@ -470,6 +505,7 @@ main {
   max-height: 220px;
   overflow-y: auto;
 }
+
 
 /* Liste sichtbar wenn .open auf .custom-dropdown (per JS) */
 .custom-dropdown.open .custom-dropdown__list {

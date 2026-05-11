@@ -1,17 +1,15 @@
-const TASK_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks" + ".json";
+const ADDTASK_URL  = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks" + ".json";
 
 let selectedPriority = "medium";
-let SUBTASKS = [];
-let USERS = [];
+let subtasksList  = [];
+let remoteUsers  = [];
 
 function init() {
-  console.log("INIT läuft");
-  console.log("dropdown:", document.getElementById("dropdown"));
-
   btnInit();
   subtaskInit();
   initDateInput();
   loadUsers();
+  initDropdownOutsideClick();
 }
 
 /**
@@ -20,12 +18,25 @@ function init() {
 function btnInit() {
   const FORM = document.getElementById("form_task");
   const CLEAR_FORM = document.getElementById("form_clear");
-  FORM.addEventListener("submit", (event) => getFormData(event));
+
+  if (FORM) {
+    FORM.addEventListener("submit", (event) => {
+      event.preventDefault();
+      createTask();
+    });
+  }
+  if (CLEAR_FORM) {
+    CLEAR_FORM.addEventListener("click", () => {
+      clearForm();
+    });
+  }
 }
+
 
 /**
  * Get the actuall Date - and set the default value of the date input to today.
  */
+
 function initDateInput() {
   const dueDateInput = document.getElementById("dueDate");
   const now = new Date();
@@ -52,70 +63,170 @@ function selectPriority(priority) {
  */
 
 function loadUsers() {
+
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
   fetch(USER_URL)
     .then((response) => response.json())
     .then((data) => {
+      remoteUsers  = Object.values(data);
+      console.log("Firebase remoteUsers :", data);
       fillUserDropdown(data);
     })
     .catch((error) => console.error("Error fetching users:", error));
 }
 
 function fillUserDropdown(users) {
-  // console.log("USERS DATA:", users);
-  const container = document.getElementById("dropdown");
+  const container = document.getElementById("assignedToList");
 
+  if (!container) {
+    console.error(" assignedToList Element nicht gefunden!");
+    return;
+  }
   let html = "";
 
   for (const userId in users) {
     const user = users[userId];
-    let firstLetter = user.name.charAt(0).toUpperCase();
-    let color = contactColors[firstLetter];
-    let initials = user.name.charAt(0);
-
-    html += `
-          <label  class="user-item user-Selection assignedTo" onclick="toggleUser(this)">
-            <div class="logoNameField">
-              <div class="initials" style="background-color: ${color};">
-                ${initials}
-              </div>
-            
-              <div class="contact-info-text">
-                <span>${user.name}</span>
-              </div>
-            </div>
-            
-              <input type="checkbox" value="${user.name}">
-          </label>
-    `;
+    if (!user || !user.name) continue;
+    const firstLetter = user.name.charAt(0).toUpperCase();
+    const color = contactColors?.[firstLetter] || "#ccc";
+    const initials = user.name.charAt(0);
+    html += getFillUserDropown(color, initials, user);
   }
-
   container.innerHTML = html;
 }
+
+function filterUsers() {
+  let search = document.getElementById('assignedToSearch').value.toLowerCase(); // Eingabe in Kleinbuchstaben
+  let container = document.getElementById("assignedToList");
+
+  // Filtere das USERS-Array (das du bereits in loadUsers befüllst)
+  let filteredUsers = remoteUsers .filter(user =>
+    user.name.toLowerCase().includes(search)
+  );
+
+  // Das Dropdown mit den gefilterten Ergebnissen neu befüllen
+  fillUserDropdown(filteredUsers);
+}
+
+
+
+
 
 function toggleUser(el) {
   const checkbox = el.querySelector("input");
 
   checkbox.checked = !checkbox.checked;
-  el.classList.toggle("active", checkbox.checked);
+
+  if (checkbox.checked) {
+    el.classList.add("selected");
+  } else {
+    el.classList.remove("selected");
+  }
+
+  updateAssignedPreview();
 }
 
+
+
 function getAssignedUsers() {
-  const checkboxes = document.querySelectorAll("#dropdown input[type='checkbox']:checked");
+  const checkboxes = document.querySelectorAll("#assignedToList input[type='checkbox']:checked");
   return Array.from(checkboxes).map((cb) => cb.value);
 }
 
-function toggleDropdown() {
-  document.getElementById("dropdown").classList.toggle("hidden");
+
+function toggleDropdown(e) {
+  e.stopPropagation();
+  const dropdown = document.getElementById("assignedToDropdown");
+  dropdown.classList.toggle("open");
 }
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    document.getElementById("assignedToDropdown")?.classList.remove("open");
+  }
+});
+
+
+function initDropdownOutsideClick() {
+  document.addEventListener("click", (e) => {
+    const dropdown = document.getElementById("assignedToDropdown");
+
+    if (!dropdown) return;
+
+    const clickedInside = dropdown.contains(e.target);
+
+    if (!clickedInside) {
+      dropdown.classList.remove("open");
+    }
+  });
+}
+
+function updateAssignedPreview() {
+  const container = document.getElementById("assignedPreview");
+  const selected = getAssignedUsers();
+
+  container.innerHTML = renderAssignedUsers(selected);
+
+
+}
+
+
+function buildTaskCard(task) {
+  return `
+    <div class="task-card">
+      <div class="task-title">${task.title}</div>
+      <div class="task-desc">${task.description}</div>
+
+      <div class="assigned-users">
+        ${renderAssignedUsers(task.assignedTo)}
+      </div>
+    </div>
+  `;
+}
+
+
+function renderAssignedUsers(users = []) {
+
+
+
+  if (!Array.isArray(users) || users.length === 0) return "";
+
+  let html = "";
+
+  users.forEach((name) => {
+    const firstLetter = name.charAt(0).toUpperCase();
+    const color = contactColors?.[firstLetter] || "#ccc";
+    if (!name) return;
+
+    const parts = name.trim().split(" ");
+    let initials = "";
+
+
+    if (parts.length > 1) {
+      initials = (parts[0][0] + parts[1][0]).toUpperCase();
+    } else {
+      initials = parts[0].slice(0, 2).toUpperCase();
+    }
+
+    html += `
+      <div class="assigned-circle" style="background-color:${color}" title="${name}">
+        ${initials}
+      </div>
+    `;
+  });
+
+  return `<div class="assigned-wrapper">${html}</div>`;
+}
+
+
 
 /**
  *  User Assignment Dropdown functions
  */
 
 /**
- * Initial all subtasks function after loading the body
+ * Initial all addSubtask function after loading the body
  */
 function subtaskInit() {
   const SUBTASK_SAVE = document.getElementById("subtask-save");
@@ -130,34 +241,14 @@ function subtaskInit() {
   });
 }
 
-/**
- * Resets the task form to its default state and clears all subtasks.
- */
-function clearForm() {
-  document.getElementById("form_task").reset();
-  initDateInput();
-  selectPriority("medium");
-  SUBTASKS = [];
-  document.getElementById("subtask_list").innerHTML = "";
-}
-/**
- * Clear the input of the Subtask
- */
-const clearSubtaskInput = (ev) => {
-  ev.preventDefault();
-  let SUBTASK_INPUT = document.getElementById("subtask_input");
-  SUBTASK_INPUT.value = "";
-};
+
 
 /**
  * Get the Form inputs into a Object to put it into firebase
  * @param {event} ev - the browser knows where we click
  * @returns
  */
-function getFormData(ev) {
-  ev.preventDefault();
-  return buildTaskObj();
-}
+
 
 /**
  * Helper func to creat the task object for put to database
@@ -165,20 +256,21 @@ function getFormData(ev) {
  */
 function buildTaskObj() {
   const val = (id) => document.getElementById(id).value;
+
   return {
     title: val("title"),
     description: val("description"),
     dueDate: val("dueDate"),
     category: val("category"),
-    assignedTo: getAssignedUsers(),
+    assignedTo: getAssignedUsers() || [],
     priority: selectedPriority,
     status: "todo",
-    subtasks: SUBTASKS,
+    subtasks: subtasksList ,
   };
 }
 
 /**
- * Adds the subtask to the array (SUBTASKS) and render the subtasks
+ * Adds the subtask to the array (addSubtask) and render the subtasks
  * @returns a savety point to get out of the funktion if no title is in it. or it`s length is shorter than 5 letters.
  */
 function addSubtask(ev) {
@@ -186,8 +278,8 @@ function addSubtask(ev) {
   const INPUT = document.getElementById("subtask_input");
   const title = INPUT.value.trim();
   if (!title) return;
-  const INDEX = SUBTASKS.length;
-  SUBTASKS.push({
+  const INDEX = subtasksList .length;
+  subtasksList .push({
     title: title,
     done: false,
   });
@@ -200,7 +292,7 @@ function addSubtask(ev) {
  * Creates a subtask list item and appends it to the subtask list in the DOM.
  * Sets the element's index via dataset and id, renders its HTML via template,
  * and attaches all required event listeners.
- * @param {number} index - The position of the subtask in the SUBTASKS array.
+ * @param {number} index - The position of the subtask in the addSubtask array.
  * @param {string} title - The display text of the subtask.
  */
 function renderSubtaskItem(index, title) {
@@ -281,30 +373,24 @@ function cancelEditSubtask(li) {
 
   const span = document.createElement("span");
   span.className = "subtask-text";
-  span.textContent = subtasks[parseInt(li.dataset.index)].title;
-  span.addEventListener("dblclick", () => startEditSubtask(li));
-  li.replaceChild(span, input);
+  span.textContent = subtasksList [parseInt(li.dataset.index)].title;
 
-  li.classList.remove("editing");
-  li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
+  li.replaceChild(span, input);
 }
 
 /**
- * Removes a subtask from the SUBTASKS array and from the DOM.
+ * Removes a subtask from the addSubtask array and from the DOM.
  * Re-indexes all remaining subtask items after deletion.
  * @param {HTMLLIElement} li - The subtask list item to delete.
  */
 function deleteSubtask(li) {
-  subtasks.splice(parseInt(li.dataset.index), 1);
+  addSubtask.splice(parseInt(li.dataset.index), 1);
   li.remove();
-  document.querySelectorAll("#subtask_list .subtask-item").forEach((item, i) => {
-    item.dataset.index = i;
-  });
 }
 
 /**
  * Saves the edited subtask title and exits inline edit mode.
- * Updates the SUBTASKS array and replaces the input with a text span.
+ * Updates the addSubtask array and replaces the input with a text span.
  * @param {HTMLLIElement} li - The subtask list item being edited.
  */
 function saveSubtask(li) {
@@ -314,7 +400,7 @@ function saveSubtask(li) {
   const newTitle = input.value.trim();
   if (!newTitle) return;
 
-  SUBTASKS[parseInt(li.dataset.index)].title = newTitle;
+  subtasksList [parseInt(li.dataset.index)].title = newTitle;
 
   const span = document.createElement("span");
   span.className = "subtask-text";
@@ -326,40 +412,70 @@ function saveSubtask(li) {
   li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
 }
 
-async function postTask(task) {
-  const response = await fetch(TASK_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(task),
-  });
 
-  if (!response.ok) {
-    throw new Error("Firebase speichern fehlgeschlagen");
-  }
-
-  const data = await response.json();
-  console.log("Firebase Response:", data);
-
-  return data;
-}
-
-async function getFormData(ev) {
-  ev.preventDefault();
+async function createTask() {
+  const task = buildTaskObj(); 
 
   try {
-    const task = buildTaskObj();
-    await postTask(task);
+    const response = await fetch(ADDTASK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(task)
+    });
 
-    //  Toast bei erfolgreichem Speichern anzeigen
-    const toast = document.getElementById("toast");
-    toast.classList.add("show");
+    if (response.ok) {
+      const toast = document.getElementById("toast");
+      if (toast) toast.classList.add("show");
 
-    setTimeout(() => {
-      toast.classList.remove("show");
-    }, 2000);
+      setTimeout(() => {
+        window.location.href = "board.html";
+      }, 2000);
+    }
   } catch (error) {
     console.error("Fehler beim Speichern:", error);
   }
 }
+
+
+
+
+async function postTask(task) {
+  const response = await fetch(ADDTASK_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(task),
+  });
+  return response.json();
+}
+
+
+
+
+
+
+
+/**
+ * Resets the task form to its default state and clears all subtasks.
+ */
+function clearForm() {
+  document.getElementById("form_task").reset();
+  initDateInput();
+  selectPriority("medium");
+  document.getElementById("assignedPreview").innerHTML = "";
+  fillUserDropdown(remoteUsers );
+  subtasksList  = [];
+  document.getElementById("subtask_list").innerHTML = "";
+}
+
+/**
+ * Clear the input of the Subtask
+ */
+const clearSubtaskInput = (ev) => {
+  ev.preventDefault();
+  let SUBTASK_INPUT = document.getElementById("subtask_input");
+  SUBTASK_INPUT.value = "";
+};
+
+
+
+

@@ -1,4 +1,4 @@
-const TASK_URL = (key = "", section = "") => {
+const getBoardTaskURL  = (key = "", section = "") => {
   return `https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks/${key ? key + "/" : ""}${section ? section + "/" : ""}.json`;
 };
 
@@ -14,7 +14,7 @@ function initBoard() {
 
 async function loadTasksFromFirebase() {
   try {
-    const RESPONSE = await fetch(TASK_URL());
+    const RESPONSE = await fetch(getBoardTaskURL ());
     if (!RESPONSE.ok) {
       throw new Error(`loading task faild: ${RESPONSE.status}`);
     }
@@ -39,7 +39,7 @@ function getArryFromResult(result) {
 
 async function updateTaskStatus(firebaseKey, status) {
   try {
-    await fetch(TASK_URL(firebaseKey, "status"), {
+    await fetch(getBoardTaskURL (firebaseKey, "status"), {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(status),
@@ -73,7 +73,7 @@ function buildTaskCard(task) {
   const WRAPPER = document.createElement("div");
   WRAPPER.innerHTML = getTaskCardTemplet(task.title, task.description, task.category, task.id, getPriority(task.priority));
 
-  const SUBTASKS = task.subtasks || [];
+  const SUBTASKS = Array.isArray(task.subtasks) ? task.subtasks : [];
   const SUB_TOTAL = SUBTASKS.length;
   const SUB_DONE = SUBTASKS.filter((s) => s.done === true).length;
   WRAPPER.querySelector(".subtask--progress-container").innerHTML = getSubtaskProgressTemplate(SUB_DONE, SUB_TOTAL);
@@ -82,6 +82,8 @@ function buildTaskCard(task) {
   (task.assignedTo || []).filter(Boolean).forEach((name) => {
     ASSIGNEES_LIST.innerHTML += getTaskAssignToTemplet(name, getInitials(name));
   });
+
+
   return WRAPPER.innerHTML;
 }
 
@@ -90,9 +92,14 @@ function getPriority(priority) {
   return VALID.includes(priority) ? priority : "low";
 }
 
-function getInitials(name) {
+function getInitials(name = "") {
+  if (typeof name !== "string") return "";
   const parts = name.trim().split(" ");
-  const last = parts.length > 1 ? parts[parts.length - 1].charAt(0).toUpperCase() : "";
+  if (!parts[0]) return "";
+  const last =
+    parts.length > 1
+      ? parts[parts.length - 1].charAt(0).toUpperCase()
+      : "";
   return parts[0].charAt(0).toUpperCase() + last;
 }
 
@@ -147,3 +154,9 @@ function taskDragDrop(status) {
   );
   updateTaskStatus(CURRENT_TASK.firebaseKey, status);
 }
+
+
+
+
+
+
