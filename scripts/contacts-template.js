@@ -1,3 +1,8 @@
+/**
+ * Creates the HTML template for a letter container in the contact list.
+ * @param {string} alphabet - The letter for the category (e.g., "A").
+ * @returns {string} The HTML template as a string.
+ */
 function renderAlphabetTableTpl(alphabet) {
   return /*html*/ `
         <div id="${alphabet}">
@@ -7,20 +12,32 @@ function renderAlphabetTableTpl(alphabet) {
 }
 
 
+/**
+ * Creates the HTML template for a single user in the contact list.
+ * @param {Object} user - The user object containing the contact details.
+ * @param {number} i - The user's unique index.
+ * @param {string} initials - The user's initials.
+ * @param {string} color - Background color for the profile circle.
+ * @returns {string} The HTML template as a string.
+ */
 function renderSingleUserHtmlTpl(user, i, initials, color) {
   return /*html*/`
-    <div id="${i}" class="user-Selection desktop-only" onclick="getUserDetails(${i})">
-        <div class="initials" style="background-color: ${color}">
-            ${initials}
-        </div>
-        <div class="contact-info-text">
-            <div class="name">${user.name}</div>
-            <p class="email">${user.email}</p>
-        </div>
+    <div id="${i}" class="user-Selection" onclick="getUserDetails(${i})">
+      <div class="initials" style="background-color: ${color}">
+        ${initials}
+      </div>
+      <div class="contact-info-text">
+        <div class="name">${user.name}</div>
+        <p class="email">${user.email}</p>
+      </div>
     </div>`;
 }
 
 
+/**
+ * Creates the HTML template for the dialog box for creating a new contact.
+ * @returns {string} The HTML template for the contact dialog.
+ */
 function renderHtmlContactDialogTpl() {
   return /*html*/ `
   <div class="dialog-container" onclick="closeDialogOutsite(event)">
@@ -48,7 +65,7 @@ function renderHtmlContactDialogTpl() {
               <img src="../assets/img/icons/input/person.svg" alt="icon" class="dialog-input-icon" />
             </div>
             <div class="dialog-input-section">
-              <input class="dialog-input" id="createEmail" type="email" name="email" placeholder="Email" required />
+              <input class="dialog-input" id="createEmail" type="email" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Bitte geben Sie eine gültige E-Mail-Adresse ein (z. B. name@beispiel.de)." required />
               <img src="../assets/img/icons/input/mail.svg" alt="icon" class="dialog-input-icon" />
             </div>
             <div class="dialog-input-section">
@@ -69,8 +86,15 @@ function renderHtmlContactDialogTpl() {
     </div>`;
 }
 
-function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
 
+/**
+ * Creates the HTML template for the dialog box used to edit a contact.
+ * @param {number} editUserIndex - The index of the user to be edited.
+ * @param {string} initials - The user's initials.
+ * @param {string} color - Color for the profile circle.
+ * @returns {string} The HTML dialog template for editing the contact.
+ */
+function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
   return /*html*/ `
    <div class="dialog-container" onclick="closeDialogOutsite(event)">
 
@@ -104,7 +128,7 @@ function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
           <img src="../assets/img/icons/input/person.svg" alt="icon" class="dialog-input-icon" />
         </div>
         <div class="dialog-input-section">
-          <input class="dialog-input" id="editEmail" type="email" name="email" placeholder="Email" required />
+          <input class="dialog-input" id="editEmail" type="email" name="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Bitte geben Sie eine gültige E-Mail-Adresse ein (z. B. name@beispiel.de)." required />
           <img src="../assets/img/icons/input/mail.svg" alt="icon" class="dialog-input-icon" />
         </div>
         <div class="dialog-input-section">
@@ -130,6 +154,14 @@ function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
 }
 
 
+/**
+ * Creates the HTML template for the detail view of a selected contact.
+ * @param {Object} user - The user object containing name, email, and phone number.
+ * @param {number} i - The user's index.
+ * @param {string} initials - The user's initials.
+ * @param {string} color - Color for the profile circle.
+ * @returns {string} The HTML template for the contact details.
+ */
 function renderShowDetailsTpl(user, i, initials, color) {
   return /*html*/ `
     <div class="contact-details-box" >
@@ -163,19 +195,5 @@ function renderShowDetailsTpl(user, i, initials, color) {
           <li>${user.phone}</li>
         </ul>
       </main>
-    </div>`;
-}
-
-
-function renderSingleUserHtmlTpl(user, i, initials, color) {
-  return /*html*/`
-    <div id="${i}" class="user-Selection" onclick="getUserDetails(${i})">
-      <div class="initials" style="background-color: ${color}">
-        ${initials}
-      </div>
-      <div class="contact-info-text">
-        <div class="name">${user.name}</div>
-        <p class="email">${user.email}</p>
-      </div>
     </div>`;
 }

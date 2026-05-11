@@ -1,10 +1,10 @@
 .contact-success-overlay {
-    position: fixed;
+    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    right: 650px;
-    bottom: 200px;
+    left: clamp(8px,2.5vw, 55px);
+    bottom: 150px;
     width: 326px;
     height: 74px;
     background-color: var(--primary-color);
@@ -13,19 +13,25 @@
     border-radius: 20px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
     font-size: 20px;
-    z-index: 11;
-    pointer-events: none;
+    z-index: 31;
     transition: all 0.3s ease-in-out;
 }
 
 .hide-overlay {
-    transform: translateX(calc(100% + 650px));
+    transform: translateX(calc(100vw + 326px)); 
 }
 
-@media(max-width:1024px) {
-   
-    .hide-overlay {
-        transform: translateY(50%, 300px);
+@media (max-width: 1024px) {
+    .contact-success-overlay {
+       
+        left: 50%;
+        transform: translateX(-50%) translateY(-100px) ;
     }
 
+    .hide-overlay {
+       
+        transform: translateX(-50%) translateY(200px);
+    }
 }
+
+

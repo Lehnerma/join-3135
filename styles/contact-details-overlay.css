@@ -111,7 +111,7 @@
   font-weight: 400;
   color: var(--primary-color);
   border: none;
-  background: none; /* Sicherstellung für Buttons */
+
 }
 
 .edit-delete-button:hover {
@@ -185,13 +185,13 @@ li {
 
 /* RESPONSIVE */
 
-@media(max-width:1024px){
-.initials-large-edit-dialog {
-        width: 120px;
-        height: 120px;
-        font-size: 47px;
-    }
+@media(max-width:1024px) {
+  .initials-large-edit-dialog {
+    width: 120px;
+    height: 120px;
+    font-size: 47px;
   }
+}
 
 @media(max-width: 650px) {
 
@@ -203,7 +203,7 @@ li {
   .mobile-only,
   .btn--addPerson,
   .edit-menu-box,
-  .btn--arrow, 
+  .btn--arrow,
   .back-arrow,
   .edit-menu {
     display: flex;
@@ -255,7 +255,7 @@ li {
     box-shadow: var(--contact-menu-shadow);
     background-color: var(--input-text-color);
     transform: translateX(150%);
-    transition: transform 0.3s ease-out; /* Hier bleibt die längere Transition für das Menü-Sliding */
+    transition: transform 0.3s ease-out;
   }
 
   .edit-delete-container.show {
@@ -309,7 +309,7 @@ li {
     height: 32px;
   }
 
-  .btn--arrow{
+  .btn--arrow {
     position: fixed;
     border: none;
     top: 128px;
@@ -317,7 +317,7 @@ li {
     z-index: 20;
   }
 
-  .btn--arrow:active{
+  .btn--arrow:active {
     transform: scale(1.2);
     background-color: var(--input-text-color);
   }
