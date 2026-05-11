@@ -217,13 +217,15 @@ main {
 .assigned-wrapper {
   display: flex;
   gap: 4px;
+  padding-top: 10px;
+  
 }
 
 .assigned-circle {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: #2a3647;
+  background: #1053af;
   color: white;
   display: flex;
   justify-content: center;

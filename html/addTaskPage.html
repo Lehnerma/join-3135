@@ -110,7 +110,7 @@
             <label for="assignedToSearch">Assigned to</label>
             <div class="custom-dropdown" id="assignedToDropdown" >
               <div class="custom-dropdown__trigger">
-                <input type="text" id="assignedToSearch" class="input custom-dropdown__input" onclick="toggleDropdown(event)"
+                <input type="text" id="assignedToSearch" onkeyup="filterUsers()" class="input custom-dropdown__input" onclick="toggleDropdown(event)"
                   placeholder="Select contacts to assign" autocomplete="off" />
                 <button type="button" class="custom-dropdown__toggle" aria-label="Toggle dropdown" >
                   <span class="custom-dropdown__arrow"></span>
@@ -183,7 +183,7 @@
       </form>
       <section class="form-footer">
         <div class="action-btns">
-          <button id="form_clear" type="reset" class="btn btn--secondary clear" form="form_task">Clear</button>
+          <button id="form_clear" type="reset" class="btn btn--secondary clear" form="form_task"  onclick="clearForm()" >Clear</button>
           <button type="submit" class="btn btn--primary" form="form_task">Create Task</button>
         </div>
       </section>

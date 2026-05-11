@@ -1,4 +1,4 @@
-const TASK_URL = (key = "", section = "") => {
+const getBoardTaskURL  = (key = "", section = "") => {
   return `https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks/${key ? key + "/" : ""}${section ? section + "/" : ""}.json`;
 };
 
@@ -14,7 +14,7 @@ function initBoard() {
 
 async function loadTasksFromFirebase() {
   try {
-    const RESPONSE = await fetch(TASK_URL());
+    const RESPONSE = await fetch(getBoardTaskURL ());
     if (!RESPONSE.ok) {
       throw new Error(`loading task faild: ${RESPONSE.status}`);
     }
@@ -39,7 +39,7 @@ function getArryFromResult(result) {
 
 async function updateTaskStatus(firebaseKey, status) {
   try {
-    await fetch(TASK_URL(firebaseKey, "status"), {
+    await fetch(getBoardTaskURL (firebaseKey, "status"), {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(status),

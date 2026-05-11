@@ -25,3 +25,41 @@
 .task-dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.4);
 }
+
+
+
+
+#add_task_dialog {
+    border: none;
+    border-radius: 30px;
+    padding: 5px 20px;
+    max-width: 1000px; /* Wichtig für das 2-Spalten-Layout */
+    width: 90%;
+    height: 100vh;
+    overflow-y: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.close-dialog-btn {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.close-dialog-btn:hover {
+    background-color: #f0f0f0;
+    border-radius: 50%;
+}
+
+/* Verhindert Scrollen des Boards im Hintergrund */
+body.modal-open {
+    overflow: hidden;
+}

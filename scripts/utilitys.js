@@ -61,3 +61,4 @@ function renderHeadInitals() {
     USER_INITIALS.innerText = "G";
   }
 }
+
