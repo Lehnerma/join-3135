@@ -92,7 +92,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: 40px;
+  padding-left: 116px;
   background-color: var(--input-text-color);
   z-index: 10;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
