@@ -17,27 +17,15 @@ function renderSingleUserHtmlTpl(user, i, initials, color) {
             <div class="name">${user.name}</div>
             <p class="email">${user.email}</p>
         </div>
-    </div>
-
-    // <div id="${i}" class="user-Selection mobile-only " onclick="getMobileDetails(${i})">
-    //     <div class="initials" style="background-color: ${color}">
-    //         ${initials}
-    //     </div>
-    //     <div class="contact-info-text">
-    //         <div class="name">${user.name}</div>
-    //         <p class="email">${user.email}</p>
-    //     </div>
-    // </div>`;
+    </div>`;
 }
 
 
 function renderHtmlContactDialogTpl() {
   return /*html*/ `
   <div class="dialog-container" onclick="closeDialogOutsite(event)">
-
       <aside class="aside-content">
-     
-        <section class="aside-text-wrapper">
+             <section class="aside-text-wrapper">
            <img class="aside-logo" src="../assets/img/icons/contacts/Capa_1.svg" alt="logo-join" />
            <div class="aside-headline">
           <h2 class="aside-h2">Add contact</h2>
@@ -46,29 +34,23 @@ function renderHtmlContactDialogTpl() {
           </div>
         </section>
       </aside> 
-
       <header class="dialog-header">
         <button type="button" id="close-btn" class="close-btn-overlay" onclick="closeContactDialog()"><svg class="close-x"><use href="../assets/img/icons/contacts/close-white.svg"></use></svg></button>
       </header>
-
       <main class="dialog-main">
-        
-        <div class="person-Logo-container">
+                <div class="person-Logo-container">
           <img class="person-logo" src="../assets/img/icons/contacts/person.svg" alt="Profile" class="large-profile-icon">
         </div>
-
         <form id="formRef">
           <section class="dialog-input-container">
             <div class="dialog-input-section">
               <input class="dialog-input" id="createName" type="text" name="name" placeholder="Name" required />
               <img src="../assets/img/icons/input/person.svg" alt="icon" class="dialog-input-icon" />
             </div>
-
             <div class="dialog-input-section">
               <input class="dialog-input" id="createEmail" type="email" name="email" placeholder="Email" required />
               <img src="../assets/img/icons/input/mail.svg" alt="icon" class="dialog-input-icon" />
             </div>
-
             <div class="dialog-input-section">
               <input class="dialog-input" id="createPhone" type="tel" name="phone" placeholder="Phone" pattern="[0-9+ ]*"
                 title="Bitte nur Zahlen, Leerzeichen oder ein + eingeben" required />
@@ -88,72 +70,76 @@ function renderHtmlContactDialogTpl() {
 }
 
 function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
- 
+
   return /*html*/ `
-    <div class="dialog-container" onclick="closeDialogOutsite(event)">
-      <aside class="aside-content">
-      <section class="aside-text-wrapper">
-           <img class="aside-logo" src="../assets/img/icons/contacts/Capa_1.svg" alt="logo-join" />
-           <div class="aside-headline">
-          <h2 class="aside-h2-edit">Edit contact</h2>
-          <div class="blue-line-horizontal"></div>
-          </div>
-        </section>
-      </aside>
+   <div class="dialog-container" onclick="closeDialogOutsite(event)">
 
-       <header class="dialog-header">
-        <button type="button" id="close-btn" class="close-btn-overlay" onclick="closeContactDialog()"><svg class="close-x"><use href="../assets/img/icons/contacts/close-white.svg"></use></svg></button>
-      </header>
+  <aside class="aside-content">
+    <section class="aside-text-wrapper">
+      <img class="aside-logo" src="../assets/img/icons/contacts/Capa_1.svg" alt="logo-join" />
+      <div class="aside-headline">
+        <h2 class="aside-h2-edit">Edit contact</h2>
+        <div class="blue-line-horizontal"></div>
+      </div>
+    </section>
+  </aside>
 
+  <header class="dialog-header">
+    <button type="button" id="close-btn" class="close-btn-overlay" onclick="closeContactDialog()"><svg class="close-x">
+        <use href="../assets/img/icons/contacts/close-white.svg"></use>
+      </svg></button>
+  </header>
 
-      <main class="dialog-main">
-        
-          <div class="person-Logo-container">
-           <div class="initials-large-dialog" style="background-color: ${color}">${initials}</div>
-           </div>
+  <main class="dialog-main">
 
-          <form>
-            <section class="dialog-input-container">
-              <div class="dialog-input-section">
-                <input class="dialog-input" id="editName" type="text" name="name" placeholder="Name" required />
-                <img src="../assets/img/icons/input/person.svg" alt="icon" class="dialog-input-icon" />
-              </div>
-              <div class="dialog-input-section">
-                <input class="dialog-input" id="editEmail" type="email" name="email" placeholder="Email" required />
-                <img src="../assets/img/icons/input/mail.svg" alt="icon" class="dialog-input-icon" />
-              </div>
-              <div class="dialog-input-section">
-                <input class="dialog-input" id="editPhone" type="tel" name="phone" placeholder="Phone" required />
-                <img src="../assets/img/icons/input/phone.svg" alt="icon" class="dialog-input-icon" />
-              </div>
-            </section>
+    <div class="person-Logo-container">
+      <div class="initials-large-edit-dialog" style="background-color: ${color}">${initials}</div>
+    </div>
 
-            <section class="dialog-login-buttons">
-              <button  type="button" class="btn btn--secondary btn--login btn-delete" onclick="deleteContact(${editUserIndex})">
-                Delete
-              </button>
-              <button type="submit" class="btn btn--primary btn--login btn-save" onclick="saveNewContactData(${editUserIndex})">
-                Save
-                <img class="img-check" src="../assets/img/icons/contacts/check.svg" alt="create check">
-              </button>
-            </section>
-          </form>
+    <form>
+
+      <section class="dialog-input-container">
+        <div class="dialog-input-section">
+          <input class="dialog-input" id="editName" type="text" name="name" placeholder="Name" required />
+          <img src="../assets/img/icons/input/person.svg" alt="icon" class="dialog-input-icon" />
         </div>
-      </main>
-    </div>`;
+        <div class="dialog-input-section">
+          <input class="dialog-input" id="editEmail" type="email" name="email" placeholder="Email" required />
+          <img src="../assets/img/icons/input/mail.svg" alt="icon" class="dialog-input-icon" />
+        </div>
+        <div class="dialog-input-section">
+          <input class="dialog-input" id="editPhone" type="tel" name="phone" placeholder="Phone" required />
+          <img src="../assets/img/icons/input/phone.svg" alt="icon" class="dialog-input-icon" />
+        </div>
+      </section>
+
+      <section class="dialog-login-buttons">
+        <button type="button" class="btn btn--secondary btn--login btn-delete"
+          onclick="deleteContact(${editUserIndex})">
+          Delete
+        </button>
+        <button type="submit" class="btn btn--primary btn--login btn-save"
+          onclick="saveNewContactData(${editUserIndex})">
+          Save
+          <img class="img-check" src="../assets/img/icons/contacts/check.svg" alt="create check">
+        </button>
+      </section>
+    </form>
+  </main>
+</div>`;
 }
 
 
 function renderShowDetailsTpl(user, i, initials, color) {
   return /*html*/ `
-    <div class="contact-details-box" onclick="closeDialogOutsite(event)">
+    <div class="contact-details-box" >
     
-      <header class="header-contect-details">
+      <header class="header-contect-details" >
         <div class="initials-large" style="background-color: ${color}">
           ${initials}
         </div>
 
-        <div class="name-and-buttons">
+        <div class="name-and-buttons"   >
           <h1 class="h1-contact-details">${user.name}</h1>
           <div class="edit-delete-container">
             <button type="button" class="edit-delete-button" onclick="openEditContactDialog()">

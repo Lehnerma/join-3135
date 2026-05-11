@@ -202,7 +202,7 @@ function mobileDetails() {
 
 function activateMobileView() {
   leftContent.classList.add('contact-list-off');
-  backArrowButton.classList.add('back-arrow-box', 'mobile-buttons-on');
+  backArrowButton.classList.add('btn--arrow', 'btn', 'mobile-buttons-on');
   editMenuButton.classList.add('edit-menu-box', 'btn--addPerson', 'mobile-buttons-on');
   [editMenuIcon, backArrowIcon].forEach(el => el.classList.add('mobile-buttons-on'));
   removeAllBgColors();
@@ -211,7 +211,7 @@ function activateMobileView() {
 
 function deactivateMobileView() {
   leftContent.classList.remove('contact-list-off', 'mobile-only');
-  backArrowButton.classList.remove('back-arrow-box', 'mobile-buttons-on');
+  backArrowButton.classList.remove('btn--arrow', 'btn', 'mobile-buttons-on');
   editMenuButton.classList.remove('edit-menu-box', 'btn--addPerson', 'mobile-buttons-on');
   [editMenuIcon, backArrowIcon].forEach(el => el.classList.remove('mobile-buttons-on'));
 }
@@ -219,7 +219,7 @@ function deactivateMobileView() {
 
 function backToContactlist() {
   leftContent.classList.remove('contact-list-off');
-  backArrowButton.classList.remove('back-arrow-box');
+  backArrowButton.classList.remove('btn--arrow', 'btn');
   editMenuButton.classList.remove('edit-menu-box', 'btn--addPerson');
 }
 
@@ -398,8 +398,15 @@ function getSingleUser(user, i) {
   return renderSingleUserHtmlTpl(user, i, initials, color);
 }
 
+function closeMobileMenu() {
+  const menu = document.querySelector('.edit-delete-container');
+  if (menu) {
+    menu.classList.remove('show');
+  }
+}
 
-function openEditMenu() {
+function openEditMenu(event) {
+  event.stopPropagation(); 
   const menu = document.querySelector('.edit-delete-container');
   menu.classList.toggle('show');
 }

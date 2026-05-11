@@ -80,7 +80,7 @@
 
     </div>
 
-    <div id="rightContent" class="right-content">
+    <div id="rightContent" class="right-content" onclick="closeMobileMenu()">
       <div class="headline">
         <h1 class="contacts-title">Contacts</h1>
         <div class="vertical-divider"></div>
@@ -88,7 +88,7 @@
         <button id="backArrowButton" type="button" onclick="backToContactlist()">
           <img id="backArrowIcon" class="back-arrow" src="../assets/img/icons/contacts/Vector.svg">
         </button>
-        <button id="editMenuButton" type="button" class="mobile-only" onclick="openEditMenu()">
+        <button id="editMenuButton" type="button" class="mobile-only" onclick="openEditMenu(event)">
           <img id="editMenuIcon" class="edit-menu" src="../assets/img/icons/contacts/more_vert.svg">
         </button>
       </div>
@@ -102,3 +102,7 @@
 </body>
 
 </html>
+
+
+
+

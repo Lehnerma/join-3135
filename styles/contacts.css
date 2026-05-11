@@ -1,7 +1,8 @@
-[role="button"],
-*[style*="cursor: pointer"],
-a,
-button {
+.add-button-container,
+.add-button-size,
+.user-Selection,
+.email {
+  cursor: pointer;
   transition: all 100ms ease-in-out;
 }
 
@@ -125,7 +126,6 @@ button {
   justify-content: flex-start;
   gap: clamp(15px, 2.4vw, 35px);
   padding: clamp(8px, 1vw, 15px) clamp(12px, 1.6vw, 24px);
-  cursor: pointer;
   flex-shrink: 0;
 }
 
@@ -208,7 +208,6 @@ button {
   white-space: nowrap;
 }
 
-
 @media (max-width: 1024px) {
   .left-content {
     width: clamp(280px, 45vw, 456px);
@@ -254,6 +253,7 @@ button {
   .right-content {
     width: 649px;
     flex-shrink: 0;
+    background-color: var(--main-bg);
   }
 
   .contacts-title {
@@ -382,5 +382,4 @@ button {
     font-weight: 400;
     font-size: 20px;
   }
-
 }

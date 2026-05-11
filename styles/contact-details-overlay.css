@@ -1,3 +1,16 @@
+.edit-delete-button,
+.edit-menu-box,
+.edit-menu,
+.btn--arrow,
+.back-arrow,
+.btn,
+.btn--primary,
+.btn--addPerson,
+.edit-delete-container {
+  cursor: pointer;
+  transition: all 100ms ease-in-out;
+}
+
 .contact-details-box {
   position: absolute;
   display: flex;
@@ -37,8 +50,8 @@
 }
 
 .initials-large {
-  width: clamp(80px, 8vw, 120px);
-  height: clamp(80px, 8vw, 120px);
+  width: clamp(90px, 8vw, 120px);
+  height: clamp(90px, 8vw, 120px);
   border-radius: 70%;
   display: flex;
   justify-content: center;
@@ -98,6 +111,7 @@
   font-weight: 400;
   color: var(--primary-color);
   border: none;
+  background: none; /* Sicherstellung für Buttons */
 }
 
 .edit-delete-button:hover {
@@ -123,7 +137,7 @@ li {
 
 /* DETAILS DIALOG*/
 
-.initials-large-dialog {
+.initials-large-edit-dialog {
   width: clamp(40px, 9vw, 120px);
   height: clamp(40px, 9vw, 120px);
   border-radius: 70%;
@@ -156,7 +170,7 @@ li {
 .mobile-only,
 .btn--addPerson,
 .edit-menu-box,
-.back-arrow-box,
+.btn--arrow,
 .back-arrow,
 .edit-menu {
   display: none;
@@ -170,6 +184,15 @@ li {
 }
 
 /* RESPONSIVE */
+
+@media(max-width:1024px){
+.initials-large-edit-dialog {
+        width: 120px;
+        height: 120px;
+        font-size: 47px;
+    }
+  }
+
 @media(max-width: 650px) {
 
   .desktop-only,
@@ -180,7 +203,7 @@ li {
   .mobile-only,
   .btn--addPerson,
   .edit-menu-box,
-  .back-arrow-box,
+  .btn--arrow, 
   .back-arrow,
   .edit-menu {
     display: flex;
@@ -194,9 +217,6 @@ li {
     top: clamp(200px, 17.5vw, 400px);
     gap: 21px;
     padding: 0;
-  }
-
-  .contact-details-box {
     animation: none;
   }
 
@@ -222,7 +242,7 @@ li {
 
   .edit-delete-container {
     position: fixed;
-    bottom: 200px;
+    bottom: 100px;
     right: 6px;
     display: flex;
     justify-content: center;
@@ -234,15 +254,13 @@ li {
     border-radius: 20px 20px 0 20px;
     box-shadow: var(--contact-menu-shadow);
     background-color: var(--input-text-color);
-    cursor: pointer;
     transform: translateX(150%);
-    transition: transform 0.3s ease-out;
+    transition: transform 0.3s ease-out; /* Hier bleibt die längere Transition für das Menü-Sliding */
   }
 
   .edit-delete-container.show {
     transform: translateX(0);
   }
-
 
   .edit-delete-button {
     display: flex;
@@ -254,9 +272,19 @@ li {
     color: var(--primary-color);
     background-color: var(--input-text-color);
     border: none;
-    cursor: pointer;
   }
 
+  .edit-delete-button:hover {
+    color: var(--primary-color);
+    transform: scale(1);
+    font-weight: 400;
+  }
+
+  .edit-delete-button:active {
+    color: var(--secondary-color);
+    transform: scale(1.05);
+    font-weight: 700;
+  }
 
   .edit-svg,
   .delete-svg {
@@ -264,7 +292,6 @@ li {
     height: clamp(21px, 2.1vw, 24px);
     margin-right: clamp(4px, 0.7vw, 8px);
   }
-
 
   .edit-menu-box {
     display: flex;
@@ -275,39 +302,34 @@ li {
     z-index: 20;
     width: 56px;
     height: 56px;
-    cursor: pointer;
   }
 
   .edit-menu {
     width: 32px;
     height: 32px;
-    cursor: pointer;
   }
 
-  .back-arrow-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
+  .btn--arrow{
     position: fixed;
     border: none;
     top: 128px;
     right: 12px;
     z-index: 20;
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
+  }
+
+  .btn--arrow:active{
+    transform: scale(1.2);
+    background-color: var(--input-text-color);
   }
 
   .back-arrow {
     width: 24.6px;
     height: 23.92px;
-    cursor: pointer;
+    background-color: var(--input-text-color);
   }
 }
 
 @media(max-width: 427px) {
-
   .aside-h2-edit {
     font-size: clamp(40px, 12.5vw, 61px);
   }
@@ -320,11 +342,9 @@ li {
     font-size: clamp(27px, 7vw, 36px);
     overflow-wrap: break-word;
   }
-
 }
 
 @media(max-width: 400px) {
-
   .header-contect-details {
     display: flex;
     flex-direction: column;
