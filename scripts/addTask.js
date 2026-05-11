@@ -4,6 +4,9 @@ let subtasksList = [];
 let remoteUsers = [];
 
 
+/** 
+ * The Main Boss .
+ */
 /**
  * Initialisiert die Seite und alle notwendigen Funktionen.
  */

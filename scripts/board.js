@@ -1,4 +1,4 @@
-const getBoardTaskURL  = (key = "", section = "") => {
+const getBoardTaskURL = (key = "", section = "") => {
   return `https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks/${key ? key + "/" : ""}${section ? section + "/" : ""}.json`;
 };
 
@@ -12,9 +12,10 @@ function initBoard() {
   loadTasksFromFirebase();
 }
 
+
 async function loadTasksFromFirebase() {
   try {
-    const RESPONSE = await fetch(getBoardTaskURL ());
+    const RESPONSE = await fetch(getBoardTaskURL());
     if (!RESPONSE.ok) {
       throw new Error(`loading task faild: ${RESPONSE.status}`);
     }
@@ -37,9 +38,10 @@ function getArryFromResult(result) {
   }));
 }
 
+
 async function updateTaskStatus(firebaseKey, status) {
   try {
-    await fetch(getBoardTaskURL (firebaseKey, "status"), {
+    await fetch(getBoardTaskURL(firebaseKey, "status"), {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(status),
@@ -87,10 +89,19 @@ function buildTaskCard(task) {
   return WRAPPER.innerHTML;
 }
 
+function openTaskDialog(id) {
+  const task = TASKS.find(t => t.id === id);
+
+  console.log(task);
+}
+
+
+
 function getPriority(priority) {
   const VALID = ["low", "medium", "urgent"];
   return VALID.includes(priority) ? priority : "low";
 }
+
 
 function getInitials(name = "") {
   if (typeof name !== "string") return "";
@@ -121,6 +132,7 @@ function taskDragStart(ev, id) {
 function allowDrop(ev) {
   ev.preventDefault();
 }
+
 //drag enter
 function columnDragEnter(ev, status) {
   ev.preventDefault();
@@ -131,11 +143,13 @@ function columnDragEnter(ev, status) {
   if (DRAG_HEIGHT) PLACE_HOLDER.style.height = DRAG_HEIGHT + "px";
   LIST.appendChild(PLACE_HOLDER);
 }
+
 //drag leave
 function columnDragLeave(ev) {
   if (ev.currentTarget.contains(ev.relatedTarget)) return;
   ev.currentTarget.querySelector(".drag-placeholder")?.remove();
 }
+
 //drag drop
 function taskDragDrop(status) {
   document.querySelectorAll(".drag-placeholder").forEach((el) => el.remove());
