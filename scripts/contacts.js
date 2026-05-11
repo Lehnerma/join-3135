@@ -310,7 +310,7 @@ function checkDetailAnimation() {
   }
 }
 
-/**
+/** *
  * Prepares the HTML template for the detail view.
  * @returns {string} The rendered HTML of the detail view.
  */
