@@ -160,7 +160,7 @@ function getDetailTaskTemplate(task) {
     </article>
 
     <footer class="detail-task--footer f-row">
-        <button type="button" class="btn btn--delete f-row">
+        <button type="button" class="btn btn--delete f-row" onclick="deleteTask(${task.id})">
           <img src="../assets/img/icons/subtask/bin.svg" alt="delete" />
           Delete
         </button>

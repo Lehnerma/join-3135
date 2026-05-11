@@ -15,40 +15,39 @@ function initBoardTask() {
   TASK_DETAIL_DIALOG.addEventListener("click", closeDialogOnBackdropClick);
 }
 
-function openAddTaskDialog(status = 'todo') {
-  const dialog = document.getElementById('add_task_dialog');
+function openAddTaskDialog(status = "todo") {
+  const dialog = document.getElementById("add_task_dialog");
   dialog.innerHTML = getAddTaskDialogTemplate();
 
   dialog.showModal();
 
   // Diese Funktionen müssen in deiner addTask.js definiert sein
   initDateInput();
-  selectPriority('medium');
+  selectPriority("medium");
   subtaskInit(); // Wichtig für Subtask-Buttons
   loadUsers(); // Lädt Kontakte in die Liste
   initDropdownOutsideClick(); // Aktiviert das Schließen des Dropdowns
 
   // Formular-Submit für den Dialog
-  const form = document.getElementById('form_task');
+  const form = document.getElementById("form_task");
   if (form) {
-    form.addEventListener('submit', async (event) => {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
       await createTask(status); // Wir übergeben den Status
     });
   }
 }
 
-
-async function createTask(status = 'todo') {
+async function createTask(status = "todo") {
   const task = buildTaskObj(); // Holt Daten aus dem Dialog-Formular
   task.status = status; // Setzt den Status (todo, progress, etc.)
 
   try {
     // WICHTIG: Nutze ADDTASK_URL (den neuen Namen aus deiner addTask.js)
-    const response = await fetch(ADDTASK_URL, { 
+    const response = await fetch(ADDTASK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(task)
+      body: JSON.stringify(task),
     });
 
     if (response.ok) {
@@ -60,23 +59,19 @@ async function createTask(status = 'todo') {
   }
 }
 
-
-
-
-
 function closeAddTaskDialog() {
-  const dialog = document.getElementById('add_task_dialog');
+  const dialog = document.getElementById("add_task_dialog");
   dialog.close();
 }
 
 function initAddTaskDialog() {
   initDateInput();
-  selectPriority('medium');
+  selectPriority("medium");
   subtaskInit();
   // Listener für das neue Formular im Dialog setzen
-  const form = document.getElementById('form_task_dialog');
+  const form = document.getElementById("form_task_dialog");
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
       createTask(); // Nutzt deine Speicher-Logik
     });
@@ -161,4 +156,35 @@ function buildTaskDetailDialog(task) {
   return WRAPPER.innerHTML;
 }
 
+function deleteTask(taskId) {
+  try {
+    const ALL_TASKS = JSON.parse(sessionStorage.tasks);
+    const TASK_INDEX = ALL_TASKS.findIndex((task) => task.id === taskId);
 
+    if (TASK_INDEX !== -1) {
+      ALL_TASKS.splice(TASK_INDEX, 1);
+      sessionStorage.tasks = JSON.stringify(ALL_TASKS);
+
+      renderBoard(ALL_TASKS);
+      closeTaskDetailDialog();
+      syncSessionStorageWithFirebase(taskId);
+    }
+  } catch (error) {
+    console.error("Fehler beim Löschen des Tasks:", error);
+  }
+}
+
+function syncSessionStorageWithFirebase(taskId) {
+  try {
+    const response = fetch(DELETETASK_URL + taskId, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+      loadTasksFromFirebase();
+    }
+  } catch (error) {
+    console.error("Fehler beim Synchronisieren mit Firebase:", error);
+  }
+}
