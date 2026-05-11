@@ -167,3 +167,10 @@
   flex-direction: column;
   justify-content: center;
 }
+
+.divider-vert {
+  background-color:  var(--input-default-main);
+  width: 1px;
+  height: 24px
+}
+

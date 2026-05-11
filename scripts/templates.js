@@ -137,11 +137,12 @@ function getDetailTaskTemplate(task) {
     </article>
 
     <footer class="detail-task--footer f-row">
-        <button type="button" class="btn btn--delete-task f-row">
+        <button type="button" class="btn btn--delete f-row">
           <img src="../assets/img/icons/subtask/bin.svg" alt="delete" />
           Delete
         </button>
-        <button type="button" class="btn btn--edit-task f-row">
+        <div class="divider-vert"></div>
+        <button type="button" class="btn btn--edit f-row">
           <img src="../assets/img/icons/subtask/edit.svg" alt="edit" />
           Edit
         </button>
