@@ -54,9 +54,7 @@ let USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.ap
 
 function init() {
   getUsers();
- 
-  
-}
+ }
 
 
 async function getUsers() {
@@ -398,15 +396,6 @@ function getSingleUser(user, i) {
   return renderSingleUserHtmlTpl(user, i, initials, color);
 }
 
-
-// function changeButton() {
-//   let addButton = document.getElementById('addButton');
-//   const isMobile = window.innerWidth <= 650;
-//   isMobile ? addButton.classList.remove('btn', 'btn--primary', 'add-button-size')
-//     : addButton.classList.add('btn', 'btn--primary', 'add-button-size');
-//   isMobile ? addButton.classList.add('btn--addPerson')
-//     : addButton.classList.remove('btn--addPerson');
-// }
 
 function openEditMenu() {
   const menu = document.querySelector('.edit-delete-container');
