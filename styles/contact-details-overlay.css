@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   gap: clamp(10px, 1.9vw, 21px);
-  width: 100%;
+  max-width: 650px;
   height: auto;
   border: none;
   top: clamp(80px, 17.5vw, 250px);

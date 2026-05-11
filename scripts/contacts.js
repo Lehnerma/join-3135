@@ -194,14 +194,14 @@ function mobileDetails() {
   if (isMobileView) {
     activateMobileView();
   } else {
-    deactivateMobileView();s
+    deactivateMobileView();
   }
   showDetails();
 }
 
 
 function activateMobileView() {
-  leftContent.classList.add('contact-list-off', 'mobile-only');
+  leftContent.classList.add('contact-list-off');
   backArrowButton.classList.add('back-arrow-box', 'mobile-buttons-on');
   editMenuButton.classList.add('edit-menu-box', 'btn--addPerson', 'mobile-buttons-on');
   [editMenuIcon, backArrowIcon].forEach(el => el.classList.add('mobile-buttons-on'));
@@ -331,6 +331,8 @@ async function deleteContact(index) {
     document.getElementById('contactDetailsDialog').innerHTML = '';
     await getUsers();
     closeContactDialog();
+    let showList=  document.getElementById('leftContent')
+       showList.classList.remove('contact-list-off');
   } else {
     console.error('Fehler beim Löschen des Kontakts');
   }

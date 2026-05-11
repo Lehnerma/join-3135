@@ -22,7 +22,7 @@
     transform: translateX(calc(100% + 650px));
 }
 
-@media(max-width:650px) {
+@media(max-width:1024px) {
    
     .hide-overlay {
         transform: translateY(50%, 300px);
