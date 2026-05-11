@@ -443,9 +443,7 @@ async function saveNewContactData(index) {
     email: document.getElementById('editEmail').value,
     phone: document.getElementById('editPhone').value,
   };
-
   const response = await updateFirebaseContact(key, updatedData);
-
   if (response.ok) {
     await getUsers();
     await closeEditDialog();
