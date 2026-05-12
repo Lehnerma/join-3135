@@ -39,7 +39,7 @@
   align-items: center;
   height: 46px;
   width: 100%;
-  padding: 8px 56px;
+  padding: 8px clamp(5px, 2vw,56px);
   cursor: pointer;
 }
 
