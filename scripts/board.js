@@ -7,6 +7,8 @@ let DRAG_ID;
 let DRAG_OLD_STATUS;
 let DRAG_HEIGHT;
 
+
+
 function initBoard() {
   initBoardTask();
   loadTasksFromFirebase();
@@ -93,11 +95,14 @@ function buildTaskCard(task) {
 
 function openTaskDialog(id) {
   const task = TASKS.find(t => t.id === id);
+  if (!task) return;
 
   console.log(task);
   const dialog = document.getElementById("taskDialog");
   dialog.classList.remove("d-none");
-  
+
+
+
   dialog.innerHTML = `
   <p>Category: ${task.category}</p>
   <h2>${task.title}</h2>
@@ -105,10 +110,48 @@ function openTaskDialog(id) {
   <p>Due Date: ${task.dueDate}</p>
   <p>Priority: ${task.priority}</p>
   <p>Assigned To: ${task.assignedTo ? task.assignedTo.join(", ") : "None"}</p>
-  <p>Status: ${task.status}</p>
-  <button onclick="closeTaskDialog()">Close</button>
-  `;
+  <p>Subtasks: ${task.subtasks ? task.subtasks.map(s => s.title).join(", ") : "None"}</p>
+  
+  <button onclick="closeTaskDialog()">X</button>
 
+  <button onclick="deleteTask('${task.firebaseKey}')">
+    Delete
+  </button>
+
+
+  <button onclick="editTask('${task.firebaseKey}')">
+    Edit
+  </button>
+  `;
+}
+
+
+function closeTaskDialog() {
+  const dialog = document.getElementById("taskDialog");
+
+  dialog.classList.add("d-none");
+  dialog.innerHTML = "";
+}
+
+
+
+async function deleteTask(firebaseKey) {
+  try {
+    const response = await fetch(getBoardTaskURL(firebaseKey),
+      {
+        method: "DELETE",
+      });
+      
+    if (!response.ok) {throw new Error(`Delete failed: ${response.status}`);}
+
+    TASKS = TASKS.filter(task =>task.firebaseKey !== firebaseKey);
+    renderBoard(TASKS);
+    closeTaskDialog();  
+
+    console.log("Task deleted");
+  }
+
+  catch (error) {console.error(error);}
 
 }
 
