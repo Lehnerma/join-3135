@@ -76,12 +76,11 @@ function renderHtmlContactDialogTpl() {
           </section>
           <section class="dialog-login-buttons">
             <button id="cancelButton" type="button" class="btn btn--secondary btn--login btn-cancel" 
-              onclick="closeContactDialog()">Cancel<svg class="cancel-img-x"><use href="../assets/img/icons/contacts/close-white.svg"></use></svg></button>
+              onclick="closeContactDialog()">Cancel<svg class="cancel-img-x" href="../assets/img/icons/contacts/Vector-x.svg"></svg></button>
             <button type="button" class="btn btn--primary btn--login btn-create " onclick="createContact()">Create contact<img class="img-check"
                 src="../assets/img/icons/contacts/check.svg" alt="create check"></button>
           </section>
         </form>
-        
       </main>
     </div>`;
 }
@@ -175,11 +174,11 @@ function renderShowDetailsTpl(user, i, initials, color) {
           <h1 class="h1-contact-details">${user.name}</h1>
           <div class="edit-delete-container">
             <button type="button" class="edit-delete-button" onclick="openEditContactDialog()">
-              <svg class="edit-svg"><use href="../assets/img/icons/contacts/edit-contacts.svg"></use></svg>
+              <svg class="edit-svg"><use href="../assets/img/icons/contacts/edit.svg"></use></svg>
               Edit
             </button>
             <button type="button" class="edit-delete-button" onclick="deleteContact(${i})">
-              <svg class="delete-svg"><use href="../assets/img/icons/contacts/trash-contact.svg"></use></svg>
+              <svg class="delete-svg"><use href="../assets/img/icons/contacts/delete.svg"></use></svg>
               Delete
             </button>
           </div>

@@ -107,11 +107,11 @@
   display: flex;
   align-items: center;
   font-family: "Inter";
-  font-size: clamp(16px, 1.4vw, 16px);
+  font-size: 16px;
   font-weight: 400;
   color: var(--primary-color);
   border: none;
-
+  background-color: transparent;
 }
 
 .edit-delete-button:hover {
@@ -120,17 +120,28 @@
   transform: scale(1.05);
 }
 
-.edit-delete-button svg {
-  fill: currentColor;
+.edit-delete-button:hover svg {
+  filter: invert(56%) sepia(85%) saturate(1478%) hue-rotate(167deg) brightness(91%) contrast(97%);
 }
 
-.edit-svg,
-.delete-svg {
-  width: clamp(21px, 2.1vw, 24px);
-  height: clamp(21px, 2.1vw, 24px);
+.edit-svg
+ {
+  width: 24px;
+  height: 24px;
   margin-right: clamp(4px, 0.7vw, 8px);
+   background-color:var(--primary-color);
+  -webkit-mask-image: url('../assets/img/icons/contacts/edit.svg');
+  mask-image: url('../assets/img/icons/contacts/edit.svg');
 }
 
+.delete-svg {
+  width: 24px;
+  height: 24px;
+  margin-right: clamp(4px, 0.7vw, 8px);
+   background-color:var(--primary-color);
+  -webkit-mask-image: url('../assets/img/icons/contacts/delete.svg');
+  mask-image: url('../assets/img/icons/contacts/delete.svg');
+}
 li {
   list-style-type: none;
 }
@@ -278,6 +289,15 @@ li {
     color: var(--primary-color);
     transform: scale(1);
     font-weight: 400;
+  }
+
+  .edit-delete-button:hover svg {
+    filter: none;
+  }
+
+  .edit-delete-button:active svg {
+    filter: invert(56%) sepia(85%) saturate(1478%) hue-rotate(167deg) brightness(91%) contrast(97%);
+    transform: scale(1.05);
   }
 
   .edit-delete-button:active {
