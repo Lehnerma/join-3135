@@ -1,4 +1,4 @@
-const getBoardTaskURL  = (key = "", section = "") => {
+const getTaskURL = (key = "", section = "") => {
   return `https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks/${key ? key + "/" : ""}${section ? section + "/" : ""}.json`;
 }; 
 
@@ -14,7 +14,7 @@ function initBoard() {
 
 async function loadTasksFromFirebase() {
   try {
-    const RESPONSE = await fetch(getBoardTaskURL ());
+    const RESPONSE = await fetch(getTaskURL());
     if (!RESPONSE.ok) {
       throw new Error(`loading task faild: ${RESPONSE.status}`);
     }
@@ -37,9 +37,23 @@ function getArryFromResult(result) {
   }));
 }
 
+// Schreibt den vollständigen Task per PUT in Firebase – überschreibt alle Felder am richtigen Key.
+async function syncTaskWithFirebase(task) {
+  const { firebaseKey, id, ...data } = task;
+  try {
+    await fetch(getTaskURL(firebaseKey), {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+  } catch (er) {
+    console.error("syncTaskWithFirebase fehlgeschlagen:", er);
+  }
+}
+
 async function updateTaskStatus(firebaseKey, status) {
   try {
-    await fetch(getBoardTaskURL (firebaseKey, "status"), {
+    await fetch(getTaskURL (firebaseKey, "status"), {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(status),

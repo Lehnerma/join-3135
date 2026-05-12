@@ -1,3 +1,5 @@
+let CURRENT_DETAIL_TASK = null;
+
 function initBoardTask() {
   const ADD_BTN_HEAD = document.getElementById("add_task_head");
   ADD_BTN_HEAD.addEventListener("click", openAddTaskDialog);
@@ -110,8 +112,7 @@ function openTaskDetailDialog(taskId) {
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const TASK = ALL_TASKS.find((task) => task.id === taskId);
   if (TASK) {
-    // Store task data in dialog's dataset for reference
-    TASK_DETAIL_DIALOG.dataset.taskId = TASK.id;
+    CURRENT_DETAIL_TASK = TASK;
     TASK_DETAIL_DIALOG.innerHTML = buildTaskDetailDialog(TASK);
     TASK_DETAIL_DIALOG.showModal();
   }
@@ -150,24 +151,6 @@ function buildTaskDetailDialog(task) {
   }
 
   return WRAPPER.innerHTML;
-}
-
-function deleteTask(taskId) {
-  try {
-    const ALL_TASKS = JSON.parse(sessionStorage.tasks);
-    const TASK_INDEX = ALL_TASKS.findIndex((task) => task.id === taskId);
-
-    if (TASK_INDEX !== -1) {
-      ALL_TASKS.splice(TASK_INDEX, 1);
-      sessionStorage.tasks = JSON.stringify(ALL_TASKS);
-
-      renderBoard(ALL_TASKS);
-      closeTaskDetailDialog();
-      syncSessionStorageWithFirebase(taskId);
-    }
-  } catch (error) {
-    console.error("Fehler beim Löschen des Tasks:", error);
-  }
 }
 
 function openEditTaskDialog(taskId) {
@@ -211,14 +194,11 @@ function closeEditTaskDialog() {
   document.getElementById("edit_task_dialog").close();
 }
 
-
 function closeEditDialogOnBackdropClick(event) {
   if (event.target === document.getElementById("edit_task_dialog")) {
     closeEditTaskDialog();
   }
 }
-
-
 
 function loadUsersForEdit(assignedTo) {
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
@@ -251,7 +231,7 @@ async function saveEditedTask(task) {
   sessionStorage.tasks = JSON.stringify(ALL_TASKS);
 
   try {
-    await fetch(getBoardTaskURL(task.firebaseKey), {
+    await fetch(getTaskURL(task.firebaseKey), {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -273,16 +253,19 @@ async function saveEditedTask(task) {
   openTaskDetailDialog(task.id);
 }
 
-function syncSessionStorageWithFirebase(taskId) {
+// Löscht den Task aus sessionStorage, dem Board und Firebase – nutzt firebaseKey aus dem Task-Object.
+async function deleteTask(task) {
   try {
-    const response = fetch(getBoardTaskURL() + taskId, {
+    const ALL_TASKS = JSON.parse(sessionStorage.tasks);
+    const TASK_INDEX = ALL_TASKS.findIndex((ta) => ta.id === task.id);
+    ALL_TASKS.splice(TASK_INDEX, 1);
+    sessionStorage.tasks = JSON.stringify(ALL_TASKS);
+    renderBoard(ALL_TASKS);
+    closeTaskDetailDialog();
+    await fetch(getTaskURL(task.firebaseKey), {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
     });
-    if (response.ok) {
-      loadTasksFromFirebase();
-    }
   } catch (error) {
-    console.error("Fehler beim Synchronisieren mit Firebase:", error);
+    console.error("Fehler beim Löschen des Tasks:", error);
   }
 }
