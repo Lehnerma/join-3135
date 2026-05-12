@@ -20,8 +20,6 @@ function openAddTaskDialog(status = "todo") {
   dialog.innerHTML = getAddTaskDialogTemplate();
 
   dialog.showModal();
-
-  // Diese Funktionen müssen in deiner addTask.js definiert sein
   initDateInput();
   selectPriority("medium");
   subtaskInit(); // Wichtig für Subtask-Buttons
@@ -84,13 +82,11 @@ function closeDialogOnBackdropClick(event) {
   }
 }
 
-// Add function to open the add task dialog and set the status of the right column
 function addStatusTask(status) {
   openAddTaskDialog();
   console.log(status);
 }
 
-//search function.
 function searchTasks() {
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const SEARCH_INPUT = document.getElementById("search_tasks").value;
@@ -181,8 +177,8 @@ function openEditTaskDialog(taskId) {
 
   closeTaskDetailDialog();
 
-  const dialog = document.getElementById("add_task_dialog");
-  dialog.innerHTML = getEditTaskDialogTemplate();
+  const dialog = document.getElementById("edit_task_dialog");
+  dialog.addEventListener("click", closeEditDialogOnBackdropClick);
   dialog.showModal();
 
   document.getElementById("title").value = task.title || "";
@@ -212,8 +208,17 @@ function openEditTaskDialog(taskId) {
 }
 
 function closeEditTaskDialog() {
-  document.getElementById("add_task_dialog").close();
+  document.getElementById("edit_task_dialog").close();
 }
+
+
+function closeEditDialogOnBackdropClick(event) {
+  if (event.target === document.getElementById("edit_task_dialog")) {
+    closeEditTaskDialog();
+  }
+}
+
+
 
 function loadUsersForEdit(assignedTo) {
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
@@ -270,7 +275,7 @@ async function saveEditedTask(task) {
 
 function syncSessionStorageWithFirebase(taskId) {
   try {
-    const response = fetch(DELETETASK_URL + taskId, {
+    const response = fetch(getBoardTaskURL() + taskId, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
     });

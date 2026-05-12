@@ -1,6 +1,6 @@
 const getBoardTaskURL  = (key = "", section = "") => {
   return `https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks/${key ? key + "/" : ""}${section ? section + "/" : ""}.json`;
-};
+}; 
 
 let TASKS = [];
 let DRAG_ID;
