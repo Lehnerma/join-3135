@@ -7,10 +7,13 @@ let DRAG_ID;
 let DRAG_OLD_STATUS;
 let DRAG_HEIGHT;
 
+
+
 function initBoard() {
   initBoardTask();
   loadTasksFromFirebase();
 }
+
 
 async function loadTasksFromFirebase() {
   try {
@@ -22,11 +25,13 @@ async function loadTasksFromFirebase() {
     const TASKS_ARRAY = getArryFromResult(RESULT);
     sessionStorage.setItem("tasks", JSON.stringify(TASKS_ARRAY));
     TASKS.push(...TASKS_ARRAY);
+    // console.log(TASKS);
     renderBoard(TASKS_ARRAY);
   } catch (er) {
     console.error(er);
   }
 }
+
 
 //get ids into the tasks array for the dragging functions
 function getArryFromResult(result) {
@@ -101,10 +106,75 @@ function buildTaskCard(task) {
   return WRAPPER.innerHTML;
 }
 
+function openTaskDialog(id) {
+  const task = TASKS.find(t => t.id === id);
+  if (!task) return;
+
+  console.log(task);
+  const dialog = document.getElementById("taskDialog");
+  dialog.classList.remove("d-none");
+
+
+
+  dialog.innerHTML = `
+  <p>Category: ${task.category}</p>
+  <h2>${task.title}</h2>
+  <p>${task.description}</p>
+  <p>Due Date: ${task.dueDate}</p>
+  <p>Priority: ${task.priority}</p>
+  <p>Assigned To: ${task.assignedTo ? task.assignedTo.join(", ") : "None"}</p>
+  <p>Subtasks: ${task.subtasks ? task.subtasks.map(s => s.title).join(", ") : "None"}</p>
+  
+  <button onclick="closeTaskDialog()">X</button>
+
+  <button onclick="deleteTask('${task.firebaseKey}')">
+    Delete
+  </button>
+
+
+  <button onclick="editTask('${task.firebaseKey}')">
+    Edit
+  </button>
+  `;
+}
+
+
+function closeTaskDialog() {
+  const dialog = document.getElementById("taskDialog");
+
+  dialog.classList.add("d-none");
+  dialog.innerHTML = "";
+}
+
+
+
+async function deleteTask(firebaseKey) {
+  try {
+    const response = await fetch(getBoardTaskURL(firebaseKey),
+      {
+        method: "DELETE",
+      });
+      
+    if (!response.ok) {throw new Error(`Delete failed: ${response.status}`);}
+
+    TASKS = TASKS.filter(task =>task.firebaseKey !== firebaseKey);
+    renderBoard(TASKS);
+    closeTaskDialog();  
+
+    console.log("Task deleted");
+  }
+
+  catch (error) {console.error(error);}
+
+}
+
+
+
 function getPriority(priority) {
   const VALID = ["low", "medium", "urgent"];
   return VALID.includes(priority) ? priority : "low";
 }
+
 
 function getInitials(name = "") {
   if (typeof name !== "string") return "";
@@ -136,6 +206,7 @@ function allowDrop(ev) {
   ev.preventDefault();
 }
 
+
 //drag enter
 function columnDragEnter(ev, status) {
   ev.preventDefault();
@@ -147,11 +218,13 @@ function columnDragEnter(ev, status) {
   LIST.appendChild(PLACE_HOLDER);
 }
 
+
 //drag leave
 function columnDragLeave(ev) {
   if (ev.currentTarget.contains(ev.relatedTarget)) return;
   ev.currentTarget.querySelector(".drag-placeholder")?.remove();
 }
+
 
 //drag drop
 function taskDragDrop(status) {

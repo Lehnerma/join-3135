@@ -91,19 +91,29 @@
   border-radius: 50%;
   color: var(--secondary-color);
   font-size: 16px;
-  font-family: "Inter-Bold", sans-serif;
+  font-weight:700;
 }
 
 .btn--user:hover {
   background-color: var(--btn-user-hover);
 }
 
-.btn--addPerson{
- width: 56px;
- height: 56px;
- border: solid 1px var(--primary-color);
- border-radius: 46px;
- background-color: var(--primary-color);
+.btn--addPerson {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border: var(--primary-color);
+  border-radius: 46px;
+  background-color: var(--primary-color);
+  box-shadow: var(--contact-menu-shadow);
+  transition: 125ms;
+  cursor: pointer;
+}
+
+.btn--addPerson:active {
+  background-color: var(--secondary-color);
 }
 
 .btn--subtask {
@@ -164,7 +174,6 @@
   justify-content: center;
   gap: 40px;
 }
-
 .f-row {
   display: flex;
   flex-direction: row;

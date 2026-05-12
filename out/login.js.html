@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: login.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: login.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>let SHOW_SIGNUP = false;
+let USERS = [];
+
+const USERS_URL = (id = "") => "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/" + id + ".json";
+
+function init() {
+  btnInit();
+  triggerAnimations();
+}
+/**
+ * initial all buttons for eventlisteners
+ */
+function btnInit() {
+  const SIGNUP = document.getElementById("signup_btn");
+  const SIGNUP_BACK = document.getElementById("signup_back");
+  const SIGNUP_PHONE = document.getElementById("signup_phone_btn");
+  const FORM_LOGIN = document.getElementById("login");
+  const FORM_SIGNUP = document.getElementById("signup");
+  const GUEST_LOGIN = document.getElementById("guest_login");
+
+  SIGNUP_BACK.addEventListener("click", (event) => toggleForms(event));
+  SIGNUP.addEventListener("click", (event) => toggleForms(event));
+  SIGNUP_PHONE.addEventListener("click", (event) => toggleForms(event));
+  GUEST_LOGIN.addEventListener("click", guestLogin);
+
+  FORM_LOGIN.addEventListener("submit", (event) => loginUser(event));
+  FORM_SIGNUP.addEventListener("submit", (event) => creatUser(event));
+}
+/**
+ * function to trigger the animation on the beginning.
+ */
+function triggerAnimations() {
+  const JOIN_LOGO = document.querySelector(".join-logo");
+  const FORM_CONTAINER = document.querySelector(".form--container");
+  const NAV_LOGIN = document.querySelector(".nav-login");
+  const FOOTER_LOGIN = document.querySelector(".footer-login");
+
+  JOIN_LOGO.classList.add("logo-animation");
+  FORM_CONTAINER.classList.add("fade-in");
+  NAV_LOGIN.classList.add("fade-in");
+  FOOTER_LOGIN.classList.add("fade-in");
+}
+
+/**
+ * Remove the fade of the forms to swap between the login in and sign up form.
+ * @param {*} container - is the container for the style
+ */
+function removeFade(container) {
+  container.classList.remove("fade-in");
+  container.style.opacity = "1";
+}
+
+/**
+ * to show or hide the forms
+ * @param {*} event -> to disable the reload for the switching
+ */
+function toggleForms(event) {
+  event.preventDefault();
+  const LOGIN_FORM = document.getElementById("login");
+  const SIGNUP_FORM = document.getElementById("signup");
+  const NAV_LOGIN = document.getElementById("nav_login");
+  const NAV_PHONE = document.getElementById("phone_signup");
+  SHOW_SIGNUP = !SHOW_SIGNUP;
+  LOGIN_FORM.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
+  SIGNUP_FORM.classList[SHOW_SIGNUP ? "remove" : "add"]("dnone");
+  if (window.innerWidth > 600) {
+    NAV_LOGIN.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
+  }
+  if (window.innerWidth &lt; 600) {
+    NAV_PHONE.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
+  }
+
+  removeFade(LOGIN_FORM);
+  removeFade(NAV_LOGIN);
+  setRequired(SHOW_SIGNUP);
+}
+
+/**
+ * Workaround to get no Errors in the console
+ * @param {*} condition -> is the condition if the form is hide or not
+ */
+function setRequired(condition) {
+  const INPUTS = document.querySelectorAll(".input_signup");
+  if (condition) {
+    INPUTS.forEach((e) => (e.required = true));
+  } else {
+    INPUTS.forEach((e) => (e.required = false));
+  }
+}
+
+/**
+ * redirect for the guest login and set id for the session storage
+ */
+function guestLogin() {
+  window.location.href = "./html/summary.html";
+  sessionStorage.setItem("user_id", "guest");
+  sessionStorage.setItem("activeUserName", "Guest");
+  sessionStorage.setItem('justLoggedIn', 'true');
+}
+
+/**
+ *To sign up a new user.
+ * @param {*} ev -> need for disable the reload of the side.
+ */
+async function creatUser(ev) {
+  ev.preventDefault();
+  const FORM = new FormData(ev.target);
+  const NEW_USER = Object.fromEntries(FORM.entries());
+  NEW_USER.id = generateId();
+  pushUser(NEW_USER);
+  ev.target.reset();
+  toggleForms(ev);
+  console.log(ev.target);
+}
+
+/**
+ * To generate a unique id for evry user witch is create from the time
+ * @returns -> uniqe id
+ */
+function generateId() {
+  return (Date.now().toString(36) + Math.random().toString(36)).substring(0, 6);
+}
+
+async function pushUser(user) {
+  try {
+    const RESPONSE = await fetch(USERS_URL(user.id), {
+      method: "PUT",
+      body: JSON.stringify(user),
+    });
+    if (!RESPONSE.ok) {
+      throw new Error(`Push the User to Firebase don't work see: ${RESPONSE.status}`);
+    }
+  } catch (er) {
+    console.error(`the function pushUser() don't worke see: ${er}`);
+  }
+}
+
+async function loginUser(ev) {
+  ev.preventDefault();
+  const FORM = new FormData(ev.target);
+  const EMAIL = FORM.get("email");
+  const PW = FORM.get("password");
+  await getUsers();
+  const ACTIV_USER = USERS.find((u) => u.email == EMAIL);
+  if (ACTIV_USER.password === PW) {
+    saveId(ACTIV_USER.id);
+    sessionStorage.setItem("activeUserName", ACTIV_USER.name);
+    sessionStorage.setItem('justLoggedIn', 'true');
+    window.location.href = "./html/summary.html";
+  }
+}
+
+async function getUsers() {
+  const RESPONSE = await fetch(USERS_URL());
+  const RESULT = await RESPONSE.json();
+  USERS = Object.values(RESULT);
+}
+
+function saveId(id) {
+  sessionStorage.setItem("user_id", id);
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateMobileView">activateMobileView</a></li><li><a href="global.html#addAlphabetTable">addAlphabetTable</a></li><li><a href="global.html#addEditContactDetails">addEditContactDetails</a></li><li><a href="global.html#addNewContact">addNewContact</a></li><li><a href="global.html#addShowDetails">addShowDetails</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#addSubtaskEventListener">addSubtaskEventListener</a></li><li><a href="global.html#backToContactlist">backToContactlist</a></li><li><a href="global.html#btnInit">btnInit</a></li><li><a href="global.html#buildTaskObj">buildTaskObj</a></li><li><a href="global.html#cancelEditSubtask">cancelEditSubtask</a></li><li><a href="global.html#checkAuth">checkAuth</a></li><li><a href="global.html#checkDetailAnimation">checkDetailAnimation</a></li><li><a href="global.html#checkUserId">checkUserId</a></li><li><a href="global.html#clearForm">clearForm</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#closeContactDialog">closeContactDialog</a></li><li><a href="global.html#closeDialogOutsite">closeDialogOutsite</a></li><li><a href="global.html#closeMobileMenu">closeMobileMenu</a></li><li><a href="global.html#creatUser">creatUser</a></li><li><a href="global.html#createContact">createContact</a></li><li><a href="global.html#deactivateMobileView">deactivateMobileView</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteUserFromDatabase">deleteUserFromDatabase</a></li><li><a href="global.html#escapeHtml">escapeHtml</a></li><li><a href="global.html#generateId">generateId</a></li><li><a href="global.html#getAssignedToItemTemplate">getAssignedToItemTemplate</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getSingleUser">getSingleUser</a></li><li><a href="global.html#getSubtaskTemplate">getSubtaskTemplate</a></li><li><a href="global.html#getUserDetails">getUserDetails</a></li><li><a href="global.html#getUsers">getUsers</a></li><li><a href="global.html#guestLogin">guestLogin</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initDateInput">initDateInput</a></li><li><a href="global.html#loadUsers">loadUsers</a></li><li><a href="global.html#logoAnimation();">logoAnimation();</a></li><li><a href="global.html#mobileDetails">mobileDetails</a></li><li><a href="global.html#openContactDialog">openContactDialog</a></li><li><a href="global.html#openEditContactDialog">openEditContactDialog</a></li><li><a href="global.html#openEditDialog">openEditDialog</a></li><li><a href="global.html#openEditMenu">openEditMenu</a></li><li><a href="global.html#removeAllBgColors">removeAllBgColors</a></li><li><a href="global.html#removeFade">removeFade</a></li><li><a href="global.html#renderAlphabetTableTpl">renderAlphabetTableTpl</a></li><li><a href="global.html#renderHtmlContactDialogTpl">renderHtmlContactDialogTpl</a></li><li><a href="global.html#renderHtmlEditContactDialogTpl">renderHtmlEditContactDialogTpl</a></li><li><a href="global.html#renderShowDetailsTpl">renderShowDetailsTpl</a></li><li><a href="global.html#renderSingleUserHtmlTpl">renderSingleUserHtmlTpl</a></li><li><a href="global.html#renderSubtaskItem">renderSubtaskItem</a></li><li><a href="global.html#saveNewContactData">saveNewContactData</a></li><li><a href="global.html#saveSubtask">saveSubtask</a></li><li><a href="global.html#scrollToUser">scrollToUser</a></li><li><a href="global.html#selectPriority">selectPriority</a></li><li><a href="global.html#setRequired">setRequired</a></li><li><a href="global.html#showDetails">showDetails</a></li><li><a href="global.html#showSuccessBanner">showSuccessBanner</a></li><li><a href="global.html#sortUserContactList">sortUserContactList</a></li><li><a href="global.html#startEditSubtask">startEditSubtask</a></li><li><a href="global.html#subtaskInit">subtaskInit</a></li><li><a href="global.html#syncNewContact">syncNewContact</a></li><li><a href="global.html#toClassName">toClassName</a></li><li><a href="global.html#toggleForms">toggleForms</a></li><li><a href="global.html#triggerAnimations">triggerAnimations</a></li><li><a href="global.html#updateFirebaseContact">updateFirebaseContact</a></li><li><a href="global.html#userContectList">userContectList</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Mon May 11 2026 18:11:33 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

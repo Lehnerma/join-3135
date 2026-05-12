@@ -1,7 +1,8 @@
-[role="button"],
-*[style*="cursor: pointer"],
-a,
-button {
+.add-button-container,
+.add-button-size,
+.user-Selection,
+.email {
+  cursor: pointer;
   transition: all 100ms ease-in-out;
 }
 
@@ -16,6 +17,7 @@ button {
 
 .left-content {
   position: relative;
+  width: 100%;
   width: clamp(300px, 30vw, 456px);
   height: 100vh;
   display: flex;
@@ -72,7 +74,6 @@ button {
 }
 
 .add-button-size {
-  font-family: "Inter";
   font-weight: 700;
   font-size: clamp(16px, 1.4vw, 21px);
   display: flex;
@@ -95,7 +96,7 @@ button {
   align-items: center;
   width: clamp(320px, 27.7vw, 400px);
   border: none;
-  padding: clamp(16px, 2.2vw, 32px) clamp(12px, 1.6vw, 24px) clamp(16px, 2.2vw, 32px) clamp(12px, 1.6vw, 24px);
+  padding: clamp(16px, 2.2vw, 32px) clamp(12px, 1.6vw, 24px);
 }
 
 .first-letter {
@@ -104,8 +105,7 @@ button {
   width: clamp(240px, 24.4vw, 352px);
   height: clamp(50px, 5.4vw, 78px);
   flex-shrink: 0;
-  padding: clamp(10px, 1.1vw, 17px) clamp(18px, 2.5vw, 36px) clamp(10px, 1.1vw, 17px) clamp(18px, 2.5vw, 36px);
-  font-family: "Inter";
+  padding: clamp(10px, 1.1vw, 17px) clamp(18px, 2.5vw, 36px);
   font-weight: 400;
   font-size: clamp(16px, 1.3vw, 20px);
   white-space: nowrap;
@@ -125,8 +125,7 @@ button {
   align-items: center;
   justify-content: flex-start;
   gap: clamp(15px, 2.4vw, 35px);
-  padding: clamp(8px, 1vw, 15px) clamp(12px, 1.6vw, 24px) clamp(8px, 1vw, 15px) clamp(12px, 1.6vw, 24px);
-  cursor: pointer;
+  padding: clamp(8px, 1vw, 15px) clamp(12px, 1.6vw, 24px);
   flex-shrink: 0;
 }
 
@@ -156,13 +155,11 @@ button {
   flex-direction: column;
 }
 
-.cotact-info-text {
-  display: flex;
+.contact-info-text {
   gap: clamp(2px, 0.3vw, 5px);
 }
 
 .name {
-  font-family: "Inter";
   font-weight: 400;
   font-size: clamp(16px, 1.3vw, 20px);
 }
@@ -177,7 +174,6 @@ button {
   display: flex;
   position: relative;
   align-items: flex-start;
-  flex-grow: 1;
   width: 100%;
   height: 100vh;
   overflow: hidden;
@@ -194,7 +190,6 @@ button {
 }
 
 .contacts-title {
-  font-family: "Inter";
   font-size: clamp(32px, 4.2vw, 61px);
   font-weight: 700;
   margin: 0;
@@ -203,48 +198,17 @@ button {
 .vertical-divider {
   background-color: var(--secondary-color);
   height: clamp(30px, 4vw, 59px);
-  width: clamp(2px, 0.2vw, 3px);
-  border-radius: clamp(1px, 0.1vw, 2px);
+  width: 3px;
+  border-radius: 2px;
 }
 
 .contacts-subtitle {
-  font-family: "Inter";
   font-weight: 400;
   font-size: clamp(16px, 1.8vw, 27px);
   white-space: nowrap;
 }
 
-/* SUCCESS OVERLAY */
-
-.contact-success-overlay {
-  position: fixed;
-  right: 50px;
-  bottom: 50px;
-  width: 326px;
-  height: 74px;
-  background-color: var(--primary-color);
-  color: var(--fourth-text-color);
-  display: flex;
-  font-weight: 400;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-  font-size: 20px;
-  z-index: 11;
-  transition: transform 0.3s ease-in-out;
-}
-
-.hide-overlay {
-  transform: translateX(calc(100% + 100px));
-}
-
 @media (max-width: 1024px) {
-
-  .main-content {
-    max-width: 1440px;
-  }
-
   .left-content {
     width: clamp(280px, 45vw, 456px);
     flex-shrink: 0;
@@ -269,7 +233,7 @@ button {
 
   .contact-list {
     width: clamp(280px, 40vw, 400px);
-    padding: clamp(16px, 3.2vw, 32px) clamp(12px, 2.4vw, 24px) clamp(16px, 3.2vw, 32px) clamp(12px, 2.4vw, 24px);
+    padding: clamp(16px, 3.2vw, 32px) clamp(12px, 2.4vw, 24px);
   }
 
   .user-Selection {
@@ -287,7 +251,9 @@ button {
   }
 
   .right-content {
+    width: 649px;
     flex-shrink: 0;
+    background-color: var(--main-bg);
   }
 
   .contacts-title {
@@ -301,11 +267,9 @@ button {
   .main-content {
     height: calc(100vh - 160px);
   }
-
 }
 
 @media(max-width:650px) {
-
   .left-content {
     position: relative;
     width: 100%;
@@ -332,17 +296,16 @@ button {
   .first-letter {
     width: clamp(300px, 90vw, 550px);
     height: clamp(50px, 15vw, 58px);
-    padding: clamp(10px, 10vw, 17px) clamp(18px, 15vw, 36px) clamp(10px, 10vw, 17px) clamp(18px, 15dvw, 36px);
+    padding: clamp(10px, 10vw, 17px) clamp(18px, 15vw, 36px);
     font-size: 16px;
     white-space: nowrap;
   }
 
   .user-Selection {
-
     width: clamp(300px, 90vw, 550px);
     height: clamp(50px, 20vw, 78px);
     gap: 35px;
-    padding: clamp(8px, 15vw, 15px) clamp(12px, 20vw, 24px) clamp(8px, 15vw, 15px) clamp(12px, 20vw, 24px);
+    padding: clamp(8px, 15vw, 15px) clamp(12px, 20vw, 24px);
     font-size: 21px;
   }
 
@@ -367,34 +330,56 @@ button {
     font-size: clamp(16px, 5vw, 20px);
   }
 
+  .add-button-container {
+    position: fixed;
+    bottom: 112px;
+    right: 12px;
+    z-index: 20;
+    width: 56px;
+    height: 56px;
+  }
+
   .contact-list {
-    padding: 0;
-    margin: -53px;
+    margin: 0;
     width: 100%;
     width: clamp(100px, 90vw, 550px);
   }
-
-  /* .right-content {
-    display: none;
-  } */
 
   .add-contact-icon {
     width: 32px;
     height: 32px;
   }
 
-  .add-button-container {
-    background-color: transparent;
-    position: fixed;
-    bottom: 100px;
-    right: 15px;
-    z-index: 20;
-    width: 56px;
-    height: 56px;
-  }
-
   .add-button-text {
     display: none;
   }
 
+  .headline {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin-top: 48px;
+    padding-left: 16px;
+  }
+
+  .contacts-title {
+    order: 1;
+    font-size: 47px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .vertical-divider {
+    order: 3;
+    width: 90px;
+    height: 3px;
+    border-radius: 3px;
+    line-height: 1;
+  }
+
+  .contacts-subtitle {
+    order: 2;
+    font-weight: 400;
+    font-size: 20px;
+  }
 }

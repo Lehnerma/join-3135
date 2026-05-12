@@ -21,7 +21,7 @@
   grid-template-columns: 1fr auto auto;
   grid-template-areas: "head-title head-search head-add";
   align-items: center;
-  padding: 8px 16px;
+  padding: 8px clamp(10px, 7vw, 64px);
   gap: 32px;
   width: 100%;
   max-width: 1056px;
@@ -122,7 +122,7 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(252px, 300px)); /* evtl max wert anpassen */
   gap: 24px;
-  padding: 0 16px;
+  padding: 0 clamp(10px, 7vw, 64px);
   overflow-x: auto;
 
   .kanban-column {
@@ -134,7 +134,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 10px;
     position: sticky;
     top: 0;
     background-color: var(--main-bg);

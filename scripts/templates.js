@@ -29,6 +29,7 @@ const contactColors = {
 
 function getFillUserDropown(color, initials, user) {
   return `
+  return `
       <label class="user-item assignedTo" onclick="toggleUser(this)">
         <div class="logoNameField">
           <div class="initials" style="background-color:${color}">
@@ -42,6 +43,7 @@ function getFillUserDropown(color, initials, user) {
 
         <input type="checkbox" value="${user.name}">
       </label>
+    `;
     `;
 }
 
