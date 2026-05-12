@@ -428,7 +428,7 @@ function showSuccessBanner() {
   banner.classList.remove('hide-overlay');
   setTimeout(() => {
     banner.classList.add('hide-overlay');
-  }, 800);
+  }, 1000);
 }
 
 /**
