@@ -23,11 +23,13 @@ async function loadTasksFromFirebase() {
     const TASKS_ARRAY = getArryFromResult(RESULT);
     sessionStorage.setItem("tasks", JSON.stringify(TASKS_ARRAY));
     TASKS.push(...TASKS_ARRAY);
+    // console.log(TASKS);
     renderBoard(TASKS_ARRAY);
   } catch (er) {
     console.error(er);
   }
 }
+
 
 //get ids into the tasks array for the dragging functions
 function getArryFromResult(result) {
@@ -93,6 +95,21 @@ function openTaskDialog(id) {
   const task = TASKS.find(t => t.id === id);
 
   console.log(task);
+  const dialog = document.getElementById("taskDialog");
+  dialog.classList.remove("d-none");
+  
+  dialog.innerHTML = `
+  <p>Category: ${task.category}</p>
+  <h2>${task.title}</h2>
+  <p>${task.description}</p>
+  <p>Due Date: ${task.dueDate}</p>
+  <p>Priority: ${task.priority}</p>
+  <p>Assigned To: ${task.assignedTo ? task.assignedTo.join(", ") : "None"}</p>
+  <p>Status: ${task.status}</p>
+  <button onclick="closeTaskDialog()">Close</button>
+  `;
+
+
 }
 
 
