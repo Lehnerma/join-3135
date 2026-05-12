@@ -1,11 +1,13 @@
-const getBoardTaskURL = (key = "", section = "") => {
+const getTaskURL = (key = "", section = "") => {
   return `https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks/${key ? key + "/" : ""}${section ? section + "/" : ""}.json`;
-};
+}; 
 
 let TASKS = [];
 let DRAG_ID;
 let DRAG_OLD_STATUS;
 let DRAG_HEIGHT;
+
+
 
 function initBoard() {
   initBoardTask();
@@ -15,7 +17,7 @@ function initBoard() {
 
 async function loadTasksFromFirebase() {
   try {
-    const RESPONSE = await fetch(getBoardTaskURL());
+    const RESPONSE = await fetch(getTaskURL());
     if (!RESPONSE.ok) {
       throw new Error(`loading task faild: ${RESPONSE.status}`);
     }
@@ -40,10 +42,23 @@ function getArryFromResult(result) {
   }));
 }
 
+// Schreibt den vollständigen Task per PUT in Firebase – überschreibt alle Felder am richtigen Key.
+async function syncTaskWithFirebase(task) {
+  const { firebaseKey, id, ...data } = task;
+  try {
+    await fetch(getTaskURL(firebaseKey), {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+  } catch (er) {
+    console.error("syncTaskWithFirebase fehlgeschlagen:", er);
+  }
+}
 
 async function updateTaskStatus(firebaseKey, status) {
   try {
-    await fetch(getBoardTaskURL(firebaseKey, "status"), {
+    await fetch(getTaskURL (firebaseKey, "status"), {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(status),
@@ -93,11 +108,14 @@ function buildTaskCard(task) {
 
 function openTaskDialog(id) {
   const task = TASKS.find(t => t.id === id);
+  if (!task) return;
 
   console.log(task);
   const dialog = document.getElementById("taskDialog");
   dialog.classList.remove("d-none");
-  
+
+
+
   dialog.innerHTML = `
   <p>Category: ${task.category}</p>
   <h2>${task.title}</h2>
@@ -105,10 +123,48 @@ function openTaskDialog(id) {
   <p>Due Date: ${task.dueDate}</p>
   <p>Priority: ${task.priority}</p>
   <p>Assigned To: ${task.assignedTo ? task.assignedTo.join(", ") : "None"}</p>
-  <p>Status: ${task.status}</p>
-  <button onclick="closeTaskDialog()">Close</button>
-  `;
+  <p>Subtasks: ${task.subtasks ? task.subtasks.map(s => s.title).join(", ") : "None"}</p>
+  
+  <button onclick="closeTaskDialog()">X</button>
 
+  <button onclick="deleteTask('${task.firebaseKey}')">
+    Delete
+  </button>
+
+
+  <button onclick="editTask('${task.firebaseKey}')">
+    Edit
+  </button>
+  `;
+}
+
+
+function closeTaskDialog() {
+  const dialog = document.getElementById("taskDialog");
+
+  dialog.classList.add("d-none");
+  dialog.innerHTML = "";
+}
+
+
+
+async function deleteTask(firebaseKey) {
+  try {
+    const response = await fetch(getBoardTaskURL(firebaseKey),
+      {
+        method: "DELETE",
+      });
+      
+    if (!response.ok) {throw new Error(`Delete failed: ${response.status}`);}
+
+    TASKS = TASKS.filter(task =>task.firebaseKey !== firebaseKey);
+    renderBoard(TASKS);
+    closeTaskDialog();  
+
+    console.log("Task deleted");
+  }
+
+  catch (error) {console.error(error);}
 
 }
 
@@ -150,6 +206,7 @@ function allowDrop(ev) {
   ev.preventDefault();
 }
 
+
 //drag enter
 function columnDragEnter(ev, status) {
   ev.preventDefault();
@@ -161,11 +218,13 @@ function columnDragEnter(ev, status) {
   LIST.appendChild(PLACE_HOLDER);
 }
 
+
 //drag leave
 function columnDragLeave(ev) {
   if (ev.currentTarget.contains(ev.relatedTarget)) return;
   ev.currentTarget.querySelector(".drag-placeholder")?.remove();
 }
+
 
 //drag drop
 function taskDragDrop(status) {
@@ -185,9 +244,3 @@ function taskDragDrop(status) {
   );
   updateTaskStatus(CURRENT_TASK.firebaseKey, status);
 }
-
-
-
-
-
-
