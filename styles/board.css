@@ -77,7 +77,7 @@
     }
   }
 
-  .btn--primary {
+  .btn--add {
     grid-area: head-add;
     display: flex;
     align-items: center;

@@ -65,7 +65,7 @@
           <button id="search_tasks_btn" class="btn" role="search"><img src="../assets/img/icons/input/search.svg" alt="🔍search" class="search-icon" /></button>
         </sectioin>
 
-        <button class="btn btn--primary">
+        <button class="btn btn--add">
           <span class="btn--primary-text" onclick="openAddTaskDialog('todo')" id="add_task_head">Add task</span>
           <img src="../assets/img/icons/subtask/add-white.svg" alt="+" />
         </button>
@@ -129,43 +129,41 @@
       edit task dialog
        -->
 
-      <dialog id="edit_task_dialog" class="dialog">
-        <article class="edit-task-dialog">
-          <header class="edit-task-dialog__header">
-            <h2>Edit Task</h2>
-            <button class="close-dialog-btn edit-task-dialog__close" onclick="closeEditTaskDialog()">
+      <dialog id="edit_task_dialog" class="dialog edit-dialog">
+          <header class="edit-task--header">
+            <button class="btn btn--close" onclick="closeEditTaskDialog()">
               <img src="../assets/img/icons/subtask/close.svg" alt="X" />
             </button>
           </header>
 
-          <form class="form-task" id="form_edit_task">
-            <div class="input-section">
-              <label for="title" class="required">Title</label>
-              <input id="title" class="input" type="text" placeholder="Enter a title" required />
+          <form class="edit-task--form" id="form_edit_task">
+            <section class="input-section">
+              <label for="title" class="">Title</label>
+              <input id="title" class="input" type="text" placeholder="Enter a title" required/>
               <span class="field-error">This field is required</span>
-            </div>
+            </section>
 
-            <div class="input-section">
+            <section class="input-section">
               <label for="description">Description</label>
               <textarea id="description" class="input" placeholder="Enter a Description" rows="3"></textarea>
-            </div>
+            </section>
 
-            <div class="input-section">
-              <label for="dueDate" class="required">Due date</label>
+            <section class="input-section">
+              <label for="dueDate" class="">Due date</label>
               <input id="dueDate" class="input input-date" type="date" required />
               <span class="field-error">This field is required</span>
-            </div>
+            </section>
 
-            <div class="input-section">
+            <section class="input-section">
               <label class="label--bold">Priority</label>
               <div class="priority-group">
                 <button type="button" id="btn_urgent" class="btn btn--prio" onclick="selectPriority('urgent')">Urgent <img class="img-prio urgent" src="../assets/img/icons/prio/urgent.svg" /></button>
                 <button type="button" id="btn_medium" class="btn btn--prio" onclick="selectPriority('medium')">Medium <img class="img-prio medium" src="../assets/img/icons/prio/medium.svg" /></button>
                 <button type="button" id="btn_low" class="btn btn--prio" onclick="selectPriority('low')">Low <img class="img-prio low" src="../assets/img/icons/prio/low.svg" /></button>
               </div>
-            </div>
+            </section>
 
-            <div class="input-section">
+            <section class="input-section">
               <label for="assignedToSearch">Assigned to</label>
               <div class="custom-dropdown" id="assignedToDropdown">
                 <div class="custom-dropdown__trigger">
@@ -177,19 +175,18 @@
                 <ul class="custom-dropdown__list" id="assignedToList"></ul>
               </div>
               <div id="assignedPreview"></div>
-            </div>
+            </section>
 
-            <div class="input-section">
-              <label for="category" class="required">Category</label>
-              <select id="category" class="input dropdown form--select" required>
+            <section class="input-section">
+              <label for="category" class="">Category</label>
+              <select id="category" class="input dropdown form--select" >
                 <option value="" selected disabled>Select task category</option>
                 <option value="Technical Task">Technical Task</option>
                 <option value="User Story">User Story</option>
               </select>
-              <span class="field-error">This field is required</span>
-            </div>
+            </section>
 
-            <div class="input-section">
+            <section class="input-section">
               <label for="subtask_input">Subtasks</label>
               <div class="input--section">
                 <input id="subtask_input" class="input" type="text" placeholder="Add subtask" />
@@ -200,13 +197,13 @@
                 </div>
               </div>
               <ul id="subtask_list" class="subtask-list"></ul>
-            </div>
+            </section>
           </form>
 
-          <footer class="edit-task-dialog__footer">
-            <button type="submit" form="form_edit_task" class="btn btn--ok">Ok <img src="../assets/img/icons/subtask/check.svg" alt="✓" /></button>
+          <footer class="edit-task--footer">
+            <button type="submit" form="form_edit_task" class="btn btn--add">Ok <img src="../assets/img/icons/subtask/check.svg" alt="✓" /></button>
           </footer>
-        </article>
+
       </dialog>
     </main>
   </body>

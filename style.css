@@ -25,7 +25,7 @@
   object-position: center;
 }
 
-.btn--primary {
+.btn--primary, .btn--add {
   background-color: var(--primary-color);
   color: white;
 

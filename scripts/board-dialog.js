@@ -115,6 +115,7 @@ function openTaskDetailDialog(taskId) {
     CURRENT_DETAIL_TASK = TASK;
     TASK_DETAIL_DIALOG.innerHTML = buildTaskDetailDialog(TASK);
     TASK_DETAIL_DIALOG.showModal();
+    TASK_DETAIL_DIALOG.scrollTop = 0; // Scrollt zum Anfang des Dialogs
   }
 }
 
@@ -163,6 +164,7 @@ function openEditTaskDialog(taskId) {
   const dialog = document.getElementById("edit_task_dialog");
   dialog.addEventListener("click", closeEditDialogOnBackdropClick);
   dialog.showModal();
+  document.getElementById("form_edit_task").scrollTop = 0;
 
   document.getElementById("title").value = task.title || "";
   document.getElementById("description").value = task.description || "";
