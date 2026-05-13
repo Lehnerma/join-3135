@@ -73,6 +73,8 @@
   padding-top: 16px;
 }
 
+
+
 .add-button-size {
   font-weight: 700;
   font-size: clamp(16px, 1.4vw, 21px);

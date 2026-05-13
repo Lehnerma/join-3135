@@ -58,23 +58,6 @@
   }
 }
 
-.btn--secondary-delete {
-  background-color: white;
-  color: var(--primary-color);
-  border: 2px solid var(--primary-color);
-
-  &:hover {
-    border-color: var(--secondary-color);
-    box-shadow: var(--btn-shadow-hover);
-    color: var(--secondary-color);
-  }
-
-  &:active {
-    background-color: white;
-    box-shadow: var(--btn-shadow-main);
-  }
-}
-
 .btn--login {
   padding: 16px 24px;
   height: 48px;
