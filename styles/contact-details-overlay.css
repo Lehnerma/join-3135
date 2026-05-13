@@ -129,18 +129,14 @@
   width: 24px;
   height: 24px;
   margin-right: clamp(4px, 0.7vw, 8px);
-   background-color:var(--primary-color);
-  -webkit-mask-image: url('../assets/img/icons/contacts/edit.svg');
-  mask-image: url('../assets/img/icons/contacts/edit.svg');
+  
 }
 
 .delete-svg {
   width: 24px;
   height: 24px;
   margin-right: clamp(4px, 0.7vw, 8px);
-   background-color:var(--primary-color);
-  -webkit-mask-image: url('../assets/img/icons/contacts/delete.svg');
-  mask-image: url('../assets/img/icons/contacts/delete.svg');
+  
 }
 li {
   list-style-type: none;

@@ -43,7 +43,7 @@ function renderHtmlContactDialogTpl() {
   <div class="dialog-container" onclick="closeDialogOutsite(event)">
       <aside class="aside-content">
              <section class="aside-text-wrapper">
-           <img class="aside-logo" src="../assets/img/icons/contacts/Capa_1.svg" alt="logo-join" />
+           <img class="aside-logo" src="../assets/img/icons/contacts/Capa.svg" alt="logo-join" />
            <div class="aside-headline">
           <h2 class="aside-h2">Add contact</h2>
           <p class="aside-p">Tasks are better with a team!</p>
@@ -52,12 +52,12 @@ function renderHtmlContactDialogTpl() {
         </section>
       </aside> 
       <header class="dialog-header">
-        <button type="button" id="close-btn" class="close-btn-overlay" onclick="closeContactDialog()"><svg class="close-x"><use href="../assets/img/icons/contacts/close-white.svg"></use></svg></button>
+        <button type="button" id="close-btn" class="close-btn-overlay" onclick="closeContactDialog()"></button>
       </header>
       <main class="dialog-main">
-                <div class="person-Logo-container">
-          <img class="person-logo" src="../assets/img/icons/contacts/person.svg" alt="Profile" class="large-profile-icon">
-        </div>
+          <div class="person-logo-ellipse">
+               <img class="person-logo" src="../assets/img/icons/contacts/person.svg" alt="Profile" class="large-profile-icon">
+           </div>
         <form id="formRef">
           <section class="dialog-input-container">
             <div class="dialog-input-section">
@@ -75,10 +75,9 @@ function renderHtmlContactDialogTpl() {
             </div>
           </section>
           <section class="dialog-login-buttons">
-            <button id="cancelButton" type="button" class="btn btn--secondary btn--login btn-cancel" 
-              onclick="closeContactDialog()">Cancel<svg class="cancel-img-x" href="../assets/img/icons/contacts/Vector-x.svg"></svg></button>
-            <button type="button" class="btn btn--primary btn--login btn-create " onclick="createContact()">Create contact<img class="img-check"
-                src="../assets/img/icons/contacts/check.svg" alt="create check"></button>
+            <button id="cancelButton" type="reset" class="btn btn--secondary btn--login btn-cancel" 
+              onclick="closeContactDialog()">Cancel</button>
+            <button type="button" class="btn btn--primary btn--login " onclick="createContact()">Create contact</button>
           </section>
         </form>
       </main>
@@ -99,7 +98,7 @@ function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
 
   <aside class="aside-content">
     <section class="aside-text-wrapper">
-      <img class="aside-logo" src="../assets/img/icons/contacts/Capa_1.svg" alt="logo-join" />
+      <img class="aside-logo" src="../assets/img/icons/contacts/Capa.svg" alt="logo-join" />
       <div class="aside-headline">
         <h2 class="aside-h2-edit">Edit contact</h2>
         <div class="blue-line-horizontal"></div>
@@ -108,14 +107,12 @@ function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
   </aside>
 
   <header class="dialog-header">
-    <button type="button" id="close-btn" class="close-btn-overlay" onclick="closeContactDialog()"><svg class="close-x">
-        <use href="../assets/img/icons/contacts/close-white.svg"></use>
-      </svg></button>
+    <button type="button" id="close-btn" class="close-btn-overlay" onclick="closeContactDialog()"></button>
   </header>
 
   <main class="dialog-main">
 
-    <div class="person-Logo-container">
+    <div class="person-logo-ellipse">
       <div class="initials-large-edit-dialog" style="background-color: ${color}">${initials}</div>
     </div>
 
@@ -137,15 +134,14 @@ function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
       </section>
 
       <section class="dialog-login-buttons">
-        <button type="button" class="btn btn--secondary btn--login btn-delete"
+        <button type="button" class="btn btn--secondary-delete btn--login"
           onclick="deleteContact(${editUserIndex})">
           Delete
         </button>
-        <button type="submit" class="btn btn--primary btn--login btn-save"
+        <button type="submit" class="btn btn--primary btn--login"
           onclick="saveNewContactData(${editUserIndex})">
           Save
-          <img class="img-check" src="../assets/img/icons/contacts/check.svg" alt="create check">
-        </button>
+         </button>
       </section>
     </form>
   </main>
