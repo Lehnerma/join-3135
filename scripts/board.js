@@ -176,31 +176,39 @@ function taskDragStart(ev, id) {
   DRAG_OLD_STATUS = ALL_TASKS.find((el) => el.id === id)?.status;
 }
 
-//drag over
-function allowDrop(ev) {
-  ev.preventDefault();
+function getDragAfterElement(list, y) {
+  const tasks = [...list.querySelectorAll(".task")];
+
+  return tasks.reduce((closest, child) => {
+    const box = child.getBoundingClientRect();
+    const offset = y - box.top - box.height / 2;
+    if (offset < 0 && offset > closest.offset) {
+      return { offset, element: child };
+    }
+    return closest;
+  }, { offset: Number.NEGATIVE_INFINITY }).element ?? null;
 }
 
-
-//Inserts placeholder before last child (sticky element) or at end if list empty
-function insertPlaceholder(list, placeholder) {
-  const lastChild = list.lastElementChild;
-  if (lastChild) {
-    lastChild.parentNode.insertBefore(placeholder, lastChild);
-  } else {
-    list.appendChild(placeholder);
-  }
-}
-
-//drag enter
-function columnDragEnter(ev, status) {
+function columnDragOver(ev, status) {
   ev.preventDefault();
   const LIST = document.getElementById(status + "_list");
-  if (LIST.querySelector(".drag-placeholder")) return;
-  const PLACE_HOLDER = document.createElement("li");
-  PLACE_HOLDER.classList.add("drag-placeholder");
-  if (DRAG_HEIGHT) PLACE_HOLDER.style.height = DRAG_HEIGHT + "px";
-  insertPlaceholder(LIST, PLACE_HOLDER);
+  let placeholder = LIST.querySelector(".drag-placeholder");
+
+  if (!placeholder) {
+    placeholder = document.createElement("li");
+    placeholder.classList.add("drag-placeholder");
+    if (DRAG_HEIGHT) placeholder.style.height = DRAG_HEIGHT + "px";
+  }
+
+  const afterElement = getDragAfterElement(LIST, ev.clientY);
+  const noTask = LIST.querySelector(".no-task");
+  const insertBefore = afterElement ?? noTask ?? null;
+
+  if (insertBefore) {
+    LIST.insertBefore(placeholder, insertBefore);
+  } else {
+    LIST.appendChild(placeholder);
+  }
 }
 
 
