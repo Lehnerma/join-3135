@@ -48,6 +48,28 @@ fetch(BASE_URL + "/tasks.json")
 </div>
 ```
 
+## Git Commits
+
+After every successful change, create a commit with a conventional prefix:
+
+| Prefix | When to use |
+|---|---|
+| `feat:` | New feature or behaviour |
+| `fix:` | Bug fix |
+| `style:` | CSS / visual changes only |
+| `refactor:` | Code restructure, no behaviour change |
+| `create:` | New file added |
+| `delete:` | File or code removed |
+| `chore:` | Config, tooling, dependencies |
+
+```
+feat: position-aware drag placeholder via dragover
+fix: placeholder not removed on drag leave
+style: sticky no-task element in overflow column
+```
+
+Never push — the developer pushes manually.
+
 ## CSS
 
 - Use **CSS custom properties** (`--color-primary`) for theming.
