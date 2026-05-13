@@ -25,7 +25,6 @@ async function loadTasksFromFirebase() {
     const TASKS_ARRAY = getArryFromResult(RESULT);
     sessionStorage.setItem("tasks", JSON.stringify(TASKS_ARRAY));
     TASKS.push(...TASKS_ARRAY);
-    // console.log(TASKS);
     renderBoard(TASKS_ARRAY);
   } catch (er) {
     console.error(er);
@@ -109,33 +108,10 @@ function buildTaskCard(task) {
 function openTaskDialog(id) {
   const task = TASKS.find(t => t.id === id);
   if (!task) return;
-
-  console.log(task);
+  
   const dialog = document.getElementById("taskDialog");
   dialog.classList.remove("d-none");
-
-
-
-  dialog.innerHTML = `
-  <p>Category: ${task.category}</p>
-  <h2>${task.title}</h2>
-  <p>${task.description}</p>
-  <p>Due Date: ${task.dueDate}</p>
-  <p>Priority: ${task.priority}</p>
-  <p>Assigned To: ${task.assignedTo ? task.assignedTo.join(", ") : "None"}</p>
-  <p>Subtasks: ${task.subtasks ? task.subtasks.map(s => s.title).join(", ") : "None"}</p>
-  
-  <button onclick="closeTaskDialog()">X</button>
-
-  <button onclick="deleteTask('${task.firebaseKey}')">
-    Delete
-  </button>
-
-
-  <button onclick="editTask('${task.firebaseKey}')">
-    Edit
-  </button>
-  `;
+  dialog.innerHTML = getTaskDialogTemplate(task);
 }
 
 
@@ -154,7 +130,6 @@ async function deleteTask(firebaseKey) {
       {
         method: "DELETE",
       });
-      
     if (!response.ok) {throw new Error(`Delete failed: ${response.status}`);}
 
     TASKS = TASKS.filter(task =>task.firebaseKey !== firebaseKey);
@@ -171,8 +146,8 @@ async function deleteTask(firebaseKey) {
 
 
 function getPriority(priority) {
-  const VALID = ["low", "medium", "urgent"];
-  return VALID.includes(priority) ? priority : "low";
+  const PRIO = ["low", "medium", "urgent"];
+  return PRIO.includes(priority) ? priority : "low";
 }
 
 
