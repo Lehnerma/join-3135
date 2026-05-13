@@ -207,15 +207,25 @@ function allowDrop(ev) {
 }
 
 
+//Inserts placeholder before last child (sticky element) or at end if list empty
+function insertPlaceholder(list, placeholder) {
+  const lastChild = list.lastElementChild;
+  if (lastChild) {
+    lastChild.parentNode.insertBefore(placeholder, lastChild);
+  } else {
+    list.appendChild(placeholder);
+  }
+}
+
 //drag enter
 function columnDragEnter(ev, status) {
   ev.preventDefault();
   const LIST = document.getElementById(status + "_list");
   if (LIST.querySelector(".drag-placeholder")) return;
-  const PLACE_HOLDER = document.createElement("li"); //change the name of the variable
+  const PLACE_HOLDER = document.createElement("li");
   PLACE_HOLDER.classList.add("drag-placeholder");
   if (DRAG_HEIGHT) PLACE_HOLDER.style.height = DRAG_HEIGHT + "px";
-  LIST.appendChild(PLACE_HOLDER);
+  insertPlaceholder(LIST, PLACE_HOLDER);
 }
 
 
