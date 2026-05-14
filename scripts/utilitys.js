@@ -2,6 +2,7 @@ checkAuth();
 
 function initUtilitys() {
   renderHeadInitals();
+  showExternalUtilityPages();
 }
 /**
  * Check if the User can enter the side or not
@@ -13,7 +14,10 @@ async function checkAuth() {
     return;
   } else if (ID === "guest") {
     return;
-  } else {
+  } else if (window.location.pathname.includes("privacyPolicy.html") || window.location.pathname.includes("legalNotice.html")) {
+    return;
+  }
+  else {
     window.location.href = "../index.html";
   }
 }
@@ -58,6 +62,10 @@ function capitalizeFirstLetter(str) {
 }
 
 function renderHeadInitals() {
+  const ID = sessionStorage.getItem("user_id");
+  if (ID == null) {
+    return;
+  } else {
   const USER_NAME = sessionStorage.getItem("activeUserName");
   const USER_INITIALS = document.getElementById("user_menu_button");
   const SPLITTED_NAME = USER_NAME.split(" ");
@@ -71,4 +79,33 @@ function renderHeadInitals() {
     USER_INITIALS.innerText = "G";
   }
 }
+}
 
+function showExternalUtilityPages() {
+  const ID = sessionStorage.getItem("user_id");
+  console.log(ID);
+  let VIEW_USER = document.getElementById("view-user");
+  let VIEW_EXTERNAL = document.getElementById("view-external");
+  let USER_MENU_BUTTON = document.getElementById("user_menu_button");
+  if (ID !== null) {
+    VIEW_USER.classList.remove("d-none");
+    VIEW_EXTERNAL.classList.add("d-none");
+    USER_MENU_BUTTON.classList.remove("d-none");
+  } else {
+    VIEW_USER.classList.add("d-none");
+    VIEW_EXTERNAL.classList.remove("d-none");
+    USER_MENU_BUTTON.classList.add("d-none");
+  }
+}
+
+function showExternalUtilityPages() {
+  const ID = sessionStorage.getItem("user_id");
+  const BODY = document.body;
+  if (ID !== null) {
+   BODY.classList.add("user-logged-in");
+    BODY.classList.remove("user-not-logged-in");
+  } else {
+    BODY.classList.add("user-not-logged-in");
+    BODY.classList.remove("user-logged-in");
+  }
+}
