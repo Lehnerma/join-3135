@@ -161,6 +161,10 @@
   display: block;
 }
 
+ .user-not-logged-in .app--icons {
+    display: none;
+   }
+
 @media screen and (width <=1024px) {
   .app {
     grid-template-rows: 80px 1fr 80px;
