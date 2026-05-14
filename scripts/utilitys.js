@@ -87,3 +87,15 @@ function showExternalUtilityPages() {
     USER_MENU_BUTTON.classList.add("d-none");
   }
 }
+
+function showExternalUtilityPages() {
+  const ID = sessionStorage.getItem("user_id");
+  const BODY = document.body;
+  if (ID !== null) {
+   BODY.classList.add("user-logged-in");
+    BODY.classList.remove("user-not-logged-in");
+  } else {
+    BODY.classList.add("user-not-logged-in");
+    BODY.classList.remove("user-logged-in");
+  }
+}

@@ -44,7 +44,7 @@
   cursor: pointer;
 }
 
-.sidebar ul li a {
+.nav-category {
   color: var(--input-text-color);
   width: 100%;
   display: flex;
@@ -148,6 +148,19 @@
   height: 56px;
 }
 
+.user-not-logged-in #view-user,
+.user-not-logged-in #user_menu_button {
+  display: none;
+}
+
+.user-logged-in #view-external {
+  display: none;
+}
+
+.user-not-logged-in #view-external {
+  display: block;
+}
+
 @media screen and (width <=1024px) {
   .app {
     grid-template-rows: 80px 1fr 80px;
@@ -201,4 +214,48 @@
   .active {
     border-radius: 16px;
   }
+
+  .user-not-logged-in .sidebar {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    padding: 0;
+    gap: 4px;
+
+  }
+
+  .user-logged-in .legal-section {
+    display: none;
+  }
+
+  .user-not-logged-in .legal-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    gap: 8px;
+    height: 100%;
+  }
+
+  .user-not-logged-in .legal-section .legal-section-link:hover {
+    font-weight: 400;
+  }
+
+  .user-not-logged-in .active {
+    background-color: var(--btn-click-color);
+    border-radius: 16px;
+    padding: 8px 12px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #view-external li {
+    margin-top: 0;
+  }
+
 }
