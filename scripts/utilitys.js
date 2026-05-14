@@ -66,19 +66,19 @@ function renderHeadInitals() {
   if (ID == null) {
     return;
   } else {
-  const USER_NAME = sessionStorage.getItem("activeUserName");
-  const USER_INITIALS = document.getElementById("user_menu_button");
-  const SPLITTED_NAME = USER_NAME.split(" ");
-  let INITIALS = SPLITTED_NAME[0][0];
-  if (SPLITTED_NAME.length > 1) {
-    INITIALS += SPLITTED_NAME[SPLITTED_NAME.length - 1][0];
+    const USER_NAME = sessionStorage.getItem("activeUserName");
+    const USER_INITIALS = document.getElementById("user_menu_button");
+    const SPLITTED_NAME = USER_NAME.split(" ");
+    let INITIALS = SPLITTED_NAME[0][0];
+    if (SPLITTED_NAME.length > 1) {
+      INITIALS += SPLITTED_NAME[SPLITTED_NAME.length - 1][0];
+    }
+    INITIALS = INITIALS.toUpperCase();
+    USER_INITIALS.innerText = INITIALS;
+    if (USER_NAME === "Guest") {
+      USER_INITIALS.innerText = "G";
+    }
   }
-  INITIALS = INITIALS.toUpperCase();
-  USER_INITIALS.innerText = INITIALS;
-  if (USER_NAME === "Guest") {
-    USER_INITIALS.innerText = "G";
-  }
-}
 }
 
 function showExternalUtilityPages() {
@@ -102,10 +102,24 @@ function showExternalUtilityPages() {
   const ID = sessionStorage.getItem("user_id");
   const BODY = document.body;
   if (ID !== null) {
-   BODY.classList.add("user-logged-in");
+    BODY.classList.add("user-logged-in");
     BODY.classList.remove("user-not-logged-in");
   } else {
     BODY.classList.add("user-not-logged-in");
     BODY.classList.remove("user-logged-in");
   }
+}
+
+function openUserMenu() {
+  const DIALOG = document.getElementById("user-menu-dialog");
+  DIALOG.showModal();
+}
+
+function closeDialog() {
+    const DIALOG = document.getElementById("user-menu-dialog");
+    DIALOG.close();
+}
+
+function preventCloseDialogOnDialog(event) {
+    event.stopPropagation();
 }
