@@ -109,7 +109,7 @@ body {
 
 .form--title .btn {
   position: absolute;
-  left: -60px;
+  left: -8px;
 }
 
 .form--title h1 {
@@ -343,3 +343,8 @@ body {
   }
 }
 
+.main-login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
