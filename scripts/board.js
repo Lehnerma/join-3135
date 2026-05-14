@@ -192,8 +192,9 @@ function getDragAfterElement(list, y) {
 function columnDragOver(ev, status) {
   ev.preventDefault();
   const LIST = document.getElementById(status + "_list");
-  let placeholder = LIST.querySelector(".drag-placeholder");
+  LIST.querySelector(".no-task")?.style.setProperty("display", "none");
 
+  let placeholder = LIST.querySelector(".drag-placeholder");
   if (!placeholder) {
     placeholder = document.createElement("li");
     placeholder.classList.add("drag-placeholder");
@@ -201,21 +202,15 @@ function columnDragOver(ev, status) {
   }
 
   const afterElement = getDragAfterElement(LIST, ev.clientY);
-  const noTask = LIST.querySelector(".no-task");
-  const insertBefore = afterElement ?? noTask ?? null;
-
-  if (insertBefore) {
-    LIST.insertBefore(placeholder, insertBefore);
-  } else {
-    LIST.appendChild(placeholder);
-  }
+  afterElement
+    ? LIST.insertBefore(placeholder, afterElement)
+    : LIST.appendChild(placeholder);
 }
 
-
-//drag leave
 function columnDragLeave(ev) {
   if (ev.currentTarget.contains(ev.relatedTarget)) return;
   ev.currentTarget.querySelector(".drag-placeholder")?.remove();
+  ev.currentTarget.querySelector(".no-task")?.style.removeProperty("display");
 }
 
 
