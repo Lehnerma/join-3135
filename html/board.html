@@ -72,7 +72,7 @@
       </article>
 
       <section class="kanban-columns" aria-label="Kanban Board">
-        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('todo')" ondragenter="columnDragEnter(event, 'todo')" ondragleave="columnDragLeave(event)">
+        <section class="kanban-column" ondragover="columnDragOver(event, 'todo')" ondrop="taskDragDrop('todo')" ondragleave="columnDragLeave(event)">
           <div class="column-title">
             <h2>To do</h2>
             <button class="btn btn--add-task" aria-label="Add task to To do" onclick="addStatusTask('todo')">
@@ -82,7 +82,7 @@
           <ul class="task--list" id="todo_list"></ul>
         </section>
 
-        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('progress')" ondragenter="columnDragEnter(event, 'progress')" ondragleave="columnDragLeave(event)">
+        <section class="kanban-column" ondragover="columnDragOver(event, 'progress')" ondrop="taskDragDrop('progress')" ondragleave="columnDragLeave(event)">
           <div class="column-title">
             <h2>In progress</h2>
             <button class="btn btn--add-task" aria-label="Add task to In progress" onclick="addStatusTask('progress')">
@@ -92,7 +92,7 @@
           <ul class="task--list" id="progress_list"></ul>
         </section>
 
-        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('feedback')" ondragenter="columnDragEnter(event, 'feedback')" ondragleave="columnDragLeave(event)">
+        <section class="kanban-column" ondragover="columnDragOver(event, 'feedback')" ondrop="taskDragDrop('feedback')" ondragleave="columnDragLeave(event)">
           <div class="column-title">
             <h2>Await feedback</h2>
             <button class="btn btn--add-task" aria-label="Add task to Await feedback" onclick="addStatusTask('feedback')">
@@ -102,7 +102,7 @@
           <ul class="task--list" id="feedback_list"></ul>
         </section>
 
-        <section class="kanban-column" ondragover="allowDrop(event)" ondrop="taskDragDrop('done')" ondragenter="columnDragEnter(event, 'done')" ondragleave="columnDragLeave(event)">
+        <section class="kanban-column" ondragover="columnDragOver(event, 'done')" ondrop="taskDragDrop('done')" ondragleave="columnDragLeave(event)">
           <div class="column-title">
             <h2>Done</h2>
             <button class="btn btn--add-task" aria-label="Add task to Done" onclick="addStatusTask('done')">

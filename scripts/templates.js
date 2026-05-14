@@ -394,3 +394,26 @@ function getAddTaskDialogTemplate() {
     </div>
   `;
 }
+
+/**
+ * Template für Task-Dialog mit Details, Delete & Edit Buttons
+ * @param {object} task - Task mit id, title, description, category, dueDate, priority, assignedTo, subtasks, firebaseKey
+ * @returns {string} HTML für Task-Dialog
+ */
+function getTaskDialogTemplate(task) {
+  const assignedNames = task.assignedTo ? task.assignedTo.join(", ") : "None";
+  const subtaskNames = task.subtasks ? task.subtasks.map(s => s.title).join(", ") : "None";
+  return `
+    <p>Category: ${escapeHtml(task.category)}</p>
+    <h2>${escapeHtml(task.title)}</h2>
+    <p>${escapeHtml(task.description)}</p>
+    <p>Due Date: ${escapeHtml(task.dueDate)}</p>
+    <p>Priority: ${escapeHtml(task.priority)}</p>
+    <p>Assigned To: ${escapeHtml(assignedNames)}</p>
+    <p>Subtasks: ${escapeHtml(subtaskNames)}</p>
+    
+    <button onclick="closeTaskDialog()">X</button>
+    <button onclick="deleteTask('${task.firebaseKey}')">Delete</button>
+    <button onclick="editTask('${task.firebaseKey}')">Edit</button>
+  `;
+}
