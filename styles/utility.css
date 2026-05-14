@@ -95,6 +95,7 @@ ol li::before {
 .btn-return {
   background: none;
   border: none;
+  cursor: pointer;
 }
 
 #user-menu-dialog {
@@ -148,6 +149,11 @@ ol li::before {
 
   .user-menu-help {
     display: block;
+    text-decoration: none;
+    color: var(--fifth-text-color);
+    height: 46px;
+    display: flex;
+    align-items: center;
   }
 
   .app--icon {

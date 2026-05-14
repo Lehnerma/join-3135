@@ -123,3 +123,12 @@ function closeDialog() {
 function preventCloseDialogOnDialog(event) {
     event.stopPropagation();
 }
+
+function goBack() {
+  window.history.back();
+}
+
+function logOut() {
+  sessionStorage.clear();
+  window.location.href = "../index.html";
+}
