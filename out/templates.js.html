@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: templates.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: templates.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+function getFillUserDropown(color, initials, user) {
+  return`
+      &lt;label class="user-item assignedTo" onclick="toggleUser(this)">
+        &lt;div class="logoNameField">
+          &lt;div class="initials" style="background-color:${color}">
+            ${initials}
+          &lt;/div>
+
+          &lt;div class="contact-info-text">
+            &lt;span>${user.name}&lt;/span>
+          &lt;/div>
+        &lt;/div>
+
+        &lt;input type="checkbox" value="${user.name}">
+      &lt;/label>
+    `; 
+}
+
+
+
+
+
+/**
+ * The template for the subtasks
+ * @returns the html code for creat a subtask
+ */
+function getSubtaskTemplate(title, index) {
+  return `
+    &lt;span id="subtask${index}" class="subtask-text">${escapeHtml(title)}&lt;/span>
+    &lt;div class="subtask-item--btns">
+      &lt;button type="button" class="btn--subtask btn--delete">
+        &lt;img src="../assets/img/icons/subtask/bin.svg" alt="delete" />
+      &lt;/button>
+      &lt;span class="div-vert">&lt;/span>
+      &lt;button type="button" class="btn--subtask btn--edit">
+        &lt;img src="../assets/img/icons/subtask/edit.svg" alt="edit" />
+      &lt;/button>
+    &lt;/div>`;
+}
+
+/**
+ * Template for a single contact row in the "Assigned To" dropdown.
+ * @param {string|number} id     - Unique contact id (used for data-value)
+ * @param {string}        name   - Full name of the contact
+ * @param {string}        initials - Two-letter initials, e.g. "MA"
+ * @param {string}        color  - CSS color value, e.g. "var(--contact-color-1)" or "#ff7a00"
+ * @param {boolean}       checked - Whether the contact is already assigned
+ * @returns {string} HTML string for one &lt;li> item
+ */
+function getAssignedToItemTemplate(id, name, initials, color, checked = false) {
+  return `
+    &lt;li class="custom-dropdown__item${checked ? " selected" : ""}" data-value="${id}" data-name="${name}">
+      &lt;span class="contact-badge" style="background-color: ${color}">${initials}&lt;/span>
+      &lt;span class="custom-dropdown__name">${name}&lt;/span>
+      &lt;input type="checkbox" class="custom-dropdown__checkbox"${checked ? " checked" : ""} />
+    &lt;/li>`;
+}
+
+function getSubtaskProgressTemplate(done, total) {
+  if (total === 0) return "";
+  return `
+    &lt;div class="subtask--progress">
+      &lt;progress class="subtask--progressbar" max="${total}" value="${done}">&lt;/progress>
+      &lt;span class="subtask--description">${done}/${total} Subtasks&lt;/span>
+    &lt;/div>`;
+}
+
+function getNoTasksTemplate(status) {
+  return `
+    &lt;li class="board-task no-task">No tasks ${status}&lt;/li>
+  `;
+}
+
+function getTaskCardTemplet(title, description, category, id, priority) {
+  return `
+&lt;li class="task" draggable="true" ondragstart="taskDragStart(event, ${id})" data-id=${id}>
+  &lt;article class="task--card">
+    &lt;header>
+      &lt;span class="task--category-label ${toClassName(category)}">${category}&lt;/span>
+    &lt;/header>
+    &lt;section class="task--content" aria-label="task content">
+      &lt;div class="task--title-wrapper">
+        &lt;h3 class="task--title">${title}&lt;/h3>
+        &lt;p class="task--description">${description}&lt;/p>
+      &lt;/div>
+
+      &lt;div class="subtask--progress-container">&lt;/div>
+    &lt;/section>
+    &lt;footer class="task--footer">
+      &lt;ul class="task--assignees" aria-label="Zugewiesene Personen">
+
+      &lt;/ul>
+      &lt;img src="../assets/img/icons/prio/${priority}.svg" alt="${priority} priority" class="prio-icon">
+    &lt;/footer>
+  &lt;/article>
+&lt;/li>`;
+}
+
+function getTaskAssignToTemplet(fullName, initials) {
+  const color = contactColors[(initials?.[0] ?? "").toUpperCase()] || "#888";
+  return `
+&lt;li class="assignee">
+  &lt;abbr class="assignee--initials" style="--assignee-color: ${color}" title="${fullName}">${initials}&lt;/abbr>
+&lt;/li>`;
+}
+
+const contactColors = {
+  A: "rgba(147, 39, 255, 1)",
+  B: "rgba(110, 82, 255, 1)",
+  C: "rgba(252, 113, 255, 1)",
+  D: "rgba(255, 187, 43, 1)",
+  E: "rgba(31, 215, 193, 1)",
+  F: "rgba(70, 47, 138, 1)",
+  G: "rgba(255, 70, 70, 1)",
+  H: "rgba(0, 190, 232, 1)",
+  I: "rgba(42, 61, 89, 1)",
+  J: "rgba(255, 94, 179, 1)",
+  K: "rgba(255, 116, 94, 1)",
+  L: "rgba(255, 163, 94, 1)",
+  M: "rgba(255, 199, 1, 1)",
+  N: "rgba(0, 56, 255, 1)",
+  O: "rgba(195, 255, 43, 1)",
+  P: "rgba(255, 230, 43, 1)",
+  Q: "rgba(255, 70, 150, 1)",
+  R: "rgba(0, 150, 130, 1)",
+  S: "rgba(255, 120, 0, 1)",
+  T: "rgba(0, 120, 255, 1)",
+  U: "rgba(180, 40, 40, 1)",
+  V: "rgba(100, 200, 0, 1)",
+  W: "rgba(150, 0, 255, 1)",
+  X: "rgba(0, 255, 200, 1)",
+  Y: "rgba(200, 150, 0, 1)",
+  Z: "rgba(120, 120, 120, 1)",
+};
+
+
+
+
+function getAddTaskDialogTemplate() {
+  return /*html*/ `
+    &lt;div class="task-container-dialog">
+      &lt;!-- Schließbutton oben rechts -->
+      &lt;button class="close-dialog-btn" onclick="closeAddTaskDialog()">
+        &lt;img src="../assets/img/icons/subtask/close.svg" alt="X">
+      &lt;/button>
+
+      &lt;h1 class="input--title">Add Task&lt;/h1>
+
+      &lt;form class="form-task form-columns" id="form_task">
+        &lt;!-- Linke Spalte -->
+        &lt;section class="column left">
+          &lt;div class="input-section">
+            &lt;label for="title" class="required">Title&lt;/label>
+            &lt;input id="title" class="input" type="text" placeholder="Enter a title" required />
+            &lt;span class="field-error">This field is required&lt;/span>
+          &lt;/div>
+          &lt;div class="input-section">
+            &lt;label for="description">Description&lt;/label>
+            &lt;textarea id="description" class="input" placeholder="Enter a Description" rows="3">&lt;/textarea>
+          &lt;/div>
+          &lt;div class="input-section">
+            &lt;label for="dueDate" class="required">Due date&lt;/label>
+            &lt;input id="dueDate" class="input input-date" type="date" required />
+            &lt;span class="field-error">This field is required&lt;/span>
+          &lt;/div>
+        &lt;/section>
+
+        &lt;div class="divider">&lt;/div>
+
+        &lt;!-- Rechte Spalte -->
+        &lt;section class="column right">
+          &lt;div class="input-section">
+            &lt;label for="priority">Priority&lt;/label>
+            &lt;div class="priority-group">
+              &lt;button type="button" id="btn_urgent" class="btn btn--prio" onclick="selectPriority('urgent')">
+                Urgent &lt;img class="img-prio urgent" src="../assets/img/icons/prio/urgent.svg">
+              &lt;/button>
+              &lt;button type="button" id="btn_medium" class="btn btn--prio medium-active" onclick="selectPriority('medium')">
+                Medium &lt;img class="img-prio medium" src="../assets/img/icons/prio/medium.svg">
+              &lt;/button>
+              &lt;button type="button" id="btn_low" class="btn btn--prio" onclick="selectPriority('low')">
+                Low &lt;img class="img-prio low" src="../assets/img/icons/prio/low.svg">
+              &lt;/button>
+            &lt;/div>
+          &lt;/div>
+
+          &lt;div class="input-section">
+            &lt;label for="assignedToSearch">Assigned to&lt;/label>
+            &lt;div class="custom-dropdown" id="assignedToDropdown">
+              &lt;div class="custom-dropdown__trigger">
+                &lt;input type="text" id="assignedToSearch" onkeyup="filterUsers()" class="input custom-dropdown__input" onclick="toggleDropdown(event)" placeholder="Select contacts to assign" autocomplete="off" />
+                &lt;button type="button" class="custom-dropdown__toggle" onclick="toggleDropdown(event)">
+                  &lt;span class="custom-dropdown__arrow">&lt;/span>
+                &lt;/button>
+              &lt;/div>
+              &lt;div id="assignedPreview">&lt;/div>
+              &lt;ul class="custom-dropdown__list" id="assignedToList">&lt;/ul>
+            &lt;/div>
+          &lt;/div>
+
+          &lt;div class="input-section">
+            &lt;label for="category" class="required">Category&lt;/label>
+            &lt;select id="category" class="input dropdown form--select" required>
+              &lt;option value="" selected disabled>Select task category&lt;/option>
+              &lt;option value="Technical Task">Technical Task&lt;/option>
+              &lt;option value="User Story">User Story&lt;/option>
+            &lt;/select>
+          &lt;/div>
+
+          &lt;div class="input-section">
+            &lt;label for="subtask_input">Subtasks&lt;/label>
+            &lt;div class="input--section">
+              &lt;input id="subtask_input" class="input" type="text" placeholder="Add subtask" />
+              &lt;div class="subtask--btns">
+                &lt;button type="button" id="subtask-close" class="btn--subtask close" onclick="clearSubtaskInput(event)">&lt;img src="../assets/img/icons/subtask/close.svg">&lt;/button>
+                &lt;span class="div-vert">&lt;/span>
+                &lt;button type="button" id="subtask-save" class="btn--subtask check" onclick="addSubtask(event)">&lt;img src="../assets/img/icons/subtask/check.svg">&lt;/button>
+              &lt;/div>
+            &lt;/div>
+            &lt;ul id="subtask_list" class="subtask-list">&lt;/ul>
+          &lt;/div>
+        &lt;/section>
+
+        &lt;section class="form-info-section">
+          &lt;p>&lt;b class="form-info">*&lt;/b> This field is required&lt;/p>
+        &lt;/section>
+      &lt;/form>
+
+      &lt;section class="form-footer">
+        &lt;div class="action-btns">
+          &lt;button id="form_clear" type="button" class="btn btn--secondary clear" onclick="clearForm()">Clear&lt;/button>
+          &lt;button type="submit" form="form_task" class="btn btn--primary">Create Task&lt;/button>
+        &lt;/div>
+      &lt;/section>
+    &lt;/div>
+  `;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateMobileView">activateMobileView</a></li><li><a href="global.html#addAlphabetTable">addAlphabetTable</a></li><li><a href="global.html#addEditContactDetails">addEditContactDetails</a></li><li><a href="global.html#addNewContact">addNewContact</a></li><li><a href="global.html#addShowDetails">addShowDetails</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#addSubtaskEventListener">addSubtaskEventListener</a></li><li><a href="global.html#backToContactlist">backToContactlist</a></li><li><a href="global.html#btnInit">btnInit</a></li><li><a href="global.html#buildTaskObj">buildTaskObj</a></li><li><a href="global.html#cancelEditSubtask">cancelEditSubtask</a></li><li><a href="global.html#checkAuth">checkAuth</a></li><li><a href="global.html#checkDetailAnimation">checkDetailAnimation</a></li><li><a href="global.html#checkUserId">checkUserId</a></li><li><a href="global.html#clearForm">clearForm</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#closeContactDialog">closeContactDialog</a></li><li><a href="global.html#closeDialogOutsite">closeDialogOutsite</a></li><li><a href="global.html#closeMobileMenu">closeMobileMenu</a></li><li><a href="global.html#creatUser">creatUser</a></li><li><a href="global.html#createContact">createContact</a></li><li><a href="global.html#deactivateMobileView">deactivateMobileView</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteUserFromDatabase">deleteUserFromDatabase</a></li><li><a href="global.html#escapeHtml">escapeHtml</a></li><li><a href="global.html#generateId">generateId</a></li><li><a href="global.html#getAssignedToItemTemplate">getAssignedToItemTemplate</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getSingleUser">getSingleUser</a></li><li><a href="global.html#getSubtaskTemplate">getSubtaskTemplate</a></li><li><a href="global.html#getUserDetails">getUserDetails</a></li><li><a href="global.html#getUsers">getUsers</a></li><li><a href="global.html#guestLogin">guestLogin</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initDateInput">initDateInput</a></li><li><a href="global.html#loadUsers">loadUsers</a></li><li><a href="global.html#logoAnimation();">logoAnimation();</a></li><li><a href="global.html#mobileDetails">mobileDetails</a></li><li><a href="global.html#openContactDialog">openContactDialog</a></li><li><a href="global.html#openEditContactDialog">openEditContactDialog</a></li><li><a href="global.html#openEditDialog">openEditDialog</a></li><li><a href="global.html#openEditMenu">openEditMenu</a></li><li><a href="global.html#removeAllBgColors">removeAllBgColors</a></li><li><a href="global.html#removeFade">removeFade</a></li><li><a href="global.html#renderAlphabetTableTpl">renderAlphabetTableTpl</a></li><li><a href="global.html#renderHtmlContactDialogTpl">renderHtmlContactDialogTpl</a></li><li><a href="global.html#renderHtmlEditContactDialogTpl">renderHtmlEditContactDialogTpl</a></li><li><a href="global.html#renderShowDetailsTpl">renderShowDetailsTpl</a></li><li><a href="global.html#renderSingleUserHtmlTpl">renderSingleUserHtmlTpl</a></li><li><a href="global.html#renderSubtaskItem">renderSubtaskItem</a></li><li><a href="global.html#saveNewContactData">saveNewContactData</a></li><li><a href="global.html#saveSubtask">saveSubtask</a></li><li><a href="global.html#scrollToUser">scrollToUser</a></li><li><a href="global.html#selectPriority">selectPriority</a></li><li><a href="global.html#setRequired">setRequired</a></li><li><a href="global.html#showDetails">showDetails</a></li><li><a href="global.html#showSuccessBanner">showSuccessBanner</a></li><li><a href="global.html#sortUserContactList">sortUserContactList</a></li><li><a href="global.html#startEditSubtask">startEditSubtask</a></li><li><a href="global.html#subtaskInit">subtaskInit</a></li><li><a href="global.html#syncNewContact">syncNewContact</a></li><li><a href="global.html#toClassName">toClassName</a></li><li><a href="global.html#toggleForms">toggleForms</a></li><li><a href="global.html#triggerAnimations">triggerAnimations</a></li><li><a href="global.html#updateFirebaseContact">updateFirebaseContact</a></li><li><a href="global.html#userContectList">userContectList</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Mon May 11 2026 18:11:33 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

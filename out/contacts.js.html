@@ -1,4 +1,32 @@
-const contactColors = {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: contacts.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: contacts.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const contactColors = {
   A: 'rgba(147, 39, 255, 1)',
   B: 'rgba(110, 82, 255, 1)',
   C: 'rgba(252, 113, 255, 1)',
@@ -78,7 +106,7 @@ function sortUserContactList() {
   USERS.sort(function (a, b) {
     let x = a.name.toLowerCase();
     let y = b.name.toLowerCase();
-    if (x < y) { return -1; }
+    if (x &lt; y) { return -1; }
     if (x > y) { return 1; }
     return 0;
   })
@@ -91,7 +119,7 @@ function sortUserContactList() {
 function addAlphabetTable() {
   let singleContacts = document.getElementById('singleContacts');
   singleContacts.innerHTML = '';
-  for (let i = 0; i < alphabet.length; i++) {
+  for (let i = 0; i &lt; alphabet.length; i++) {
     singleContacts.innerHTML += renderAlphabetTableTpl(alphabet[i]);
   }
   userContectList();
@@ -101,7 +129,7 @@ function addAlphabetTable() {
  * Assigns users to the corresponding letter containers in the list.
  */
 function userContectList() {
-  for (let i = 0; i < USERS.length; i++) {
+  for (let i = 0; i &lt; USERS.length; i++) {
     let user = USERS[i];
     let firstLetter = user.name.charAt(0).toUpperCase();
     let targetContainer = document.getElementById(firstLetter);
@@ -228,7 +256,7 @@ function getUserDetails(userIndex) {
  * Controls the display of contact details in the mobile view.
  */
 function mobileDetails() {
-  const isMobileView = window.innerWidth <= 650 && editUserIndex;
+  const isMobileView = window.innerWidth &lt;= 650 &amp;&amp; editUserIndex;
   if (isMobileView) {
     activateMobileView();
   } else {
@@ -283,11 +311,11 @@ function removeAllBgColors() {
  */
 function showDetails() {
   const dialogRef = document.getElementById('contactDetailsDialog');
-  if (!colorIsAlreadyActive && window.innerWidth >= 651) {
+  if (!colorIsAlreadyActive &amp;&amp; window.innerWidth >= 651) {
     userSelectionID.classList.add('bg-color-active');
     dialogRef.innerHTML = addShowDetails();
   }
-  else if (window.innerWidth <= 650) {
+  else if (window.innerWidth &lt;= 650) {
     dialogRef.innerHTML = addShowDetails();
   }
   else {
@@ -302,7 +330,7 @@ function showDetails() {
 function checkDetailAnimation() {
   const dialogRef = document.getElementById('contactDetailsDialog');
   const detailBox = dialogRef.querySelector('.contact-details-box');
-  if (detailAnimation && detailBox) {
+  if (detailAnimation &amp;&amp; detailBox) {
     if (detailBox) {
       detailBox.classList.add('no-animation');
     }
@@ -428,7 +456,7 @@ function showSuccessBanner() {
   banner.classList.remove('hide-overlay');
   setTimeout(() => {
     banner.classList.add('hide-overlay');
-  }, 900);
+  }, 800);
 }
 
 /**
@@ -456,7 +484,7 @@ async function saveNewContactData(index) {
  * Sends a PATCH request to Firebase to update a contact's data.
  * @param {string} key - The contact's Firebase key.
  * @param {Object} updatedData - The contact's updated data.
- * @returns {Promise<Response>} The server's response.
+ * @returns {Promise&lt;Response>} The server's response.
  */
 async function updateFirebaseContact(key, updatedData) {
   return await fetch(`https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`, {
@@ -487,3 +515,26 @@ function openEditMenu(event) {
   const menu = document.querySelector('.edit-delete-container');
   menu.classList.toggle('show');
 }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateMobileView">activateMobileView</a></li><li><a href="global.html#addAlphabetTable">addAlphabetTable</a></li><li><a href="global.html#addEditContactDetails">addEditContactDetails</a></li><li><a href="global.html#addNewContact">addNewContact</a></li><li><a href="global.html#addShowDetails">addShowDetails</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#addSubtaskEventListener">addSubtaskEventListener</a></li><li><a href="global.html#backToContactlist">backToContactlist</a></li><li><a href="global.html#btnInit">btnInit</a></li><li><a href="global.html#buildTaskObj">buildTaskObj</a></li><li><a href="global.html#cancelEditSubtask">cancelEditSubtask</a></li><li><a href="global.html#checkAuth">checkAuth</a></li><li><a href="global.html#checkDetailAnimation">checkDetailAnimation</a></li><li><a href="global.html#checkUserId">checkUserId</a></li><li><a href="global.html#clearForm">clearForm</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#closeContactDialog">closeContactDialog</a></li><li><a href="global.html#closeDialogOutsite">closeDialogOutsite</a></li><li><a href="global.html#closeMobileMenu">closeMobileMenu</a></li><li><a href="global.html#creatUser">creatUser</a></li><li><a href="global.html#createContact">createContact</a></li><li><a href="global.html#deactivateMobileView">deactivateMobileView</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteUserFromDatabase">deleteUserFromDatabase</a></li><li><a href="global.html#escapeHtml">escapeHtml</a></li><li><a href="global.html#generateId">generateId</a></li><li><a href="global.html#getAssignedToItemTemplate">getAssignedToItemTemplate</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getSingleUser">getSingleUser</a></li><li><a href="global.html#getSubtaskTemplate">getSubtaskTemplate</a></li><li><a href="global.html#getUserDetails">getUserDetails</a></li><li><a href="global.html#getUsers">getUsers</a></li><li><a href="global.html#guestLogin">guestLogin</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initDateInput">initDateInput</a></li><li><a href="global.html#loadUsers">loadUsers</a></li><li><a href="global.html#logoAnimation();">logoAnimation();</a></li><li><a href="global.html#mobileDetails">mobileDetails</a></li><li><a href="global.html#openContactDialog">openContactDialog</a></li><li><a href="global.html#openEditContactDialog">openEditContactDialog</a></li><li><a href="global.html#openEditDialog">openEditDialog</a></li><li><a href="global.html#openEditMenu">openEditMenu</a></li><li><a href="global.html#removeAllBgColors">removeAllBgColors</a></li><li><a href="global.html#removeFade">removeFade</a></li><li><a href="global.html#renderAlphabetTableTpl">renderAlphabetTableTpl</a></li><li><a href="global.html#renderHtmlContactDialogTpl">renderHtmlContactDialogTpl</a></li><li><a href="global.html#renderHtmlEditContactDialogTpl">renderHtmlEditContactDialogTpl</a></li><li><a href="global.html#renderShowDetailsTpl">renderShowDetailsTpl</a></li><li><a href="global.html#renderSingleUserHtmlTpl">renderSingleUserHtmlTpl</a></li><li><a href="global.html#renderSubtaskItem">renderSubtaskItem</a></li><li><a href="global.html#saveNewContactData">saveNewContactData</a></li><li><a href="global.html#saveSubtask">saveSubtask</a></li><li><a href="global.html#scrollToUser">scrollToUser</a></li><li><a href="global.html#selectPriority">selectPriority</a></li><li><a href="global.html#setRequired">setRequired</a></li><li><a href="global.html#showDetails">showDetails</a></li><li><a href="global.html#showSuccessBanner">showSuccessBanner</a></li><li><a href="global.html#sortUserContactList">sortUserContactList</a></li><li><a href="global.html#startEditSubtask">startEditSubtask</a></li><li><a href="global.html#subtaskInit">subtaskInit</a></li><li><a href="global.html#syncNewContact">syncNewContact</a></li><li><a href="global.html#toClassName">toClassName</a></li><li><a href="global.html#toggleForms">toggleForms</a></li><li><a href="global.html#triggerAnimations">triggerAnimations</a></li><li><a href="global.html#updateFirebaseContact">updateFirebaseContact</a></li><li><a href="global.html#userContectList">userContectList</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Mon May 11 2026 18:11:33 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

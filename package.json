@@ -1,0 +1,23 @@
+{
+  "name": "join-3135",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lehnerma/join-3135.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lehnerma/join-3135/issues"
+  },
+  "homepage": "https://github.com/Lehnerma/join-3135#readme",
+  "devDependencies": {
+    "jsdoc": "^4.0.5"
+  }
+}

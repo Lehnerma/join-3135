@@ -51,6 +51,16 @@ function toClassName(name) {
   return name.trim().toLowerCase().replace(" ", "-");
 }
 
+/**
+ * Capitalizes the first letter of a string.
+ * Example: 'hello' => 'Hello'
+ * @param {string} str
+ * @returns {string}
+ */
+function capitalizeFirstLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 function renderHeadInitals() {
   const ID = sessionStorage.getItem("user_id");
   if (ID == null) {
