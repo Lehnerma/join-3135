@@ -12,7 +12,7 @@
     transform: translate(-50%, -50%);
   }
   to {
-    transform: translate(50%, -50%);
+    transform: translate(90%, -50%);
   }
 }
 
@@ -44,7 +44,7 @@
   max-height: 95vh;
 }
 
-.dialog--add{
+.dialog--add {
   width: 100%;
   max-width: 870px;
 }
@@ -214,6 +214,14 @@
   min-height: 0;
 }
 
-.d-none {
-  display: none;
+.dialog-add-headline {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: row-reverse;
+  h1 {
+    font-size: 47px;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+  }
 }
