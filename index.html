@@ -18,7 +18,7 @@
       <img class="join-logo" src="./assets/img/logo-join-dark.svg" alt="page-1Logo" />
       <nav class="nav-login" id="nav_login">
         <p class="span-nav-login">Not a Join user?</p>
-        <button id="signup_btn" class="btn btn--primary btn--signup">Sign up</button>
+        <button  type="button" id="signup_btn" class="btn btn--primary btn--signup">Sign up</button>
       </nav>
     </header>
 
@@ -35,8 +35,8 @@
           </div>
 
           <div class="input--section">
-            <input class="input" type="password" name="password" placeholder="Password" pattern="[a-zA-Z0-9]{3,}"  title="Password must be at least 3 characters long and contain only letters and numbers."  required />
-            <img src="./assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
+            <input id="pwInputLogIn" class="input" oninput="logInChangeLockToEye()" type="password" name="password" placeholder="Password" pattern="[a-zA-Z0-9]{3,}"  title="Password must be at least 3 characters long and contain only letters and numbers."  required />
+            <img id="lockLogIn" onclick="showPasswordInput('pwInputLogIn', 'lockLogIn')"  src="./assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
           </div>
         </section>
        
@@ -55,22 +55,22 @@
           <section class="input--container">
             <div class="input--section">
               <input class="input input_signup" id="name" type="text" name="name" placeholder="Name" autocomplete="Name" pattern="^[a-zA-ZÀ-ÿ\s\-\.]+$"  title="Please enter a valid name (letters, spaces, and hyphens only)."  required />
-              <img src="../assets/img/icons/input/person.svg" alt="letter icon" class="input--icon" />
+              <img class="input--icon" src="../assets/img/icons/input/person.svg" alt="letter icon" />
             </div>
 
             <div class="input--section">
               <input class="input input_signup" id="singUpEmail" type="email" name="email" placeholder="Email" autocomplete="email" pattern="[a-z0-9._%\+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" title="Bitte gib eine gültige E-Mail-Adresse ein (z.B. max@mustermann.de)" required />
-              <img src="../assets/img/icons/input/mail.svg" alt="letter icon" class="input--icon" />
+              <img class="input--icon" src="../assets/img/icons/input/mail.svg" alt="letter icon"  />
             </div>
 
             <div class="input--section">
-              <input class="input input_signup" type="password" name="password" placeholder="Password" pattern="[a-zA-Z0-9]{3,}"  title="Password must be at least 3 characters long and contain only letters and numbers."   required />
-              <img src="../assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
+              <input class="input input_signup" id="pwInput" oninput="signUpChangeLockToEye()" type="password" name="password" placeholder="Password" pattern="[a-zA-Z0-9]{3,}"  title="Password must be at least 3 characters long and contain only letters and numbers."   required />
+              <img class="input--icon" id="lock" onclick="showPasswordInput('pwInput', 'lock')" src="../assets/img/icons/input/lock.svg" alt="lock icon"  />
             </div>
           
             <div class="input--section">
-              <input class="input input_signup" type="password" name="password" placeholder="Confirm Password" pattern="[a-zA-Z0-9]{3,}"  title="Password must be at least 3 characters long and contain only letters and numbers." required />
-              <img src="../assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
+              <input class="input input_signup" id="pwInputConfirm"  oninput="signUpChangeLockToEye()"type="password" name="password" placeholder="Confirm Password" pattern="[a-zA-Z0-9]{3,}"  title="Password must be at least 3 characters long and contain only letters and numbers." required />
+              <img class="input--icon" id="lockConfirm" onclick="showPasswordInput('pwInputConfirm', 'lockConfirm')" src="../assets/img/icons/input/lock.svg" alt="lock icon"  />
             </div>
           </section>
          

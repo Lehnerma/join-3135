@@ -2,7 +2,7 @@ body {
   display: grid;
   min-height: 100vh;
   grid-template-rows: 150px 1fr 80px;
-  align-content: start; 
+  align-content: start;
   background-color: var(--main-bg);
 }
 
@@ -152,6 +152,17 @@ body {
   width: 422px;
   height: 48px;
 }
+
+.hidden {
+  display: none;
+  opacity: 0;
+}
+
+.visible {
+  display: flex;
+  opacity: 1;
+}
+
 
 .login-buttons {
   display: flex;
@@ -348,5 +359,3 @@ body {
     margin-bottom: 20px;
   }
 }
-
-
