@@ -8,6 +8,7 @@ function init() {
   triggerAnimations();
 }
 
+
 /**
  * initial all buttons for eventlisteners
  */
@@ -18,15 +19,23 @@ function btnInit() {
   const FORM_LOGIN = document.getElementById("login");
   const FORM_SIGNUP = document.getElementById("signup");
   const GUEST_LOGIN = document.getElementById("guest_login");
-
-  SIGNUP_BACK.addEventListener("click", (event) => toggleForms(event));
+   SIGNUP_BACK.addEventListener("click", (event) => toggleForms(event));
   SIGNUP.addEventListener("click", (event) => toggleForms(event));
   SIGNUP_PHONE.addEventListener("click", (event) => toggleForms(event));
   GUEST_LOGIN.addEventListener("click", guestLogin);
-
   FORM_LOGIN.addEventListener("submit", (event) => loginUser(event));
   FORM_SIGNUP.addEventListener("submit", (event) => creatUser(event));
+  setupInputEvents();
 }
+
+
+function setupInputEvents() {
+  document.getElementById("pwInputLogIn").addEventListener("input", logInChangeLockToEye);
+  document.getElementById("pwInput").addEventListener("input", signUpChangeLockToEye);
+  document.getElementById("pwInputConfirm").addEventListener("input", signUpChangeLockToEye);
+}
+
+
 /**
  * function to trigger the animation on the beginning.
  */
@@ -42,6 +51,7 @@ function triggerAnimations() {
   FOOTER_LOGIN.classList.add("fade-in");
 }
 
+
 /**
  * Remove the fade of the forms to swap between the login in and sign up form.
  * @param {*} container - is the container for the style
@@ -50,6 +60,7 @@ function removeFade(container) {
   container.classList.remove("fade-in");
   container.style.opacity = "1";
 }
+
 
 /**
  * to show or hide the forms
@@ -70,11 +81,11 @@ function toggleForms(event) {
   if (window.innerWidth < 600) {
     NAV_PHONE.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
   }
-
   removeFade(LOGIN_FORM);
   removeFade(NAV_LOGIN);
   setRequired(SHOW_SIGNUP);
 }
+
 
 /**
  * Workaround to get no Errors in the console
@@ -89,6 +100,7 @@ function setRequired(condition) {
   }
 }
 
+
 /**
  * redirect for the guest login and set id for the session storage
  */
@@ -98,6 +110,7 @@ function guestLogin() {
   sessionStorage.setItem("activeUserName", "Guest");
   sessionStorage.setItem('justLoggedIn', 'true');
 }
+
 
 /**
  *To sign up a new user.
@@ -114,6 +127,7 @@ async function creatUser(ev) {
   console.log(ev.target);
 }
 
+
 /**
  * To generate a unique id for evry user witch is create from the time
  * @returns -> uniqe id
@@ -121,6 +135,7 @@ async function creatUser(ev) {
 function generateId() {
   return (Date.now().toString(36) + Math.random().toString(36)).substring(0, 6);
 }
+
 
 async function pushUser(user) {
   try {
@@ -135,6 +150,7 @@ async function pushUser(user) {
     console.error(`the function pushUser() don't worke see: ${er}`);
   }
 }
+
 
 async function loginUser(ev) {
   ev.preventDefault();
@@ -151,11 +167,13 @@ async function loginUser(ev) {
   }
 }
 
+
 async function getUsers() {
   const RESPONSE = await fetch(USERS_URL());
   const RESULT = await RESPONSE.json();
   USERS = Object.values(RESULT);
 }
+
 
 function saveId(id) {
   sessionStorage.setItem("user_id", id);
@@ -163,12 +181,27 @@ function saveId(id) {
 
 
 function logInChangeLockToEye() {
-  const pwInputLogIn = document.getElementById('pwInputLogIn');
-  const lockLogIn = document.getElementById('lockLogIn');
+  const pwInput = document.getElementById('pwInputLogIn');
+  const lock = document.getElementById('lockLogIn');
+  
   const lockIcon = "../assets/img/icons/input/lock.svg";
-  const eyeIcon = "../assets/img/icons/input/visibility_off.svg";
-  lockLogIn.src = pwInputLogIn.value.length > 0 ? eyeIcon : lockIcon;
+  const eyeOFF = "../assets/img/icons/input/visibility_off.svg";
+  const eyeON = "../assets/img/icons/input/visibility.svg";
+
+  if (pwInput.value.length === 0) {
+    // 1. Fall: Feld leer -> Schloss
+    lock.src = lockIcon;
+  } 
+  else if (pwInput.type === "password") {
+    // 2. Fall: Text da, aber Passwort versteckt -> Auge zu
+    lock.src = eyeOFF;
+  } 
+  else {
+    // 3. Fall: Text da und Passwort sichtbar -> Auge offen
+    lock.src = eyeON;
+  }
 }
+
 
 function signUpChangeLockToEye() {
   const pwInput = document.getElementById('pwInput');
@@ -181,16 +214,17 @@ function signUpChangeLockToEye() {
   lockConfirm.src = pwInputConfirm.value.length > 0 ? eyeIcon : lockIcon;
 }
 
+
 function showPasswordInput(inputID, icon) {
   const eyeON = "../assets/img/icons/input/visibility.svg";
   const eyeOFF = "../assets/img/icons/input/visibility_off.svg";
   const input = document.getElementById(inputID);
   const changeIcon = document.getElementById(icon);
-    if (input.type === "password") {
-     input.type ="text";
-     changeIcon.src = eyeON;
+  if (input.type === "password") {
+    input.type = "text";
+    changeIcon.src = eyeON;
   }
-  else{
+  else {
     input.type = "password";
     changeIcon.src = eyeOFF;
   }
