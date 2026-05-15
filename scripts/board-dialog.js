@@ -1,5 +1,16 @@
 let CURRENT_DETAIL_TASK = null;
 
+function slideOutDialog(dialog) {
+  return new Promise((resolve) => {
+    dialog.classList.add("slide-out");
+    dialog.addEventListener("animationend", () => {
+      dialog.classList.remove("slide-out");
+      dialog.close();
+      resolve();
+    }, { once: true });
+  });
+}
+
 function initBoardTask() {
   const ADD_BTN_HEAD = document.getElementById("add_task_head");
   ADD_BTN_HEAD.addEventListener("click", openAddTaskDialog);
