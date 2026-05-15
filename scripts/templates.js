@@ -92,7 +92,7 @@ function getSubtaskProgressTemplate(done, total) {
 
 function getNoTasksTemplate(status) {
   return `
-    <li class="board-task no-task">No tasks ${status}</li>
+    <li class="board-task no-task">No tasks ${capitalizeFirstLetter(status)}</li>
   `;
 }
 
