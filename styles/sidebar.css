@@ -100,11 +100,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-left: clamp(0px, 6vw, 116px);
   background-color: var(--input-text-color);
   z-index: 10;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
-  padding-right: calc((100% - 1208px) / 2);
+  padding-right: calc((100% - 1208px));
 }
 
 .app--title .title-logo {
@@ -114,6 +113,7 @@
 .app--title-headline {
   font-size: 20px;
   font-weight: 400;
+  padding-left: clamp(0px, 6vw, 116px);
   color: var(--primary-text-color);
 }
 
@@ -161,9 +161,9 @@
   display: block;
 }
 
- .user-not-logged-in .app--icons {
-    display: none;
-   }
+.user-not-logged-in .app--icons {
+  display: none;
+}
 
 @media screen and (width <=1024px) {
   .app {
