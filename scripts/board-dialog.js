@@ -96,7 +96,7 @@ function closeDialogOnBackdropClick(event) {
 }
 
 function addStatusTask(status) {
-  openAddTaskDialog();
+  openAddTaskDialog(status);
   console.log(status);
 }
 
