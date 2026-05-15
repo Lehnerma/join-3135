@@ -299,7 +299,7 @@ function getAddTaskDialogTemplate() {
   return /*html*/ `
     <div class="task-container-dialog">
       <!-- Schließbutton oben rechts -->
-      <button class="close-dialog-btn" onclick="closeAddTaskDialog()">
+      <button class="btn btn--close" onclick="closeAddTaskDialog()">
         <img src="../assets/img/icons/subtask/close.svg" alt="X">
       </button>
 
