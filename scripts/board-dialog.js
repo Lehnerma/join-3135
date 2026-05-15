@@ -11,6 +11,20 @@ function slideOutDialog(dialog) {
   });
 }
 
+function showTaskCreatedToast() {
+  const toast = document.getElementById("task_created_toast");
+  toast.style.display = "flex";
+  toast.classList.add("taskCreatedToast--visible");
+  setTimeout(() => {
+    toast.classList.remove("taskCreatedToast--visible");
+    toast.classList.add("taskCreatedToast--hidden");
+    toast.addEventListener("animationend", () => {
+      toast.style.display = "none";
+      toast.classList.remove("taskCreatedToast--hidden");
+    }, { once: true });
+  }, 2000);
+}
+
 function initBoardTask() {
   const ADD_BTN_HEAD = document.getElementById("add_task_head");
   ADD_BTN_HEAD.addEventListener("click", openAddTaskDialog);
@@ -62,8 +76,9 @@ async function createTask(status = "todo") {
     });
 
     if (response.ok) {
-      closeAddTaskDialog(); // Schließt das Fenster
-      await loadTasksFromFirebase(); // Lädt das Board neu, damit der Task erscheint
+      await closeAddTaskDialog();
+      loadTasksFromFirebase();
+      showTaskCreatedToast();
     }
   } catch (error) {
     console.error("Fehler beim Erstellen im Dialog:", error);
@@ -216,21 +231,25 @@ function closeEditDialogOnBackdropClick(event) {
 
 function loadUsersForEdit(assignedTo) {
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
-  fetch(USER_URL)
-    .then((r) => r.json())
-    .then((data) => {
-      remoteUsers = Object.values(data);
-      fillUserDropdown(data);
-      document.querySelectorAll("#assignedToList label.user-item").forEach((label) => {
-        const checkbox = label.querySelector("input[type='checkbox']");
-        if (checkbox && assignedTo.includes(checkbox.value)) {
-          checkbox.checked = true;
-          label.classList.add("selected");
-        }
-      });
-      updateAssignedPreview();
-    })
-    .catch((err) => console.error("Error loading users for edit:", err));
+  try {
+    fetch(USER_URL)
+      .then((r) => r.json())
+      .then((data) => {
+        remoteUsers = Object.values(data);
+        fillUserDropdown(data);
+        document.querySelectorAll("#assignedToList label.user-item").forEach((label) => {
+          const checkbox = label.querySelector("input[type='checkbox']");
+          if (checkbox && assignedTo.includes(checkbox.value)) {
+            checkbox.checked = true;
+            label.classList.add("selected");
+          }
+        });
+        updateAssignedPreview();
+      })
+      .catch((err) => console.error("Error loading users for edit:", err));
+  } catch (err) {
+    console.error("Error in loadUsersForEdit:", err);
+  }
 }
 
 async function saveEditedTask(task) {
