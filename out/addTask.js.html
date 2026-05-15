@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: addTask.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: addTask.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const ADDTASK_URL  = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks" + ".json";
+
+let selectedPriority = "medium";
+let subtasksList  = [];
+let remoteUsers  = [];
+
+function init() {
+  btnInit();
+  subtaskInit();
+  initDateInput();
+  loadUsers();
+  initDropdownOutsideClick();
+}
+
+/**
+ * Initial all btns in the form.
+ */
+function btnInit() {
+  const FORM = document.getElementById("form_task");
+  const CLEAR_FORM = document.getElementById("form_clear");
+
+  if (FORM) {
+    FORM.addEventListener("submit", (event) => {
+      event.preventDefault();
+      createTask();
+    });
+  }
+  if (CLEAR_FORM) {
+    CLEAR_FORM.addEventListener("click", () => {
+      clearForm();
+    });
+  }
+}
+
+
+/**
+ * Get the actuall Date - and set the default value of the date input to today.
+ */
+
+function initDateInput() {
+  const dueDateInput = document.getElementById("dueDate");
+  const now = new Date();
+  const today = now.toISOString().split("T")[0];
+  dueDateInput.min = today;
+  dueDateInput.value = today;
+}
+
+/**
+ * set the priority of the Task - and hightlight it.
+ * @param {String} priority
+ */
+function selectPriority(priority) {
+  const priorities = ["urgent", "medium", "low"];
+  priorities.forEach((prio) => {
+    document.getElementById(`btn_${prio}`).classList.remove(`${prio}-active`);
+  });
+  document.getElementById(`btn_${priority}`).classList.add(`${priority}-active`);
+  selectedPriority = priority;
+}
+
+/**
+ *  User Assignment Dropdown functions
+ */
+
+function loadUsers() {
+
+  const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+
+  fetch(USER_URL)
+    .then((response) => response.json())
+    .then((data) => {
+      remoteUsers  = Object.values(data);
+      console.log("Firebase remoteUsers :", data);
+      fillUserDropdown(data);
+    })
+    .catch((error) => console.error("Error fetching users:", error));
+}
+
+function fillUserDropdown(users) {
+  const container = document.getElementById("assignedToList");
+
+  if (!container) {
+    console.error(" assignedToList Element nicht gefunden!");
+    return;
+  }
+  let html = "";
+
+  for (const userId in users) {
+    const user = users[userId];
+    if (!user || !user.name) continue;
+    const firstLetter = user.name.charAt(0).toUpperCase();
+    const color = contactColors?.[firstLetter] || "#ccc";
+    const initials = user.name.charAt(0);
+    html += getFillUserDropown(color, initials, user);
+  }
+  container.innerHTML = html;
+}
+
+function filterUsers() {
+  let search = document.getElementById('assignedToSearch').value.toLowerCase(); // Eingabe in Kleinbuchstaben
+  let container = document.getElementById("assignedToList");
+
+  // Filtere das USERS-Array (das du bereits in loadUsers befüllst)
+  let filteredUsers = remoteUsers .filter(user =>
+    user.name.toLowerCase().includes(search)
+  );
+
+  // Das Dropdown mit den gefilterten Ergebnissen neu befüllen
+  fillUserDropdown(filteredUsers);
+}
+
+
+
+
+
+function toggleUser(el) {
+  const checkbox = el.querySelector("input");
+
+  checkbox.checked = !checkbox.checked;
+
+  if (checkbox.checked) {
+    el.classList.add("selected");
+  } else {
+    el.classList.remove("selected");
+  }
+
+  updateAssignedPreview();
+}
+
+
+
+function getAssignedUsers() {
+  const checkboxes = document.querySelectorAll("#assignedToList input[type='checkbox']:checked");
+  return Array.from(checkboxes).map((cb) => cb.value);
+}
+
+
+function toggleDropdown(e) {
+  e.stopPropagation();
+  const dropdown = document.getElementById("assignedToDropdown");
+  dropdown.classList.toggle("open");
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    document.getElementById("assignedToDropdown")?.classList.remove("open");
+  }
+});
+
+
+function initDropdownOutsideClick() {
+  document.addEventListener("click", (e) => {
+    const dropdown = document.getElementById("assignedToDropdown");
+
+    if (!dropdown) return;
+
+    const clickedInside = dropdown.contains(e.target);
+
+    if (!clickedInside) {
+      dropdown.classList.remove("open");
+    }
+  });
+}
+
+function updateAssignedPreview() {
+  const container = document.getElementById("assignedPreview");
+  const selected = getAssignedUsers();
+
+  container.innerHTML = renderAssignedUsers(selected);
+
+
+}
+
+
+function buildTaskCard(task) {
+  return `
+    &lt;div class="task-card">
+      &lt;div class="task-title">${task.title}&lt;/div>
+      &lt;div class="task-desc">${task.description}&lt;/div>
+
+      &lt;div class="assigned-users">
+        ${renderAssignedUsers(task.assignedTo)}
+      &lt;/div>
+    &lt;/div>
+  `;
+}
+
+
+function renderAssignedUsers(users = []) {
+
+
+
+  if (!Array.isArray(users) || users.length === 0) return "";
+
+  let html = "";
+
+  users.forEach((name) => {
+    const firstLetter = name.charAt(0).toUpperCase();
+    const color = contactColors?.[firstLetter] || "#ccc";
+    if (!name) return;
+
+    const parts = name.trim().split(" ");
+    let initials = "";
+
+
+    if (parts.length > 1) {
+      initials = (parts[0][0] + parts[1][0]).toUpperCase();
+    } else {
+      initials = parts[0].slice(0, 2).toUpperCase();
+    }
+
+    html += `
+      &lt;div class="assigned-circle" style="background-color:${color}" title="${name}">
+        ${initials}
+      &lt;/div>
+    `;
+  });
+
+  return `&lt;div class="assigned-wrapper">${html}&lt;/div>`;
+}
+
+
+
+/**
+ *  User Assignment Dropdown functions
+ */
+
+/**
+ * Initial all addSubtask function after loading the body
+ */
+function subtaskInit() {
+  const SUBTASK_SAVE = document.getElementById("subtask-save");
+  const SUBTASK_CLEAR = document.getElementById("subtask-close");
+  const SUBTASK_INPUT = document.getElementById("subtask_input");
+  SUBTASK_SAVE.addEventListener("click", (event) => addSubtask(event));
+  SUBTASK_CLEAR.addEventListener("click", (event) => clearSubtaskInput(event));
+  SUBTASK_INPUT.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      addSubtask(e);
+    }
+  });
+}
+
+
+
+// /**
+//  * Get the Form inputs into a Object to put it into firebase
+//  * @param {event} ev - the browser knows where we click
+//  * @returns
+//  */
+
+
+/**
+ * Helper func to creat the task object for put to database
+ * @returns Task Object
+ */
+function buildTaskObj() {
+  const val = (id) => document.getElementById(id).value;
+
+  return {
+    title: val("title"),
+    description: val("description"),
+    dueDate: val("dueDate"),
+    category: val("category"),
+    assignedTo: getAssignedUsers() || [],
+    priority: selectedPriority,
+    status: "todo",
+    subtasks: subtasksList ,
+  };
+}
+
+/**
+ * Adds the subtask to the array (addSubtask) and render the subtasks
+ * @returns a savety point to get out of the funktion if no title is in it. or it`s length is shorter than 5 letters.
+ */
+function addSubtask(ev) {
+  ev.preventDefault();
+  const INPUT = document.getElementById("subtask_input");
+  const title = INPUT.value.trim();
+  if (!title) return;
+  const INDEX = subtasksList .length;
+  subtasksList .push({
+    title: title,
+    done: false,
+  });
+  INPUT.value = "";
+
+  renderSubtaskItem(INDEX, title);
+}
+
+/**
+ * Creates a subtask list item and appends it to the subtask list in the DOM.
+ * Sets the element's index via dataset and id, renders its HTML via template,
+ * and attaches all required event listeners.
+ * @param {number} index - The position of the subtask in the addSubtask array.
+ * @param {string} title - The display text of the subtask.
+ */
+function renderSubtaskItem(index, title) {
+  const LIST = document.getElementById("subtask_list");
+  const LI = document.createElement("li");
+  LI.className = "subtask-item input--section";
+  LI.dataset.index = index;
+  LI.id = "subtask" + index;
+  LI.innerHTML = getSubtaskTemplate(title, index);
+  addSubtaskEventListener(LI);
+  LIST.appendChild(LI);
+}
+
+/**
+ * Attaches event listeners to a subtask list item for inline editing and deletion.
+ * - Dblclick on the text starts inline editing.
+ * - Click on the delete button removes the subtask.
+ * - Click on the edit button toggles between saving and starting inline editing.
+ * @param {HTMLLIElement} LI - The subtask list item element to attach listeners to.
+ */
+function addSubtaskEventListener(LI) {
+  LI.querySelector(".subtask-text").addEventListener("dblclick", () => startEditSubtask(LI));
+  LI.querySelector(".btn--delete").addEventListener("click", () => deleteSubtask(LI));
+  LI.querySelector(".btn--edit").addEventListener("click", () => {
+    if (LI.classList.contains("editing")) {
+      saveSubtask(LI);
+    } else {
+      startEditSubtask(LI);
+    }
+  });
+}
+
+/**
+ * Escapes special HTML characters in a string to prevent XSS.
+ * @param {string} str - The raw string to escape.
+ * @returns {string} The escaped HTML-safe string.
+ */
+function escapeHtml(str) {
+  const div = document.createElement("div");
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+/**
+ * Switches a subtask list item into inline edit mode.
+ * Replaces the text span with an input field and updates the edit button icon.
+ * @param {HTMLLIElement} li - The subtask list item to edit.
+ */
+function startEditSubtask(li) {
+  if (li.classList.contains("editing")) return;
+
+  li.classList.add("editing");
+
+  const span = li.querySelector(".subtask-text");
+  const input = document.createElement("input");
+  input.type = "text";
+  input.className = "subtask-edit-input";
+  input.value = span.textContent;
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") saveSubtask(li);
+    if (e.key === "Escape") cancelEditSubtask(li);
+  });
+
+  li.replaceChild(input, span);
+  li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/check.svg";
+
+  input.focus();
+  input.select();
+}
+
+/**
+ * Cancels inline editing and restores the original subtask text.
+ * @param {HTMLLIElement} li - The subtask list item being edited.
+ */
+function cancelEditSubtask(li) {
+  const input = li.querySelector(".subtask-edit-input");
+  if (!input) return;
+
+  const span = document.createElement("span");
+  span.className = "subtask-text";
+  span.textContent = subtasksList [parseInt(li.dataset.index)].title;
+
+  li.replaceChild(span, input);
+}
+
+/**
+ * Removes a subtask from the addSubtask array and from the DOM.
+ * Re-indexes all remaining subtask items after deletion.
+ * @param {HTMLLIElement} li - The subtask list item to delete.
+ */
+function deleteSubtask(li) {
+  addSubtask.splice(parseInt(li.dataset.index), 1);
+  li.remove();
+}
+
+/**
+ * Saves the edited subtask title and exits inline edit mode.
+ * Updates the addSubtask array and replaces the input with a text span.
+ * @param {HTMLLIElement} li - The subtask list item being edited.
+ */
+function saveSubtask(li) {
+  const input = li.querySelector(".subtask-edit-input");
+  if (!input) return;
+
+  const newTitle = input.value.trim();
+  if (!newTitle) return;
+
+  subtasksList [parseInt(li.dataset.index)].title = newTitle;
+
+  const span = document.createElement("span");
+  span.className = "subtask-text";
+  span.textContent = newTitle;
+  span.addEventListener("dblclick", () => startEditSubtask(li));
+  li.replaceChild(span, input);
+
+  li.classList.remove("editing");
+  li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
+}
+
+
+async function createTask() {
+  const task = buildTaskObj(); 
+
+  try {
+    const response = await fetch(ADDTASK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(task)
+    });
+
+    if (response.ok) {
+      const toast = document.getElementById("toast");
+      if (toast) toast.classList.add("show");
+
+      setTimeout(() => {
+        window.location.href = "board.html";
+      }, 2000);
+    }
+  } catch (error) {
+    console.error("Fehler beim Speichern:", error);
+  }
+}
+
+
+
+
+async function postTask(task) {
+  const response = await fetch(ADDTASK_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(task),
+  });
+  return response.json();
+}
+
+
+
+
+
+
+
+/**
+ * Resets the task form to its default state and clears all subtasks.
+ */
+function clearForm() {
+  document.getElementById("form_task").reset();
+  initDateInput();
+  selectPriority("medium");
+  document.getElementById("assignedPreview").innerHTML = "";
+  fillUserDropdown(remoteUsers );
+  subtasksList  = [];
+  document.getElementById("subtask_list").innerHTML = "";
+}
+
+/**
+ * Clear the input of the Subtask
+ */
+const clearSubtaskInput = (ev) => {
+  ev.preventDefault();
+  let SUBTASK_INPUT = document.getElementById("subtask_input");
+  SUBTASK_INPUT.value = "";
+};
+
+
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateMobileView">activateMobileView</a></li><li><a href="global.html#addAlphabetTable">addAlphabetTable</a></li><li><a href="global.html#addEditContactDetails">addEditContactDetails</a></li><li><a href="global.html#addNewContact">addNewContact</a></li><li><a href="global.html#addShowDetails">addShowDetails</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#addSubtaskEventListener">addSubtaskEventListener</a></li><li><a href="global.html#backToContactlist">backToContactlist</a></li><li><a href="global.html#btnInit">btnInit</a></li><li><a href="global.html#buildTaskObj">buildTaskObj</a></li><li><a href="global.html#cancelEditSubtask">cancelEditSubtask</a></li><li><a href="global.html#checkAuth">checkAuth</a></li><li><a href="global.html#checkDetailAnimation">checkDetailAnimation</a></li><li><a href="global.html#checkUserId">checkUserId</a></li><li><a href="global.html#clearForm">clearForm</a></li><li><a href="global.html#clearSubtaskInput">clearSubtaskInput</a></li><li><a href="global.html#closeContactDialog">closeContactDialog</a></li><li><a href="global.html#closeDialogOutsite">closeDialogOutsite</a></li><li><a href="global.html#closeMobileMenu">closeMobileMenu</a></li><li><a href="global.html#creatUser">creatUser</a></li><li><a href="global.html#createContact">createContact</a></li><li><a href="global.html#deactivateMobileView">deactivateMobileView</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteSubtask">deleteSubtask</a></li><li><a href="global.html#deleteUserFromDatabase">deleteUserFromDatabase</a></li><li><a href="global.html#escapeHtml">escapeHtml</a></li><li><a href="global.html#generateId">generateId</a></li><li><a href="global.html#getAssignedToItemTemplate">getAssignedToItemTemplate</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getSingleUser">getSingleUser</a></li><li><a href="global.html#getSubtaskTemplate">getSubtaskTemplate</a></li><li><a href="global.html#getUserDetails">getUserDetails</a></li><li><a href="global.html#getUsers">getUsers</a></li><li><a href="global.html#guestLogin">guestLogin</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initDateInput">initDateInput</a></li><li><a href="global.html#loadUsers">loadUsers</a></li><li><a href="global.html#logoAnimation();">logoAnimation();</a></li><li><a href="global.html#mobileDetails">mobileDetails</a></li><li><a href="global.html#openContactDialog">openContactDialog</a></li><li><a href="global.html#openEditContactDialog">openEditContactDialog</a></li><li><a href="global.html#openEditDialog">openEditDialog</a></li><li><a href="global.html#openEditMenu">openEditMenu</a></li><li><a href="global.html#removeAllBgColors">removeAllBgColors</a></li><li><a href="global.html#removeFade">removeFade</a></li><li><a href="global.html#renderAlphabetTableTpl">renderAlphabetTableTpl</a></li><li><a href="global.html#renderHtmlContactDialogTpl">renderHtmlContactDialogTpl</a></li><li><a href="global.html#renderHtmlEditContactDialogTpl">renderHtmlEditContactDialogTpl</a></li><li><a href="global.html#renderShowDetailsTpl">renderShowDetailsTpl</a></li><li><a href="global.html#renderSingleUserHtmlTpl">renderSingleUserHtmlTpl</a></li><li><a href="global.html#renderSubtaskItem">renderSubtaskItem</a></li><li><a href="global.html#saveNewContactData">saveNewContactData</a></li><li><a href="global.html#saveSubtask">saveSubtask</a></li><li><a href="global.html#scrollToUser">scrollToUser</a></li><li><a href="global.html#selectPriority">selectPriority</a></li><li><a href="global.html#setRequired">setRequired</a></li><li><a href="global.html#showDetails">showDetails</a></li><li><a href="global.html#showSuccessBanner">showSuccessBanner</a></li><li><a href="global.html#sortUserContactList">sortUserContactList</a></li><li><a href="global.html#startEditSubtask">startEditSubtask</a></li><li><a href="global.html#subtaskInit">subtaskInit</a></li><li><a href="global.html#syncNewContact">syncNewContact</a></li><li><a href="global.html#toClassName">toClassName</a></li><li><a href="global.html#toggleForms">toggleForms</a></li><li><a href="global.html#triggerAnimations">triggerAnimations</a></li><li><a href="global.html#updateFirebaseContact">updateFirebaseContact</a></li><li><a href="global.html#userContectList">userContectList</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Mon May 11 2026 18:11:33 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

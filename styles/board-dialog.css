@@ -7,21 +7,202 @@
   }
 }
 
-.task-dialog {
+.dialog-slide-in {
+  animation: slideFromRight 175ms ease-in-out forwards;
+}
+
+.dialog {
+  background-color: white;
+  border: none;
+  border-radius: 30px;
+  width: 100%;
+  max-width: 525px;
+  max-height: 95vh;
+  padding: 48px 40px;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+  z-index: 11;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dialog .slide-in {
+  animation: slideFromRight 175ms ease-in-out forwards;
+}
+
+.dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.detail-task--category {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.detail-task--title {
+  font-size: 61px;
+  font-weight: 700;
+}
+
+.detail-task--subheading {
+  font-size: 20px;
+  font-weight: 400;
+  width: 100%;
+  max-width: 116px;
+  color: var(--secondary-text-color);
+}
+
+.detail-task--text {
+  font-size: 20px;
+}
+
+.detail-task--content {
+  margin: 24px 0;
+}
+
+.detail-task--prio-content {
+  gap: 10px;
+}
+
+.detail-task--assignees {
+  gap: 8px;
+
+  .detail-task--assignees-list {
+    list-style: none;
+
+    li {
+      gap: 24px;
+      padding: 8px 16px;
+
+      .assignee--initials {
+        width: 42px;
+        height: 42px;
+      }
+
+      .assignee--name {
+        font-family: "Open Sans", sans-serif;
+        font-size: 19px;
+      }
+    }
+  }
+}
+
+.detail-task--subtask-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px;
+}
+
+.detail-task--header,
+.detail-task--content,
+.detail-task--infos,
+.detail-task--date,
+.detail-task--prio {
+  gap: 24px;
+}
+
+.detail-task--subtask-checkbox {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  appearance: none;
+  background-size: 24px 24px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  padding: 0;
+
+  &:hover {
+    background-color: var(--btn-arrow-hover);
+    border-radius: 50%;
+  }
+}
+
+.detail-task--subtask-checkbox:not(:checked) {
+  background-image: url("../../assets/img/icons/general/checkbox_default.svg");
+}
+
+.detail-task--subtask-checkbox:checked {
+  background-image: url("../../assets/img/icons/general/checkbox_checked.svg");
+}
+
+.detail-task--footer {
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.btn--delete,
+.btn--edit {
+  gap: 8px;
+  font-size: 16px;
+  img {
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  &:hover {
+    color: var(--secondary-color);
+    font-weight: 700;
+  }
+}
+
+.btn--delete:hover img,
+.btn--edit:hover img {
+  filter: brightness(0) saturate(100%) invert(67%) sepia(67%) saturate(1234%) hue-rotate(170deg) brightness(102%) contrast(102%);
+}
+
+/* ── Edit Task Dialog ─────────────────────────────────── */
+
+.edit-dialog[open] {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 24px;
+}
+
+.edit-task--dialog {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 24px;
+}
+
+.edit-task--header,
+.edit-task--footer {
+  display: flex;
+}
+
+.edit-task--header {
+  justify-content: flex-end;
+}
+
+.edit-task--form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+
+
+
+
+.d-none {
+  display: none;
+}
+
+.dialog {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 60%;
-  height: 70%;
-  background-color: white;
-  border: none;
-  border-radius: 30px;
-  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+  background: white;
+  padding: 24px;
+  border-radius: 20px;
   z-index: 1000;
-  animation: slideFromRight 175ms ease-in-out forwards;
-}
-
-.task-dialog::backdrop {
-  background-color: rgba(0, 0, 0, 0.4);
 }

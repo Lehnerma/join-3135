@@ -8,21 +8,25 @@
   <title>Contacts</title>
   <link rel="stylesheet" href="../style.css" />
   <link rel="stylesheet" href="../styles/sidebar.css" />
-  
   <link rel="stylesheet" href="../styles/contacts.css" />
-   <link rel="stylesheet" href="../styles/fonts.css" />
+  <link rel="stylesheet" href="../styles/contact-cuccsses-edit-overlay.css">
+  <link rel="stylesheet" href="../styles/contact-details-overlay.css">
+  <link rel="stylesheet" href="../styles/create-contact-overlay.css">
+  <link rel="stylesheet" href="../styles/fonts.css" />
   <link rel="stylesheet" href="../styles/colors.css" />
+  <script defer src="../scripts/utilitys.js"></script>
   <script defer src="../scripts/contacts.js"></script>
   <script defer src="../scripts/contacts-template.js"></script>
-  <!-- <script defer src="../scripts/utilitys.js"></script> -->
+
 </head>
 
-<body class="app" onload="init(), initUtilitys()">
+<body class="app" onload="init(); initUtilitys()">
   <header class="app--title">
     <h1 class="app--title-headline">Kanban Project Management Tool</h1>
+    <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
     <div class="app--icons">
-      <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="?" class="app--icon" /></a>
-      <button id="user_menu_button" class="btn btn--user"></button>
+      <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="help" class="app--icon" /></a>
+      <button type="button" id="user_menu_button" class="btn btn--user" aria-label="Show User Menu"></button>
     </div>
   </header>
   <nav class="sidebar">
@@ -53,11 +57,15 @@
   </nav>
 
   <main class="main-content">
-    
-    <div class="left-content">
+
+    <div id="leftContent" class="left-content">
       <div class="add-button-container">
-        <button type="button" class="btn btn--primary add-button-size" onclick="openContactDialog()">
-          Add new contact
+        <button id="addButton" type="button" class="desktop-only btn btn--primary add-button-size btn-add-contact"
+          onclick="openContactDialog()">
+          <span class="add-button-text">Add new contact</span>
+          <img class="add-contact-icon" src="../assets/img/icons/contacts/person_add.svg" alt="add contact button">
+        </button>
+        <button type="button" class="mobile-only btn--addPerson" onclick="openContactDialog()">
           <img class="add-contact-icon" src="../assets/img/icons/contacts/person_add.svg" alt="add contact button">
         </button>
       </div>
@@ -65,19 +73,29 @@
       <div id="contactList" class="contact-list">
         <div id="singleContacts" class="single-contacts"></div>
       </div>
-      <div id="contactSuccessOverlay" class="contact-success-overlay hide-overlay">
-        <span>Contact successfully created</span>
-      </div>
-
     </div>
 
-    <div class="right-content">
+    <div id="rightContent" class="right-content" onclick="closeMobileMenu()">
       <div class="headline">
         <h1 class="contacts-title">Contacts</h1>
         <div class="vertical-divider"></div>
         <span class="contacts-subtitle">Better with a team</span>
+        <button id="backArrowButton" type="button" aria-label="Back to Contact list Button"
+          onclick="backToContactlist()">
+          <img id="backArrowIcon" alt="back-arrow-icon" class="back-arrow"
+            src="../assets/img/icons/contacts/Vector.svg">
+        </button>
+        <button id="editMenuButton" type="button" class="mobile-only" onclick="openEditMenu(event)">
+          <img id="editMenuIcon" alt="edit-meni-icon" class="edit-menu"
+            src="../assets/img/icons/contacts/more_vert.svg">
+        </button>
+        <div id="contactSuccessOverlay" class="contact-success-overlay hide-overlay">
+          <span>Contact successfully created</span>
+        </div>
       </div>
       <div id="contactDetailsDialog"></div>
+    </div>
+
   </main>
 
   <dialog class="dialog-content" id="openNewDialog" onclick="closeContactDialog()">
@@ -89,4 +107,7 @@
 
 
 
- 
+
+
+
+

@@ -1,20 +1,23 @@
-const TASK_URL = (key = "", section = "") => {
+const getTaskURL = (key = "", section = "") => {
   return `https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks/${key ? key + "/" : ""}${section ? section + "/" : ""}.json`;
-};
+}; 
 
 let TASKS = [];
 let DRAG_ID;
 let DRAG_OLD_STATUS;
 let DRAG_HEIGHT;
 
+
+
 function initBoard() {
   initBoardTask();
   loadTasksFromFirebase();
 }
 
+
 async function loadTasksFromFirebase() {
   try {
-    const RESPONSE = await fetch(TASK_URL());
+    const RESPONSE = await fetch(getTaskURL());
     if (!RESPONSE.ok) {
       throw new Error(`loading task faild: ${RESPONSE.status}`);
     }
@@ -28,6 +31,7 @@ async function loadTasksFromFirebase() {
   }
 }
 
+
 //get ids into the tasks array for the dragging functions
 function getArryFromResult(result) {
   return Object.entries(result).map(([key, values], index) => ({
@@ -37,9 +41,23 @@ function getArryFromResult(result) {
   }));
 }
 
+// Schreibt den vollständigen Task per PUT in Firebase – überschreibt alle Felder am richtigen Key.
+async function syncTaskWithFirebase(task) {
+  const { firebaseKey, id, ...data } = task;
+  try {
+    await fetch(getTaskURL(firebaseKey), {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+  } catch (er) {
+    console.error("syncTaskWithFirebase fehlgeschlagen:", er);
+  }
+}
+
 async function updateTaskStatus(firebaseKey, status) {
   try {
-    await fetch(TASK_URL(firebaseKey, "status"), {
+    await fetch(getTaskURL (firebaseKey, "status"), {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(status),
@@ -73,7 +91,7 @@ function buildTaskCard(task) {
   const WRAPPER = document.createElement("div");
   WRAPPER.innerHTML = getTaskCardTemplet(task.title, task.description, task.category, task.id, getPriority(task.priority));
 
-  const SUBTASKS = task.subtasks || [];
+  const SUBTASKS = Array.isArray(task.subtasks) ? task.subtasks : [];
   const SUB_TOTAL = SUBTASKS.length;
   const SUB_DONE = SUBTASKS.filter((s) => s.done === true).length;
   WRAPPER.querySelector(".subtask--progress-container").innerHTML = getSubtaskProgressTemplate(SUB_DONE, SUB_TOTAL);
@@ -82,17 +100,65 @@ function buildTaskCard(task) {
   (task.assignedTo || []).filter(Boolean).forEach((name) => {
     ASSIGNEES_LIST.innerHTML += getTaskAssignToTemplet(name, getInitials(name));
   });
+
+
   return WRAPPER.innerHTML;
 }
 
-function getPriority(priority) {
-  const VALID = ["low", "medium", "urgent"];
-  return VALID.includes(priority) ? priority : "low";
+function openTaskDialog(id) {
+  const task = TASKS.find(t => t.id === id);
+  if (!task) return;
+  
+  const dialog = document.getElementById("taskDialog");
+  dialog.classList.remove("d-none");
+  dialog.innerHTML = getTaskDialogTemplate(task);
 }
 
-function getInitials(name) {
+
+function closeTaskDialog() {
+  const dialog = document.getElementById("taskDialog");
+
+  dialog.classList.add("d-none");
+  dialog.innerHTML = "";
+}
+
+
+
+async function deleteTask(firebaseKey) {
+  try {
+    const response = await fetch(getBoardTaskURL(firebaseKey),
+      {
+        method: "DELETE",
+      });
+    if (!response.ok) {throw new Error(`Delete failed: ${response.status}`);}
+
+    TASKS = TASKS.filter(task =>task.firebaseKey !== firebaseKey);
+    renderBoard(TASKS);
+    closeTaskDialog();  
+
+    console.log("Task deleted");
+  }
+
+  catch (error) {console.error(error);}
+
+}
+
+
+
+function getPriority(priority) {
+  const PRIO = ["low", "medium", "urgent"];
+  return PRIO.includes(priority) ? priority : "low";
+}
+
+
+function getInitials(name = "") {
+  if (typeof name !== "string") return "";
   const parts = name.trim().split(" ");
-  const last = parts.length > 1 ? parts[parts.length - 1].charAt(0).toUpperCase() : "";
+  if (!parts[0]) return "";
+  const last =
+    parts.length > 1
+      ? parts[parts.length - 1].charAt(0).toUpperCase()
+      : "";
   return parts[0].charAt(0).toUpperCase() + last;
 }
 
@@ -110,25 +176,44 @@ function taskDragStart(ev, id) {
   DRAG_OLD_STATUS = ALL_TASKS.find((el) => el.id === id)?.status;
 }
 
-//drag over
-function allowDrop(ev) {
-  ev.preventDefault();
+function getDragAfterElement(list, y) {
+  const tasks = [...list.querySelectorAll(".task")];
+
+  return tasks.reduce((closest, child) => {
+    const box = child.getBoundingClientRect();
+    const offset = y - box.top - box.height / 2;
+    if (offset < 0 && offset > closest.offset) {
+      return { offset, element: child };
+    }
+    return closest;
+  }, { offset: Number.NEGATIVE_INFINITY }).element ?? null;
 }
-//drag enter
-function columnDragEnter(ev, status) {
+
+function columnDragOver(ev, status) {
   ev.preventDefault();
   const LIST = document.getElementById(status + "_list");
-  if (LIST.querySelector(".drag-placeholder")) return;
-  const PLACE_HOLDER = document.createElement("li"); //change the name of the variable
-  PLACE_HOLDER.classList.add("drag-placeholder");
-  if (DRAG_HEIGHT) PLACE_HOLDER.style.height = DRAG_HEIGHT + "px";
-  LIST.appendChild(PLACE_HOLDER);
+  LIST.querySelector(".no-task")?.style.setProperty("display", "none");
+
+  let placeholder = LIST.querySelector(".drag-placeholder");
+  if (!placeholder) {
+    placeholder = document.createElement("li");
+    placeholder.classList.add("drag-placeholder");
+    if (DRAG_HEIGHT) placeholder.style.height = DRAG_HEIGHT + "px";
+  }
+
+  const afterElement = getDragAfterElement(LIST, ev.clientY);
+  afterElement
+    ? LIST.insertBefore(placeholder, afterElement)
+    : LIST.appendChild(placeholder);
 }
-//drag leave
+
 function columnDragLeave(ev) {
   if (ev.currentTarget.contains(ev.relatedTarget)) return;
   ev.currentTarget.querySelector(".drag-placeholder")?.remove();
+  ev.currentTarget.querySelector(".no-task")?.style.removeProperty("display");
 }
+
+
 //drag drop
 function taskDragDrop(status) {
   document.querySelectorAll(".drag-placeholder").forEach((el) => el.remove());

@@ -1,0 +1,337 @@
+.edit-delete-button,
+.edit-menu-box,
+.edit-menu,
+.btn--arrow,
+.back-arrow,
+.btn,
+.btn--primary,
+.btn--addPerson,
+.edit-delete-container {
+  cursor: pointer;
+  transition: all 100ms ease-in-out;
+}
+
+.contact-details-box {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 1.9vw, 21px);
+  max-width: 650px;
+  height: auto;
+  border: none;
+  top: clamp(80px, 17.5vw, 250px);
+  left: clamp(8px, 2.5vw, 55px);
+  background-color: transparent;
+  z-index: 30;
+  animation: slideInDetailBox 0.3s ease-out forwards;
+}
+
+@keyframes slideInDetailBox {
+  from {
+    transform: translate(100vw);
+    opacity: 0;
+  }
+
+  to {
+    transform: translate(0);
+    opacity: 1;
+  }
+}
+
+.no-animation {
+  animation: none;
+}
+
+.header-contect-details {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: clamp(20px, 1vw, 54px);
+}
+
+.initials-large {
+  width: clamp(90px, 8vw, 120px);
+  height: clamp(90px, 8vw, 120px);
+  border-radius: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--input-text-color);
+  font-size: clamp(27px, 3vw, 47px);
+  font-weight: 500;
+  border-style: solid;
+  border-width: 3px;
+  border-color: var(--input-text-color);
+  box-shadow: var(--contact-shadow-initials);
+}
+
+.main-contact-details {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.contact-information {
+  font-size: 20px;
+  font-weight: 400;
+  padding-top: clamp(20px, 5.3vw, 59px);
+  padding-bottom: clamp(20px, 5.3vw, 59px);
+}
+
+.email-and-phone {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.3vw, 15px);
+}
+
+.h1-contact-details {
+  font-size: clamp(27px, 3vw, 47px);
+  font-weight: 500;
+  margin-bottom: clamp(4px, 0.7vw, 8px);
+}
+
+.edit-delete-container {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 16px;
+  z-index: 30;
+}
+
+.edit-button {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--primary-color);
+  border: none;
+  background-color: transparent;
+  gap: 8px;
+
+
+  &::before {
+    content: "";
+    width: 24px;
+    height: 24px;
+    color: var(--primary-color);
+    background-image: url('../assets/img/icons/contacts/edit.svg');
+  }
+
+  &:hover::before {
+    background-image: url('../assets/img/icons/contacts/edit-blue.svg');
+  }
+
+  &:hover {
+    font-weight: 700;
+    color: var(--secondary-color);
+  }
+}
+
+.delete-button {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--primary-color);
+  border: none;
+  background-color: transparent;
+  gap: 8px;
+
+  &::before {
+    content: "";
+    width: 24px;
+    height: 24px;
+    color: var(--primary-color);
+    background-image: url('../assets/img/icons/contacts/delete.svg');
+     }
+
+  &:hover::before {
+    background-image: url('../assets/img/icons/contacts/delete-blue.svg');
+  }
+
+  &:hover {
+    font-weight: 700;
+    color: var(--secondary-color);
+  }
+}
+
+
+li {
+  list-style-type: none;
+}
+
+
+
+/* RESPONSIVE */
+
+@media(max-width:1024px) {
+  .initials-large-edit-dialog {
+    width: 120px;
+    height: 120px;
+    font-size: 47px;
+  }
+}
+
+@media(max-width: 650px) {
+
+  .desktop-only,
+  .add-button-size {
+    display: none;
+  }
+
+  .mobile-only,
+  .btn--addPerson,
+  .edit-menu-box,
+  .btn--arrow,
+  .back-arrow,
+  .edit-menu {
+    display: flex;
+  }
+
+  .contact-list-off {
+    display: none;
+  }
+
+  .contact-details-box {
+    top: clamp(200px, 17.5vw, 400px);
+    gap: 21px;
+    padding: 0;
+    animation: none;
+  }
+
+  .header-contect-details {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .contact-information,
+  .main-contact-details,
+  .email-and-phone {
+    padding: 0;
+    gap: 21px;
+  }
+
+  .h1-contact-details {
+    font-size: 36px;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .edit-delete-container {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
+    bottom: 100px;
+    right: 6px;
+    width: 116px;
+    height: 100px;
+    border-radius: 20px 20px 0 20px;
+    box-shadow: var(--contact-menu-shadow);
+    background-color: var(--input-text-color);
+    transform: translateX(150%);
+    transition: transform 0.3s ease-out;
+  }
+
+  .edit-delete-container.show {
+    transform: translateX(0);
+  }
+
+  .edit-button,
+  .delete-button {
+    padding-left: 18px;
+  }
+
+  .edit-button:hover,
+  .delete-button:hover {
+    font-weight: 400;
+    color: var(--primary-color);
+  }
+
+  .edit-button:hover::before {
+    background-image: url('../assets/img/icons/contacts/edit.svg');
+  }
+
+  .delete-button:hover::before {
+    background-image: url('../assets/img/icons/contacts/delete.svg');
+  }
+
+  .edit-button:active,
+  .delete-button:active {
+    font-weight: 700;
+    color: var(--secondary-color);
+  }
+
+  .edit-button:active::before {
+    background-image: url('../assets/img/icons/contacts/edit-blue.svg');
+  }
+
+  .delete-button:active::before {
+    background-image: url('../assets/img/icons/contacts/delete-blue.svg');
+  }
+
+  .edit-menu-box {
+    display: flex;
+    position: fixed;
+    border: none;
+    bottom: 112px;
+    right: 12px;
+    z-index: 20;
+    width: 56px;
+    height: 56px;
+  }
+
+  .edit-menu {
+    width: 32px;
+    height: 32px;
+  }
+
+  .btn--arrow {
+    position: fixed;
+    border: none;
+    top: 128px;
+    right: 12px;
+    z-index: 20;
+  }
+
+  .btn--arrow:active {
+    transform: scale(1.2);
+    background-color: var(--input-text-color);
+  }
+
+  .back-arrow {
+    width: 24.6px;
+    height: 23.92px;
+    background-color: var(--input-text-color);
+  }
+}
+
+@media(max-width: 427px) {
+  .aside-h2-edit {
+    font-size: clamp(40px, 12.5vw, 61px);
+  }
+
+  .initials-large {
+    font-size: clamp(16px, 7vw, 27px);
+  }
+
+  .h1-contact-details {
+    font-size: clamp(27px, 7vw, 36px);
+    overflow-wrap: break-word;
+  }
+}
+
+@media(max-width: 400px) {
+  .header-contect-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+}

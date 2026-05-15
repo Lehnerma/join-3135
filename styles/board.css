@@ -21,7 +21,7 @@
   grid-template-columns: 1fr auto auto;
   grid-template-areas: "head-title head-search head-add";
   align-items: center;
-  padding: 8px 16px;
+  padding: 8px clamp(10px, 7vw, 64px);
   gap: 32px;
   width: 100%;
   max-width: 1056px;
@@ -77,7 +77,7 @@
     }
   }
 
-  .btn--primary {
+  .btn--add {
     grid-area: head-add;
     display: flex;
     align-items: center;
@@ -122,7 +122,7 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(252px, 300px)); /* evtl max wert anpassen */
   gap: 24px;
-  padding: 0 16px;
+  padding: 0 clamp(10px, 7vw, 64px);
   overflow-x: auto;
 
   .kanban-column {
@@ -134,7 +134,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 10px;
     position: sticky;
     top: 0;
     background-color: var(--main-bg);
@@ -258,13 +257,6 @@
   &:active {
     transition: transform 0.125s ease;
     transform: rotate(5deg);
-  }
-}
-
-@media (min-width: 900px) {
-  .task:last-child {
-    position: sticky;
-    top: 64px;
   }
 }
 
@@ -413,4 +405,16 @@
   border-radius: 24px;
   background: transparent;
   list-style: none;
+}
+
+@media (min-width: 900px) {
+  .task:last-child,
+  .drag-placeholder:last-child,
+  .no-task:last-child {
+    position: sticky;
+    top: 48px;
+  }
+  .column-title{
+    padding-bottom: 24px;
+  }
 }

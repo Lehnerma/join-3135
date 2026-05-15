@@ -48,7 +48,6 @@ main {
   margin-top: 4px;
 }
 
-
 .input:user-invalid~.field-error,
 .form--select:user-invalid~.field-error {
   display: block;
@@ -148,7 +147,7 @@ main {
   background: white;
 }
 
-.dropdown {
+/* .dropdown {
   border: 1px solid #ccc;
   border-radius: 8px;
   margin-top: 5px;
@@ -157,11 +156,11 @@ main {
   background: white;
   display: flex;
   flex-direction: column;
-}
+} */
 
-.hidden {
+/* .hidden {
   display: none;
-}
+} */
 
 .assignedTo {
   display: flex;
@@ -169,19 +168,30 @@ main {
   align-items: center;
 
 }
+
 .logoNameField {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-
 .user-item {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
   padding: 8px;
   border-radius: 8px;
+  cursor: pointer;
+  transition: background 100ms ease;
+}
+
+.user-item:hover {
+  background: #f0f0f0;
+}
+
+.user-item.selected {
+  background: #2a3647;
+  color: white;
 }
 
 .user-item .initials {
@@ -197,11 +207,26 @@ main {
 .user-item.active {
   background-color: #2a3647;
   color: white;
-} 
+}
 
+.assigned-wrapper {
+  display: flex;
+  gap: 4px;
+  padding-top: 10px;
+  
+}
 
-
-
+.assigned-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #1053af;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
 
 .option {
   display: flex;
@@ -213,8 +238,6 @@ main {
 .option:hover {
   background: #f0f0f0;
 }
-
-
 
 .input {
   width: 100%;
@@ -230,7 +253,6 @@ main {
 .input--section .input {
   padding-right: 100px;
 }
-
 
 .required::after {
   content: "*";
@@ -281,6 +303,7 @@ main {
   height: 56px;
   font-size: 20px;
   gap: 8px;
+  font-weight: 700;
 
   &::after {
     content: "";
@@ -408,6 +431,7 @@ main {
 /* ============================================================
    CUSTOM DROPDOWN – Assigned To (Suche + Initialen + Checkbox)
    ============================================================ */
+
 
 .custom-dropdown {
   position: relative;
