@@ -106,11 +106,30 @@ async function creatUser(ev) {
   ev.preventDefault();
   const FORM = new FormData(ev.target);
   const NEW_USER = Object.fromEntries(FORM.entries());
+  const TARGET = ev.target;
   NEW_USER.id = generateId();
   pushUser(NEW_USER);
-  ev.target.reset();
-  toggleForms(ev);
+  showSuccessMessage();
+  setTimeout(() => {
+    hideSuccessMessage();
+    ev.target.reset();
+    toggleForms(TARGET);
+  }, 2000);
   console.log(ev.target);
+}
+
+function showSuccessMessage() {
+    const msg = document.getElementById('success_message');
+    document.body.classList.add('dim-background');
+    msg.classList.remove('dnone');
+    msg.classList.add('show-animation');
+}
+
+function hideSuccessMessage() {
+    const msg = document.getElementById('success_message');
+    document.body.classList.remove('dim-background');
+    msg.classList.add('dnone');
+    msg.classList.remove('show-animation');
 }
 
 /**
