@@ -225,3 +225,42 @@
     font-weight: 700;
   }
 }
+
+/* ── Task Created Toast ───────────────────────────────── */
+
+.taskCreatedToast {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  align-items: center;
+  gap: 16px;
+  background: var(--primary-color);
+  color: white;
+  padding: 20px 32px;
+  border-radius: 20px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.taskCreatedToast--visible {
+  display: flex;
+  animation: slideFromRight 175ms ease-in-out forwards;
+}
+
+.taskCreatedToast--hidden {
+  display: flex;
+  animation: slideToRight 175ms ease-in-out forwards;
+}
+
+.taskCreatedToast__icon {
+  width: 20px;
+  height: 20px;
+}
+
+.taskCreatedToast__text {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+}

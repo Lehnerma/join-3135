@@ -11,6 +11,20 @@ function slideOutDialog(dialog) {
   });
 }
 
+function showTaskCreatedToast() {
+  const toast = document.getElementById("task_created_toast");
+  // toast.style.display = "flex";
+  toast.classList.add("taskCreatedToast--visible");
+  setTimeout(() => {
+    toast.classList.remove("taskCreatedToast--visible");
+    toast.classList.add("taskCreatedToast--hidden");
+    toast.addEventListener("animationend", () => {
+      toast.classList.add = "dnone";
+      toast.classList.remove("taskCreatedToast--hidden");
+    }, { once: true });
+  }, 1500);
+}
+
 function initBoardTask() {
   const ADD_BTN_HEAD = document.getElementById("add_task_head");
   ADD_BTN_HEAD.addEventListener("click", openAddTaskDialog);
@@ -54,7 +68,6 @@ async function createTask(status = "todo") {
   task.status = status; // Setzt den Status (todo, progress, etc.)
 
   try {
-    // WICHTIG: Nutze ADDTASK_URL (den neuen Namen aus deiner addTask.js)
     const response = await fetch(ADDTASK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -62,8 +75,10 @@ async function createTask(status = "todo") {
     });
 
     if (response.ok) {
-      closeAddTaskDialog(); // Schließt das Fenster
-      await loadTasksFromFirebase(); // Lädt das Board neu, damit der Task erscheint
+      showTaskCreatedToast();
+      await closeAddTaskDialog();
+      loadTasksFromFirebase();
+      
     }
   } catch (error) {
     console.error("Fehler beim Erstellen im Dialog:", error);
@@ -214,23 +229,24 @@ function closeEditDialogOnBackdropClick(event) {
   }
 }
 
-function loadUsersForEdit(assignedTo) {
+async function loadUsersForEdit(assignedTo) {
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
-  fetch(USER_URL)
-    .then((r) => r.json())
-    .then((data) => {
-      remoteUsers = Object.values(data);
-      fillUserDropdown(data);
-      document.querySelectorAll("#assignedToList label.user-item").forEach((label) => {
-        const checkbox = label.querySelector("input[type='checkbox']");
-        if (checkbox && assignedTo.includes(checkbox.value)) {
-          checkbox.checked = true;
-          label.classList.add("selected");
-        }
-      });
-      updateAssignedPreview();
-    })
-    .catch((err) => console.error("Error loading users for edit:", err));
+  try {
+    const response = await fetch(USER_URL);
+    const data = await response.json();
+    remoteUsers = Object.values(data);
+    fillUserDropdown(data);
+    document.querySelectorAll("#assignedToList label.user-item").forEach((label) => {
+      const checkbox = label.querySelector("input[type='checkbox']");
+      if (checkbox && assignedTo.includes(checkbox.value)) {
+        checkbox.checked = true;
+        label.classList.add("selected");
+      }
+    });
+    updateAssignedPreview();
+  } catch (err) {
+    console.error("Error in loadUsersForEdit:", err);
+  }
 }
 
 async function saveEditedTask(task) {
