@@ -19,20 +19,13 @@ function btnInit() {
   const FORM_LOGIN = document.getElementById("login");
   const FORM_SIGNUP = document.getElementById("signup");
   const GUEST_LOGIN = document.getElementById("guest_login");
-   SIGNUP_BACK.addEventListener("click", (event) => toggleForms(event));
+  SIGNUP_BACK.addEventListener("click", (event) => toggleForms(event));
   SIGNUP.addEventListener("click", (event) => toggleForms(event));
   SIGNUP_PHONE.addEventListener("click", (event) => toggleForms(event));
   GUEST_LOGIN.addEventListener("click", guestLogin);
   FORM_LOGIN.addEventListener("submit", (event) => loginUser(event));
   FORM_SIGNUP.addEventListener("submit", (event) => creatUser(event));
   setupInputEvents();
-}
-
-
-function setupInputEvents() {
-  document.getElementById("pwInputLogIn").addEventListener("input", logInChangeLockToEye);
-  document.getElementById("pwInput").addEventListener("input", signUpChangeLockToEye);
-  document.getElementById("pwInputConfirm").addEventListener("input", signUpChangeLockToEye);
 }
 
 
@@ -62,23 +55,28 @@ function removeFade(container) {
 }
 
 
+function toggleForms(event) {
+  event.preventDefault();
+  clearAndResetForms();
+  SHOW_SIGNUP = !SHOW_SIGNUP;
+  updateToggleUI();
+}
+
+
 /**
  * to show or hide the forms
  * @param {*} event -> to disable the reload for the switching
  */
-function toggleForms(event) {
-  event.preventDefault();
+function updateToggleUI() {
   const LOGIN_FORM = document.getElementById("login");
   const SIGNUP_FORM = document.getElementById("signup");
   const NAV_LOGIN = document.getElementById("nav_login");
   const NAV_PHONE = document.getElementById("phone_signup");
-  SHOW_SIGNUP = !SHOW_SIGNUP;
   LOGIN_FORM.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
   SIGNUP_FORM.classList[SHOW_SIGNUP ? "remove" : "add"]("dnone");
   if (window.innerWidth > 600) {
     NAV_LOGIN.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
-  }
-  if (window.innerWidth < 600) {
+  } if (window.innerWidth < 600) {
     NAV_PHONE.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
   }
   removeFade(LOGIN_FORM);
@@ -180,52 +178,88 @@ function saveId(id) {
 }
 
 
-function logInChangeLockToEye() {
-  const pwInput = document.getElementById('pwInputLogIn');
-  const lock = document.getElementById('lockLogIn');
-  
+function setupInputEvents() {
+  document.getElementById('pwInputLogIn').addEventListener('input', () => changeLockToEye('pwInputLogIn', 'lockLogIn'));
+  document.getElementById('pwInput').addEventListener('input', () => changeLockToEye('pwInput', 'lock'));
+  document.getElementById('pwInputConfirm').addEventListener('input', () => changeLockToEye('pwInputConfirm', 'lockConfirm'));
+  document.getElementById('lockLogIn').addEventListener('click', () => showPasswordInput('lockLogIn', 'pwInputLogIn'));
+  document.getElementById('lock').addEventListener('click', () => showPasswordInput('lock', 'pwInput'));
+  document.getElementById('lockConfirm').addEventListener('click', () => showPasswordInput('lockConfirm', 'pwInputConfirm'));
+  document.getElementById('pwInputLogIn').addEventListener('blur', () => resetPasswordVisibility('pwInputLogIn', 'lockLogIn'));
+  document.getElementById('pwInput').addEventListener('blur', () => resetPasswordVisibility('pwInput', 'lock'));
+  document.getElementById('pwInputConfirm').addEventListener('blur', () => resetPasswordVisibility('pwInputConfirm', 'lockConfirm'));
+}
+
+
+function changeLockToEye(pwInputID, iconID) {
+  let inputPW = document.getElementById(pwInputID);
+  let lock = document.getElementById(iconID);
   const lockIcon = "../assets/img/icons/input/lock.svg";
   const eyeOFF = "../assets/img/icons/input/visibility_off.svg";
   const eyeON = "../assets/img/icons/input/visibility.svg";
-
-  if (pwInput.value.length === 0) {
-    // 1. Fall: Feld leer -> Schloss
+  if (inputPW.value.length === 0) {
     lock.src = lockIcon;
-  } 
-  else if (pwInput.type === "password") {
-    // 2. Fall: Text da, aber Passwort versteckt -> Auge zu
+  } else if (inputPW.type === "password") {
     lock.src = eyeOFF;
-  } 
-  else {
-    // 3. Fall: Text da und Passwort sichtbar -> Auge offen
+  } else {
     lock.src = eyeON;
   }
 }
 
 
-function signUpChangeLockToEye() {
-  const pwInput = document.getElementById('pwInput');
-  const lock = document.getElementById('lock');
-  const pwInputConfirm = document.getElementById('pwInputConfirm');
-  const lockConfirm = document.getElementById('lockConfirm');
-  const lockIcon = "../assets/img/icons/input/lock.svg";
-  const eyeIcon = "../assets/img/icons/input/visibility_off.svg";
-  lock.src = pwInput.value.length > 0 ? eyeIcon : lockIcon;
-  lockConfirm.src = pwInputConfirm.value.length > 0 ? eyeIcon : lockIcon;
-}
-
-
-function showPasswordInput(inputID, icon) {
-  const eyeON = "../assets/img/icons/input/visibility.svg";
+function showPasswordInput(iconID, pwInputID) {
+  let input = document.getElementById(pwInputID);
+  let icon = document.getElementById(iconID);
   const eyeOFF = "../assets/img/icons/input/visibility_off.svg";
-  const input = document.getElementById(inputID);
-  const changeIcon = document.getElementById(icon);
-  if (input.type === "password") {
-    input.type = "text";
-    changeIcon.src = eyeON;
-  }
-  else {
-    input.type = "password";
-    changeIcon.src = eyeOFF;
+  const eyeON = "../assets/img/icons/input/visibility.svg";
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.src = eyeON;
+  } else {
+    input.type = 'password';
+    icon.src = eyeOFF;
   }
 }
+
+
+function resetPasswordVisibility(pwInputID, iconID) {
+  const input = document.getElementById(pwInputID);
+  const icon = document.getElementById(iconID);
+  const lockIcon = "../assets/img/icons/input/lock.svg";
+  const eyeOFF = "../assets/img/icons/input/visibility_off.svg";
+  input.type = 'password';
+  if (input.value.length === 0) {
+    icon.src = lockIcon;
+  } else {
+    icon.src = eyeOFF;
+  }
+}
+
+
+function clearAndResetForms() {
+  const LOGIN_FORM = document.getElementById("login");
+  const SIGNUP_FORM = document.getElementById("signup");
+  LOGIN_FORM.reset();
+  SIGNUP_FORM.reset();
+  resetPasswordVisibility('pwInputLogIn', 'lockLogIn');
+  resetPasswordVisibility('pwInput', 'lock');
+  resetPasswordVisibility('pwInputConfirm', 'lockConfirm');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

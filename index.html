@@ -36,10 +36,10 @@
 
           <div class="input--section">
             <input id="pwInputLogIn" class="input"  type="password" name="password" placeholder="Password" pattern="[a-zA-Z0-9]{3,}"  title="Password must be at least 3 characters long and contain only letters and numbers."  required />
-            <img id="lockLogIn"   src="./assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
+            <img id="lockLogIn" src="./assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
           </div>
         </section>
-       
+       <span id="login-error" class="field-error dnone">Check your email and password. Please try again.</span>
         <section class="login-buttons">
           <button type="submit" class="btn btn--primary btn--login login-button-text">Log in</button>
           <button type="button" class="btn btn--secondary btn--login login-button-text" id="guest_login">Guest Log in</button>
@@ -65,17 +65,18 @@
 
             <div class="input--section">
               <input class="input input_signup" id="pwInput"  type="password" name="password" placeholder="Password" pattern="[a-zA-Z0-9]{3,}"  title="Password must be at least 3 characters long and contain only letters and numbers."   required />
-              <img class="input--icon" id="lock" onclick="showPasswordInput('pwInput', 'lock')" src="../assets/img/icons/input/lock.svg" alt="lock icon"  />
+              <img class="input--icon" id="lock" 
+              src="../assets/img/icons/input/lock.svg" alt="lock icon" />
             </div>
           
             <div class="input--section">
               <input class="input input_signup" id="pwInputConfirm" type="password" name="password" placeholder="Confirm Password" pattern="[a-zA-Z0-9]{3,}"  title="Password must be at least 3 characters long and contain only letters and numbers." required />
-              <img class="input--icon" id="lockConfirm" onclick="showPasswordInput('pwInputConfirm', 'lockConfirm')" src="../assets/img/icons/input/lock.svg" alt="lock icon"  />
+              <img class="input--icon" id="lockConfirm" src="../assets/img/icons/input/lock.svg" alt="lock icon"  />
             </div>
           </section>
-          <span class="field-error">This field is required</span>
+          <span id="signup-error" class="field-error dnone">Your passwords don't match. Please try again.</span>
           <div class="privacy-content">
-            <input class="input_signup" title=" Please accept the Privacy policy "    type="checkbox" id="privacy" name="privacy" required />
+            <input class="input_signup" title=" Please accept the Privacy policy" type="checkbox" id="privacy" name="privacy" required />
             <span> I accept the </span>
             <a href="../html/privacyPolicy.html" class="acceptPrivacyPolicy">Privacy policy</a>
           </div>
