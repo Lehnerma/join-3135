@@ -29,13 +29,13 @@
         </section>
 
         <section class="input--container">
-          <div class="input--section">
-            <input class="input" id="email" type="email" name="email" placeholder="Email" autocomplete="email" pattern="[a-z0-9._%\+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" title="Please enter a valid email address (e.g., name@example.com)." required />
+          <div class="input--section ">
+            <input class="input input--login " id="email_input_login" type="email" name="email" placeholder="Email" autocomplete="email" pattern="[a-z0-9._%\+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" title="Please enter a valid email address (e.g., name@example.com)." required />
             <img src="./assets/img/icons/input/mail.svg" alt="letter icon" class="input--icon" />
           </div>
 
-          <div class="input--section">
-            <input id="pwInputLogIn" class="input" oninput="logInChangeLockToEye()" type="password" name="password" placeholder="Password" pattern="[a-zA-Z0-9]{3,}"  title="Password must be at least 3 characters long and contain only letters and numbers."  required />
+          <div class="input--section " id="pw_container_login">
+            <input id="pw_input_login" class="input" oninput="logInChangeLockToEye()" type="password" name="password" placeholder="Password" pattern="[a-zA-Z0-9]{3,}"  title="Password must be at least 3 characters long and contain only letters and numbers."  required />
             <img id="lockLogIn" onclick="showPasswordInput('pwInputLogIn', 'lockLogIn')"  src="./assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
           </div>
         </section>
