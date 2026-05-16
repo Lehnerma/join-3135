@@ -22,7 +22,7 @@ function showTaskCreatedToast() {
       toast.style.display = "none";
       toast.classList.remove("taskCreatedToast--hidden");
     }, { once: true });
-  }, 2000);
+  }, 1500);
 }
 
 function initBoardTask() {
@@ -68,7 +68,6 @@ async function createTask(status = "todo") {
   task.status = status; // Setzt den Status (todo, progress, etc.)
 
   try {
-    // WICHTIG: Nutze ADDTASK_URL (den neuen Namen aus deiner addTask.js)
     const response = await fetch(ADDTASK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -76,9 +75,10 @@ async function createTask(status = "todo") {
     });
 
     if (response.ok) {
+      showTaskCreatedToast();
       await closeAddTaskDialog();
       loadTasksFromFirebase();
-      showTaskCreatedToast();
+      
     }
   } catch (error) {
     console.error("Fehler beim Erstellen im Dialog:", error);
@@ -229,24 +229,21 @@ function closeEditDialogOnBackdropClick(event) {
   }
 }
 
-function loadUsersForEdit(assignedTo) {
+async function loadUsersForEdit(assignedTo) {
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
   try {
-    fetch(USER_URL)
-      .then((r) => r.json())
-      .then((data) => {
-        remoteUsers = Object.values(data);
-        fillUserDropdown(data);
-        document.querySelectorAll("#assignedToList label.user-item").forEach((label) => {
-          const checkbox = label.querySelector("input[type='checkbox']");
-          if (checkbox && assignedTo.includes(checkbox.value)) {
-            checkbox.checked = true;
-            label.classList.add("selected");
-          }
-        });
-        updateAssignedPreview();
-      })
-      .catch((err) => console.error("Error loading users for edit:", err));
+    const response = await fetch(USER_URL);
+    const data = await response.json();
+    remoteUsers = Object.values(data);
+    fillUserDropdown(data);
+    document.querySelectorAll("#assignedToList label.user-item").forEach((label) => {
+      const checkbox = label.querySelector("input[type='checkbox']");
+      if (checkbox && assignedTo.includes(checkbox.value)) {
+        checkbox.checked = true;
+        label.classList.add("selected");
+      }
+    });
+    updateAssignedPreview();
   } catch (err) {
     console.error("Error in loadUsersForEdit:", err);
   }
