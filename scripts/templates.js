@@ -92,7 +92,7 @@ function getSubtaskProgressTemplate(done, total) {
 
 function getNoTasksTemplate(status) {
   return `
-    <li class="board-task no-task">No tasks ${status}</li>
+    <li class="board-task no-task">No tasks ${capitalizeFirstLetter(status)}</li>
   `;
 }
 
@@ -299,11 +299,13 @@ function getAddTaskDialogTemplate() {
   return /*html*/ `
     <div class="task-container-dialog">
       <!-- Schließbutton oben rechts -->
-      <button class="close-dialog-btn" onclick="closeAddTaskDialog()">
-        <img src="../assets/img/icons/subtask/close.svg" alt="X">
-      </button>
+      <div class="dialog-add-headline">
+        <button class="btn btn--close" onclick="closeAddTaskDialog()">
+          <img src="../assets/img/icons/subtask/close.svg" alt="X">
+        </button>
 
-      <h1 class="input--title">Add Task</h1>
+        <h1 class="input--title">Add Task</h1>
+      </div>
 
       <form class="form-task form-columns" id="form_task">
         <!-- Linke Spalte -->

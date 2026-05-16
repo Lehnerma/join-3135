@@ -3,6 +3,7 @@ body {
   min-height: 100vh;
   grid-template-rows: 150px 1fr 80px;
   align-content: start;
+  align-content: start;
   background-color: var(--main-bg);
 }
 
@@ -36,7 +37,7 @@ body {
 }
 
 .join-logo {
-  position: absolute;
+  position: fixed;
   z-index: 2;
   top: 50vh;
   left: 50%;
@@ -152,6 +153,17 @@ body {
   width: 422px;
   height: 48px;
 }
+
+.hidden {
+  display: none;
+  opacity: 0;
+}
+
+.visible {
+  display: flex;
+  opacity: 1;
+}
+
 
 .login-buttons {
   display: flex;
