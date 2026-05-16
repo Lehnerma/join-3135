@@ -72,7 +72,8 @@
   padding: 16px;
 }
 
-.btn--arrow, .btn--close {
+.btn--arrow,
+.btn--close {
   width: 32px;
   height: 32px;
   background-color: transparent;
@@ -174,11 +175,13 @@
   justify-content: center;
   gap: 40px;
 }
+
 .f-row {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
+
 .f-col {
   display: flex;
   flex-direction: column;
@@ -186,8 +189,7 @@
 }
 
 .divider-vert {
-  background-color:  var(--input-default-main);
+  background-color: var(--input-default-main);
   width: 1px;
   height: 24px
 }
-

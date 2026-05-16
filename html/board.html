@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../styles/fonts.css" />
     <link rel="stylesheet" href="../styles/colors.css" />
     <link rel="stylesheet" href="../styles/sidebar.css" />
+    <link rel="stylesheet" href="../styles/utility.css" />
     <link rel="stylesheet" href="../styles/board.css" />
     <link rel="stylesheet" href="../styles/board-dialog.css" />
     <link rel="stylesheet" href="../styles/addTask.css" />
@@ -29,9 +30,18 @@
       <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
       <div class="app--icons">
         <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="help" class="app--icon" /></a>
-        <button id="user_menu_button" class="btn btn--user"></button>
+        <button id="user_menu_button" class="btn btn--user" onclick="openUserMenu()"></button>
       </div>
     </header>
+
+    <dialog id="user-menu-dialog" onclick="closeDialog()">
+      <div class="user-menu" onclick="preventCloseDialogOnDialog(event)">
+        <a href="../html/help.html" class="user-menu-help user-menu-link">Help</a>
+        <a href="../html/legalNotice.html" class="user-menu-link">Legal Notice</a>
+        <a href="../html/privacyPolicy.html" class="user-menu-link">Privacy Policy</a>
+        <a href="#" class="user-menu-link" onclick="logOut()">Log out</a>
+      </div>
+    </dialog>
 
     <nav class="sidebar">
       <img class="nav-logo" src="../assets/img/logo-join.svg" alt="join_logo" />
@@ -59,11 +69,12 @@
       <article class="header-section">
         <h1>Board</h1>
 
-        <sectioin class="search-container">
+        <section class="search-container" id="search_container">
           <input type="text" id="search_tasks" class="task-search-input" placeholder="Find Task" />
           <span class="search-divider"></span>
           <button id="search_tasks_btn" class="btn" role="search"><img src="../assets/img/icons/input/search.svg" alt="🔍search" class="search-icon" /></button>
-        </sectioin>
+          <!-- <label for="search_tasks">No Tasks found!</label> -->
+        </section>
 
         <button class="btn btn--add">
           <span class="btn--primary-text" onclick="openAddTaskDialog('todo')" id="add_task_head">Add task</span>
@@ -105,9 +116,9 @@
         <section class="kanban-column" ondragover="columnDragOver(event, 'done')" ondrop="taskDragDrop('done')" ondragleave="columnDragLeave(event)">
           <div class="column-title">
             <h2>Done</h2>
-            <!-- <button class="btn btn--add-task" aria-label="Add task to Done" onclick="addStatusTask('done')"> 
-              <img src="../assets/img/icons/subtask/add.svg" alt="" aria-hidden="true" /> 
-            </button> -->
+            <button class="btn btn--add-task" aria-label="Add task to Done" onclick="addStatusTask('done')">
+              <img src="../assets/img/icons/subtask/add.svg" alt="" aria-hidden="true" />
+            </button>
           </div>
           <ul class="task--list" id="done_list"></ul>
         </section>
@@ -117,6 +128,7 @@
       ######### addtask dialog ##########
       -------------------------------------->
 
+      <dialog id="add_task_dialog" class="dialog slide-in"></dialog>
       <dialog id="add_task_dialog" class="dialog dialog--add slide-in"></dialog>
 
       <!-------------------------------------
@@ -213,7 +225,6 @@
         <img src="../assets/img/icons/subtask/check-light.svg" alt="" class="taskCreatedToast__icon" />
         <p class="taskCreatedToast__text">Task added to Board</p>
       </aside>
-
     </main>
   </body>
 </html>

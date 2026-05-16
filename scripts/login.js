@@ -7,6 +7,7 @@ function init() {
   btnInit();
   triggerAnimations();
 }
+
 /**
  * initial all buttons for eventlisteners
  */
@@ -158,4 +159,39 @@ async function getUsers() {
 
 function saveId(id) {
   sessionStorage.setItem("user_id", id);
+}
+
+
+function logInChangeLockToEye() {
+  const pwInputLogIn = document.getElementById('pwInputLogIn');
+  const lockLogIn = document.getElementById('lockLogIn');
+  const lockIcon = "../assets/img/icons/input/lock.svg";
+  const eyeIcon = "../assets/img/icons/input/visibility_off.svg";
+  lockLogIn.src = pwInputLogIn.value.length > 0 ? eyeIcon : lockIcon;
+}
+
+function signUpChangeLockToEye() {
+  const pwInput = document.getElementById('pwInput');
+  const lock = document.getElementById('lock');
+  const pwInputConfirm = document.getElementById('pwInputConfirm');
+  const lockConfirm = document.getElementById('lockConfirm');
+  const lockIcon = "../assets/img/icons/input/lock.svg";
+  const eyeIcon = "../assets/img/icons/input/visibility_off.svg";
+  lock.src = pwInput.value.length > 0 ? eyeIcon : lockIcon;
+  lockConfirm.src = pwInputConfirm.value.length > 0 ? eyeIcon : lockIcon;
+}
+
+function showPasswordInput(inputID, icon) {
+  const eyeON = "../assets/img/icons/input/visibility.svg";
+  const eyeOFF = "../assets/img/icons/input/visibility_off.svg";
+  const input = document.getElementById(inputID);
+  const changeIcon = document.getElementById(icon);
+    if (input.type === "password") {
+     input.type ="text";
+     changeIcon.src = eyeON;
+  }
+  else{
+    input.type = "password";
+    changeIcon.src = eyeOFF;
+  }
 }

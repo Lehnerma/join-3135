@@ -42,9 +42,9 @@
 .utility-content {
   padding-top: 120px;
   padding-left: clamp(20px, calc(-2.857px + 7.143vw), 100px);
-  padding-right:  clamp(20px,
-            calc((100% - 1208px) / 2),
-            calc((100% - 1208px) / 2));
+  padding-right: clamp(20px,
+      calc((100% - 1208px) / 2),
+      calc((100% - 1208px) / 2));
   padding-bottom: 50px;
   margin-right: 24px;
 }
@@ -95,5 +95,68 @@ ol li::before {
 .btn-return {
   background: none;
   border: none;
+  cursor: pointer;
 }
 
+#user-menu-dialog {
+  position: fixed;
+  top: 96px;
+  /* right: 20px; */
+  left: min(calc(100vw - 170px), 1270px);
+  margin: 0;
+  height: 158px;
+  width: 150px;
+  border-radius: 20px 0 20px 20px;
+  background-color: var(--primary-color);
+  border: none;
+  padding: 0;
+}
+
+#user-menu-dialog::backdrop {
+  backdrop-filter: none;
+  background-color: transparent;
+}
+
+.user-menu {
+  padding: 18px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-star;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.user-menu-link {
+  text-decoration: none;
+  color: var(--fifth-text-color);
+  height: 46px;
+  display: flex;
+  align-items: center;
+}
+
+.user-menu-help {
+  display: none;
+}
+
+@media screen and (width <=1024px) {
+  #user-menu-dialog {
+    top: 68px;
+    left: auto;
+    right: 8px;
+    height: 204px;
+  }
+
+  .user-menu-help {
+    display: block;
+    text-decoration: none;
+    color: var(--fifth-text-color);
+    height: 46px;
+    display: flex;
+    align-items: center;
+  }
+
+  .app--icon {
+    display: none;
+  }
+}
