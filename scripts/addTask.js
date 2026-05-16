@@ -442,7 +442,7 @@ async function postTask(task) {
  */
 function clearForm() {
   document.getElementById("form_task").reset();
-  initDateInput();
+  initDateInput(); 
   selectPriority("medium");
   document.getElementById("assignedPreview").innerHTML = "";
   fillUserDropdown(remoteUsers);

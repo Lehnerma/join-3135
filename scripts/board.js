@@ -1,19 +1,16 @@
 const getTaskURL = (key = "", section = "") => {
   return `https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks/${key ? key + "/" : ""}${section ? section + "/" : ""}.json`;
-}; 
+};
 
 let TASKS = [];
 let DRAG_ID;
 let DRAG_OLD_STATUS;
 let DRAG_HEIGHT;
 
-
-
 function initBoard() {
   initBoardTask();
   loadTasksFromFirebase();
 }
-
 
 async function loadTasksFromFirebase() {
   try {
@@ -30,7 +27,6 @@ async function loadTasksFromFirebase() {
     console.error(er);
   }
 }
-
 
 //get ids into the tasks array for the dragging functions
 function getArryFromResult(result) {
@@ -57,7 +53,7 @@ async function syncTaskWithFirebase(task) {
 
 async function updateTaskStatus(firebaseKey, status) {
   try {
-    await fetch(getTaskURL (firebaseKey, "status"), {
+    await fetch(getTaskURL(firebaseKey, "status"), {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(status),
@@ -101,19 +97,17 @@ function buildTaskCard(task) {
     ASSIGNEES_LIST.innerHTML += getTaskAssignToTemplet(name, getInitials(name));
   });
 
-
   return WRAPPER.innerHTML;
 }
 
 function openTaskDialog(id) {
-  const task = TASKS.find(t => t.id === id);
+  const task = TASKS.find((t) => t.id === id);
   if (!task) return;
-  
+
   const dialog = document.getElementById("taskDialog");
   dialog.classList.remove("d-none");
   dialog.innerHTML = getTaskDialogTemplate(task);
 }
-
 
 function closeTaskDialog() {
   const dialog = document.getElementById("taskDialog");
@@ -122,43 +116,35 @@ function closeTaskDialog() {
   dialog.innerHTML = "";
 }
 
-
-
 async function deleteTask(firebaseKey) {
   try {
-    const response = await fetch(getBoardTaskURL(firebaseKey),
-      {
-        method: "DELETE",
-      });
-    if (!response.ok) {throw new Error(`Delete failed: ${response.status}`);}
+    const response = await fetch(getBoardTaskURL(firebaseKey), {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      throw new Error(`Delete failed: ${response.status}`);
+    }
 
-    TASKS = TASKS.filter(task =>task.firebaseKey !== firebaseKey);
+    TASKS = TASKS.filter((task) => task.firebaseKey !== firebaseKey);
     renderBoard(TASKS);
-    closeTaskDialog();  
+    closeTaskDialog();
 
     console.log("Task deleted");
+  } catch (error) {
+    console.error(error);
   }
-
-  catch (error) {console.error(error);}
-
 }
-
-
 
 function getPriority(priority) {
   const PRIO = ["low", "medium", "urgent"];
   return PRIO.includes(priority) ? priority : "low";
 }
 
-
 function getInitials(name = "") {
   if (typeof name !== "string") return "";
   const parts = name.trim().split(" ");
   if (!parts[0]) return "";
-  const last =
-    parts.length > 1
-      ? parts[parts.length - 1].charAt(0).toUpperCase()
-      : "";
+  const last = parts.length > 1 ? parts[parts.length - 1].charAt(0).toUpperCase() : "";
   return parts[0].charAt(0).toUpperCase() + last;
 }
 
@@ -179,14 +165,19 @@ function taskDragStart(ev, id) {
 function getDragAfterElement(list, y) {
   const tasks = [...list.querySelectorAll(".task")];
 
-  return tasks.reduce((closest, child) => {
-    const box = child.getBoundingClientRect();
-    const offset = y - box.top - box.height / 2;
-    if (offset < 0 && offset > closest.offset) {
-      return { offset, element: child };
-    }
-    return closest;
-  }, { offset: Number.NEGATIVE_INFINITY }).element ?? null;
+  return (
+    tasks.reduce(
+      (closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+          return { offset, element: child };
+        }
+        return closest;
+      },
+      { offset: Number.NEGATIVE_INFINITY },
+    ).element ?? null
+  );
 }
 
 function columnDragOver(ev, status) {
@@ -202,9 +193,7 @@ function columnDragOver(ev, status) {
   }
 
   const afterElement = getDragAfterElement(LIST, ev.clientY);
-  afterElement
-    ? LIST.insertBefore(placeholder, afterElement)
-    : LIST.appendChild(placeholder);
+  afterElement ? LIST.insertBefore(placeholder, afterElement) : LIST.appendChild(placeholder);
 }
 
 function columnDragLeave(ev) {
@@ -212,7 +201,6 @@ function columnDragLeave(ev) {
   ev.currentTarget.querySelector(".drag-placeholder")?.remove();
   ev.currentTarget.querySelector(".no-task")?.style.removeProperty("display");
 }
-
 
 //drag drop
 function taskDragDrop(status) {
