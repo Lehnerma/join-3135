@@ -55,7 +55,9 @@ function removeFade(container) {
  * @param {*} event -> to disable the reload for the switching
  */
 function toggleForms(event) {
-  event.preventDefault();
+  if (event && typeof event.preventDefault === 'function') {
+    event.preventDefault();
+  }
   const LOGIN_FORM = document.getElementById("login");
   const SIGNUP_FORM = document.getElementById("signup");
   const NAV_LOGIN = document.getElementById("nav_login");
@@ -106,14 +108,13 @@ async function creatUser(ev) {
   ev.preventDefault();
   const FORM = new FormData(ev.target);
   const NEW_USER = Object.fromEntries(FORM.entries());
-  const TARGET = ev.target;
   NEW_USER.id = generateId();
   pushUser(NEW_USER);
   showSuccessMessage();
   setTimeout(() => {
     hideSuccessMessage();
     ev.target.reset();
-    toggleForms(TARGET);
+    toggleForms();
   }, 2000);
   console.log(ev.target);
 }
