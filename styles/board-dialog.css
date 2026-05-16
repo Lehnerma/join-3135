@@ -241,7 +241,7 @@
   border-radius: 20px;
   white-space: nowrap;
   pointer-events: none;
-  z-index: 100;
+  z-index: 20;
 }
 
 .taskCreatedToast--visible {

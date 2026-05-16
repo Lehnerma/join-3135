@@ -13,13 +13,13 @@ function slideOutDialog(dialog) {
 
 function showTaskCreatedToast() {
   const toast = document.getElementById("task_created_toast");
-  toast.style.display = "flex";
+  // toast.style.display = "flex";
   toast.classList.add("taskCreatedToast--visible");
   setTimeout(() => {
     toast.classList.remove("taskCreatedToast--visible");
     toast.classList.add("taskCreatedToast--hidden");
     toast.addEventListener("animationend", () => {
-      toast.style.display = "none";
+      toast.classList.add = "dnone";
       toast.classList.remove("taskCreatedToast--hidden");
     }, { once: true });
   }, 1500);
