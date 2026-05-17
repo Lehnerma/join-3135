@@ -163,6 +163,29 @@ body {
   opacity: 1;
 }
 
+.error-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.field-error {
+  color: red;
+  font-size: 16px;
+  font-weight: 400;
+  padding-top: 67px;
+}
+
+.input-border-red{
+ border-color: red;
+ outline-color: red !important;
+}
+.input-border-green{
+ border: 1px solid green;
+ outline-color: green !important;
+}
+
 
 .login-buttons {
   display: flex;
@@ -329,8 +352,9 @@ body {
   }
 
   .form--container {
-    padding: 16px;
+    margin: 32px;
     width: 90%;
+    padding: 16px;
   }
 
   .form--title h1 {
@@ -357,5 +381,11 @@ body {
     justify-content: center;
     gap: 32px;
     margin-bottom: 20px;
+  }
+}
+
+@media(max-width:418px) {
+  .form--container {
+    gap: 52px;
   }
 }
