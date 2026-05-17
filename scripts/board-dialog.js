@@ -3,11 +3,15 @@ let CURRENT_DETAIL_TASK = null;
 function slideOutDialog(dialog) {
   return new Promise((resolve) => {
     dialog.classList.add("slide-out");
-    dialog.addEventListener("animationend", () => {
-      dialog.classList.remove("slide-out");
-      dialog.close();
-      resolve();
-    }, { once: true });
+    dialog.addEventListener(
+      "animationend",
+      () => {
+        dialog.classList.remove("slide-out");
+        dialog.close();
+        resolve();
+      },
+      { once: true },
+    );
   });
 }
 
@@ -18,10 +22,14 @@ function showTaskCreatedToast() {
   setTimeout(() => {
     toast.classList.remove("taskCreatedToast--visible");
     toast.classList.add("taskCreatedToast--hidden");
-    toast.addEventListener("animationend", () => {
-      toast.classList.add = "dnone";
-      toast.classList.remove("taskCreatedToast--hidden");
-    }, { once: true });
+    toast.addEventListener(
+      "animationend",
+      () => {
+        toast.classList.add = "dnone";
+        toast.classList.remove("taskCreatedToast--hidden");
+      },
+      { once: true },
+    );
   }, 1500);
 }
 
@@ -30,7 +38,7 @@ function initBoardTask() {
   ADD_BTN_HEAD.addEventListener("click", openAddTaskDialog);
 
   const TASK_DIALOG = document.getElementById("add_task_dialog");
-  TASK_DIALOG.addEventListener("click", closeDialogOnBackdropClick); 
+  TASK_DIALOG.addEventListener("click", closeDialogOnBackdropClick);
 
   const SEARCH_TASKS_BTN = document.getElementById("search_tasks_btn");
   SEARCH_TASKS_BTN.addEventListener("click", () => searchTasks());
@@ -78,7 +86,6 @@ async function createTask(status = "todo") {
       showTaskCreatedToast();
       await closeAddTaskDialog();
       loadTasksFromFirebase();
-      
     }
   } catch (error) {
     console.error("Fehler beim Erstellen im Dialog:", error);
@@ -118,6 +125,7 @@ function addStatusTask(status) {
 function searchTasks() {
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const SEARCH_INPUT = document.getElementById("search_tasks").value;
+  const SEARCH_CONTAINER = document.getElementById("search_container");
   const SEARCH_VALUE = [];
 
   ALL_TASKS.filter((task) => {
@@ -128,6 +136,9 @@ function searchTasks() {
       SEARCH_VALUE.push(task);
     }
   });
+
+  SEARCH_CONTAINER.classList.toggle("nothing-found", SEARCH_VALUE.length === 0);
+
   renderBoard(SEARCH_VALUE);
 }
 

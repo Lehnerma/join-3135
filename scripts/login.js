@@ -98,7 +98,7 @@ function guestLogin() {
   window.location.href = "./html/summary.html";
   sessionStorage.setItem("user_id", "guest");
   sessionStorage.setItem("activeUserName", "Guest");
-  sessionStorage.setItem('justLoggedIn', 'true');
+  sessionStorage.setItem("justLoggedIn", "true");
 }
 
 /**
@@ -107,33 +107,41 @@ function guestLogin() {
  */
 async function creatUser(ev) {
   ev.preventDefault();
+  if (!verifyPassword()) {
+    return;
+  }
   const FORM = new FormData(ev.target);
   const NEW_USER = Object.fromEntries(FORM.entries());
   NEW_USER.id = generateId();
   pushUser(NEW_USER);
-  showSuccessMessage();
-  setTimeout(() => {
-    hideSuccessMessage();
-    ev.target.reset();
-    toggleForms();
-  }, 2000);
-  console.log(ev.target);
+  ev.target.reset();
+  toggleForms(ev);
 }
 
-function showSuccessMessage() {
-    const msg = document.getElementById('success_message');
-    document.body.classList.add('dim-background');
-    msg.classList.remove('dnone');
-    msg.classList.add('show-animation');
+/**
+ * Verifies that the password and confirm password fields match.
+ * @returns {boolean} - true if passwords match, false otherwise
+ */
+function verifyPassword() {
+  const password = document.getElementById("pwInput");
+  const confirmPassword = document.getElementById("pwInputConfirm");
+  return password.value === confirmPassword;
 }
 
-function hideSuccessMessage() {
-    const msg = document.getElementById('success_message');
-    document.body.classList.remove('dim-background');
-    msg.classList.add('dnone');
-    msg.classList.remove('show-animation');
+/**
+ * Validates that both password input fields match and updates the UI accordingly.
+ * Adds an error class if passwords don't match, removes it if they do.
+ */
+function confirmPassword() {
+  const password = document.getElementById("pwInput");
+  const confoirmPassword = document.getElementById("pwInputConfirm");
+  const confirmPasswordContainer = document.querySelector("#pwConfirmSignup");
+  if (password.value !== confoirmPassword.value) {
+    confirmPasswordContainer.classList.add("invalid-signup-pw");
+  } else {
+    confirmPasswordContainer.classList.remove("invalid-signup-pw");
+  }
 }
-
 /**
  * To generate a unique id for evry user witch is create from the time
  * @returns -> uniqe id
@@ -163,12 +171,21 @@ async function loginUser(ev) {
   const PW = FORM.get("password");
   await getUsers();
   const ACTIV_USER = USERS.find((u) => u.email == EMAIL);
-  if (ACTIV_USER.password === PW) {
-    saveId(ACTIV_USER.id);
-    sessionStorage.setItem("activeUserName", ACTIV_USER.name);
-    sessionStorage.setItem('justLoggedIn', 'true');
-    window.location.href = "./html/summary.html";
+  if (!ACTIV_USER || !(ACTIV_USER.password === PW)) {
+    showFailEntriesLogin();
+    return;
   }
+  saveSession(ACTIV_USER);
+  window.location.href = "./html/summary.html";
+}
+
+function showFailEntriesLogin() {
+  const MAIL = document.getElementById("email_input_login");
+  const PASSWORD_CONTAINER = document.getElementById("pw_container_login");
+  const PASSWORD = document.getElementById("pw_input_login");
+  MAIL.classList.add("invalid-login");
+  PASSWORD.classList.add("invalid-login");
+  PASSWORD_CONTAINER.classList.add("invalid-login-pw");
 }
 
 async function getUsers() {
@@ -177,24 +194,25 @@ async function getUsers() {
   USERS = Object.values(RESULT);
 }
 
-function saveId(id) {
-  sessionStorage.setItem("user_id", id);
+function saveSession(user) {
+  sessionStorage.setItem("user_id", user.id);
+  sessionStorage.setItem("activeUserName", user.name);
+  sessionStorage.setItem("justLoggedIn", "true");
 }
 
-
 function logInChangeLockToEye() {
-  const pwInputLogIn = document.getElementById('pwInputLogIn');
-  const lockLogIn = document.getElementById('lockLogIn');
+  const pwInputLogIn = document.getElementById("pwInputLogIn");
+  const lockLogIn = document.getElementById("lockLogIn");
   const lockIcon = "../assets/img/icons/input/lock.svg";
   const eyeIcon = "../assets/img/icons/input/visibility_off.svg";
   lockLogIn.src = pwInputLogIn.value.length > 0 ? eyeIcon : lockIcon;
 }
 
 function signUpChangeLockToEye() {
-  const pwInput = document.getElementById('pwInput');
-  const lock = document.getElementById('lock');
-  const pwInputConfirm = document.getElementById('pwInputConfirm');
-  const lockConfirm = document.getElementById('lockConfirm');
+  const pwInput = document.getElementById("pwInput");
+  const lock = document.getElementById("lock");
+  const pwInputConfirm = document.getElementById("pwInputConfirm");
+  const lockConfirm = document.getElementById("lockConfirm");
   const lockIcon = "../assets/img/icons/input/lock.svg";
   const eyeIcon = "../assets/img/icons/input/visibility_off.svg";
   lock.src = pwInput.value.length > 0 ? eyeIcon : lockIcon;
@@ -206,11 +224,10 @@ function showPasswordInput(inputID, icon) {
   const eyeOFF = "../assets/img/icons/input/visibility_off.svg";
   const input = document.getElementById(inputID);
   const changeIcon = document.getElementById(icon);
-    if (input.type === "password") {
-     input.type ="text";
-     changeIcon.src = eyeON;
-  }
-  else{
+  if (input.type === "password") {
+    input.type = "text";
+    changeIcon.src = eyeON;
+  } else {
     input.type = "password";
     changeIcon.src = eyeOFF;
   }

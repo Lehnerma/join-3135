@@ -25,7 +25,8 @@
   object-position: center;
 }
 
-.btn--primary, .btn--add {
+.btn--primary,
+.btn--add {
   background-color: var(--primary-color);
   color: white;
 
@@ -150,6 +151,34 @@
   border: 1px solid var(--secondary-color);
 }
 
+.invalid-login {
+  border: var(--faulty-entry-color) solid 1px;
+}
+
+.invalid-login-pw::after {
+  content: "Check your email and password. Please try again.";
+  position: absolute;
+  bottom: -24px;
+  left: 0;
+  color: var(--faulty-entry-color);
+  font-size: 16px;
+}
+
+.invalid-signup-pw {
+  input {
+    border: var(--faulty-entry-color) solid 1px;
+  }
+}
+
+.invalid-signup-pw::after {
+  content: "Your passwords don't match. Please try again.";
+  position: absolute;
+  bottom: -24px;
+  left: 0;
+  color: var(--faulty-entry-color);
+  font-size: 16px;
+}
+
 .input--icon {
   width: 24px;
   height: 24px;
@@ -191,5 +220,5 @@
 .divider-vert {
   background-color: var(--input-default-main);
   width: 1px;
-  height: 24px
+  height: 24px;
 }
