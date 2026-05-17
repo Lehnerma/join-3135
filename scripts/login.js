@@ -122,8 +122,8 @@ async function creatUser(ev) {
  */
 function verifyPassword() {
   const password = document.getElementById("pwInput");
-  const confoirmPassword = document.getElementById("pwInputConfirm");
-  return password === confoirmPassword;
+  const confirmPassword = document.getElementById("pwInputConfirm");
+  return password.value === confirmPassword;
 }
 
 /**
