@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -18,7 +18,7 @@
       <img class="join-logo" src="./assets/img/logo-join-dark.svg" alt="page-1Logo" />
       <nav class="nav-login" id="nav_login">
         <p class="span-nav-login">Not a Join user?</p>
-        <button  type="button" id="signup_btn" class="btn btn--primary btn--signup">Sign up</button>
+        <button type="button" id="signup_btn" class="btn btn--primary btn--signup">Sign up</button>
       </nav>
     </header>
 
@@ -30,16 +30,16 @@
 
         <section class="input--container">
           <div class="input--section">
-            <input class="input" id="email" type="email" name="email" placeholder="Email" autocomplete="email" pattern="[a-z0-9._%\+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" title="Please enter a valid email address (e.g., name@example.com)." required />
+            <input class="input input--login" id="email_input_login" type="email" name="email" placeholder="Email" autocomplete="email" pattern="[a-z0-9._%\+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" title="Please enter a valid email address (e.g., name@example.com)." required />
             <img src="./assets/img/icons/input/mail.svg" alt="letter icon" class="input--icon" />
           </div>
 
-          <div class="input--section">
-            <input id="pwInputLogIn" class="input" oninput="logInChangeLockToEye()" type="password" name="password" placeholder="Password" pattern="[a-zA-Z0-9]{3,}"  title="Password must be at least 3 characters long and contain only letters and numbers."  required />
-            <img id="lockLogIn" onclick="showPasswordInput('pwInputLogIn', 'lockLogIn')"  src="./assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
+          <div class="input--section" id="pw_container_login">
+            <input id="pw_input_login" class="input" oninput="logInChangeLockToEye()" type="password" name="password" placeholder="Password" pattern="[a-zA-Z0-9]{3,}" title="Password must be at least 3 characters long and contain only letters and numbers." required />
+            <img id="lockLogIn" onclick="showPasswordInput('pwInputLogIn', 'lockLogIn')" src="./assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
           </div>
         </section>
-       
+
         <section class="login-buttons">
           <button type="submit" class="btn btn--primary btn--login login-button-text">Log in</button>
           <button type="button" class="btn btn--secondary btn--login login-button-text" id="guest_login">Guest Log in</button>
@@ -54,33 +54,33 @@
         <div class="input--container-wrapper">
           <section class="input--container">
             <div class="input--section">
-              <input class="input input_signup" id="name" type="text" name="name" placeholder="Name" autocomplete="Name" pattern="^[a-zA-ZÀ-ÿ\s\-\.]+$"  title="Please enter a valid name (letters, spaces, and hyphens only)."  required />
+              <input class="input input_signup" id="name" type="text" name="name" placeholder="Name" autocomplete="Name" pattern="^[a-zA-ZÀ-ÿ\s\-\.]+$" title="Please enter a valid name (letters, spaces, and hyphens only)." required />
               <img class="input--icon" src="../assets/img/icons/input/person.svg" alt="letter icon" />
             </div>
 
             <div class="input--section">
               <input class="input input_signup" id="singUpEmail" type="email" name="email" placeholder="Email" autocomplete="email" pattern="[a-z0-9._%\+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" title="Bitte gib eine gültige E-Mail-Adresse ein (z.B. max@mustermann.de)" required />
-              <img class="input--icon" src="../assets/img/icons/input/mail.svg" alt="letter icon"  />
+              <img class="input--icon" src="../assets/img/icons/input/mail.svg" alt="letter icon" />
             </div>
 
             <div class="input--section">
-              <input class="input input_signup" id="pwInput" oninput="signUpChangeLockToEye()" type="password" name="password" placeholder="Password" pattern="[a-zA-Z0-9]{3,}"  title="Password must be at least 3 characters long and contain only letters and numbers."   required />
-              <img class="input--icon" id="lock" onclick="showPasswordInput('pwInput', 'lock')" src="../assets/img/icons/input/lock.svg" alt="lock icon"  />
+              <input class="input input_signup" id="pwInput" oninput="signUpChangeLockToEye()" type="password" name="password" placeholder="Password" pattern="[a-zA-Z0-9]{3,}" title="Password must be at least 3 characters long and contain only letters and numbers." required />
+              <img class="input--icon" id="lock" onclick="showPasswordInput('pwInput', 'lock')" src="../assets/img/icons/input/lock.svg" alt="lock icon" />
             </div>
-          
-            <div class="input--section">
-              <input class="input input_signup" id="pwInputConfirm"  oninput="signUpChangeLockToEye()"type="password" name="password" placeholder="Confirm Password" pattern="[a-zA-Z0-9]{3,}"  title="Password must be at least 3 characters long and contain only letters and numbers." required />
-              <img class="input--icon" id="lockConfirm" onclick="showPasswordInput('pwInputConfirm', 'lockConfirm')" src="../assets/img/icons/input/lock.svg" alt="lock icon"  />
+
+            <div class="input--section" id="pwConfirmSignup">
+              <input class="input input_signup" id="pwInputConfirm" oninput="signUpChangeLockToEye()" onchange="confirmPassword()" type="password" name="password" placeholder="Confirm Password" pattern="[a-zA-Z0-9]{3,}" title="Password must be at least 3 characters long and contain only letters and numbers." required />
+              <img class="input--icon" id="lockConfirm" onclick="showPasswordInput('pwInputConfirm', 'lockConfirm')" src="../assets/img/icons/input/lock.svg" alt="lock icon" />
             </div>
           </section>
-         
+
           <div class="privacy-content">
-            <input class="input_signup" title=" Please accept the Privacy policy "    type="checkbox" id="privacy" name="privacy" required />
+            <input class="input_signup" title=" Please accept the Privacy policy " type="checkbox" id="privacy" name="privacy" required />
             <span> I accept the </span>
             <a href="../html/privacyPolicy.html" class="acceptPrivacyPolicy">Privacy policy</a>
           </div>
         </div>
-        <button type="submit" class="btn btn--primary btn--signup ">Sign up</button>
+        <button type="submit" class="btn btn--primary btn--signup">Sign up</button>
       </form>
     </main>
 

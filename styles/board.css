@@ -76,13 +76,6 @@
         }
       }
     }
-
-    /* label {
-      position: absolute;
-      bottom: -20px;
-      left: 0;
-    } */
-    
   }
 
     .nothing-found{
@@ -94,7 +87,7 @@
         bottom: -20px;
         left: 0;
         color: var(--faulty-entry-color);
-        font-size: 14px;
+        font-size: 16px;
       }
     }
 
