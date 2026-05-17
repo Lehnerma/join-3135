@@ -105,8 +105,8 @@ function guestLogin() {
  */
 async function creatUser(ev) {
   ev.preventDefault();
-  if (!verifyPassword()){
-    return
+  if (!verifyPassword()) {
+    return;
   }
   const FORM = new FormData(ev.target);
   const NEW_USER = Object.fromEntries(FORM.entries());
@@ -116,20 +116,28 @@ async function creatUser(ev) {
   toggleForms(ev);
 }
 
+/**
+ * Verifies that the password and confirm password fields match.
+ * @returns {boolean} - true if passwords match, false otherwise
+ */
 function verifyPassword() {
   const password = document.getElementById("pwInput");
-  const confoirmPassword = document.getElementById("pwInputConfirm")
+  const confoirmPassword = document.getElementById("pwInputConfirm");
   return password === confoirmPassword;
 }
 
-function confirmPassword(){
+/**
+ * Validates that both password input fields match and updates the UI accordingly.
+ * Adds an error class if passwords don't match, removes it if they do.
+ */
+function confirmPassword() {
   const password = document.getElementById("pwInput");
   const confoirmPassword = document.getElementById("pwInputConfirm");
-  const confirmPasswordContainer = document.querySelector(".confirmPasswords");
+  const confirmPasswordContainer = document.querySelector("#pwConfirmSignup");
   if (password.value !== confoirmPassword.value) {
-    confoirmPassword.classList.add("invalid-signup-pw");
+    confirmPasswordContainer.classList.add("invalid-signup-pw");
   } else {
-    confoirmPassword.classList.remove("invalid-signup-pw");
+    confirmPasswordContainer.classList.remove("invalid-signup-pw");
   }
 }
 /**

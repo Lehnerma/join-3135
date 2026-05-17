@@ -165,11 +165,13 @@
 }
 
 .invalid-signup-pw {
-  border: var(--faulty-entry-color) solid 1px;
+  input {
+    border: var(--faulty-entry-color) solid 1px;
+  }
 }
 
 .invalid-signup-pw::after {
-  content: "Check your email and password. Please try again.";
+  content: "Your passwords don't match. Please try again.";
   position: absolute;
   bottom: -24px;
   left: 0;
