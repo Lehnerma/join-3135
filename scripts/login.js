@@ -25,6 +25,7 @@ function btnInit() {
   GUEST_LOGIN.addEventListener("click", guestLogin);
   FORM_LOGIN.addEventListener("submit", (event) => loginUser(event));
   FORM_SIGNUP.addEventListener("submit", (event) => creatUser(event));
+  
   setupInputEvents();
 }
 
@@ -116,6 +117,20 @@ function guestLogin() {
  */
 async function creatUser(ev) {
   ev.preventDefault();
+  const pw = document.getElementById('pwInput');
+  const pwCofirm = document.getElementById('pwInputConfirm');
+  const errorMessage = document.getElementById('signup-error');
+ 
+if(pw == !pwCofirm){
+   
+  errorMessage.classList.remove('dnone')
+
+} 
+   
+
+
+
+
   const FORM = new FormData(ev.target);
   const NEW_USER = Object.fromEntries(FORM.entries());
   NEW_USER.id = generateId();
@@ -185,6 +200,7 @@ function setupInputEvents() {
   document.getElementById('lockLogIn').addEventListener('click', () => showPasswordInput('lockLogIn', 'pwInputLogIn'));
   document.getElementById('lock').addEventListener('click', () => showPasswordInput('lock', 'pwInput'));
   document.getElementById('lockConfirm').addEventListener('click', () => showPasswordInput('lockConfirm', 'pwInputConfirm'));
+  
   document.getElementById('pwInputLogIn').addEventListener('blur', () => resetPasswordVisibility('pwInputLogIn', 'lockLogIn'));
   document.getElementById('pwInput').addEventListener('blur', () => resetPasswordVisibility('pwInput', 'lock'));
   document.getElementById('pwInputConfirm').addEventListener('blur', () => resetPasswordVisibility('pwInputConfirm', 'lockConfirm'));
