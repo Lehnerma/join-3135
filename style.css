@@ -164,6 +164,19 @@
   font-size: 16px;
 }
 
+.invalid-signup-pw {
+  border: var(--faulty-entry-color) solid 1px;
+}
+
+.invalid-signup-pw::after {
+  content: "Check your email and password. Please try again.";
+  position: absolute;
+  bottom: -24px;
+  left: 0;
+  color: var(--faulty-entry-color);
+  font-size: 16px;
+}
+
 .input--icon {
   width: 24px;
   height: 24px;

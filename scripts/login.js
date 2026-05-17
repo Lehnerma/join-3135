@@ -105,15 +105,33 @@ function guestLogin() {
  */
 async function creatUser(ev) {
   ev.preventDefault();
+  if (!verifyPassword()){
+    return
+  }
   const FORM = new FormData(ev.target);
   const NEW_USER = Object.fromEntries(FORM.entries());
   NEW_USER.id = generateId();
   pushUser(NEW_USER);
   ev.target.reset();
   toggleForms(ev);
-  console.log(ev.target);
 }
 
+function verifyPassword() {
+  const password = document.getElementById("pwInput");
+  const confoirmPassword = document.getElementById("pwInputConfirm")
+  return password === confoirmPassword;
+}
+
+function confirmPassword(){
+  const password = document.getElementById("pwInput");
+  const confoirmPassword = document.getElementById("pwInputConfirm");
+  const confirmPasswordContainer = document.querySelector(".confirmPasswords");
+  if (password.value !== confoirmPassword.value) {
+    confoirmPassword.classList.add("invalid-signup-pw");
+  } else {
+    confoirmPassword.classList.remove("invalid-signup-pw");
+  }
+}
 /**
  * To generate a unique id for evry user witch is create from the time
  * @returns -> uniqe id
@@ -154,7 +172,7 @@ async function loginUser(ev) {
 function showFailEntriesLogin() {
   const MAIL = document.getElementById("email_input_login");
   const PASSWORD_CONTAINER = document.getElementById("pw_container_login");
-  const PASSWORD= document.getElementById("pw_input_login")
+  const PASSWORD = document.getElementById("pw_input_login");
   MAIL.classList.add("invalid-login");
   PASSWORD.classList.add("invalid-login");
   PASSWORD_CONTAINER.classList.add("invalid-login-pw");
