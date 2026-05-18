@@ -252,7 +252,7 @@
   max-width: 252px;
   background-color: rgba(231, 231, 231, 1);
   color: var(--fourth-text-color);
-  border: solid 1px var(--fourth-text-color);
+  border: dashed 1px var(--fourth-text-color);
   border-radius: 10px;
   font-family: "Open Sans", sans-serif;
 }
