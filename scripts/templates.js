@@ -99,11 +99,12 @@ function getNoTasksTemplate(status) {
 function getTaskCardTemplet(title, description, category, id, priority) {
   return `
 <li class="task" onclick="openTaskDetailDialog(${id})" draggable="true" ondragstart="taskDragStart(event, ${id})" data-id=${id}>
- <img src="../assets/img/icons/general/double-arrow.svg" alt="Move Arrows" class="move-icon" onclick="openMoveTaskDialog(${id})">  
-<article class="task--card">
- 
-    <header>
+  <article class="task--card">
+    <header class="task--header">
       <span class="task--category-label ${toClassName(category)}">${category}</span>
+      <button type="button" class="btn task--status-move" onclick="openMoveTaskDialog(${id})">
+        <img src="../assets/img/icons/general/double-arrow.svg" alt="Move Arrows" class="move-icon">
+      </button>
     </header>
     <section class="task--content" aria-label="task content">
       <div class="task--title-wrapper">

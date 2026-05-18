@@ -312,7 +312,12 @@ async function deleteTask(task) {
 }
 
 function openMoveTaskDialog(taskId) {
-  const MOVE_DIALOG = document.getElementById("move_task_dialog");
-  MOVE_DIALOG.addEventListener("click", closeMoveDialogOnBackdropClick);
-  MOVE_DIALOG.showModal();
+  event.stopPropagation() // verhinder event bubbling
+  // const MOVE_DIALOG = document.getElementById("move_task_dialog");
+  // MOVE_DIALOG.addEventListener("click", closeMoveDialogOnBackdropClick);
+  // MOVE_DIALOG.showModal();
+  console.log('test');
+  
+  console.log('test2');
+  
 }
