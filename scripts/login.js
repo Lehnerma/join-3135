@@ -296,11 +296,21 @@ function showPasswordInput(inputID, icon) {
  * Clears all text from both the login and signup forms
  * and resets all password icons back to their original state.
  */
+/**
+ * Clears all text from both the login and signup forms
+ * and resets all password icons and error styles.
+ */
 function clearAndResetForms() {
   const LOGIN_FORM = document.getElementById("login");
   const SIGNUP_FORM = document.getElementById("signup");
+  const MAIL = document.getElementById("email_input_login");
+  const PASSWORD_CONTAINER = document.getElementById("pw_container_login");
+  const PASSWORD = document.getElementById("pwInputLogin");
   LOGIN_FORM.reset();
   SIGNUP_FORM.reset();
+  MAIL.classList.remove("invalid-login");
+  PASSWORD.classList.remove("invalid-login");
+  PASSWORD_CONTAINER.classList.remove("invalid-login-pw");
   resetPasswordVisibility('pwInputLogin', 'lockLogin');
   resetPasswordVisibility('pwInput', 'lock');
   resetPasswordVisibility('pwInputConfirm', 'lockConfirm');
