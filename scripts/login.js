@@ -26,7 +26,7 @@ function btnInit() {
   GUEST_LOGIN.addEventListener("click", guestLogin);
   FORM_LOGIN.addEventListener("submit", (event) => loginUser(event));
   FORM_SIGNUP.addEventListener("submit", (event) => creatUser(event));
-  setupInputEvents();
+  // setupInputEvents();
 }
 
 
@@ -63,7 +63,7 @@ function removeFade(container) {
  */
 function toggleForms(event) {
   event.preventDefault();
-  clearAndResetForms();
+  // clearAndResetForms();
   SHOW_SIGNUP = !SHOW_SIGNUP;
   updateToggleUI();
 }
@@ -287,18 +287,19 @@ function showPasswordInput(iconID, pwInputID) {
  * @param {string} pwInputID - The ID of the password input box.
  * @param {string} iconID - The ID of the icon image.
  */
-function resetPasswordVisibility(pwInputID, iconID) {
-  const input = document.getElementById(pwInputID);
-  const icon = document.getElementById(iconID);
-  const lockIcon = "../assets/img/icons/input/lock.svg";
-  const eyeOFF = "../assets/img/icons/input/visibility_off.svg";
-  const input = document.getElementById(inputID);
-  const changeIcon = document.getElementById(icon);
-  if (input.type === "password") {
-    input.type = "text";
-    changeIcon.src = eyeON;
-  } else {
-    input.type = "password";
-    changeIcon.src = eyeOFF;
-  }
-}
+// function resetPasswordVisibility(pwInputID, iconID) {
+//   const input = document.getElementById(pwInputID);
+//   const icon = document.getElementById(iconID);
+//   const lockIcon = "../assets/img/icons/input/lock.svg";
+//   const eyeOFF = "../assets/img/icons/input/visibility_off.svg";
+//   const input = document.getElementById(inputID);
+//   const changeIcon = document.getElementById(icon);
+//   if (input.type === "password") {
+//     input.type = "text";
+//     changeIcon.src = eyeON;
+//   } else {
+//     input.type = "password";
+//     changeIcon.src = eyeOFF;
+//   }
+// }
+
