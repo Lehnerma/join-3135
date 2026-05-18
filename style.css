@@ -131,6 +131,11 @@
   }
 }
 
+input:focus {
+  outline-color: var(--secondary-color);
+
+}
+
 .input {
   font-size: 20px;
   padding: 16px 24px;
@@ -153,6 +158,14 @@
 
 .invalid-login {
   border: var(--faulty-entry-color) solid 1px;
+
+}
+
+.success-signup-pw {
+  input {
+    border: var(--success-input-pw) solid 1px;
+    outline-color: var(--success-input-pw);
+  }
 }
 
 .invalid-login-pw::after {
@@ -167,6 +180,8 @@
 .invalid-signup-pw {
   input {
     border: var(--faulty-entry-color) solid 1px;
+    outline-color: var(--faulty-entry-color);
+    outline: none;
   }
 }
 
@@ -178,6 +193,19 @@
   color: var(--faulty-entry-color);
   font-size: 16px;
 }
+
+@media (max-width:600px) {
+  .invalid-login-pw::after {
+    bottom: -48px;
+  }
+}
+@media (max-width:418px) {
+  .invalid-signup-pw::after {
+    bottom: -48px;
+    
+  }
+}
+
 
 .input--icon {
   width: 24px;

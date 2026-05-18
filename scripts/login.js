@@ -3,10 +3,12 @@ let USERS = [];
 
 const USERS_URL = (id = "") => "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/" + id + ".json";
 
+/**
+ * Initializes the page functions.
+ */
 function init() {
   btnInit();
   triggerAnimations();
-
 }
 
 
@@ -26,7 +28,6 @@ function btnInit() {
   GUEST_LOGIN.addEventListener("click", guestLogin);
   FORM_LOGIN.addEventListener("submit", (event) => loginUser(event));
   FORM_SIGNUP.addEventListener("submit", (event) => creatUser(event));
-  setupInputEvents();
 }
 
 
@@ -55,11 +56,10 @@ function removeFade(container) {
 }
 
 
+
 /**
- * Switches between the login form and the signup form.
- * It stops the page from reloading, clears the forms, 
- * changes the view state, and updates the screen.
- *  @param {Event} event - The click event from the browser that triggers this function.
+ * Switches between the login and signup forms.
+ * @param {Event} event - The click event.
  */
 function toggleForms(event) {
   event.preventDefault();
@@ -112,7 +112,7 @@ function guestLogin() {
   window.location.href = "./html/summary.html";
   sessionStorage.setItem("user_id", "guest");
   sessionStorage.setItem("activeUserName", "Guest");
-  sessionStorage.setItem('justLoggedIn', 'true');
+  sessionStorage.setItem("justLoggedIn", "true");
 }
 
 
@@ -122,54 +122,49 @@ function guestLogin() {
  */
 async function creatUser(ev) {
   ev.preventDefault();
-  const arePwTrue = getPasswordElements();
-  if (!arePwTrue) {
+  if (!verifyPassword()) {
     return;
   }
   const FORM = new FormData(ev.target);
   const NEW_USER = Object.fromEntries(FORM.entries());
   NEW_USER.id = generateId();
-  await pushUser(NEW_USER);
+  pushUser(NEW_USER);
   ev.target.reset();
   toggleForms(ev);
-  console.log(ev.target);
 }
 
 
 /**
- * Finds the password input boxes and the error message text on the web page.
- * It gets the typed text from them so they can be compared.
+ * Verifies that the password and confirm password fields match.
+ * @returns {boolean} - true if passwords match, false otherwise
  */
-function getPasswordElements() {
-  const pwInput = document.getElementById('pwInput');
-  const pwInputConfirm = document.getElementById('pwInputConfirm');
-  const pw = pwInput.value;
-  const pwConfirm = pwInputConfirm.value;
-  const errorMessage = document.getElementById('signup-error');
-  comparePWAndPWConfirm(pwInput, pwInputConfirm, pw, pwConfirm, errorMessage);
+function verifyPassword() {
+  const password = document.getElementById("pwInput");
+  const confirmPassword = document.getElementById("pwInputConfirm");
+  return password.value === confirmPassword.value;
 }
 
 
 /**
-* Compares the first password with the second password.
-* Turns the error message and the border colors (green or red) on or off depending on the result.
-* 
-* @returns {boolean} Returns "true" if both passwords are exactly the same. Returns "false" if they do not match or if the second box is still empty.
-*/
-function comparePWAndPWConfirm(pwInput, pwInputConfirm, pw, pwConfirm, errorMessage) {
-  errorMessage.classList.add('hidden');
-  pwInputConfirm.classList.remove('input-border-green', 'input-border-red');
-  if (pwConfirm.length === 0) return false;
-
-  if (pw === pwConfirm) {
-    pwInputConfirm.classList.add('input-border-green');
+ * Validates that both password input fields match and updates the UI accordingly.
+ * Adds an error class if passwords don't match, removes it if they do.
+ */
+function confirmPassword() {
+  const password = document.getElementById("pwInput");
+  const confirmPassword = document.getElementById("pwInputConfirm");
+  const confirmPasswordContainer = document.getElementById("pwConfirmSignup");
+  confirmPasswordContainer.classList.remove("invalid-signup-pw");
+  if (password.value.length === 0) {
+    return;
+  } if (password.value === confirmPassword.value) {
+    confirmPasswordContainer.classList.remove("invalid-signup-pw");
+    confirmPasswordContainer.classList.add("success-signup-pw");
     return true;
+  } if (confirmPassword.value.length >= password.value.length) {
+    confirmPasswordContainer.classList.add("invalid-signup-pw");
+    confirmPasswordContainer.classList.remove("success-signup-pw");
+    return false;
   }
-  if (pwConfirm.length >= pw.length) {
-    errorMessage.classList.remove('hidden');
-    pwInputConfirm.classList.add('input-border-red');
-  }
-  return false;
 }
 
 
@@ -183,12 +178,8 @@ function generateId() {
 
 
 /**
- * Sends the user's data to the database (Firebase) to save or update it.
- * If something goes wrong with the internet connection or the server, 
- * it catches the mistake and shows an error message in the console.
- * 
- * @param {Object} user - The user object that contains the data and the user ID.
- * @returns {Promise<void>} This is an async function, so it returns a promise that finishes when the saving is done.
+ * Sends user data to the database.
+ * @param {Object} user - The user object to save.
  */
 async function pushUser(user) {
   try {
@@ -206,11 +197,8 @@ async function pushUser(user) {
 
 
 /**
- * Tries to log in the user. It gets the typed email and password,
- * loads all users from the database, checks if the password is correct,
- * saves the user info, and opens the summary page.
- * 
- * @param {Event} ev - The submit event from the login form.
+ * Checks login data and logs the user in.
+ * @param {Event} ev - The submit event.
  */
 async function loginUser(ev) {
   ev.preventDefault();
@@ -219,18 +207,31 @@ async function loginUser(ev) {
   const PW = FORM.get("password");
   await getUsers();
   const ACTIV_USER = USERS.find((u) => u.email == EMAIL);
-  if (ACTIV_USER.password === PW) {
-    saveId(ACTIV_USER.id);
-    sessionStorage.setItem("activeUserName", ACTIV_USER.name);
-    sessionStorage.setItem('justLoggedIn', 'true');
-    window.location.href = "./html/summary.html";
+  if (!ACTIV_USER || !(ACTIV_USER.password === PW)) {
+    showFailEntriesLogin();
+    return;
   }
+  saveSession(ACTIV_USER);
+  window.location.href = "./html/summary.html";
 }
 
 
 /**
- * Downloads the list of all users from the database 
- * and saves them into the global USERS array.
+ * Shows error styles if login fails.
+ */
+function showFailEntriesLogin() {
+  const MAIL = document.getElementById("email_input_login");
+  const PASSWORD_CONTAINER = document.getElementById("pw_container_login");
+  const PASSWORD = document.getElementById("pwInputLogin");
+  MAIL.classList.add("invalid-login");
+  PASSWORD.classList.add("invalid-login");
+  PASSWORD_CONTAINER.classList.add("invalid-login-pw");
+  changeLockToEye('pwInputLogin', 'lockLogin');
+}
+
+
+/**
+ * Loads all users from the server.
  */
 async function getUsers() {
   const RESPONSE = await fetch(USERS_URL());
@@ -240,38 +241,20 @@ async function getUsers() {
 
 
 /**
- * Saves the unique user ID into the browser's temporary storage (sessionStorage).
- * 
- * @param {string|number} id - The ID of the logged-in user.
+ * Saves user info to session storage.
+ * @param {Object} user - The active user.
  */
-function saveId(id) {
-  sessionStorage.setItem("user_id", id);
+function saveSession(user) {
+  sessionStorage.setItem("user_id", user.id);
+  sessionStorage.setItem("activeUserName", user.name);
+  sessionStorage.setItem("justLoggedIn", "true");
 }
 
 
 /**
- * Sets up all the event listeners for the password fields.
- * It listens for typing, clicking on icons, or leaving the input box.
- */
-function setupInputEvents() {
-  document.getElementById('pwInputLogIn').addEventListener('input', () => changeLockToEye('pwInputLogIn', 'lockLogIn'));
-  document.getElementById('pwInput').addEventListener('input', () => { changeLockToEye('pwInput', 'lock'); getPasswordElements(); });
-  document.getElementById('pwInputConfirm').addEventListener('input', () => { changeLockToEye('pwInputConfirm', 'lockConfirm'); getPasswordElements(); });
-  document.getElementById('lockLogIn').addEventListener('click', () => showPasswordInput('lockLogIn', 'pwInputLogIn'));
-  document.getElementById('lock').addEventListener('click', () => showPasswordInput('lock', 'pwInput'));
-  document.getElementById('lockConfirm').addEventListener('click', () => showPasswordInput('lockConfirm', 'pwInputConfirm'));
-  document.getElementById('pwInputLogIn').addEventListener('blur', () => resetPasswordVisibility('pwInputLogIn', 'lockLogIn'));
-  document.getElementById('pwInput').addEventListener('blur', () => resetPasswordVisibility('pwInput', 'lock'));
-  document.getElementById('pwInputConfirm').addEventListener('blur', () => resetPasswordVisibility('pwInputConfirm', 'lockConfirm'));
-}
-
-
-/**
- * Changes the input icon between a lock, an open eye, or a closed eye
- * depending on whether the user typed something or if the text is hidden.
- * 
- * @param {string} pwInputID - The ID of the password input box.
- * @param {string} iconID - The ID of the icon image.
+ * Changes the icon from lock to eye when typing.
+ * @param {string} pwInputID - ID of the password input.
+ * @param {string} iconID - ID of the icon image.
  */
 function changeLockToEye(pwInputID, iconID) {
   let inputPW = document.getElementById(pwInputID);
@@ -290,44 +273,21 @@ function changeLockToEye(pwInputID, iconID) {
 
 
 /**
- * Toggles the password visibility. If the password is hidden, it shows it.
- * If it is visible, it hides it again. It also changes the eye icon.
- * 
- * @param {string} iconID - The ID of the icon image.
- * @param {string} pwInputID - The ID of the password input box.
+ * Toggles between showing and hiding the password text.
+ * @param {string} inputID - ID of the input field.
+ * @param {string} icon - ID of the icon image.
  */
-function showPasswordInput(iconID, pwInputID) {
-  let input = document.getElementById(pwInputID);
-  let icon = document.getElementById(iconID);
-  const eyeOFF = "../assets/img/icons/input/visibility_off.svg";
+function showPasswordInput(inputID, icon) {
   const eyeON = "../assets/img/icons/input/visibility.svg";
-  if (input.type === 'password') {
-    input.type = 'text';
-    icon.src = eyeON;
-  } else {
-    input.type = 'password';
-    icon.src = eyeOFF;
-  }
-}
-
-
-/**
- * Resets the password input box back to hidden dots ('password' type)
- * and puts back the lock icon if the box is completely empty.
- * 
- * @param {string} pwInputID - The ID of the password input box.
- * @param {string} iconID - The ID of the icon image.
- */
-function resetPasswordVisibility(pwInputID, iconID) {
-  const input = document.getElementById(pwInputID);
-  const icon = document.getElementById(iconID);
-  const lockIcon = "../assets/img/icons/input/lock.svg";
   const eyeOFF = "../assets/img/icons/input/visibility_off.svg";
-  input.type = 'password';
-  if (input.value.length === 0) {
-    icon.src = lockIcon;
+  const input = document.getElementById(inputID);
+  const changeIcon = document.getElementById(icon);
+  if (input.type === "password") {
+    input.type = "text";
+    changeIcon.src = eyeON;
   } else {
-    icon.src = eyeOFF;
+    input.type = "password";
+    changeIcon.src = eyeOFF;
   }
 }
 
@@ -341,18 +301,30 @@ function clearAndResetForms() {
   const SIGNUP_FORM = document.getElementById("signup");
   LOGIN_FORM.reset();
   SIGNUP_FORM.reset();
-  resetPasswordVisibility('pwInputLogIn', 'lockLogIn');
+  resetPasswordVisibility('pwInputLogin', 'lockLogin');
   resetPasswordVisibility('pwInput', 'lock');
   resetPasswordVisibility('pwInputConfirm', 'lockConfirm');
 }
 
 
-
-
-
-
-
-
-
-
-
+/**
+ * Resets the password field to hidden and shows the lock icon.
+ * @param {string} pwInputID - ID of the input field.
+ * @param {string} iconID - ID of the icon image.
+ */
+function resetPasswordVisibility(pwInputID, iconID) {
+  const pwConfirmContainer = document.getElementById('pwConfirmSignup'); // Container suchen
+  const input = document.getElementById(pwInputID);
+  const icon = document.getElementById(iconID);
+  if (!input || !icon) return;
+  input.type = 'password';
+  if (input.value.length === 0) {
+    icon.src = "../assets/img/icons/input/lock.svg";
+    if (pwConfirmContainer) {
+      pwConfirmContainer.classList.remove('invalid-signup-pw');
+      pwConfirmContainer.classList.remove('success-signup-pw');
+    }
+  } else {
+    icon.src = "../assets/img/icons/input/visibility_off.svg";
+  }
+}
