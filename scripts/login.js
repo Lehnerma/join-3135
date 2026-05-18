@@ -62,7 +62,10 @@ function removeFade(container) {
  * @param {Event} event - The click event.
  */
 function toggleForms(event) {
-  event.preventDefault();
+  
+  if (event && typeof event.preventDefault === 'function') {
+    event.preventDefault();
+  };
   clearAndResetForms();
   SHOW_SIGNUP = !SHOW_SIGNUP;
   updateToggleUI();
@@ -73,14 +76,7 @@ function toggleForms(event) {
  * to show or hide the forms
  * @param {*} event -> to disable the reload for the switching
  */
-<<<<<<< HEAD
 function updateToggleUI() {
-=======
-function toggleForms(event) {
-  if (event && typeof event.preventDefault === 'function') {
-    event.preventDefault();
-  }
->>>>>>> main
   const LOGIN_FORM = document.getElementById("login");
   const SIGNUP_FORM = document.getElementById("signup");
   const NAV_LOGIN = document.getElementById("nav_login");
@@ -345,3 +341,4 @@ function resetPasswordVisibility(pwInputID, iconID) {
     icon.src = "../assets/img/icons/input/visibility_off.svg";
   }
 }
+
