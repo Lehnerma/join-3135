@@ -310,3 +310,9 @@ async function deleteTask(task) {
     console.error("Fehler beim Löschen des Tasks:", error);
   }
 }
+
+function openMoveTaskDialog(taskId) {
+  const MOVE_DIALOG = document.getElementById("move_task_dialog");
+  MOVE_DIALOG.addEventListener("click", closeMoveDialogOnBackdropClick);
+  MOVE_DIALOG.showModal();
+}

@@ -78,18 +78,18 @@
     }
   }
 
-    .nothing-found{
-      border: var(--faulty-entry-color) solid 1px;
+  .nothing-found {
+    border: var(--faulty-entry-color) solid 1px;
 
-      &::after {
-        content: "No Tasks found!";
-        position: absolute;
-        bottom: -20px;
-        left: 0;
-        color: var(--faulty-entry-color);
-        font-size: 16px;
-      }
+    &::after {
+      content: "No Tasks found!";
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      color: var(--faulty-entry-color);
+      font-size: 16px;
     }
+  }
 
   .btn--add {
     grid-area: head-add;
@@ -101,6 +101,8 @@
     font-weight: 700;
     border-radius: 10px;
   }
+
+
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr auto;
@@ -134,7 +136,8 @@
 
 .kanban-columns {
   display: grid;
-  grid-template-columns: repeat(4, minmax(252px, 300px)); /* evtl max wert anpassen */
+  grid-template-columns: repeat(4, minmax(252px, 300px));
+  /* evtl max wert anpassen */
   gap: 24px;
   padding: 0 16px;
   /* clamp(10px, 7vw, 64px) */
@@ -192,6 +195,7 @@
       overflow-x: hidden;
       overflow-y: visible;
     }
+
     .column-title h2 {
       font-size: 27px;
       color: var(--primary-color);
@@ -213,7 +217,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%; /*need for the sticky task */
+  height: 100%;
+  /*need for the sticky task */
   gap: 16px;
 
   padding: 8px 16px;
@@ -233,6 +238,7 @@
     align-items: flex-start;
     overflow-x: scroll;
     height: auto;
+
     .task {
       width: 252px;
     }
@@ -268,6 +274,7 @@
   /* width: clamp(200px, 30vw, 300px); */
   min-width: 220px;
   width: 100%;
+  position: relative;
 
   &:active {
     transition: transform 0.125s ease;
@@ -318,7 +325,8 @@
   color: #a8a8a8;
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  line-clamp: 2; /* Fallback für ältere Browser */
+  line-clamp: 2;
+  /* Fallback für ältere Browser */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -423,13 +431,33 @@
 }
 
 @media (min-width: 900px) {
+
   .task:last-child,
   .drag-placeholder:last-child,
   .no-task:last-child {
     position: sticky;
     top: 48px;
   }
+
   .column-title {
     padding: 0 16px 24px 16px;
+  }
+}
+
+.move-icon {
+  display: none;
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .move-icon {
+    display: block;
+    height: 20px;
+    width: 20px;
+    top: 16px;
+    right: 16px;
+    cursor: pointer;
   }
 }
