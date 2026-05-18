@@ -112,7 +112,7 @@ function guestLogin() {
   window.location.href = "./html/summary.html";
   sessionStorage.setItem("user_id", "guest");
   sessionStorage.setItem("activeUserName", "Guest");
-  sessionStorage.setItem('justLoggedIn', 'true');
+  sessionStorage.setItem("justLoggedIn", "true");
 }
 
 
@@ -122,8 +122,7 @@ function guestLogin() {
  */
 async function creatUser(ev) {
   ev.preventDefault();
-  const arePwTrue = getPasswordElements();
-  if (!arePwTrue) {
+  if (!verifyPassword()) {
     return;
   }
   const FORM = new FormData(ev.target);
@@ -132,47 +131,32 @@ async function creatUser(ev) {
   await pushUser(NEW_USER);
   ev.target.reset();
   toggleForms(ev);
-  console.log(ev.target);
 }
 
-
 /**
- * Finds the password input boxes and the error message text on the web page.
- * It gets the typed text from them so they can be compared.
+ * Verifies that the password and confirm password fields match.
+ * @returns {boolean} - true if passwords match, false otherwise
  */
-function getPasswordElements() {
-  const pwInput = document.getElementById('pwInput');
-  const pwInputConfirm = document.getElementById('pwInputConfirm');
-  const pw = pwInput.value;
-  const pwConfirm = pwInputConfirm.value;
-  const errorMessage = document.getElementById('signup-error');
-  comparePWAndPWConfirm(pwInput, pwInputConfirm, pw, pwConfirm, errorMessage);
+function verifyPassword() {
+  const password = document.getElementById("pwInput");
+  const confirmPassword = document.getElementById("pwInputConfirm");
+  return password.value === confirmPassword;
 }
-
 
 /**
-* Compares the first password with the second password.
-* Turns the error message and the border colors (green or red) on or off depending on the result.
-* 
-* @returns {boolean} Returns "true" if both passwords are exactly the same. Returns "false" if they do not match or if the second box is still empty.
-*/
-function comparePWAndPWConfirm(pwInput, pwInputConfirm, pw, pwConfirm, errorMessage) {
-  errorMessage.classList.add('hidden');
-  pwInputConfirm.classList.remove('input-border-green', 'input-border-red');
-  if (pwConfirm.length === 0) return false;
-
-  if (pw === pwConfirm) {
-    pwInputConfirm.classList.add('input-border-green');
-    return true;
+ * Validates that both password input fields match and updates the UI accordingly.
+ * Adds an error class if passwords don't match, removes it if they do.
+ */
+function confirmPassword() {
+  const password = document.getElementById("pwInput");
+  const confoirmPassword = document.getElementById("pwInputConfirm");
+  const confirmPasswordContainer = document.querySelector("#pwConfirmSignup");
+  if (password.value !== confoirmPassword.value) {
+    confirmPasswordContainer.classList.add("invalid-signup-pw");
+  } else {
+    confirmPasswordContainer.classList.remove("invalid-signup-pw");
   }
-  if (pwConfirm.length >= pw.length) {
-    errorMessage.classList.remove('hidden');
-    pwInputConfirm.classList.add('input-border-red');
-  }
-  return false;
 }
-
-
 /**
  * To generate a unique id for evry user witch is create from the time
  * @returns -> uniqe id
@@ -219,63 +203,48 @@ async function loginUser(ev) {
   const PW = FORM.get("password");
   await getUsers();
   const ACTIV_USER = USERS.find((u) => u.email == EMAIL);
-  if (ACTIV_USER.password === PW) {
-    saveId(ACTIV_USER.id);
-    sessionStorage.setItem("activeUserName", ACTIV_USER.name);
-    sessionStorage.setItem('justLoggedIn', 'true');
-    window.location.href = "./html/summary.html";
+  if (!ACTIV_USER || !(ACTIV_USER.password === PW)) {
+    showFailEntriesLogin();
+    return;
   }
+  saveSession(ACTIV_USER);
+  window.location.href = "./html/summary.html";
 }
 
+function showFailEntriesLogin() {
+  const MAIL = document.getElementById("email_input_login");
+  const PASSWORD_CONTAINER = document.getElementById("pw_container_login");
+  const PASSWORD = document.getElementById("pw_input_login");
+  MAIL.classList.add("invalid-login");
+  PASSWORD.classList.add("invalid-login");
+  PASSWORD_CONTAINER.classList.add("invalid-login-pw");
+}
 
-/**
- * Downloads the list of all users from the database 
- * and saves them into the global USERS array.
- */
 async function getUsers() {
   const RESPONSE = await fetch(USERS_URL());
   const RESULT = await RESPONSE.json();
   USERS = Object.values(RESULT);
 }
 
-
-/**
- * Saves the unique user ID into the browser's temporary storage (sessionStorage).
- * 
- * @param {string|number} id - The ID of the logged-in user.
- */
-function saveId(id) {
-  sessionStorage.setItem("user_id", id);
+function saveSession(user) {
+  sessionStorage.setItem("user_id", user.id);
+  sessionStorage.setItem("activeUserName", user.name);
+  sessionStorage.setItem("justLoggedIn", "true");
 }
 
-
-/**
- * Sets up all the event listeners for the password fields.
- * It listens for typing, clicking on icons, or leaving the input box.
- */
-function setupInputEvents() {
-  document.getElementById('pwInputLogIn').addEventListener('input', () => changeLockToEye('pwInputLogIn', 'lockLogIn'));
-  document.getElementById('pwInput').addEventListener('input', () => { changeLockToEye('pwInput', 'lock'); getPasswordElements(); });
-  document.getElementById('pwInputConfirm').addEventListener('input', () => { changeLockToEye('pwInputConfirm', 'lockConfirm'); getPasswordElements(); });
-  document.getElementById('lockLogIn').addEventListener('click', () => showPasswordInput('lockLogIn', 'pwInputLogIn'));
-  document.getElementById('lock').addEventListener('click', () => showPasswordInput('lock', 'pwInput'));
-  document.getElementById('lockConfirm').addEventListener('click', () => showPasswordInput('lockConfirm', 'pwInputConfirm'));
-  document.getElementById('pwInputLogIn').addEventListener('blur', () => resetPasswordVisibility('pwInputLogIn', 'lockLogIn'));
-  document.getElementById('pwInput').addEventListener('blur', () => resetPasswordVisibility('pwInput', 'lock'));
-  document.getElementById('pwInputConfirm').addEventListener('blur', () => resetPasswordVisibility('pwInputConfirm', 'lockConfirm'));
+function logInChangeLockToEye() {
+  const pwInputLogIn = document.getElementById("pwInputLogIn");
+  const lockLogIn = document.getElementById("lockLogIn");
+  const lockIcon = "../assets/img/icons/input/lock.svg";
+  const eyeIcon = "../assets/img/icons/input/visibility_off.svg";
+  lockLogIn.src = pwInputLogIn.value.length > 0 ? eyeIcon : lockIcon;
 }
 
-
-/**
- * Changes the input icon between a lock, an open eye, or a closed eye
- * depending on whether the user typed something or if the text is hidden.
- * 
- * @param {string} pwInputID - The ID of the password input box.
- * @param {string} iconID - The ID of the icon image.
- */
-function changeLockToEye(pwInputID, iconID) {
-  let inputPW = document.getElementById(pwInputID);
-  let lock = document.getElementById(iconID);
+function signUpChangeLockToEye() {
+  const pwInput = document.getElementById("pwInput");
+  const lock = document.getElementById("lock");
+  const pwInputConfirm = document.getElementById("pwInputConfirm");
+  const lockConfirm = document.getElementById("lockConfirm");
   const lockIcon = "../assets/img/icons/input/lock.svg";
   const eyeOFF = "../assets/img/icons/input/visibility_off.svg";
   const eyeON = "../assets/img/icons/input/visibility.svg";
@@ -323,36 +292,13 @@ function resetPasswordVisibility(pwInputID, iconID) {
   const icon = document.getElementById(iconID);
   const lockIcon = "../assets/img/icons/input/lock.svg";
   const eyeOFF = "../assets/img/icons/input/visibility_off.svg";
-  input.type = 'password';
-  if (input.value.length === 0) {
-    icon.src = lockIcon;
+  const input = document.getElementById(inputID);
+  const changeIcon = document.getElementById(icon);
+  if (input.type === "password") {
+    input.type = "text";
+    changeIcon.src = eyeON;
   } else {
-    icon.src = eyeOFF;
+    input.type = "password";
+    changeIcon.src = eyeOFF;
   }
 }
-
-
-/**
- * Clears all text from both the login and signup forms
- * and resets all password icons back to their original state.
- */
-function clearAndResetForms() {
-  const LOGIN_FORM = document.getElementById("login");
-  const SIGNUP_FORM = document.getElementById("signup");
-  LOGIN_FORM.reset();
-  SIGNUP_FORM.reset();
-  resetPasswordVisibility('pwInputLogIn', 'lockLogIn');
-  resetPasswordVisibility('pwInput', 'lock');
-  resetPasswordVisibility('pwInputConfirm', 'lockConfirm');
-}
-
-
-
-
-
-
-
-
-
-
-

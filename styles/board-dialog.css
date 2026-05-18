@@ -7,17 +7,28 @@
   }
 }
 
-.dialog-slide-in {
+@keyframes slideToRight {
+  from {
+    transform: translate(-50%, -50%);
+  }
+  to {
+    transform: translate(90%, -50%);
+  }
+}
+
+.slide-in {
   animation: slideFromRight 175ms ease-in-out forwards;
+}
+
+.slide-out {
+  animation: slideToRight 175ms ease-in-out forwards;
 }
 
 .dialog {
   background-color: white;
   border: none;
   border-radius: 30px;
-  width: 100%;
-  max-width: 525px;
-  max-height: 95vh;
+
   padding: 48px 40px;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
   z-index: 11;
@@ -27,8 +38,23 @@
   transform: translate(-50%, -50%);
 }
 
+.dialog--task {
+  width: 100%;
+  max-width: 525px;
+  max-height: 95vh;
+}
+
+.dialog--add {
+  width: 100%;
+  max-width: 870px;
+}
+
 .dialog .slide-in {
   animation: slideFromRight 175ms ease-in-out forwards;
+}
+
+.dialog .slide-out {
+  animation: slideToRight 175ms ease-in-out forwards;
 }
 
 .dialog::backdrop {
@@ -188,21 +214,53 @@
   min-height: 0;
 }
 
-
-
-
-
-.d-none {
-  display: none;
+.dialog-add-headline {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: row-reverse;
+  h1 {
+    font-size: 47px;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+  }
 }
 
-.dialog {
+/* ── Task Created Toast ───────────────────────────────── */
+
+.taskCreatedToast {
+  display: none;
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 24px;
+  align-items: center;
+  gap: 16px;
+  background: var(--primary-color);
+  color: white;
+  padding: 20px 32px;
   border-radius: 20px;
-  z-index: 1000;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.taskCreatedToast--visible {
+  display: flex;
+  animation: slideFromRight 175ms ease-in-out forwards;
+}
+
+.taskCreatedToast--hidden {
+  display: flex;
+  animation: slideToRight 175ms ease-in-out forwards;
+}
+
+.taskCreatedToast__icon {
+  width: 20px;
+  height: 20px;
+}
+
+.taskCreatedToast__text {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
 }
