@@ -35,8 +35,8 @@
           </div>
 
           <div class="input--section" id="pw_container_login">
-            <input id="pw_input_login" class="input" oninput="logInChangeLockToEye()" type="password" name="password" placeholder="Password" pattern="[a-zA-Z0-9]{3,}" title="Password must be at least 3 characters long and contain only letters and numbers." required />
-            <img id="lockLogIn" onclick="showPasswordInput('pwInputLogIn', 'lockLogIn')" src="./assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
+            <input id="pwInputLogin" class="input" oninput="changeLockToEye('pwInputLogin','lockLogin')" type="password" name="password" placeholder="Password" pattern="[a-zA-Z0-9]{3,}" title="Password must be at least 3 characters long and contain only letters and numbers." required />
+            <img id="lockLogin" onclick="showPasswordInput('pwInputLogin', 'lockLogin')" src="./assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
           </div>
         </section>
 
@@ -64,15 +64,19 @@
             </div>
 
             <div class="input--section">
-              <input class="input input_signup" id="pwInput" oninput="signUpChangeLockToEye()" type="password" name="password" placeholder="Password" pattern="[a-zA-Z0-9]{3,}" title="Password must be at least 3 characters long and contain only letters and numbers." required />
+              <input class="input input_signup" id="pwInput" oninput=" confirmPassword(); changeLockToEye('pwInput','lock' )" type="password" name="password" placeholder="Password" pattern="[a-zA-Z0-9]{3,}" title="Password must be at least 3 characters long and contain only letters and numbers." required />
               <img class="input--icon" id="lock" onclick="showPasswordInput('pwInput', 'lock')" src="../assets/img/icons/input/lock.svg" alt="lock icon" />
             </div>
 
             <div class="input--section" id="pwConfirmSignup">
-              <input class="input input_signup" id="pwInputConfirm" oninput="signUpChangeLockToEye()" onchange="confirmPassword()" type="password" name="password" placeholder="Confirm Password" pattern="[a-zA-Z0-9]{3,}" title="Password must be at least 3 characters long and contain only letters and numbers." required />
+              <input class="input input_signup" id="pwInputConfirm" oninput=" confirmPassword(); changeLockToEye('pwInputConfirm', 'lockConfirm')" type="password" name="password" placeholder="Confirm Password" pattern="[a-zA-Z0-9]{3,}" title="Password must be at least 3 characters long and contain only letters and numbers." required />
               <img class="input--icon" id="lockConfirm" onclick="showPasswordInput('pwInputConfirm', 'lockConfirm')" src="../assets/img/icons/input/lock.svg" alt="lock icon" />
             </div>
           </section>
+         
+<div class="success-message dnone" id="success_message">
+  <span>You Signed Up successfully</span>
+</div>
 
           <div class="privacy-content">
             <input class="input_signup" title=" Please accept the Privacy policy " type="checkbox" id="privacy" name="privacy" required />

@@ -1,31 +1,22 @@
-const contactColors = {
-  A: 'rgba(147, 39, 255, 1)',
-  B: 'rgba(110, 82, 255, 1)',
-  C: 'rgba(252, 113, 255, 1)',
-  D: 'rgba(255, 187, 43, 1)',
-  E: 'rgba(31, 215, 193, 1)',
-  F: 'rgba(70, 47, 138, 1)',
-  G: 'rgba(255, 70, 70, 1)',
-  H: 'rgba(0, 190, 232, 1)',
-  I: 'rgba(42, 61, 89, 1)',
-  J: 'rgba(255, 94, 179, 1)',
-  K: 'rgba(255, 116, 94, 1)',
-  L: 'rgba(255, 163, 94, 1)',
-  M: 'rgba(255, 199, 1, 1)',
-  N: 'rgba(0, 56, 255, 1)',
-  O: 'rgba(195, 255, 43, 1)',
-  P: 'rgba(255, 230, 43, 1)',
-  Q: 'rgba(255, 70, 150, 1)',
-  R: 'rgba(0, 150, 130, 1)',
-  S: 'rgba(255, 120, 0, 1)',
-  T: 'rgba(0, 120, 255, 1)',
-  U: 'rgba(180, 40, 40, 1)',
-  V: 'rgba(100, 200, 0, 1)',
-  W: 'rgba(150, 0, 255, 1)',
-  X: 'rgba(0, 255, 200, 1)',
-  Y: 'rgba(200, 150, 0, 1)',
-  Z: 'rgba(120, 120, 120, 1)'
-};
+const contactColors = [
+  'rgba(255, 122, 0, 1)',
+  'rgba(147, 39, 255, 1)',
+  'rgba(110, 82, 255, 1)',
+  'rgba(252, 113, 255, 1)',
+  'rgba(255, 187, 43, 1)',
+  'rgba(31, 215, 193, 1)',
+  'rgba(70, 47, 138, 1)',
+  'rgba(255, 70, 70, 1)',
+  'rgba(0, 190, 232, 1)',
+  'rgba(42, 61, 89, 1)',
+  'rgba(255, 94, 179, 1)',
+  'rgba(255, 116, 94, 1)',
+  'rgba(255, 163, 94, 1)',
+  'rgba(255, 199, 1, 1)',
+  'rgba(0, 56, 255, 1)',
+  'rgba(195, 255, 43, 1)',
+  'rgba(255, 230, 43, 1)'
+];
 
 const alphabet = [
   "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
@@ -66,6 +57,10 @@ async function getUsers() {
   for (let key in RESULT) {
     let person = RESULT[key];
     person.firebaseKey = key;
+    if (!person.color) {
+      person.color = contactColors[Math.floor(Math.random() * contactColors.length)];
+      updateFirebaseContact(key, { color: person.color });
+    }
     USERS.push(person);
   }
   sortUserContactList();
@@ -120,9 +115,9 @@ function userContectList() {
 function getSingleUser(user, i) {
   let initials = getInitials(user.name);
   const firstLetter = user.name.charAt(0).toUpperCase();
-  let color = contactColors[firstLetter];
-  return renderSingleUserHtmlTpl(user, i, initials, color);
+  return renderSingleUserHtmlTpl(user, i, initials, user.color);
 }
+
 
 /**
  * Extracts the initials from a name (first and last name).
@@ -173,8 +168,7 @@ function addEditContactDetails(editUserIndex) {
   let user = USERS[editUserIndex];
   let initials = getInitials(user.name);
   let firstLetter = user.name.charAt(0).toUpperCase();
-  let color = contactColors[firstLetter];
-  openEditDialog(editUserIndex, initials, color);
+  openEditDialog(editUserIndex, initials, user.color);
 }
 
 /**
@@ -317,8 +311,7 @@ function checkDetailAnimation() {
 function addShowDetails() {
   const initials = getInitials(user.name);
   const firstLetter = user.name.charAt(0).toUpperCase();
-  const color = contactColors[firstLetter];
-  return renderShowDetailsTpl(user, editUserIndex, initials, color);
+  return renderShowDetailsTpl(user, editUserIndex, initials, user.color);
 }
 
 /**
@@ -333,7 +326,8 @@ function createContact() {
     name: name,
     email: email,
     phone: phone,
-    id: id
+    id: id,
+    color: contactColors[Math.floor(Math.random() * contactColors.length)]
   });
   addNewContact(newContact);
 }
@@ -431,6 +425,7 @@ function showSuccessBanner() {
   }, 900);
 }
 
+
 /**
  * Saves the edited data of a contact and updates the view.
  * @param {number} index - The index of the user to be saved.
@@ -442,6 +437,7 @@ async function saveNewContactData(index) {
     name: document.getElementById('editName').value,
     email: document.getElementById('editEmail').value,
     phone: document.getElementById('editPhone').value,
+    color: user.color
   };
   const response = await updateFirebaseContact(key, updatedData);
   if (response.ok) {

@@ -3,6 +3,7 @@ body {
   min-height: 100vh;
   grid-template-rows: 150px 1fr 80px;
   align-content: start;
+  align-content: start;
   background-color: var(--main-bg);
 }
 
@@ -48,6 +49,10 @@ body {
 
 .logo-animation {
   animation: slide-diagonal 0.7s ease-in-out 0.3s forwards;
+}
+
+input {
+  cursor: pointer;
 }
 
 @keyframes slide-diagonal {
@@ -163,6 +168,13 @@ body {
   opacity: 1;
 }
 
+.error-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+}
+
 
 .login-buttons {
   display: flex;
@@ -258,6 +270,52 @@ body {
   transform: scale(1.05);
 }
 
+.success-message {
+  background-color: var(--primary-color);
+  height: 74px;
+  width: 312px;
+  border-radius: 20px;
+  margin: 0 auto;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  left: 50%;
+  bottom: -100px;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & span {
+    color: var(--third-text-color);
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+}
+
+.show-animation {
+  animation: slideUpAndStay 0.5s ease-out forwards;
+}
+
+@keyframes slideUpAndStay {
+  0% { 
+    bottom: -100px; 
+  }
+  100% { 
+    bottom: 50%; 
+    transform: translate(-50%, 50%); 
+  }
+}
+
+.dim-background {
+  transition: background-color 0.5s ease;
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+
 @media (max-width: 600px) {
   body {
     opacity: 1;
@@ -329,8 +387,9 @@ body {
   }
 
   .form--container {
-    padding: 16px;
+    margin: 32px;
     width: 90%;
+    padding: 16px;
   }
 
   .form--title h1 {
@@ -358,4 +417,14 @@ body {
     gap: 32px;
     margin-bottom: 20px;
   }
+  
+@media(max-width:418px) {
+  .form--container {
+    gap: 52px;
+  }
+
+  .input--container-wrapper {
+    gap: 170px;
+  }
+}
 }

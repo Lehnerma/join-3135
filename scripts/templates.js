@@ -99,7 +99,9 @@ function getNoTasksTemplate(status) {
 function getTaskCardTemplet(title, description, category, id, priority) {
   return `
 <li class="task" onclick="openTaskDetailDialog(${id})" draggable="true" ondragstart="taskDragStart(event, ${id})" data-id=${id}>
-  <article class="task--card">
+ <img src="../assets/img/icons/general/double-arrow.svg" alt="Move Arrows" class="move-icon" onclick="openMoveTaskDialog(${id})">  
+<article class="task--card">
+ 
     <header>
       <span class="task--category-label ${toClassName(category)}">${category}</span>
     </header>
