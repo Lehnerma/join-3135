@@ -133,8 +133,8 @@
 
 input:focus {
   outline-color: var(--secondary-color);
-
-}
+  
+} 
 
 .input {
   font-size: 20px;
@@ -199,10 +199,11 @@ input:focus {
     bottom: -48px;
   }
 }
+
 @media (max-width:418px) {
   .invalid-signup-pw::after {
     bottom: -48px;
-    
+
   }
 }
 
