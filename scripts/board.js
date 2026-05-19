@@ -158,6 +158,7 @@ function renderNoTasksElemt(status) {
 function taskDragStart(ev, id) {
   DRAG_ID = id;
   DRAG_HEIGHT = ev.currentTarget.offsetHeight;
+  ev.currentTarget.classList.add("task--dragging");
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   DRAG_OLD_STATUS = ALL_TASKS.find((el) => el.id === id)?.status;
 }
@@ -205,6 +206,7 @@ function columnDragLeave(ev) {
 //drag drop
 function taskDragDrop(status) {
   document.querySelectorAll(".drag-placeholder").forEach((el) => el.remove());
+  document.querySelectorAll(".task--dragging").forEach((el) => el.classList.remove("task--dragging"));
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const CURRENT_TASK = ALL_TASKS.find((el) => el.id === DRAG_ID);
   if (!CURRENT_TASK || CURRENT_TASK.status === status) return;
