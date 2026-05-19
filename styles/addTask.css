@@ -61,6 +61,7 @@ main {
 
 .priority-group {
   display: flex;
+  justify-content: space-evenly;
   gap: 10px;
   margin-bottom: 10px;
 }
@@ -68,8 +69,9 @@ main {
 .btn--prio {
   /* flex: 1; */
   height: 41px;
-  min-width: 50px;
-  max-width: 120px;
+  width: clamp(90px, calc(76.857px + 4.107vw), 136px);
+  /* min-width: 50px;
+  max-width: 120px; */
   padding: 8px;
   border: 1px solid var(--border-color);
   border-radius: 10px;
@@ -122,7 +124,7 @@ main {
 
 .img-prio {
   margin-left: 8px;
-  width: 20px;
+  width: clamp(16px, calc(14.857px + 0.357vw), 20px);
   height: auto;
 }
 

@@ -29,6 +29,8 @@
 .btn--add {
   background-color: var(--primary-color);
   color: white;
+  padding: 10px;
+  font-weight: 700;
 
   &:hover {
     background-color: var(--secondary-color);
@@ -39,6 +41,12 @@
   &:active {
     background-color: var(--btn-click-color);
     box-shadow: var(--btn-shadow-main);
+  }
+
+  & img {
+    filter: brightness(0) invert(1);
+    height: 16px;
+    width: auto;
   }
 }
 
@@ -133,8 +141,8 @@
 
 input:focus {
   outline-color: var(--secondary-color);
-  
-} 
+
+}
 
 .input {
   font-size: 20px;

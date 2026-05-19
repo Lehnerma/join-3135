@@ -31,7 +31,7 @@
   border: none;
   border-radius: 30px;
 
-  padding: 48px 40px;
+  padding: clamp(4px, calc(-8.571px + 3.929vw), 48px) clamp(8px, calc(-1.143px + 2.857vw), 40px);
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
   z-index: 11;
 
@@ -41,7 +41,7 @@
 }
 
 .dialog--task {
-  width: 100%;
+  width: clamp(310px, calc(228.571px + 25.446vw), 595px);
   max-width: 525px;
   max-height: 95vh;
 }
@@ -212,6 +212,8 @@
 .edit-task--header,
 .edit-task--footer {
   display: flex;
+  justify-content: flex-end;
+  margin-bottom: clamp(8px, calc(5.714px + 0.714vw), 16px);
 }
 
 .edit-task--header {
