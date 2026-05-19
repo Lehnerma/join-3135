@@ -28,8 +28,8 @@ function openMoveTaskDialog(event, taskId, btn) {
 
   const targets = MOVE_TARGETS[TASK.status] ?? [];
   const dropdown = buildMoveDropdown(taskId, targets);
-  positionDropdown(dropdown, btn);
   document.body.appendChild(dropdown);
+  positionDropdown(dropdown, btn);
 
   setTimeout(() => document.addEventListener("click", closeMoveDropdownOnOutside), 0);
   document.addEventListener("scroll", closeMoveDropdown, { capture: true, once: true });
@@ -43,11 +43,17 @@ function buildMoveDropdown(taskId, targets) {
   return element;
 }
 
+/**
+ * Positions the dropdown for setting the next status relative to the button.
+ * @param {HTMLElement} dropdown - The dropdown element to position.
+ * @param {HTMLElement} btn - The button element to position relative to.
+ */
 function positionDropdown(dropdown, btn) {
   const rect = btn.getBoundingClientRect();
-  dropdown.style.top = `${rect.bottom + 8}px`;
-  dropdown.style.left = `${rect.left + rect.width / 2}px`;1
-  dropdown.style.transform = "translateX(-50%)";
+  dropdown.style.top = `${rect.bottom - 24}px`;
+
+  const overflowsRight = rect.left + dropdown.offsetWidth > window.innerWidth - 8;
+  dropdown.style.left = overflowsRight ? `${rect.right - dropdown.offsetWidth + 24}px` : `${rect.left}px`;
 }
 
 function getMoveDropdownTemplate(taskId, targets) {
