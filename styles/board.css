@@ -153,6 +153,7 @@
     position: sticky;
     top: 0;
     background-color: var(--main-bg);
+    z-index: 11;
 
     h2 {
       font-size: 20px;
