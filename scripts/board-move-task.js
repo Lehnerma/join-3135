@@ -1,7 +1,7 @@
 const STATUS_LABELS = {
-  todo: "To do",
-  progress: "In Progress",
-  feedback: "Await feedback",
+  todo: "To-do",
+  progress: "Progress",
+  feedback: "Feedback",
   done: "Done",
 };
 
