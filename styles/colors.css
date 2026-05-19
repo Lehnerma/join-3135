@@ -52,7 +52,7 @@
   /* input */
   --input-text-color: rgba(255, 255, 255, 1);
   /*input text color*/
-  --input-default-main: rgba(209, 209, 209, 1);
+  --input-default-main: rgba(209, 209, 209,1);
   --input-required: rgba(255, 129, 144, 1);
   --subtask-edit-border: rgba(151, 71, 255, 1);
   --success-input-pw:rgba(40, 167, 69, 1);

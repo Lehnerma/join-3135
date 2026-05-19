@@ -200,11 +200,11 @@ function getDetailTaskTemplate(task) {
     </footer>`;
 }
 
-function getDetailSubtaskTemplate(title, checked = false) {
+function getDetailSubtaskTemplate(title, checked = false, id) {
   return `
     <li class="detail-task--subtask-item f-row">
-      <input type="checkbox" class="detail-task--subtask-checkbox"${checked ? " checked" : ""} />
-      <p class="detail-task--subtask-text">${title}</p>
+      <input type="checkbox" id="sub_check${id}" class="detail-task--subtask-checkbox"${checked ? " checked" : ""} />
+      <label for="sub_check${id}" class="detail-task--subtask-text">${title}</label>
     </li>`;
 }
 

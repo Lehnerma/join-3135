@@ -41,6 +41,9 @@ function triggerAnimations() {
   const FOOTER_LOGIN = document.querySelector(".footer-login");
   JOIN_LOGO.classList.add("logo-animation");
   FORM_CONTAINER.classList.add("fade-in");
+  if (window.innerWidth <= 600) {
+    FORM_CONTAINER.classList.add("mobile-fade-in");
+  }
   NAV_LOGIN.classList.add("fade-in");
   FOOTER_LOGIN.classList.add("fade-in");
 }
@@ -62,7 +65,6 @@ function removeFade(container) {
  * @param {Event} event - The click event.
  */
 function toggleForms(event) {
-  
   if (event && typeof event.preventDefault === 'function') {
     event.preventDefault();
   };
@@ -83,13 +85,13 @@ function updateToggleUI() {
   const NAV_PHONE = document.getElementById("phone_signup");
   LOGIN_FORM.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
   SIGNUP_FORM.classList[SHOW_SIGNUP ? "remove" : "add"]("dnone");
-  if (window.innerWidth > 600) {
+  if (NAV_LOGIN) {
     NAV_LOGIN.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
-  } if (window.innerWidth < 600) {
+  } if (NAV_PHONE) {
     NAV_PHONE.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
   }
   removeFade(LOGIN_FORM);
-  removeFade(NAV_LOGIN);
+  if (NAV_LOGIN) removeFade(NAV_LOGIN);
   setRequired(SHOW_SIGNUP);
 }
 
@@ -131,9 +133,12 @@ async function creatUser(ev) {
   const FORM = new FormData(ev.target);
   const NEW_USER = Object.fromEntries(FORM.entries());
   NEW_USER.id = generateId();
-  pushUser(NEW_USER);
-  ev.target.reset();
-  toggleForms(ev);
+  await pushUser(NEW_USER);
+  successMessage();
+  setTimeout(() => {
+    toggleForms();
+    ev.target.reset();
+  }, 1200);
 }
 
 
@@ -342,3 +347,17 @@ function resetPasswordVisibility(pwInputID, iconID) {
   }
 }
 
+/**
+ * Shows a success message banner and a dark background shadow.
+ * Both elements disappear automatically after 1.6 seconds.
+ */
+function successMessage() {
+  const banner = document.getElementById('success_message');
+  const dim = document.getElementById('dim'); 
+  banner.classList.add('show-animation');
+  dim.classList.remove('dnone');
+  setTimeout(() => {
+    banner.classList.remove('show-animation');
+    dim.classList.add('dnone');
+  }, 1200);
+}
