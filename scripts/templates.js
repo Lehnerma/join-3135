@@ -102,7 +102,7 @@ function getTaskCardTemplet(title, description, category, id, priority) {
   <article class="task--card">
     <header class="task--header">
       <span class="task--category-label ${toClassName(category)}">${category}</span>
-      <button type="button" class="btn task--status-move" onclick="openMoveTaskDialog(${id})">
+      <button type="button" class="btn task--status-move" onclick="openMoveTaskDialog(event, ${id}, this)">
         <img src="../assets/img/icons/general/double-arrow.svg" alt="Move Arrows" class="move-icon">
       </button>
     </header>

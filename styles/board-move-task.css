@@ -1,0 +1,65 @@
+/* =============================================
+   MOVE TASK DROPDOWN
+   ============================================= */
+
+.moveTaskDropdown {
+  position: fixed;
+  z-index: 100;
+  background-color: #2a3647;
+  border-radius: 20px;
+  padding: 12px 0;
+  min-width: 160px;
+  box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.15);
+}
+
+.moveTaskDropdown__label {
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0 16px 8px;
+  margin: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.moveTaskDropdown__list {
+  list-style: none;
+  padding: 4px 0 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.moveTaskDropdown__btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  border-radius: 0;
+  text-align: left;
+  transition: background-color 120ms ease;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  &:active {
+    background-color: rgba(255, 255, 255, 0.18);
+  }
+}
+
+.moveTaskDropdown__arrow {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) invert(1);
+  flex-shrink: 0;
+}
