@@ -428,7 +428,7 @@
   .drag-placeholder:last-child,
   .no-task:last-child {
     position: sticky;
-    top: 48px;
+    top: 56px;
   }
 
   .column-title {

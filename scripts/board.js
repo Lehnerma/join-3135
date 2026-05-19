@@ -183,6 +183,7 @@ function getDragAfterElement(list, y) {
 
 function columnDragOver(ev, status) {
   ev.preventDefault();
+  if (status === DRAG_OLD_STATUS) return;
   const LIST = document.getElementById(status + "_list");
   LIST.querySelector(".no-task")?.style.setProperty("display", "none");
 
