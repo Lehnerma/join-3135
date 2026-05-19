@@ -41,6 +41,9 @@ function triggerAnimations() {
   const FOOTER_LOGIN = document.querySelector(".footer-login");
   JOIN_LOGO.classList.add("logo-animation");
   FORM_CONTAINER.classList.add("fade-in");
+  if (window.innerWidth <= 600) {
+    FORM_CONTAINER.classList.add("mobile-fade-in");
+  }
   NAV_LOGIN.classList.add("fade-in");
   FOOTER_LOGIN.classList.add("fade-in");
 }
