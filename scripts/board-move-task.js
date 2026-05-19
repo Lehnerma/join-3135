@@ -32,6 +32,7 @@ function openMoveTaskDialog(event, taskId, btn) {
   document.body.appendChild(dropdown);
 
   setTimeout(() => document.addEventListener("click", closeMoveDropdownOnOutside), 0);
+  document.addEventListener("scroll", closeMoveDropdown, { capture: true, once: true });
 }
 
 function buildMoveDropdown(taskId, targets) {
@@ -45,7 +46,7 @@ function buildMoveDropdown(taskId, targets) {
 function positionDropdown(dropdown, btn) {
   const rect = btn.getBoundingClientRect();
   dropdown.style.top = `${rect.bottom + 8}px`;
-  dropdown.style.left = `${rect.left + rect.width / 2}px`;
+  dropdown.style.left = `${rect.left + rect.width / 2}px`;1
   dropdown.style.transform = "translateX(-50%)";
 }
 
