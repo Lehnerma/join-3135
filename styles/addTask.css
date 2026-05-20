@@ -36,10 +36,10 @@ main {
   padding: 8px 0;
 }
 
-.input:user-invalid,
+/* .input:user-invalid,
 .form--select:user-invalid:user-invalid {
   border: 1px solid red;
-}
+} */
 
 .field-error {
   display: none;
@@ -48,10 +48,10 @@ main {
   margin-top: 4px;
 }
 
-.input:user-invalid~.field-error,
+/* .input:user-invalid~.field-error,
 .form--select:user-invalid~.field-error {
-  display: block;
-}
+  display: block; 
+} */
 
 .column {
   display: flex;

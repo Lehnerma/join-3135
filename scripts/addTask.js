@@ -73,7 +73,6 @@ function loadUsers() {
     .then((response) => response.json())
     .then((data) => {
       remoteUsers = Object.values(data);
-      console.log("Firebase remoteUsers :", data);
       fillUserDropdown(data);
     })
     .catch((error) => console.error("Fehler beim Laden der Benutzer:", error));
@@ -405,22 +404,43 @@ function saveSubtask(li) {
  * Sends the new task object to the database and forwards it to the board.
  */
 async function createTask() {
+  const title = document.getElementById("title");
+  const dueDate = document.getElementById("dueDate");
+  const category = document.getElementById("category");
+
+  if (
+    !title.value.trim() ||
+    !dueDate.value ||
+    !category.value
+  ) {
+    alert("Please fill all required fields");
+    return;
+  }
+
   const task = buildTaskObj();
+
   try {
     const response = await fetch(ADDTASK_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify(task)
     });
+
     if (response.ok) {
-      const toast = document.getElementById("toast");
-      if (toast) toast.classList.add("show");
+      const toast =
+        document.getElementById("toast");
+
+      toast?.classList.add("show");
+
       setTimeout(() => {
-        window.location.href = "board.html";
+        window.location.href =
+          "board.html";
       }, 2000);
     }
   } catch (error) {
-    console.error("Fehler beim Speichern:", error);
+    console.error(error);
   }
 }
 

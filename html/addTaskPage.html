@@ -21,7 +21,7 @@
   <!-- <script src="../scripts/subtask.js"></script> -->
 </head>
 
-<body class="app" onload="(init(), initUtilitys(), subtaskInit())">
+<body class="app" onload="(init(), initUtilitys())">
   <header class="app--title">
     <h1 class="app--title-headline">Kanban Project Management Tool</h1>
     <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
@@ -76,7 +76,7 @@
         <section class="column left">
           <div class="input-section">
             <label for="title" class="required">Title</label>
-            <input id="title" class="input" type="text" placeholder="Enter a title" required />
+            <input id="title" class="input" type="text" placeholder="Enter a title"  />
             <span class="field-error">This field is required</span>
           </div>
           <div class="input-section">
@@ -86,7 +86,7 @@
 
           <div class="input-section">
             <label for="dueDate" class="required">Due date</label>
-            <input id="dueDate" class="input input-date" type="date" required />
+            <input id="dueDate" class="input input-date" type="date"  />
             <span class="field-error">This field is required</span>
           </div>
         </section>
@@ -163,7 +163,7 @@
             <label for="category" class="required">Category</label>
             <select id="category" class="input dropdown form--select" required>
               <option value="" selected>Select task category</option>
-              <option value="Technical Task">Technical Task</option>
+              <option value="Technical Tasks">Technical Task</option>
               <option value="User Story">User Story</option>
             </select>
             <span class="field-error">This field is required</span>
