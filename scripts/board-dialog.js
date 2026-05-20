@@ -60,18 +60,7 @@ function initBoardTask() {
   SEARCH_INPUT.addEventListener("input", searchTasks); //check if input or change is better for the search function.
 
   const TASK_DETAIL_DIALOG = document.getElementById("task_detail_dialog");
-  TASK_DETAIL_DIALOG.addEventListener("click", closeDialogOnBackdropClick);
-}
-
-/**
- * Closes a dialog if the user clicks on the background (backdrop) instead of the content.
- *
- * @param {Event} event - The click event.
- */
-function closeDialogOnBackdropClick(event) {
-  if (event.target === this) {
-    slideOutDialog(this);
-  }
+  TASK_DETAIL_DIALOG.addEventListener("click", closeTaskDetailDialogOnBackdropClick);
 }
 
 /**
@@ -81,7 +70,7 @@ function closeDialogOnBackdropClick(event) {
  */
 function addStatusTask(status) {
   sessionStorage.setItem("task-status", status);
-  window.location.href = "../html/addTaskPage.html"
+  window.location.href = "../html/addTaskPage.html";
 }
 
 /**
@@ -141,12 +130,47 @@ function closeTaskDetailDialogOnBackdropClick(event) {
 }
 
 /**
+ * Toggles the done state of a subtask in SessionStorage immediately.
+ *
+ * @param {number} taskId - The ID of the parent task.
+ * @param {number} subtaskIndex - The index of the subtask to toggle.
+ */
+function toggleSubtaskDone(taskId, subtaskIndex) {
+  const ALL_TASKS = JSON.parse(sessionStorage.tasks);
+  const TASK = ALL_TASKS.find((t) => t.id === taskId);
+  if (!TASK?.subtasks?.[subtaskIndex]) return;
+  const current = TASK.subtasks[subtaskIndex].done;
+  TASK.subtasks[subtaskIndex].done = !(current === true || current === "true");
+  sessionStorage.tasks = JSON.stringify(ALL_TASKS);
+  CURRENT_DETAIL_TASK = TASK;
+}
+
+/**
  * Closes the task detail dialog using the slide-out animation.
+ * Syncs the current task's subtasks to both SessionStorage and Firebase,
+ * then re-renders the board.
  *
  * @returns {Promise} Resolves when the dialog is closed.
  */
-function closeTaskDetailDialog() {
+async function closeTaskDetailDialog() {
   const TASK_DETAIL_DIALOG = document.getElementById("task_detail_dialog");
+  if (CURRENT_DETAIL_TASK) {
+    const ALL_TASKS = JSON.parse(sessionStorage.tasks);
+    const TASK = ALL_TASKS.find((t) => t.id === CURRENT_DETAIL_TASK.id);
+    if (TASK) {
+      sessionStorage.tasks = JSON.stringify(ALL_TASKS);
+      renderBoard(ALL_TASKS);
+      try {
+        await fetch(getTaskURL(TASK.firebaseKey), {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ subtasks: TASK.subtasks }),
+        });
+      } catch (err) {
+        console.error("Error syncing subtasks with Firebase:", err);
+      }
+    }
+  }
   return slideOutDialog(TASK_DETAIL_DIALOG);
 }
 
@@ -170,8 +194,8 @@ function buildTaskDetailDialog(task) {
   const SUB_TOTAL = SUBTASKS.length;
   const SUBTASK_LIST = WRAPPER.querySelector("#detail_subtask_list");
   if (SUB_TOTAL > 0) {
-    SUBTASKS.forEach((subtask) => {
-      SUBTASK_LIST.innerHTML += getDetailSubtaskTemplate(subtask.title, subtask.done, taskID);
+    SUBTASKS.forEach((subtask, index) => {
+      SUBTASK_LIST.innerHTML += getDetailSubtaskTemplate(subtask.title, subtask.done, taskID, index);
     });
   }
   return WRAPPER.innerHTML;
