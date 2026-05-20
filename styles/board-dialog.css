@@ -46,11 +46,6 @@
   max-height: 95vh;
 }
 
-.dialog--add {
-  width: 100%;
-  max-width: 870px;
-}
-
 .dialog .slide-in {
   animation: slideFromRight 175ms ease-in-out forwards;
 }

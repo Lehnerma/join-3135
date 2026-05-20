@@ -3,7 +3,7 @@ let CURRENT_DETAIL_TASK = null;
 /**
  * Closes a dialog with a slide-out animation.
  * It waits for the animation to finish before closing the dialog completely.
- * 
+ *
  * @param {HTMLElement} dialog - The dialog element to close.
  * @returns {Promise} A promise that resolves when the animation is done.
  */
@@ -22,14 +22,13 @@ function slideOutDialog(dialog) {
   });
 }
 
-
 /**
  * Shows a temporary success message (toast) when a task is created.
  * The message fades in, stays for 1.5 seconds, and then fades out.
  */
 function showTaskCreatedToast() {
   const toast = document.getElementById("task_created_toast");
-    toast.classList.add("taskCreatedToast--visible");
+  toast.classList.add("taskCreatedToast--visible");
   setTimeout(() => {
     toast.classList.remove("taskCreatedToast--visible");
     toast.classList.add("taskCreatedToast--hidden");
@@ -44,17 +43,15 @@ function showTaskCreatedToast() {
   }, 1500);
 }
 
-
 /**
  * Initializes the event listeners for the board.
  * It sets up buttons for adding tasks, searching, and clicking on task details.
  */
 function initBoardTask() {
   const ADD_BTN_HEAD = document.getElementById("add_task_head");
-  ADD_BTN_HEAD.addEventListener("click", openAddTaskDialog);
-
-  const TASK_DIALOG = document.getElementById("add_task_dialog");
-  TASK_DIALOG.addEventListener("click", closeDialogOnBackdropClick);
+  ADD_BTN_HEAD.addEventListener("click", () => {
+    window.location.href = "../html/addTaskPage.html";
+  });
 
   const SEARCH_TASKS_BTN = document.getElementById("search_tasks_btn");
   SEARCH_TASKS_BTN.addEventListener("click", () => searchTasks());
@@ -66,94 +63,9 @@ function initBoardTask() {
   TASK_DETAIL_DIALOG.addEventListener("click", closeDialogOnBackdropClick);
 }
 
-
-/**
- * Opens the "Add Task" dialog and prepares all form inputs.
- * It sets a default status (like "todo") and starts dropdowns and date pickers.
- * 
- * @param {string} status - The column where the task will be added (default is "todo").
- */
-function openAddTaskDialog(status = "todo") {
-  const dialog = document.getElementById("add_task_dialog");
-  dialog.innerHTML = getAddTaskDialogTemplate();
-  dialog.showModal();
-  initDateInput();
-  selectPriority("medium");
-  subtaskInit(); 
-  loadUsers(); 
-  initDropdownOutsideClick(); 
-
-  const form = document.getElementById("form_task");
-  if (form) {
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      await createTask(status); 
-    });
-  }
-}
-
-
-/**
- * Saves a new task to the database.
- * It builds the task object, sends it to Firebase, and updates the board.
- * 
- * @param {string} status - The status/column for the new task.
- */
-async function createTask(status = "todo") {
-  const task = buildTaskObj(); 
-  task.status = status; 
-
-  try {
-    const response = await fetch(ADDTASK_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(task),
-    });
-
-    if (response.ok) {
-      showTaskCreatedToast();
-      await closeAddTaskDialog();
-      loadTasksFromFirebase();
-    }
-  } catch (error) {
-    console.error("Fehler beim Erstellen im Dialog:", error);
-  }
-}
-
-
-/**
- * Closes the "Add Task" dialog using the slide-out animation.
- * 
- * @returns {Promise} Resolves when the dialog is closed.
- */
-function closeAddTaskDialog() {
-  const dialog = document.getElementById("add_task_dialog");
-  return slideOutDialog(dialog);
-}
-
-
-/**
- * Initializes the form settings inside the add task dialog.
- * It sets the date, priority, and the submit event listener.
- */
-function initAddTaskDialog() {
-  initDateInput();
-  selectPriority("medium");
-  subtaskInit();
-  // Listener für das neue Formular im Dialog setzen
-  const form = document.getElementById("form_task_dialog");
-  if (form) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      createTask(); // Nutzt deine Speicher-Logik
-    });
-  }
-}
-
-
 /**
  * Closes a dialog if the user clicks on the background (backdrop) instead of the content.
- * 
+ *
  * @param {Event} event - The click event.
  */
 function closeDialogOnBackdropClick(event) {
@@ -162,17 +74,15 @@ function closeDialogOnBackdropClick(event) {
   }
 }
 
-
 /**
- * Opens the add task dialog and assigns a specific status immediately.
- * 
+ * We set the status into the session storage and redirect to addtask.html.
+ *
  * @param {string} status - The status for the new task (e.g., 'inProgress').
  */
 function addStatusTask(status) {
-  openAddTaskDialog(status);
-  console.log(status);
+  sessionStorage.setItem("task-status", status);
+  window.location.href = "../html/addTaskPage.html"
 }
-
 
 /**
  * Filters the tasks on the board based on the user's search input.
@@ -198,11 +108,10 @@ function searchTasks() {
   renderBoard(SEARCH_VALUE);
 }
 
-
 /**
  * Opens the detailed view of a task.
  * It finds the task by ID and fills the detail dialog with its information.
- * 
+ *
  * @param {string} taskId - The ID of the task to show.
  */
 function openTaskDetailDialog(taskId) {
@@ -219,10 +128,9 @@ function openTaskDetailDialog(taskId) {
   }
 }
 
-
 /**
  * Closes the task detail dialog when the user clicks the background.
- * 
+ *
  * @param {Event} event - The click event.
  */
 function closeTaskDetailDialogOnBackdropClick(event) {
@@ -232,10 +140,9 @@ function closeTaskDetailDialogOnBackdropClick(event) {
   }
 }
 
-
 /**
  * Closes the task detail dialog using the slide-out animation.
- * 
+ *
  * @returns {Promise} Resolves when the dialog is closed.
  */
 function closeTaskDetailDialog() {
@@ -243,12 +150,11 @@ function closeTaskDetailDialog() {
   return slideOutDialog(TASK_DETAIL_DIALOG);
 }
 
-
 /**
  * Creates the HTML content for the task detail window.
- * It fills the template with the task information, adds the assigned users, 
+ * It fills the template with the task information, adds the assigned users,
  * and lists all subtasks.
- * 
+ *
  * @param {Object} task - The task object containing all details.
  * @returns {string} The finished HTML code for the dialog.
  */
@@ -271,11 +177,10 @@ function buildTaskDetailDialog(task) {
   return WRAPPER.innerHTML;
 }
 
-
 /**
- * Starts the edit process. 
+ * Starts the edit process.
  * It finds the task data, closes the detail view, and opens the edit window.
- * 
+ *
  * @param {string} taskId - The ID of the task to be edited.
  */
 async function openEditTaskDialog(taskId) {
@@ -290,10 +195,9 @@ async function openEditTaskDialog(taskId) {
   setupEditTaskInteractions(task);
 }
 
-
 /**
  * Fills the basic text fields and priority in the edit form.
- * 
+ *
  * @param {Object} task - The task object with all information.
  */
 function fillEditFormFields(task) {
@@ -308,10 +212,9 @@ function fillEditFormFields(task) {
   selectPriority(task.priority || "medium");
 }
 
-
 /**
  * Prepares the subtasks, users, and the save button for the edit form.
- * 
+ *
  * @param {Object} task - The task object with all information.
  */
 function setupEditTaskInteractions(task) {
@@ -329,10 +232,9 @@ function setupEditTaskInteractions(task) {
   }
 }
 
-
 /**
  * Closes the edit task window with a slide-out animation.
- * 
+ *
  * @returns {Promise} A promise that finishes when the animation is done.
  */
 function closeEditTaskDialog() {
@@ -340,11 +242,10 @@ function closeEditTaskDialog() {
   return slideOutDialog(dialog);
 }
 
-
 /**
  * Closes the edit window when the user clicks on the dark background (backdrop).
  * It checks if the click was on the background and not on the content inside.
- * 
+ *
  * @param {Event} event - The mouse click event.
  */
 function closeEditDialogOnBackdropClick(event) {
@@ -353,12 +254,11 @@ function closeEditDialogOnBackdropClick(event) {
   }
 }
 
-
 /**
  * Loads all users from the database to edit a task.
  * It fills the dropdown menu and checks the boxes for users already assigned to the task.
  * Finally, it updates the small preview icons.
- * 
+ *
  * @param {Array} assignedTo - A list of user names already assigned to this task.
  */
 async function loadUsersForEdit(assignedTo) {
@@ -381,7 +281,6 @@ async function loadUsersForEdit(assignedTo) {
   }
 }
 
-
 /**
  * Main function to handle the edit process.
  * Coordinates data building, saving, and UI updates.
@@ -397,7 +296,6 @@ async function saveEditedTask(task) {
   await closeEditTaskDialog();
   openTaskDetailDialog(updated.id);
 }
-
 
 /**
  * Handles saving the task to SessionStorage and Firebase.
@@ -428,12 +326,11 @@ async function updateTaskData(updatedTask) {
   }
 }
 
-
 /**
  * Deletes a task from the board and the database.
  * It removes the task from the local storage, updates the board view,
  * closes the detail window, and deletes the task from Firebase.
- * 
+ *
  * @param {Object} task - The task object that should be deleted.
  */
 async function deleteTask(task) {
@@ -451,5 +348,3 @@ async function deleteTask(task) {
     console.error("Fehler beim Löschen des Tasks:", error);
   }
 }
-
-

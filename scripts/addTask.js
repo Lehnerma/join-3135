@@ -2,6 +2,8 @@ const ADDTASK_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabas
 let selectedPriority = "medium";
 let subtasksList = [];
 let remoteUsers = [];
+let initialTaskStatus = sessionStorage.getItem("task-status") ?? "todo";
+sessionStorage.removeItem("task-status");
 
 /**
  * Initializes the page and all necessary functions.
@@ -33,6 +35,7 @@ function btnInit() {
     });
   }
 }
+
 
 
 /**
@@ -261,7 +264,7 @@ function buildTaskObj() {
     category: val("category"),
     assignedTo: getAssignedUsers() || [],
     priority: selectedPriority,
-    status: "todo",
+    status: initialTaskStatus,
     subtasks: subtasksList,
   };
 }
