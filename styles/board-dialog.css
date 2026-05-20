@@ -57,7 +57,9 @@
 .dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.4);
 }
-
+.detail-task--header{
+  padding: 8px;
+}
 .detail-task--category {
   display: flex;
   align-items: center;
@@ -113,11 +115,8 @@
 }
 
 .detail-task--subtask-item {
-  display: flex;
-  align-items: center;
   gap: 16px;
   padding: 8px 16px;
-  width: auto;
 }
 
 .detail-task--header,
@@ -133,21 +132,20 @@
   height: 24px;
   cursor: pointer;
   appearance: none;
-  background-size: 24px 24px;
   background-repeat: no-repeat;
   background-position: center;
+  object-fit: contain;
   border: none;
-  padding: 0;
 
   &:hover {
     background-color: var(--input-default-main);
     border-radius: 50%;
-    transform: scale(1.05);
   }
 }
 
-.detail-task--subtask-text:hover {
-  transform: scale(1.05);
+.detail-task--subtask-text {
+  width: 100%;
+  max-width: 320px;
 }
 
 .detail-task--subtask-checkbox:not(:checked) {
@@ -161,6 +159,7 @@
 .detail-task--footer {
   justify-content: flex-end;
   gap: 8px;
+  padding: 8px;
 }
 
 .btn--delete,

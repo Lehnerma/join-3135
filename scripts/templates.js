@@ -179,7 +179,7 @@ function getDetailTaskTemplate(task) {
       </section>
 
       <section class="detail-task--subtasks">
-        <h4>Subtasks</h4>
+        <h4 class="detail-task--subheading">Subtasks</h4>
         <ul id="detail_subtask_list" class="detail-task--subtasks-list" aria-label="list of subtasks">
 
         </ul>
@@ -204,7 +204,7 @@ function getDetailSubtaskTemplate(title, checked = false, id) {
   return `
     <li class="detail-task--subtask-item f-row">
       <input type="checkbox" id="sub_check${id}" class="detail-task--subtask-checkbox"${checked ? " checked" : ""} />
-      <label for="sub_check${id}" class="detail-task--subtask-text">${title}</label>
+      <p for="sub_check${id}" class="detail-task--subtask-text">${title}</p>
     </li>`;
 }
 
