@@ -1,13 +1,13 @@
 .utility-h1 {
-  padding-bottom: 20px;
+  padding-bottom: clamp(2px, calc(-3.143px + 1.607vw), 20px);
   font-weight: 700;
-  font-size: clamp(46px, calc(41.429px + 1.429vw), 62px);
+  font-size: clamp(36px, calc(28.571px + 2.321vw), 62px);
 }
 
 .utility-h2 {
   padding: 20px 0 10px 0;
   font-weight: 700;
-  font-size: 28px;
+  font-size: clamp(22px, calc(20.286px + 0.536vw), 28px);
 }
 
 .utility-h3 {
@@ -40,13 +40,13 @@
 }
 
 .utility-content {
-  padding-top: 120px;
+  padding-top: clamp(20px, calc(-8.571px + 8.929vw), 120px);
   padding-left: clamp(20px, calc(-2.857px + 7.143vw), 100px);
   padding-right: clamp(20px,
       calc((100% - 1208px) / 2),
       calc((100% - 1208px) / 2));
-  padding-bottom: 50px;
-  margin-right: 24px;
+  padding-bottom: clamp(12px, calc(1.143px + 3.393vw), 50px);
+  margin-right: clamp(0px, calc(-6.857px + 2.143vw), 24px);
 }
 
 .utility-ol {

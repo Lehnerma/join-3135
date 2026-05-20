@@ -5,7 +5,7 @@
     "sidebar content";
   grid-template-columns: 232px 1fr;
   grid-template-rows: 96px 1fr;
-  height: 100vh;
+  height: 100dvh;
   background-color: var(--third-background-color);
 }
 
@@ -129,7 +129,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  padding-right: 16px;
+  /* padding-right: 16px; */
   transition: transform 0.7s ease-in-out;
 }
 

@@ -308,7 +308,7 @@ li {
   .back-arrow {
     width: 24.6px;
     height: 23.92px;
-    background-color: var(--input-text-color);
+   background: none;
   }
 }
 
