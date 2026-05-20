@@ -249,6 +249,18 @@ function subtaskInit() {
 
 
 /**
+ * Returns the task status from sessionStorage if available, otherwise "todo".
+ * Removes the stored value after reading it.
+ * @returns {string} The task status.
+ */
+function getInitialStatus() {
+  const stored = sessionStorage.getItem("taskStatus");
+  if (!stored) return "todo";
+  sessionStorage.removeItem("taskStatus");
+  return stored;
+}
+
+/**
  * Collects all form data and creates a task object for the database.
  * @returns {Object} The finished task object.
  */
@@ -261,7 +273,7 @@ function buildTaskObj() {
     category: val("category"),
     assignedTo: getAssignedUsers() || [],
     priority: selectedPriority,
-    status: "todo",
+    status: getInitialStatus(),
     subtasks: subtasksList,
   };
 }
