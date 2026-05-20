@@ -124,7 +124,7 @@ function openTaskDetailDialog(taskId) {
     CURRENT_DETAIL_TASK = TASK;
     TASK_DETAIL_DIALOG.innerHTML = buildTaskDetailDialog(TASK);
     TASK_DETAIL_DIALOG.showModal();
-    TASK_DETAIL_DIALOG.scrollTop = 0; // Scrollt zum Anfang des Dialogs
+    TASK_DETAIL_DIALOG.querySelector(".detail-task--content").scrollTop = 0;
   }
 }
 
@@ -307,7 +307,7 @@ function refreshTaskDetailDialog(taskId) {
   if (TASK) {
     CURRENT_DETAIL_TASK = TASK;
     TASK_DETAIL_DIALOG.innerHTML = buildTaskDetailDialog(TASK);
-    TASK_DETAIL_DIALOG.scrollTop = 0;
+    TASK_DETAIL_DIALOG.querySelector(".detail-task--content").scrollTop = 0;
   }
 }
 

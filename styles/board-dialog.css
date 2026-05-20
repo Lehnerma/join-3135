@@ -44,6 +44,7 @@
   width: clamp(310px, calc(228.571px + 25.446vw), 595px);
   max-width: 525px;
   max-height: 95vh;
+  overflow-y: hidden;
 }
 
 .dialog .slide-in {
@@ -57,7 +58,7 @@
 .dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.4);
 }
-.detail-task--header{
+.detail-task--header {
   padding: 8px;
 }
 .detail-task--category {
@@ -84,7 +85,12 @@
 }
 
 .detail-task--content {
+  display: flex;
+  flex-direction: column;
   margin: 24px 0;
+  overflow-y: auto;
+  max-height: 70dvh;
+  height: 100%;
 }
 
 .detail-task--prio-content {
@@ -274,6 +280,9 @@
 @media (max-width: 900px) {
   .detail-task--title {
     font-size: 36px;
+  }
+  .detail-task--subheading{
+    color: var(--board-title-col);
   }
   .detail-task--description,
   .detail-task--subheading,

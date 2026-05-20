@@ -153,7 +153,7 @@ function getDetailTaskTemplate(task) {
       <h2 class="detail-task--title">${task.title}</h2>
     </header>
 
-    <article class="detail-task--content f-col" aria-label="detailed information of the task">
+    <article class="detail-task--content" aria-label="detailed information of the task">
 
       <div class="detail-task--description detail-task--text">${task.description}</div>
 
