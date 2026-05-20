@@ -2,6 +2,8 @@ const ADDTASK_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabas
 let selectedPriority = "medium";
 let subtasksList = [];
 let remoteUsers = [];
+let initialTaskStatus = sessionStorage.getItem("task-status") ?? "todo";
+sessionStorage.removeItem("task-status");
 
 /**
  * Initializes the page and all necessary functions.
@@ -33,6 +35,7 @@ function btnInit() {
     });
   }
 }
+
 
 
 /**
@@ -249,18 +252,6 @@ function subtaskInit() {
 
 
 /**
- * Returns the task status from sessionStorage if available, otherwise "todo".
- * Removes the stored value after reading it.
- * @returns {string} The task status.
- */
-function getInitialStatus() {
-  const stored = sessionStorage.getItem("taskStatus");
-  if (!stored) return "todo";
-  sessionStorage.removeItem("taskStatus");
-  return stored;
-}
-
-/**
  * Collects all form data and creates a task object for the database.
  * @returns {Object} The finished task object.
  */
@@ -273,7 +264,7 @@ function buildTaskObj() {
     category: val("category"),
     assignedTo: getAssignedUsers() || [],
     priority: selectedPriority,
-    status: getInitialStatus(),
+    status: initialTaskStatus,
     subtasks: subtasksList,
   };
 }
