@@ -103,13 +103,13 @@
         width: 42px;
         height: 42px;
       }
-
-      .assignee--name {
-        font-family: "Open Sans", sans-serif;
-        font-size: 19px;
-      }
     }
   }
+}
+
+.assignee--name {
+  font-family: "Open Sans", sans-serif;
+  font-size: 19px;
 }
 
 .detail-task--subtask-item {
@@ -119,9 +119,6 @@
   padding: 8px 16px;
   width: auto;
 }
-
-
-
 
 .detail-task--header,
 .detail-task--content,
@@ -273,4 +270,16 @@
   font-size: 16px;
   font-weight: 400;
   margin: 0;
+}
+
+@media (max-width: 900px) {
+  .detail-task--title {
+    font-size: 36px;
+  }
+  .detail-task--description,
+  .detail-task--subheading,
+  .detail-task--text,
+  .assignee--name {
+    font-size: 16px;
+  }
 }

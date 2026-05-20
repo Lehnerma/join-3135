@@ -416,7 +416,8 @@
 
 .drag-placeholder {
   min-height: 80px;
-  width: 252px;
+  min-width: 220px;
+  min-width: 252px;
   border: 2px dashed #a8a8a8;
   border-radius: 24px;
   background: transparent;
