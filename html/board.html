@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="../styles/subtasks.css" />
 
     <script src="../scripts/templates.js"></script>
-    <script src="../scripts/addTask.js"></script>
+
     <script src="../scripts/board.js"></script>
     <script src="../scripts/utilitys.js"></script>
     <script src="../scripts/board-move-task.js"></script>
@@ -78,8 +78,8 @@
           <!-- <label for="search_tasks">No Tasks found!</label> -->
         </section>
 
-        <button class="btn btn--add">
-          <span class="btn--primary-text" onclick="openAddTaskDialog('todo')" id="add_task_head">Add task</span>
+        <button class="btn btn--add" id="add_task_head">
+          <span class="btn--primary-text" >Add task</span>
           <img src="../assets/img/icons/subtask/add-white.svg" alt="+" />
         </button>
       </article>
@@ -126,12 +126,7 @@
         </section>
       </section>
 
-      <!-------------------------------------
-      ######### addtask dialog ##########
-      -------------------------------------->
 
-      <dialog id="add_task_dialog" class="dialog slide-in"></dialog>
-      <dialog id="add_task_dialog" class="dialog dialog--add slide-in"></dialog>
 
       <!-------------------------------------
       ######### detail task dialog ##########
