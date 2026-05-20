@@ -44,6 +44,7 @@
   width: clamp(310px, calc(228.571px + 25.446vw), 595px);
   max-width: 525px;
   max-height: 95vh;
+  overflow-y: hidden;
 }
 
 .dialog .slide-in {
@@ -57,7 +58,9 @@
 .dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.4);
 }
-
+.detail-task--header {
+  padding: 8px;
+}
 .detail-task--category {
   display: flex;
   align-items: center;
@@ -82,7 +85,12 @@
 }
 
 .detail-task--content {
+  display: flex;
+  flex-direction: column;
   margin: 24px 0;
+  overflow-y: auto;
+  max-height: 70dvh;
+  height: 100%;
 }
 
 .detail-task--prio-content {
@@ -103,25 +111,19 @@
         width: 42px;
         height: 42px;
       }
-
-      .assignee--name {
-        font-family: "Open Sans", sans-serif;
-        font-size: 19px;
-      }
     }
   }
 }
 
-.detail-task--subtask-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 8px 16px;
-  width: auto;
+.assignee--name {
+  font-family: "Open Sans", sans-serif;
+  font-size: 19px;
 }
 
-
-
+.detail-task--subtask-item {
+  gap: 16px;
+  padding: 8px 16px;
+}
 
 .detail-task--header,
 .detail-task--content,
@@ -136,21 +138,20 @@
   height: 24px;
   cursor: pointer;
   appearance: none;
-  background-size: 24px 24px;
   background-repeat: no-repeat;
   background-position: center;
+  object-fit: contain;
   border: none;
-  padding: 0;
 
   &:hover {
     background-color: var(--input-default-main);
     border-radius: 50%;
-    transform: scale(1.05);
   }
 }
 
-.detail-task--subtask-text:hover {
-  transform: scale(1.05);
+.detail-task--subtask-text {
+  width: 100%;
+  max-width: 320px;
 }
 
 .detail-task--subtask-checkbox:not(:checked) {
@@ -164,6 +165,7 @@
 .detail-task--footer {
   justify-content: flex-end;
   gap: 8px;
+  padding: 8px;
 }
 
 .btn--delete,
@@ -273,4 +275,19 @@
   font-size: 16px;
   font-weight: 400;
   margin: 0;
+}
+
+@media (max-width: 900px) {
+  .detail-task--title {
+    font-size: 36px;
+  }
+  .detail-task--subheading{
+    color: var(--board-title-col);
+  }
+  .detail-task--description,
+  .detail-task--subheading,
+  .detail-task--text,
+  .assignee--name {
+    font-size: 16px;
+  }
 }

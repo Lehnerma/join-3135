@@ -86,7 +86,7 @@
   width: 32px;
   height: 32px;
   background-color: transparent;
-
+  border-radius: 50%;
   &:hover {
     background-color: var(--btn-arrow-hover);
     border-radius: 50%;

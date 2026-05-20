@@ -124,7 +124,7 @@ function openTaskDetailDialog(taskId) {
     CURRENT_DETAIL_TASK = TASK;
     TASK_DETAIL_DIALOG.innerHTML = buildTaskDetailDialog(TASK);
     TASK_DETAIL_DIALOG.showModal();
-    TASK_DETAIL_DIALOG.scrollTop = 0; // Scrollt zum Anfang des Dialogs
+    TASK_DETAIL_DIALOG.querySelector(".detail-task--content").scrollTop = 0;
   }
 }
 
@@ -179,15 +179,14 @@ function buildTaskDetailDialog(task) {
 
 /**
  * Starts the edit process.
- * It finds the task data, closes the detail view, and opens the edit window.
+ * Opens the edit dialog on top of the detail view — no slide animation.
  *
  * @param {string} taskId - The ID of the task to be edited.
  */
-async function openEditTaskDialog(taskId) {
+function openEditTaskDialog(taskId) {
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const task = ALL_TASKS.find((t) => t.id === taskId);
   if (!task) return;
-  await closeTaskDetailDialog();
   const dialog = document.getElementById("edit_task_dialog");
   dialog.addEventListener("click", closeEditDialogOnBackdropClick);
   dialog.showModal();
@@ -233,13 +232,12 @@ function setupEditTaskInteractions(task) {
 }
 
 /**
- * Closes the edit task window with a slide-out animation.
- *
- * @returns {Promise} A promise that finishes when the animation is done.
+ * Closes the edit task dialog instantly (no animation).
+ * The detail dialog remains open underneath.
  */
 function closeEditTaskDialog() {
   const dialog = document.getElementById("edit_task_dialog");
-  return slideOutDialog(dialog);
+  dialog.close();
 }
 
 /**
@@ -293,8 +291,24 @@ async function saveEditedTask(task) {
   await updateTaskData(updated);
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   renderBoard(ALL_TASKS);
-  await closeEditTaskDialog();
-  openTaskDetailDialog(updated.id);
+  closeEditTaskDialog();
+  refreshTaskDetailDialog(updated.id);
+}
+
+/**
+ * Refreshes the detail dialog content in-place without reopening it.
+ *
+ * @param {string} taskId - The ID of the task to refresh.
+ */
+function refreshTaskDetailDialog(taskId) {
+  const TASK_DETAIL_DIALOG = document.getElementById("task_detail_dialog");
+  const ALL_TASKS = JSON.parse(sessionStorage.tasks);
+  const TASK = ALL_TASKS.find((task) => task.id === taskId);
+  if (TASK) {
+    CURRENT_DETAIL_TASK = TASK;
+    TASK_DETAIL_DIALOG.innerHTML = buildTaskDetailDialog(TASK);
+    TASK_DETAIL_DIALOG.querySelector(".detail-task--content").scrollTop = 0;
+  }
 }
 
 /**
