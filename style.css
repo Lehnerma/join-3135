@@ -8,6 +8,9 @@
   scroll-behavior: smooth;
   font-family: "Inter", sans-serif;
 }
+button {
+  cursor: pointer;
+}
 
 .dnone {
   display: none !important;
