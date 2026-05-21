@@ -1,3 +1,9 @@
+/**
+ * Builds the Firebase REST API URL for tasks.
+ * @param {string} [key=""] - Optional Firebase key of a specific task.
+ * @param {string} [section=""] - Optional field path within the task.
+ * @returns {string} The full Firebase URL.
+ */
 const getTaskURL = (key = "", section = "") => {
   return `https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks/${key ? key + "/" : ""}${section ? section + "/" : ""}.json`;
 };
@@ -8,12 +14,19 @@ let DRAG_OLD_STATUS;
 let DRAG_HEIGHT;
 const USERS=[]
 
+/**
+ * Initialises the board: sets up UI interactions and loads data from Firebase.
+ */
 function initBoard() {
   initBoardTask();
   loadTasksFromFirebase();
   loadUsersFromFirebase()
 }
 
+/**
+ * Fetches all tasks from Firebase, stores them in session storage, and renders the board.
+ * @returns {Promise<void>}
+ */
 async function loadTasksFromFirebase() {
   try {
     const RESPONSE = await fetch(getTaskURL());
@@ -31,6 +44,10 @@ async function loadTasksFromFirebase() {
 }
 
 const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users"+".json"
+/**
+ * Fetches all users from Firebase and stores them in session storage.
+ * @returns {Promise<void>}
+ */
 async function loadUsersFromFirebase() {
   try {
     const RESPONSE = await fetch(USER_URL);
@@ -46,7 +63,11 @@ async function loadUsersFromFirebase() {
   }
 }
 
-//get ids into the tasks array for the dragging functions
+/**
+ * Converts the Firebase result object into an array with id and firebaseKey added.
+ * @param {Object} result - Raw Firebase response object.
+ * @returns {Array<Object>} Array of task objects enriched with id and firebaseKey.
+ */
 function getArryFromResult(result) {
   return Object.entries(result).map(([key, values], index) => ({
     id: index,
@@ -54,6 +75,11 @@ function getArryFromResult(result) {
     ...values,
   }));
 }
+/**
+ * Converts the Firebase users object into a flat array.
+ * @param {Object} result - Raw Firebase response object.
+ * @returns {Array<Object>} Array of user objects with id, name, and color.
+ */
 function getUserArry(result) {
   return Object.entries(result).map(([key, values], index) => ({
     id: index,
@@ -62,7 +88,11 @@ function getUserArry(result) {
   }));
 }
 
-// Schreibt den vollständigen Task per PUT in Firebase – überschreibt alle Felder am richtigen Key.
+/**
+ * Writes the full task to Firebase via PUT, overwriting all fields at the given key.
+ * @param {Object} task - The task object including firebaseKey and id.
+ * @returns {Promise<void>}
+ */
 async function syncTaskWithFirebase(task) {
   const { firebaseKey, id, ...data } = task;
   try {
@@ -76,6 +106,12 @@ async function syncTaskWithFirebase(task) {
   }
 }
 
+/**
+ * Updates only the status field of a task in Firebase.
+ * @param {string} firebaseKey - The Firebase key of the task.
+ * @param {string} status - The new status value.
+ * @returns {Promise<void>}
+ */
 async function updateTaskStatus(firebaseKey, status) {
   try {
     await fetch(getTaskURL(firebaseKey, "status"), {
@@ -88,6 +124,10 @@ async function updateTaskStatus(firebaseKey, status) {
   }
 }
 
+/**
+ * Renders all four board columns for the given tasks.
+ * @param {Array<Object>} tasks - Array of all task objects.
+ */
 function renderBoard(tasks) {
   const STATUS = ["todo", "progress", "feedback", "done"];
   STATUS.forEach((status) => {
@@ -98,6 +138,11 @@ function renderBoard(tasks) {
   });
 }
 
+/**
+ * Renders a single board column with the matching tasks.
+ * @param {string} status - The column status key (e.g. "todo", "progress").
+ * @param {Array<Object>} tasks - Tasks to display in this column.
+ */
 function renderColumn(status, tasks) {
   const LIST = document.getElementById(status + "_list");
   LIST.innerHTML = "";
@@ -108,12 +153,22 @@ function renderColumn(status, tasks) {
   tasks.forEach((task) => (LIST.innerHTML += buildTaskCard(task)));
 }
 
+/**
+ * Looks up the avatar color for a user by name from session storage.
+ * @param {string} name - The full name of the user.
+ * @returns {string} A CSS color string, or "#ccc" if the user is not found.
+ */
 function getAssigneeColor(name){
   const users = JSON.parse(sessionStorage.getItem('users'))
   const user = users.find((u) => u.name === name);
   return user ? user.color : "#ccc";
 }
 
+/**
+ * Builds the HTML string for a single task card, including subtask progress and assignees.
+ * @param {Object} task - The task object.
+ * @returns {string} HTML string for the task card.
+ */
 function buildTaskCard(task) {
   const WRAPPER = document.createElement("div");
   WRAPPER.innerHTML = getTaskCardTemplet(task.title, task.description, task.category, task.id, getPriority(task.priority));
@@ -133,6 +188,10 @@ function buildTaskCard(task) {
   return WRAPPER.innerHTML;
 }
 
+/**
+ * Opens the task overview dialog and populates it with the given task's data.
+ * @param {number} id - The local id of the task.
+ */
 function openTaskDialog(id) {
   const task = TASKS.find((t) => t.id === id);
   if (!task) return;
@@ -142,6 +201,9 @@ function openTaskDialog(id) {
   dialog.innerHTML = getTaskDialogTemplate(task);
 }
 
+/**
+ * Hides and clears the task overview dialog.
+ */
 function closeTaskDialog() {
   const dialog = document.getElementById("taskDialog");
 
@@ -149,6 +211,11 @@ function closeTaskDialog() {
   dialog.innerHTML = "";
 }
 
+/**
+ * Deletes a task from Firebase, removes it from the local list, and refreshes the board.
+ * @param {string} firebaseKey - The Firebase key of the task to delete.
+ * @returns {Promise<void>}
+ */
 async function deleteTask(firebaseKey) {
   try {
     const response = await fetch(getBoardTaskURL(firebaseKey), {
@@ -168,11 +235,21 @@ async function deleteTask(firebaseKey) {
   }
 }
 
+/**
+ * Returns the priority string if valid, otherwise falls back to "low".
+ * @param {string} priority - The raw priority value.
+ * @returns {string} A valid priority: "low", "medium", or "urgent".
+ */
 function getPriority(priority) {
   const PRIO = ["low", "medium", "urgent"];
   return PRIO.includes(priority) ? priority : "low";
 }
 
+/**
+ * Extracts the uppercase initials from a full name.
+ * @param {string} [name=""] - The full name.
+ * @returns {string} Up to two uppercase initial letters.
+ */
 function getInitials(name = "") {
   if (typeof name !== "string") return "";
   const parts = name.trim().split(" ");
@@ -181,13 +258,21 @@ function getInitials(name = "") {
   return parts[0].charAt(0).toUpperCase() + last;
 }
 
+/**
+ * Renders the "no tasks" placeholder into the given status column.
+ * @param {string} status - The column status key.
+ */
 function renderNoTasksElemt(status) {
   let LIST = document.getElementById(status + "_list");
   LIST.innerHTML = "";
   LIST.innerHTML += getNoTasksTemplate(status);
 }
 
-//drag start
+/**
+ * Handles the dragstart event for a task card.
+ * @param {DragEvent} ev - The drag event.
+ * @param {number} id - The id of the task being dragged.
+ */
 function taskDragStart(ev, id) {
   DRAG_ID = id;
   DRAG_HEIGHT = ev.currentTarget.offsetHeight;
@@ -196,6 +281,12 @@ function taskDragStart(ev, id) {
   DRAG_OLD_STATUS = ALL_TASKS.find((el) => el.id === id)?.status;
 }
 
+/**
+ * Finds the task element directly after the cursor position during a drag.
+ * @param {HTMLElement} list - The column list element.
+ * @param {number} y - The current cursor Y position.
+ * @returns {HTMLElement|null} The element to insert before, or null to append at the end.
+ */
 function getDragAfterElement(list, y) {
   const tasks = [...list.querySelectorAll(".task")];
 
@@ -214,6 +305,11 @@ function getDragAfterElement(list, y) {
   );
 }
 
+/**
+ * Handles dragover on a board column: shows a positional drop placeholder.
+ * @param {DragEvent} ev - The drag event.
+ * @param {string} status - The target column's status key.
+ */
 function columnDragOver(ev, status) {
   ev.preventDefault();
   if (status === DRAG_OLD_STATUS) return;
@@ -231,13 +327,20 @@ function columnDragOver(ev, status) {
   afterElement ? LIST.insertBefore(placeholder, afterElement) : LIST.appendChild(placeholder);
 }
 
+/**
+ * Handles dragleave on a board column: removes the drop placeholder.
+ * @param {DragEvent} ev - The drag event.
+ */
 function columnDragLeave(ev) {
   if (ev.currentTarget.contains(ev.relatedTarget)) return;
   ev.currentTarget.querySelector(".drag-placeholder")?.remove();
   ev.currentTarget.querySelector(".no-task")?.style.removeProperty("display");
 }
 
-//drag drop
+/**
+ * Handles a drop on a board column: updates the task status locally and in Firebase.
+ * @param {string} status - The target column's status key.
+ */
 function taskDragDrop(status) {
   document.querySelectorAll(".drag-placeholder").forEach((el) => el.remove());
   document.querySelectorAll(".task--dragging").forEach((el) => el.classList.remove("task--dragging"));

@@ -18,6 +18,12 @@ const MOVE_TARGETS = {
   done: [{ status: "feedback", direction: "up" }],
 };
 
+/**
+ * Opens the move-task dropdown for a task card.
+ * @param {Event} event - The click event (stops propagation).
+ * @param {number} taskId - The id of the task to move.
+ * @param {HTMLElement} btn - The button that triggered the dropdown.
+ */
 function openMoveTaskDialog(event, taskId, btn) {
   event.stopPropagation();
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
@@ -35,6 +41,12 @@ function openMoveTaskDialog(event, taskId, btn) {
   document.addEventListener("scroll", closeMoveDropdown, { capture: true, once: true });
 }
 
+/**
+ * Creates the move-task dropdown element and fills it with move options.
+ * @param {number} taskId - The id of the task.
+ * @param {Array<Object>} targets - List of move targets with status and direction.
+ * @returns {HTMLElement} The constructed dropdown element.
+ */
 function buildMoveDropdown(taskId, targets) {
   const element = document.createElement("div");
   element.id = "move_task_dropdown";
@@ -56,6 +68,12 @@ function positionDropdown(dropdown, btn) {
   dropdown.style.left = overflowsRight ? `${rect.right - dropdown.offsetWidth + 24}px` : `${rect.left}px`;
 }
 
+/**
+ * Builds the inner HTML for the move dropdown.
+ * @param {number} taskId - The id of the task.
+ * @param {Array<Object>} targets - List of move targets.
+ * @returns {string} HTML string for the dropdown content.
+ */
 function getMoveDropdownTemplate(taskId, targets) {
   const btns = targets.map((t) => getMoveButtonTemplate(taskId, t)).join("");
   return `
@@ -64,6 +82,14 @@ function getMoveDropdownTemplate(taskId, targets) {
   `;
 }
 
+/**
+ * Builds a single move button HTML string.
+ * @param {number} taskId - The id of the task.
+ * @param {Object} target - Move target with status and direction.
+ * @param {string} target.status - The target status key.
+ * @param {string} target.direction - "up" or "down".
+ * @returns {string} HTML string for one list item button.
+ */
 function getMoveButtonTemplate(taskId, { status, direction }) {
   const icon = direction === "up" ? "arrow_upward" : "arrow_downward";
   return `
@@ -76,17 +102,30 @@ function getMoveButtonTemplate(taskId, { status, direction }) {
   `;
 }
 
+/**
+ * Removes the move-task dropdown from the DOM and cleans up its event listener.
+ */
 function closeMoveDropdown() {
   document.getElementById("move_task_dropdown")?.remove();
   document.removeEventListener("click", closeMoveDropdownOnOutside);
 }
 
+/**
+ * Closes the move dropdown when the user clicks outside it.
+ * @param {MouseEvent} e - The click event.
+ */
 function closeMoveDropdownOnOutside(e) {
   if (!document.getElementById("move_task_dropdown")?.contains(e.target)) {
     closeMoveDropdown();
   }
 }
 
+/**
+ * Moves a task to a new status, updates session storage, re-renders the affected columns, and syncs to Firebase.
+ * @param {number} taskId - The id of the task to move.
+ * @param {string} newStatus - The target status key.
+ * @returns {Promise<void>}
+ */
 async function moveTaskToStatus(taskId, newStatus) {
   closeMoveDropdown();
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);

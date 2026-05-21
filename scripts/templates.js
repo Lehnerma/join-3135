@@ -27,6 +27,13 @@ const contactColors = {
   Z: "rgba(120, 120, 120, 1)",
 };
 
+/**
+ * Returns the HTML for a user row in the "Assigned To" dropdown.
+ * @param {string} color - CSS color for the initials badge.
+ * @param {string} initials - Two-letter initials.
+ * @param {Object} user - User object with a name property.
+ * @returns {string} HTML string for a dropdown label.
+ */
 function getFillUserDropown(color, initials, user) {
   return `
       <label class="user-item assignedTo" onclick="toggleUser(this)">
@@ -81,6 +88,12 @@ function getAssignedToItemTemplate(id, name, initials, color, checked = false) {
     </li>`;
 }
 
+/**
+ * Returns the HTML for the subtask progress bar, or an empty string if there are no subtasks.
+ * @param {number} done - Number of completed subtasks.
+ * @param {number} total - Total number of subtasks.
+ * @returns {string} HTML string, or "" if total is 0.
+ */
 function getSubtaskProgressTemplate(done, total) {
   if (total === 0) return "";
   return `
@@ -90,12 +103,26 @@ function getSubtaskProgressTemplate(done, total) {
     </div>`;
 }
 
+/**
+ * Returns the HTML for the "no tasks" placeholder in a board column.
+ * @param {string} status - The column status key.
+ * @returns {string} HTML string for the placeholder list item.
+ */
 function getNoTasksTemplate(status) {
   return `
     <li class="board-task no-task">No tasks ${capitalizeFirstLetter(status)}</li>
   `;
 }
 
+/**
+ * Returns the HTML for a task card on the board.
+ * @param {string} title - Task title.
+ * @param {string} description - Task description.
+ * @param {string} category - Task category.
+ * @param {number} id - Task id.
+ * @param {string} priority - Priority level ("low", "medium", "urgent").
+ * @returns {string} HTML string for the task card list item.
+ */
 function getTaskCardTemplet(title, description, category, id, priority) {
   return `
 <li class="task" onclick="openTaskDetailDialog(${id})" draggable="true" ondragstart="taskDragStart(event, ${id})" data-id=${id}>
@@ -124,6 +151,13 @@ function getTaskCardTemplet(title, description, category, id, priority) {
 </li>`;
 }
 
+/**
+ * Returns the HTML for a single assignee badge (initials only).
+ * @param {string} fullName - The full name of the assignee.
+ * @param {string} initials - Two-letter initials.
+ * @param {string} color - CSS background color.
+ * @returns {string} HTML string for an assignee list item.
+ */
 function getTaskAssignToTemplet(fullName, initials, color) {
   return `
 <li class="assignee">
@@ -131,6 +165,13 @@ function getTaskAssignToTemplet(fullName, initials, color) {
 </li>`;
 }
 
+/**
+ * Returns the HTML for an assignee badge with the full name displayed.
+ * @param {string} fullName - The full name of the assignee.
+ * @param {string} initials - Two-letter initials.
+ * @param {string} color - CSS background color.
+ * @returns {string} HTML string for an assignee list item with name.
+ */
 function getTaskAssignToTempletWithName(fullName, initials, color) {
   return `
 <li class="assignee f-row">
@@ -139,6 +180,11 @@ function getTaskAssignToTempletWithName(fullName, initials, color) {
 </li>`;
 }
 
+/**
+ * Returns the HTML for the full task detail view inside the detail dialog.
+ * @param {Object} task - The task object with all detail fields.
+ * @returns {string} HTML string for the detail view.
+ */
 function getDetailTaskTemplate(task) {
   return `
     <header class="detail-task--header f-col">
@@ -198,6 +244,13 @@ function getDetailTaskTemplate(task) {
     </footer>`;
 }
 
+/**
+ * Returns the HTML for a single subtask row in the detail view.
+ * @param {string} title - The subtask title.
+ * @param {boolean} [checked=false] - Whether the subtask is done.
+ * @param {number} id - The parent task's id (used for the checkbox id).
+ * @returns {string} HTML string for a subtask list item.
+ */
 function getDetailSubtaskTemplate(title, checked = false, id) {
   return `
     <li class="detail-task--subtask-item f-row">
@@ -206,6 +259,10 @@ function getDetailSubtaskTemplate(title, checked = false, id) {
     </li>`;
 }
 
+/**
+ * Returns the HTML for the edit-task dialog form.
+ * @returns {string} HTML string for the edit task form dialog.
+ */
 function getEditTaskDialogTemplate() {
   return /*html*/ `
     <div class="edit-task-dialog">
@@ -296,6 +353,10 @@ function getEditTaskDialogTemplate() {
   `;
 }
 
+/**
+ * Returns the HTML for the add-task dialog form.
+ * @returns {string} HTML string for the add task form dialog.
+ */
 function getAddTaskDialogTemplate() {
   return /*html*/ `
     <div class="task-container-dialog">
@@ -399,9 +460,9 @@ function getAddTaskDialogTemplate() {
 }
 
 /**
- * Template für Task-Dialog mit Details, Delete & Edit Buttons
- * @param {object} task - Task mit id, title, description, category, dueDate, priority, assignedTo, subtasks, firebaseKey
- * @returns {string} HTML für Task-Dialog
+ * Returns the HTML for the legacy task detail/action dialog.
+ * @param {Object} task - Task object with id, title, description, category, dueDate, priority, assignedTo, subtasks, and firebaseKey.
+ * @returns {string} HTML string for the dialog.
  */
 function getTaskDialogTemplate(task) {
   const assignedNames = task.assignedTo ? task.assignedTo.join(", ") : "None";
