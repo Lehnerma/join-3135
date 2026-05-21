@@ -293,8 +293,8 @@ async function loadUsersForEdit(assignedTo) {
     const response = await fetch(USER_URL);
     const data = await response.json();
     remoteUsers = Object.values(data);
-    const SORTET_USERS = sortUsersWithActiveFirst(remoteUsers);
-    fillUserDropdown(SORTET_USERS);
+    const sorted_users = sortUsersWithActiveFirst(remoteUsers);
+    fillUserDropdown(sorted_users);
     document.querySelectorAll("#assignedToList label.user-item").forEach((label) => {
       const checkbox = label.querySelector("input[type='checkbox']");
       if (checkbox && assignedTo.includes(checkbox.value)) {

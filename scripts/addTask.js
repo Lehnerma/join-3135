@@ -4,7 +4,7 @@ let subtasksList = [];
 let remoteUsers = [];
 let initialTaskStatus = sessionStorage.getItem("task-status") ?? "todo";
 sessionStorage.removeItem("task-status");
-const USERS = [];
+
 /**
  * Initializes the page and all necessary functions.
  */
@@ -124,7 +124,7 @@ function fillUserDropdown(users) {
   for (const userId in users) {
     const user = users[userId];
     if (!user || !user.name) {
-      return;
+      container;
     }
     const firstLetter = user.name.charAt(0).toUpperCase();
     const color = contactColors?.[firstLetter] || "#ccc";
