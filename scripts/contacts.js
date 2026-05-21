@@ -25,7 +25,7 @@ const alphabet = [
 ];
 
 
-let USERS = [];
+USERS = [];
 let newContact = "";
 let editName = '';
 let editEmail = '';
@@ -70,6 +70,7 @@ async function getUsers() {
     USERS.push(person)
   }
   sortUserContactList();
+  await loadUsers();
   }
 
 
