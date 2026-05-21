@@ -3,17 +3,17 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+/**
+ * Entry point called on DOMContentLoaded. Runs the logo animation.
+ */
 function init() {
     logoAnimation();
 }
 
 /**
- * @function logoAnimation();
- * @description Checks if the animation has already run in this session
-   If yes: Turn off animation
-   If no: Run animation and set flag
+ * Runs the logo fade-in animation on first visit.
+ * If the animation has already played this session, it is skipped via a sessionStorage flag.
  */
-
 function logoAnimation() {
     const joinLogoFadeInElements = document.querySelectorAll('.join-logo, .nav-login, .login-content, .form-login ');
         if (sessionStorage.getItem('animationPlayed')){

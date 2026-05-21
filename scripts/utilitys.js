@@ -1,5 +1,8 @@
 checkAuth();
 
+/**
+ * Initialises the utility module: renders the header initials and applies login-state CSS classes.
+ */
 function initUtilitys() {
   renderHeadInitals();
   showExternalUtilityPages();
@@ -61,6 +64,10 @@ function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+/**
+ * Renders the logged-in user's initials into the header avatar button.
+ * Does nothing if no user id is stored in session storage.
+ */
 function renderHeadInitals() {
   const ID = sessionStorage.getItem("user_id");
   if (ID == null) {
@@ -81,23 +88,11 @@ function renderHeadInitals() {
   }
 }
 
-function showExternalUtilityPages() {
-  const ID = sessionStorage.getItem("user_id");
-  console.log(ID);
-  let VIEW_USER = document.getElementById("view-user");
-  let VIEW_EXTERNAL = document.getElementById("view-external");
-  let USER_MENU_BUTTON = document.getElementById("user_menu_button");
-  if (ID !== null) {
-    VIEW_USER.classList.remove("d-none");
-    VIEW_EXTERNAL.classList.add("d-none");
-    USER_MENU_BUTTON.classList.remove("d-none");
-  } else {
-    VIEW_USER.classList.add("d-none");
-    VIEW_EXTERNAL.classList.remove("d-none");
-    USER_MENU_BUTTON.classList.add("d-none");
-  }
-}
 
+/**
+ * Applies login-state CSS classes to <body> based on whether a user is logged in.
+ * Adds "user-logged-in" when a session id is present, "user-not-logged-in" otherwise.
+ */
 function showExternalUtilityPages() {
   const ID = sessionStorage.getItem("user_id");
   const BODY = document.body;
@@ -110,24 +105,41 @@ function showExternalUtilityPages() {
   }
 }
 
+/**
+ * Opens the user menu dialog.
+ */
 function openUserMenu() {
   const DIALOG = document.getElementById("user-menu-dialog");
   DIALOG.showModal();
 }
 
+/**
+ * Closes the user menu dialog.
+ */
 function closeDialog() {
     const DIALOG = document.getElementById("user-menu-dialog");
     DIALOG.close();
 }
 
+/**
+ * Stops click events inside the user menu dialog from bubbling to the backdrop,
+ * preventing an accidental dialog close.
+ * @param {Event} event - The click event.
+ */
 function preventCloseDialogOnDialog(event) {
     event.stopPropagation();
 }
 
+/**
+ * Navigates back to the previous page in browser history.
+ */
 function goBack() {
   window.history.back();
 }
 
+/**
+ * Clears session storage and redirects to the login page.
+ */
 function logOut() {
   sessionStorage.clear();
   window.location.href = "../index.html";
