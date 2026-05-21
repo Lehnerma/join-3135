@@ -77,11 +77,31 @@
   font-style: normal;
   font-display: swap;
 }
-
-/* @font-face {
-  font-family: "Open Sans";
-  src: url("../assets/fonts/OpenSans_18pt-SemiBold.ttf") format("truetype");
+@font-face {
+  font-family: "Mulish";
+  src: url("../assets/fonts/Mulish-VariableFont_wght.ttf") format("truetype");
   font-weight: 400;
-  font-style: italic;
+  font-style: normal;
   font-display: swap;
-} */
+}
+@font-face {
+  font-family: "Mulish";
+  src: url("../assets/fonts/Mulish-Italic-VariableFont_wght.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mulish";
+  src: url("../assets/fonts/Mulish-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Mulish";
+  src: url("../assets/fonts/Mulish-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
