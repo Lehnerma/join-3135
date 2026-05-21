@@ -210,10 +210,14 @@ function buildTaskDetailDialog(task) {
 function openEditTaskDialog(taskId) {
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const task = ALL_TASKS.find((t) => t.id === taskId);
+
   if (!task) return;
   const dialog = document.getElementById("edit_task_dialog");
+
   dialog.addEventListener("click", closeEditDialogOnBackdropClick);
   dialog.showModal();
+  const subtask_list = document.getElementById("subtask_list");
+  subtask_list.innerHTML = "";
   fillEditFormFields(task);
   setupEditTaskInteractions(task);
 }
@@ -241,7 +245,7 @@ function fillEditFormFields(task) {
  * @param {Object} task - The task object with all information.
  */
 function setupEditTaskInteractions(task) {
-  subtasksList = (task.subtasks || []).map((s) => ({ title: s.title, done: s.done }));
+  subtasksList = (task.subtasks || []).map((st) => ({ title: st.title, done: st.done }));
   subtaskInit();
   subtasksList.forEach((sub, i) => renderSubtaskItem(i, sub.title));
   loadUsersForEdit(task.assignedTo || []);

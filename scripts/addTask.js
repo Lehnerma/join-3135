@@ -315,6 +315,7 @@ function addSubtask(ev) {
  */
 function renderSubtaskItem(index, title) {
   const LIST = document.getElementById("subtask_list");
+
   const LI = document.createElement("li");
   LI.className = "subtask-item input--section";
   LI.dataset.index = index;
