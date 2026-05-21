@@ -252,8 +252,9 @@ input {
 }
 
 .footer-content {
+  width: 220px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 16px;
 }

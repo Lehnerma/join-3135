@@ -129,7 +129,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  /* padding-right: 16px; */
+  padding-right: 16px;
   transition: transform 0.7s ease-in-out;
 }
 
@@ -220,6 +220,10 @@
   .active {
     border-radius: 16px;
   }
+
+  .app--icons {
+  padding-right: 0;
+}
 
   .user-not-logged-in .sidebar {
     display: flex;
