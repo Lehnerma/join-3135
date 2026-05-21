@@ -201,7 +201,7 @@ function buildTaskDetailDialog(task) {
   WRAPPER.innerHTML = getDetailTaskTemplate(task);
   const ASSIGNEES_LIST = WRAPPER.querySelector("#detail_task_assignees");
   (task.assignedTo || []).filter(Boolean).forEach((name) => {
-    ASSIGNEES_LIST.innerHTML += getTaskAssignToTempletWithName(name, getInitials(name));
+    ASSIGNEES_LIST.innerHTML += getTaskAssignToTempletWithName(name, getInitials(name), getAssigneeColor(name));
   });
   const SUBTASKS = task.subtasks || [];
   const SUB_TOTAL = SUBTASKS.length;
