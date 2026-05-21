@@ -74,7 +74,9 @@
         <section class="search-container" id="search_container">
           <input type="text" id="search_tasks" class="task-search-input" placeholder="Find Task" />
           <span class="search-divider"></span>
-          <button id="search_tasks_btn" class="btn" role="search"><img src="../assets/img/icons/input/search.svg" alt="🔍search" class="search-icon" /></button>
+          <button id="search_tasks_btn" class="btn" role="search">
+            <img src="../assets/img/icons/input/search.svg" alt="🔍search" class="search-icon" />
+          </button>
           <!-- <label for="search_tasks">No Tasks found!</label> -->
         </section>
 
@@ -118,7 +120,6 @@
         <section class="kanban-column" ondragover="columnDragOver(event, 'done')" ondrop="taskDragDrop('done')" ondragleave="columnDragLeave(event)">
           <div class="column-title">
             <h2>Done</h2>
-
           </div>
           <ul class="task--list" id="done_list"></ul>
         </section>

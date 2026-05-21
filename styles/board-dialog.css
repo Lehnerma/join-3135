@@ -89,7 +89,7 @@
   flex-direction: column;
   margin: 24px 0;
   overflow-y: auto;
-  max-height: 70dvh;
+  max-height: 64dvh;
   height: 100%;
 }
 
