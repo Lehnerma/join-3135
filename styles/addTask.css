@@ -36,13 +36,11 @@ main {
   padding: 8px 0;
 }
 
-/* .input:user-invalid,
-.form--select:user-invalid:user-invalid {
-  border: 1px solid red;
-} */
+.input-invalid {
+    border: 1px solid red;
+}
 
 .field-error {
-  display: none;
   color: #ff3d00;
   font-size: 12px;
   margin-top: 4px;

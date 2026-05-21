@@ -69,7 +69,7 @@ function loadUsers() {
   fetch(USER_URL)
     .then((response) => response.json())
     .then((data) => {
-        remoteUsers = Object.entries(data).map(([id, user]) => ({ id, ...user }));
+      remoteUsers = Object.entries(data).map(([id, user]) => ({ id, ...user }));
       console.log("Firebase remoteUsers :", data);
       fillUserDropdown(data);
     })
@@ -265,6 +265,7 @@ function subtaskInit() {
  * @returns {Object} The finished task object.
  */
 function buildTaskObj() {
+
   const val = (id) => document.getElementById(id).value;
   return {
     title: val("title"),
@@ -414,6 +415,10 @@ function saveSubtask(li) {
  * Sends the new task object to the database and forwards it to the board.
  */
 async function createTask() {
+  const isValid = validateForm(); 
+  if (isValid == false) {
+    return; 
+  }
   const task = buildTaskObj();
   try {
     const response = await fetch(ADDTASK_URL, {
@@ -421,7 +426,7 @@ async function createTask() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(task)
     });
-    if (response.ok) {
+        if (response.ok) {
       const toast = document.getElementById("toast");
       if (toast) toast.classList.add("show");
       setTimeout(() => {
@@ -431,6 +436,23 @@ async function createTask() {
   } catch (error) {
     console.error("Fehler beim Speichern:", error);
   }
+}
+
+
+function validateForm() {
+  const title = document.getElementById("title");
+  const dueDate = document.getElementById("dueDate");
+  const category = document.getElementById("category");
+  const titleError = document.getElementById('title_error');
+  const dateError = document.getElementById('date_error');
+  const categoryError = document.getElementById('category_error');
+  titleError.classList.toggle('dnone', title.value.trim());
+  title.classList.toggle('input-invalid', !title.value.trim());
+  dateError.classList.toggle('dnone', dueDate.value);
+  dueDate.classList.toggle('input-invalid', !dueDate.value);
+  categoryError.classList.toggle('dnone', category.value);
+  category.classList.toggle('input-invalid', !category.value);
+  return title.value.trim() && dueDate.value && category.value;
 }
 
 

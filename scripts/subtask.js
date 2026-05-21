@@ -31,7 +31,13 @@ function addSubtask(ev) {
   ev.preventDefault();
   const INPUT = document.getElementById("subtask_input");
   const title = INPUT.value.trim();
-  if (!title) return;
+  if (!title){
+  const fieldError = document.getElementById('fieldError');
+         fieldError.classList.remove('dnone');
+   }else{
+    fieldError.classList.add('dnone');
+   }
+
   const INDEX = SUBTASKS.length;
   SUBTASKS.push({ title });
   INPUT.value = "";
@@ -83,9 +89,7 @@ function addSubtaskEventListener(LI) {
  */
 function startEditSubtask(li) {
   if (li.classList.contains("editing")) return;
-
   li.classList.add("editing");
-
   const span = li.querySelector(".subtask-text");
   const input = document.createElement("input");
   input.type = "text";
@@ -95,10 +99,8 @@ function startEditSubtask(li) {
     if (e.key === "Enter") saveSubtask(li);
     if (e.key === "Escape") cancelEditSubtask(li);
   });
-
   li.replaceChild(input, span);
   li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/check.svg";
-
   input.focus();
   input.select();
 }
@@ -110,13 +112,11 @@ function startEditSubtask(li) {
 function cancelEditSubtask(li) {
   const input = li.querySelector(".subtask-edit-input");
   if (!input) return;
-
   const span = document.createElement("span");
   span.className = "subtask-text";
   span.textContent = SUBTASKS[parseInt(li.dataset.index)].title;
   span.addEventListener("dblclick", () => startEditSubtask(li));
   li.replaceChild(span, input);
-
   li.classList.remove("editing");
   li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
 }
@@ -142,18 +142,14 @@ function deleteSubtask(li) {
 function saveSubtask(li) {
   const input = li.querySelector(".subtask-edit-input");
   if (!input) return;
-
   const newTitle = input.value.trim();
   if (!newTitle) return;
-
   SUBTASKS[parseInt(li.dataset.index)].title = newTitle;
-
   const span = document.createElement("span");
   span.className = "subtask-text";
   span.textContent = newTitle;
   span.addEventListener("dblclick", () => startEditSubtask(li));
   li.replaceChild(span, input);
-
   li.classList.remove("editing");
   li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
 }

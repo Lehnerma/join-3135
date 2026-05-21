@@ -11,7 +11,7 @@ const USERS=[]
 function initBoard() {
   initBoardTask();
   loadTasksFromFirebase();
-  loadUsersFromFirebase()
+  loadUsersFromFirebase();
 }
 
 async function loadTasksFromFirebase() {
