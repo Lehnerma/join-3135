@@ -61,6 +61,7 @@ function initBoardTask() {
 
   const TASK_DETAIL_DIALOG = document.getElementById("task_detail_dialog");
   TASK_DETAIL_DIALOG.addEventListener("click", closeTaskDetailDialogOnBackdropClick);
+  TASK_DETAIL_DIALOG.addEventListener("cancel", handleTaskDetailDialogEscape);
 }
 
 /**
@@ -127,6 +128,18 @@ function closeTaskDetailDialogOnBackdropClick(event) {
   if (event.target === TASK_DETAIL_DIALOG) {
     closeTaskDetailDialog();
   }
+}
+
+/**
+ * Handles the native `cancel` event (Escape key) on the task detail dialog.
+ * Prevents the browser from closing the dialog directly so that subtask
+ * changes are synced to Firebase before the dialog is closed.
+ *
+ * @param {Event} event - The cancel event fired by the dialog element.
+ */
+function handleTaskDetailDialogEscape(event) {
+  event.preventDefault();
+  closeTaskDetailDialog();
 }
 
 /**
