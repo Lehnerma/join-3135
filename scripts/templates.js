@@ -124,19 +124,17 @@ function getTaskCardTemplet(title, description, category, id, priority) {
 </li>`;
 }
 
-function getTaskAssignToTemplet(fullName, initials) {
-  const color = contactColors[(initials?.[0] ?? "").toUpperCase()] || "#888";
+function getTaskAssignToTemplet(fullName, initials, color) {
   return `
 <li class="assignee">
-  <abbr class="assignee--initials" style="--assignee-color: ${color}" title="${fullName}">${initials}</abbr>
+  <abbr class="assignee--initials" style="background-color:${color}" title="${fullName}">${initials}</abbr>
 </li>`;
 }
 
-function getTaskAssignToTempletWithName(fullName, initials) {
-  const color = contactColors[(initials?.[0] ?? "").toUpperCase()] || "#888";
+function getTaskAssignToTempletWithName(fullName, initials, color) {
   return `
 <li class="assignee f-row">
-  <abbr class="assignee--initials" style="--assignee-color: ${color}" title="${fullName}">${initials}</abbr>
+  <abbr class="assignee--initials" style="background-color:${color}" title="${fullName}">${initials}</abbr>
   <p class="assignee--name">${fullName}</p>
 </li>`;
 }

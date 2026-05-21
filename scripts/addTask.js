@@ -69,7 +69,7 @@ function loadUsers() {
   fetch(USER_URL)
     .then((response) => response.json())
     .then((data) => {
-      remoteUsers = Object.values(data);
+        remoteUsers = Object.entries(data).map(([id, user]) => ({ id, ...user }));
       console.log("Firebase remoteUsers :", data);
       fillUserDropdown(data);
     })
@@ -91,8 +91,9 @@ function fillUserDropdown(users) {
   for (const userId in users) {
     const user = users[userId];
     if (!user || !user.name) continue;
+
     const firstLetter = user.name.charAt(0).toUpperCase();
-    const color = contactColors?.[firstLetter] || "#ccc";
+    const color = user.color || "#ccc";
     const initials = user.name.charAt(0);
     html += getFillUserDropown(color, initials, user);
   }
@@ -133,8 +134,19 @@ function toggleUser(el) {
  * @returns {string[]} An array containing the names of the selected users.
  */
 function getAssignedUsers() {
-  const checkboxes = document.querySelectorAll("#assignedToList input[type='checkbox']:checked");
-  return Array.from(checkboxes).map((cb) => cb.value);
+  const checkboxes = document.querySelectorAll(
+    "#assignedToList input[type='checkbox']:checked"
+  );
+
+  console.log("CHECKBOXES:", checkboxes);
+
+  const values = Array.from(checkboxes).map((cb) => {
+    console.log("VALUE:", cb.value);
+    return cb.value;
+  });
+
+  console.log("FINAL ASSIGNED:", values);
+  return values;
 }
 
 
@@ -200,7 +212,7 @@ function buildTaskCard(task) {
     </div>
   `;
 }
- 
+
 
 /**
  * Creates the HTML icons (circles with initials) for assigned users.
@@ -283,7 +295,7 @@ function addSubtask(ev) {
   INPUT.value = "";
   renderSubtaskItem(INDEX, title);
 }
- 
+
 
 /**
  * Creates a list item for a subtask and adds it to the DOM.
@@ -414,7 +426,7 @@ async function createTask() {
       if (toast) toast.classList.add("show");
       setTimeout(() => {
         window.location.href = "board.html";
-      }, 2000);
+      }, 1000);
     }
   } catch (error) {
     console.error("Fehler beim Speichern:", error);
@@ -442,7 +454,7 @@ async function postTask(task) {
  */
 function clearForm() {
   document.getElementById("form_task").reset();
-  initDateInput(); 
+  initDateInput();
   selectPriority("medium");
   document.getElementById("assignedPreview").innerHTML = "";
   fillUserDropdown(remoteUsers);

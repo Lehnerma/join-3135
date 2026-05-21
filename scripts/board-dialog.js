@@ -60,18 +60,8 @@ function initBoardTask() {
   SEARCH_INPUT.addEventListener("input", searchTasks); //check if input or change is better for the search function.
 
   const TASK_DETAIL_DIALOG = document.getElementById("task_detail_dialog");
-  TASK_DETAIL_DIALOG.addEventListener("click", closeDialogOnBackdropClick);
-}
-
-/**
- * Closes a dialog if the user clicks on the background (backdrop) instead of the content.
- *
- * @param {Event} event - The click event.
- */
-function closeDialogOnBackdropClick(event) {
-  if (event.target === this) {
-    slideOutDialog(this);
-  }
+  TASK_DETAIL_DIALOG.addEventListener("click", closeTaskDetailDialogOnBackdropClick);
+  TASK_DETAIL_DIALOG.addEventListener("cancel", handleTaskDetailDialogEscape);
 }
 
 /**
@@ -141,6 +131,34 @@ function closeTaskDetailDialogOnBackdropClick(event) {
 }
 
 /**
+ * Handles the native `cancel` event (Escape key) on the task detail dialog.
+ * Prevents the browser from closing the dialog directly so that subtask
+ * changes are synced to Firebase before the dialog is closed.
+ *
+ * @param {Event} event - The cancel event fired by the dialog element.
+ */
+function handleTaskDetailDialogEscape(event) {
+  event.preventDefault();
+  closeTaskDetailDialog();
+}
+
+/**
+ * Toggles the done state of a subtask in SessionStorage immediately.
+ *
+ * @param {number} taskId - The ID of the parent task.
+ * @param {number} subtaskIndex - The index of the subtask to toggle.
+ */
+function toggleSubtaskDone(taskId, subtaskIndex) {
+  const ALL_TASKS = JSON.parse(sessionStorage.tasks);
+  const TASK = ALL_TASKS.find((t) => t.id === taskId);
+  if (!TASK?.subtasks?.[subtaskIndex]) return;
+  const current = TASK.subtasks[subtaskIndex].done;
+  TASK.subtasks[subtaskIndex].done = !(current === true || current === "true");
+  sessionStorage.tasks = JSON.stringify(ALL_TASKS);
+  CURRENT_DETAIL_TASK = TASK;
+}
+
+/**
  * Closes the task detail dialog using the slide-out animation.
  *
  * @returns {Promise} Resolves when the dialog is closed.
@@ -164,7 +182,7 @@ function buildTaskDetailDialog(task) {
   WRAPPER.innerHTML = getDetailTaskTemplate(task);
   const ASSIGNEES_LIST = WRAPPER.querySelector("#detail_task_assignees");
   (task.assignedTo || []).filter(Boolean).forEach((name) => {
-    ASSIGNEES_LIST.innerHTML += getTaskAssignToTempletWithName(name, getInitials(name));
+    ASSIGNEES_LIST.innerHTML += getTaskAssignToTempletWithName(name, getInitials(name), getAssigneeColor(name));
   });
   const SUBTASKS = task.subtasks || [];
   const SUB_TOTAL = SUBTASKS.length;

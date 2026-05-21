@@ -448,7 +448,7 @@ main {
 
   .priority-group {
     justify-content: space-evenly;
-    gap: clamp(6px, calc(5.89px + 0.034vw), 10px);
+    gap: clamp(6px, calc(4.857px + 0.357vw), 10px);
   }
 }
 

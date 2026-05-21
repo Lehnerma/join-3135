@@ -6,10 +6,12 @@ let TASKS = [];
 let DRAG_ID;
 let DRAG_OLD_STATUS;
 let DRAG_HEIGHT;
+const USERS=[]
 
 function initBoard() {
   initBoardTask();
   loadTasksFromFirebase();
+  loadUsersFromFirebase()
 }
 
 async function loadTasksFromFirebase() {
@@ -28,12 +30,35 @@ async function loadTasksFromFirebase() {
   }
 }
 
+const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users"+".json"
+async function loadUsersFromFirebase() {
+  try {
+    const RESPONSE = await fetch(USER_URL);
+    if (!RESPONSE.ok) {
+      throw new Error(`loading users failed: ${RESPONSE.status}`);
+    }
+    const RESULT = await RESPONSE.json();
+    const USER_ARRY = getUserArry(RESULT)
+    USERS.push(...USER_ARRY)
+    sessionStorage.setItem("users", JSON.stringify(USER_ARRY));
+  } catch (er) {
+    console.error(er);
+  }
+}
+
 //get ids into the tasks array for the dragging functions
 function getArryFromResult(result) {
   return Object.entries(result).map(([key, values], index) => ({
     id: index,
     firebaseKey: key,
     ...values,
+  }));
+}
+function getUserArry(result) {
+  return Object.entries(result).map(([key, values], index) => ({
+    id: index,
+    name: values.name,
+    color: values.color
   }));
 }
 
@@ -83,6 +108,12 @@ function renderColumn(status, tasks) {
   tasks.forEach((task) => (LIST.innerHTML += buildTaskCard(task)));
 }
 
+function getAssigneeColor(name){
+  const users = JSON.parse(sessionStorage.getItem('users'))
+  const user = users.find((u) => u.name === name);
+  return user ? user.color : "#ccc";
+}
+
 function buildTaskCard(task) {
   const WRAPPER = document.createElement("div");
   WRAPPER.innerHTML = getTaskCardTemplet(task.title, task.description, task.category, task.id, getPriority(task.priority));
@@ -93,9 +124,11 @@ function buildTaskCard(task) {
   WRAPPER.querySelector(".subtask--progress-container").innerHTML = getSubtaskProgressTemplate(SUB_DONE, SUB_TOTAL);
 
   const ASSIGNEES_LIST = WRAPPER.querySelector(".task--assignees");
-  (task.assignedTo || []).filter(Boolean).forEach((name) => {
-    ASSIGNEES_LIST.innerHTML += getTaskAssignToTemplet(name, getInitials(name));
-  });
+  if (task.assignedTo) {
+    task.assignedTo.forEach((name) => {
+      ASSIGNEES_LIST.innerHTML += getTaskAssignToTemplet(name, getInitials(name), getAssigneeColor(name));
+    });
+  }
 
   return WRAPPER.innerHTML;
 }
