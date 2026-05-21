@@ -67,15 +67,16 @@ function selectPriority(priority) {
 /**
  * Loads the user list from the Firebase database.
  */
-function loadUsers() {
+async function loadUsers() {
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
-  fetch(USER_URL)
-    .then((response) => response.json())
-    .then((data) => {
-      remoteUsers = Object.values(data);
-      fillUserDropdown(data);
-    })
-    .catch((error) => console.error("Fehler beim Laden der Benutzer:", error));
+  try {
+    const response = await fetch(USER_URL);
+    const data = await response.json();
+    remoteUsers = Object.values(data);
+    fillUserDropdown(data);
+  } catch (error) {
+    console.error("Fehler beim Laden der Benutzer:", error);
+  }
 }
 
 
