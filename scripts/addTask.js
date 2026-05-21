@@ -123,11 +123,10 @@ function fillUserDropdown(users) {
   let html = "";
   for (const userId in users) {
     const user = users[userId];
-    if (!user || !user.name) {
-      container;
-    }
+    if (!user || !user.name) continue;
+
     const firstLetter = user.name.charAt(0).toUpperCase();
-    const color = contactColors?.[firstLetter] || "#ccc";
+    const color = user.color || "#ccc";
     const initials = user.name.charAt(0);
     html += getFillUserDropown(color, initials, user);
   }
@@ -446,7 +445,7 @@ async function createTask() {
 
       setTimeout(() => {
         window.location.href = "board.html";
-      }, 2000);
+      }, 1000);
     }
   } catch (error) {
     console.error(error);
