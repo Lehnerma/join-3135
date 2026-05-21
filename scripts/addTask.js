@@ -4,7 +4,7 @@ let subtasksList = [];
 let remoteUsers = [];
 let initialTaskStatus = sessionStorage.getItem("task-status") ?? "todo";
 sessionStorage.removeItem("task-status");
-
+const USERS = [];
 /**
  * Initializes the page and all necessary functions.
  */
@@ -16,27 +16,40 @@ function init() {
   initDropdownOutsideClick();
 }
 
-
 /**
  * Initializes the event listeners for the main form and the clear button.
  */
 function btnInit() {
   const FORM = document.getElementById("form_task");
   const CLEAR_FORM = document.getElementById("form_clear");
-  if (FORM) {
-    FORM.addEventListener("submit", (event) => {
-      event.preventDefault();
-      createTask();
-    });
-  }
-  if (CLEAR_FORM) {
-    CLEAR_FORM.addEventListener("click", () => {
-      clearForm();
-    });
-  }
+  registerFormSubmitListener(FORM);
+  registerClearFormListener(CLEAR_FORM);
 }
 
+/**
+ * Registers the submit event listener on the task form.
+ * Prevents the default submission and triggers task creation.
+ *
+ * @param {HTMLFormElement|null} form - The task form element to attach the listener to.
+ */
+function registerFormSubmitListener(form) {
+  if (!form) return;
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    createTask();
+  });
+}
 
+/**
+ * Registers the click event listener on the clear-form button.
+ * Triggers the form reset when the button is clicked.
+ *
+ * @param {HTMLElement|null} clearBtn - The clear button element to attach the listener to.
+ */
+function registerClearFormListener(clearBtn) {
+  if (!clearBtn) return;
+  clearBtn.addEventListener("click", () => clearForm());
+}
 
 /**
  * Initializes the date input field: Sets the minimum date and the default value to today.
@@ -48,7 +61,6 @@ function initDateInput() {
   dueDateInput.min = today;
   dueDateInput.value = today;
 }
-
 
 /**
  * Sets the task priority and updates the visual appearance of the buttons.
@@ -63,6 +75,24 @@ function selectPriority(priority) {
   selectedPriority = priority;
 }
 
+/**
+ * Sorts users with the active user first, followed by alphabetically sorted contacts.
+ * @param {Array} users - The array of user objects to sort.
+ * @returns {Array} - Sorted array with active user at position 0.
+ */
+function sortUsersWithActiveFirst(users) {
+  const ACTIV_USER = sessionStorage.getItem("activeUserName");
+  const sorted = users.toSorted((a, b) => a.name.localeCompare(b.name));
+
+  if (ACTIV_USER) {
+    const activeUserIndex = sorted.findIndex((user) => user.name == ACTIV_USER);
+
+    const activeUser = sorted.splice(activeUserIndex, 1)[0];
+    sorted.unshift(activeUser);
+  }
+
+  return sorted;
+}
 
 /**
  * Loads the user list from the Firebase database.
@@ -73,12 +103,12 @@ async function loadUsers() {
     const response = await fetch(USER_URL);
     const data = await response.json();
     remoteUsers = Object.values(data);
-    fillUserDropdown(data);
+    const SORTET_USERS = sortUsersWithActiveFirst(remoteUsers);
+    fillUserDropdown(SORTET_USERS);
   } catch (error) {
     console.error("Fehler beim Laden der Benutzer:", error);
   }
 }
-
 
 /**
  * Populates the dropdown menu with the list of available users.
@@ -93,7 +123,9 @@ function fillUserDropdown(users) {
   let html = "";
   for (const userId in users) {
     const user = users[userId];
-    if (!user || !user.name) continue;
+    if (!user || !user.name) {
+      return;
+    }
     const firstLetter = user.name.charAt(0).toUpperCase();
     const color = contactColors?.[firstLetter] || "#ccc";
     const initials = user.name.charAt(0);
@@ -102,18 +134,14 @@ function fillUserDropdown(users) {
   container.innerHTML = html;
 }
 
-
 /**
  * Filters the user list based on the search input in the dropdown menu.
  */
 function filterUsers() {
-  let search = document.getElementById('assignedToSearch').value.toLowerCase();
-  let filteredUsers = remoteUsers.filter(user =>
-    user.name.toLowerCase().includes(search)
-  );
+  let search = document.getElementById("assignedToSearch").value.toLowerCase();
+  let filteredUsers = remoteUsers.filter((user) => user.name.toLowerCase().includes(search));
   fillUserDropdown(filteredUsers);
 }
-
 
 /**
  * Toggles the selection status of a user in the dropdown menu.
@@ -130,7 +158,6 @@ function toggleUser(el) {
   updateAssignedPreview();
 }
 
-
 /**
  * Retrieves all currently selected users from the checklist.
  * @returns {string[]} An array containing the names of the selected users.
@@ -140,7 +167,6 @@ function getAssignedUsers() {
   return Array.from(checkboxes).map((cb) => cb.value);
 }
 
-
 /**
  * Opens or closes the user dropdown menu.
  * @param {Event} e - The click event.
@@ -148,9 +174,10 @@ function getAssignedUsers() {
 function toggleDropdown(e) {
   e.stopPropagation();
   const dropdown = document.getElementById("assignedToDropdown");
+  const assigneeList = document.getElementById("assignedToList");
   dropdown.classList.toggle("open");
+  assigneeList.scrollTo({ top: 0 });
 }
-
 
 /**
  * Event listener for the Escape key to close the dropdown menu.
@@ -160,7 +187,6 @@ document.addEventListener("keydown", (e) => {
     document.getElementById("assignedToDropdown")?.classList.remove("open");
   }
 });
-
 
 /**
  * Initializes the closing of the dropdown menu when a click is made outside the element.
@@ -176,7 +202,6 @@ function initDropdownOutsideClick() {
   });
 }
 
-
 /**
  * Updates the preview icons of the assigned users below the dropdown.
  */
@@ -185,7 +210,6 @@ function updateAssignedPreview() {
   const selected = getAssignedUsers();
   container.innerHTML = renderAssignedUsers(selected);
 }
-
 
 /**
  * Creates the basic HTML structure for a task card.
@@ -203,7 +227,6 @@ function buildTaskCard(task) {
     </div>
   `;
 }
- 
 
 /**
  * Creates the HTML icons (circles with initials) for assigned users.
@@ -233,7 +256,6 @@ function renderAssignedUsers(users = []) {
   return `<div class="assigned-wrapper">${html}</div>`;
 }
 
-
 /**
  * Initializes the event listeners for subtask input.
  */
@@ -249,7 +271,6 @@ function subtaskInit() {
     }
   });
 }
-
 
 /**
  * Collects all form data and creates a task object for the database.
@@ -286,7 +307,6 @@ function addSubtask(ev) {
   INPUT.value = "";
   renderSubtaskItem(INDEX, title);
 }
- 
 
 /**
  * Creates a list item for a subtask and adds it to the DOM.
@@ -304,7 +324,6 @@ function renderSubtaskItem(index, title) {
   LIST.appendChild(LI);
 }
 
-
 /**
  * Adds event listeners for edit and delete to a subtask element.
  * @param {HTMLLIElement} LI - The list element of the subtask.
@@ -321,7 +340,6 @@ function addSubtaskEventListener(LI) {
   });
 }
 
-
 /**
  * Converts special characters to HTML entities to prevent XSS.
  * @param {string} str - The text to be sanitized.
@@ -332,7 +350,6 @@ function escapeHtml(str) {
   div.textContent = str;
   return div.innerHTML;
 }
-
 
 /**
  * Enables edit mode for a subtask.
@@ -356,7 +373,6 @@ function startEditSubtask(li) {
   input.select();
 }
 
-
 /**
  * Cancels the editing mode of a subtask and restores the original text.
  * @param {HTMLLIElement} li - The list element of the subtask.
@@ -370,7 +386,6 @@ function cancelEditSubtask(li) {
   li.replaceChild(span, input);
 }
 
-
 /**
  * Removes a subtask from the array and from the DOM.
  * @param {HTMLLIElement} li - The list element of the subtask.
@@ -379,7 +394,6 @@ function deleteSubtask(li) {
   subtasksList.splice(parseInt(li.dataset.index), 1);
   li.remove();
 }
-
 
 /**
  * Saves the modified text of a subtask and exits edit mode.
@@ -400,7 +414,6 @@ function saveSubtask(li) {
   li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
 }
 
-
 /**
  * Sends the new task object to the database and forwards it to the board.
  */
@@ -409,11 +422,7 @@ async function createTask() {
   const dueDate = document.getElementById("dueDate");
   const category = document.getElementById("category");
 
-  if (
-    !title.value.trim() ||
-    !dueDate.value ||
-    !category.value
-  ) {
+  if (!title.value.trim() || !dueDate.value || !category.value) {
     alert("Please fill all required fields");
     return;
   }
@@ -424,27 +433,24 @@ async function createTask() {
     const response = await fetch(ADDTASK_URL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(task)
+      body: JSON.stringify(task),
     });
 
     if (response.ok) {
-      const toast =
-        document.getElementById("toast");
+      const toast = document.getElementById("toast");
 
       toast?.classList.add("show");
 
       setTimeout(() => {
-        window.location.href =
-          "board.html";
+        window.location.href = "board.html";
       }, 2000);
     }
   } catch (error) {
     console.error(error);
   }
 }
-
 
 /**
  * Helper function for sending a task to the database via POST.
@@ -460,20 +466,18 @@ async function postTask(task) {
   return response.json();
 }
 
-
 /**
  * Resets the form to its default state.
  */
 function clearForm() {
   document.getElementById("form_task").reset();
-  initDateInput(); 
+  initDateInput();
   selectPriority("medium");
   document.getElementById("assignedPreview").innerHTML = "";
   fillUserDropdown(remoteUsers);
   subtasksList = [];
   document.getElementById("subtask_list").innerHTML = "";
 }
-
 
 /**
  * Clears the input field for subtasks.
