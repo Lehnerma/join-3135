@@ -70,7 +70,7 @@ async function getUsers() {
     USERS.push(person)
   }
   sortUserContactList();
-}
+  }
 
 
 /**

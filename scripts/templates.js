@@ -1,33 +1,31 @@
 const contactColors = {
   A: "rgba(147, 39, 255, 1)",
-  B: "rgba(31, 215, 193, 1)",
-  C: "rgba(255, 187, 43, 1)",
-  D: "rgba(0, 190, 232, 1)",
-  E: "rgba(255, 70, 70, 1)",
-  F: "rgba(100, 200, 0, 1)",
-  G: "rgba(110, 82, 255, 1)",
-  H: "rgba(195, 255, 43, 1)",
-  I: "rgba(255, 120, 0, 1)",
-  J: "rgba(0, 56, 255, 1)",
-  K: "rgba(252, 113, 255, 1)",
-  L: "rgba(0, 150, 130, 1)",
+  B: "rgba(110, 82, 255, 1)",
+  C: "rgba(252, 113, 255, 1)",
+  D: "rgba(255, 187, 43, 1)",
+  E: "rgba(31, 215, 193, 1)",
+  F: "rgba(70, 47, 138, 1)",
+  G: "rgba(255, 70, 70, 1)",
+  H: "rgba(0, 190, 232, 1)",
+  I: "rgba(42, 61, 89, 1)",
+  J: "rgba(255, 94, 179, 1)",
+  K: "rgba(255, 116, 94, 1)",
+  L: "rgba(255, 163, 94, 1)",
   M: "rgba(255, 199, 1, 1)",
-  N: "rgba(180, 40, 40, 1)",
-  O: "rgba(150, 0, 255, 1)",
+  N: "rgba(0, 56, 255, 1)",
+  O: "rgba(195, 255, 43, 1)",
   P: "rgba(255, 230, 43, 1)",
-  Q: "rgba(0, 120, 255, 1)",
-  R: "rgba(255, 116, 94, 1)",
-  S: "rgba(70, 47, 138, 1)",
-  T: "rgba(200, 150, 0, 1)",
-  U: "rgba(255, 163, 94, 1)",
-  V: "rgba(42, 61, 89, 1)",
-  W: "rgba(255, 94, 179, 1)",
-  X: "rgba(120, 120, 120, 1)",
-  Y: "rgba(255, 70, 150, 1)",
-  Z: "rgba(0, 255, 200, 1)",
+  Q: "rgba(255, 70, 150, 1)",
+  R: "rgba(0, 150, 130, 1)",
+  S: "rgba(255, 120, 0, 1)",
+  T: "rgba(0, 120, 255, 1)",
+  U: "rgba(180, 40, 40, 1)",
+  V: "rgba(100, 200, 0, 1)",
+  W: "rgba(150, 0, 255, 1)",
+  X: "rgba(0, 255, 200, 1)",
+  Y: "rgba(200, 150, 0, 1)",
+  Z: "rgba(120, 120, 120, 1)",
 };
-
-
 
 function getFillUserDropown(color, initials, user) {
   return `
@@ -202,12 +200,11 @@ function getDetailTaskTemplate(task) {
     </footer>`;
 }
 
-function getDetailSubtaskTemplate(title, checked = false, taskId, subtaskIndex) {
-  const isChecked = checked === true || checked === "true";
+function getDetailSubtaskTemplate(title, checked = false, id) {
   return `
     <li class="detail-task--subtask-item f-row">
-      <input type="checkbox" id="sub_check_${taskId}_${subtaskIndex}" class="detail-task--subtask-checkbox"${isChecked ? " checked" : ""} onchange="toggleSubtaskDone(${taskId}, ${subtaskIndex})" />
-      <label for="sub_check_${taskId}_${subtaskIndex}" class="detail-task--subtask-text">${title}</label>
+      <input type="checkbox" id="sub_check${id}" class="detail-task--subtask-checkbox"${checked ? " checked" : ""} />
+      <p for="sub_check${id}" class="detail-task--subtask-text">${title}</p>
     </li>`;
 }
 
