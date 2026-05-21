@@ -18,10 +18,12 @@ const contactColors = [
   'rgba(255, 230, 43, 1)'
 ];
 
+
 const alphabet = [
   "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
 ];
+
 
 let USERS = [];
 let newContact = "";
@@ -40,6 +42,7 @@ const editMenuIcon = document.getElementById('editMenuIcon');
 const backArrowIcon = document.getElementById('backArrowIcon');
 let USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
+
 /**
  * Initializes the application by loading the user.
  */
@@ -47,24 +50,28 @@ function init() {
   getUsers();
 }
 
+
 /**
- * Loads the user list from the Firebase database and saves it locally.
+ * Loads users from Firebase, fixes missing colors/phones, and saves them to the USERS array.
+ * * @async
+ * @function getUsers
+ * @returns {Promise}
  */
 async function getUsers() {
   const RESPONSE = await fetch(USERS_URL);
   let RESULT = await RESPONSE.json();
-  USERS = [];
+      USERS = [];
   for (let key in RESULT) {
     let person = RESULT[key];
     person.firebaseKey = key;
-    if (!person.color) {
-      person.color = contactColors[Math.floor(Math.random() * contactColors.length)];
-      updateFirebaseContact(key, { color: person.color });
-    }
-    USERS.push(person);
+    person.color ??= contactColors[Math.floor(Math.random() * contactColors.length)]
+    person.phone ??= person.phone = "";
+    updateFirebaseContact(key, { color: person.color }, { phone: person.email });
+    USERS.push(person)
   }
   sortUserContactList();
 }
+
 
 /**
  * Sorts the global USERS list alphabetically by name.
@@ -80,6 +87,7 @@ function sortUserContactList() {
   addAlphabetTable();
 }
 
+
 /**
  * Creates the letter containers for the contact list based on the alphabet.
  */
@@ -91,6 +99,7 @@ function addAlphabetTable() {
   }
   userContectList();
 }
+
 
 /**
  * Assigns users to the corresponding letter containers in the list.
@@ -105,6 +114,7 @@ function userContectList() {
     }
   }
 }
+
 
 /**
  * Generates the HTML structure for a single user in the list.
@@ -134,6 +144,7 @@ function getInitials(name) {
   return currentInitial;
 }
 
+
 /**
  * opens the dialog box for creating a new contact.
  */
@@ -143,6 +154,7 @@ function openContactDialog() {
   dialogRef.innerHTML = renderHtmlContactDialogTpl();
   dialogRef.showModal();
 }
+
 
 /**
  * Opens the dialog box for editing an existing contact.
@@ -160,6 +172,7 @@ function openEditDialog(editUserIndex, initials, color) {
   document.getElementById('editPhone').value = editPhone;
 }
 
+
 /**
  * Prepares the data for editing a contact and opens the dialog.
  * @param {number} editUserIndex - The user's index.
@@ -171,12 +184,14 @@ function addEditContactDetails(editUserIndex) {
   openEditDialog(editUserIndex, initials, user.color);
 }
 
+
 /**
  * Auxiliary function for opening the editing dialog using the global index.
  */
 function openEditContactDialog() {
   addEditContactDetails(editUserIndex);
 }
+
 
 /**
  * Closes the contact dialog box and resets the form.
@@ -191,6 +206,7 @@ function closeContactDialog() {
   }
 }
 
+
 /**
  * Prevents the dialog from closing when clicking on the dialog's interior.
  * @param {Event} event - The click event.
@@ -198,6 +214,7 @@ function closeContactDialog() {
 function closeDialogOutsite(event) {
   event.stopPropagation();
 }
+
 
 /**
  * Sets the details of the selected user and controls the view (desktop/mobile).
@@ -218,11 +235,14 @@ function getUserDetails(userIndex) {
   }
 }
 
+
 /**
  * Controls the display of contact details in the mobile view.
  */
 function mobileDetails() {
-  const isMobileView = window.innerWidth <= 650 && editUserIndex;
+    let index  = editUserIndex;
+        index = true;
+    const isMobileView = window.innerWidth <= 650 && index;
   if (isMobileView) {
     activateMobileView();
   } else {
@@ -230,6 +250,7 @@ function mobileDetails() {
   }
   showDetails();
 }
+
 
 /**
  * Activates the classes for the mobile detail view.
@@ -242,6 +263,7 @@ function activateMobileView() {
   removeAllBgColors();
 }
 
+
 /**
  * Disables classes for the mobile detail view.
  */
@@ -252,6 +274,7 @@ function deactivateMobileView() {
   [editMenuIcon, backArrowIcon].forEach(el => el.classList.remove('mobile-buttons-on'));
 }
 
+
 /**
  * Returns from the detailed view to the contact list in the mobile view.
  */
@@ -260,6 +283,7 @@ function backToContactlist() {
   backArrowButton.classList.remove('btn--arrow', 'btn');
   editMenuButton.classList.remove('edit-menu-box', 'btn--addPerson');
 }
+
 
 /**
  * Removes the active background marker from all contacts in the list.
@@ -271,6 +295,7 @@ function removeAllBgColors() {
   });
   showDetails();
 }
+
 
 /**
  * Displays the details of the selected user in the details container.
@@ -290,6 +315,7 @@ function showDetails() {
   checkDetailAnimation();
 }
 
+
 /**
  * Checks and disables the detail box's pop-up animation, if necessary.
  */
@@ -304,6 +330,7 @@ function checkDetailAnimation() {
   }
 }
 
+
 /** *
  * Prepares the HTML template for the detail view.
  * @returns {string} The rendered HTML of the detail view.
@@ -313,6 +340,7 @@ function addShowDetails() {
   const firstLetter = user.name.charAt(0).toUpperCase();
   return renderShowDetailsTpl(user, editUserIndex, initials, user.color);
 }
+
 
 /**
  * Collects the data from the form and creates a new contact object.
@@ -332,6 +360,7 @@ function createContact() {
   addNewContact(newContact);
 }
 
+
 /**
  * Adds a new contact locally, sorts the list, and synchronizes with the database.
  * @param {Object} newContact - The new contact to be created.
@@ -350,6 +379,7 @@ async function addNewContact(newContact) {
   showSuccessBanner();
 }
 
+
 /**
  * Smoothly scrolls to a specific user in the contact list.
  * @param {number} index - The user's index.
@@ -360,6 +390,7 @@ function scrollToUser(index) {
     id.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 }
+
 
 /**
  * Saves the new contact to the Firebase database via POST.
@@ -380,6 +411,7 @@ async function syncNewContact(newContact) {
   }
 }
 
+
 /**
  * Deletes a contact from the list and the database based on its index.
  * @param {number} index - The index of the user to be deleted.
@@ -398,6 +430,7 @@ async function deleteContact(index) {
   }
 }
 
+
 /**
  * Sends a DELETE request to Firebase to permanently remove a user.
  * @param {string} firebaseKey - The user's unique Firebase key.
@@ -413,6 +446,7 @@ async function deleteUserFromDatabase(firebaseKey) {
     return false;
   }
 }
+
 
 /**
  * Displays a success banner for a short time after creating a contact.
@@ -448,6 +482,7 @@ async function saveNewContactData(index) {
   }
 }
 
+
 /**
  * Sends a PATCH request to Firebase to update a contact's data.
  * @param {string} key - The contact's Firebase key.
@@ -464,6 +499,7 @@ async function updateFirebaseContact(key, updatedData) {
   });
 }
 
+
 /**
  * Closes the mobile menu (Edit/Delete menu).
  */
@@ -473,6 +509,7 @@ function closeMobileMenu() {
     menu.classList.remove('show');
   }
 }
+
 
 /**
  * Opens or closes the mobile editing menu.

@@ -17,7 +17,7 @@
   flex-direction: column;
   gap: clamp(10px, 1.9vw, 21px);
   max-width: 650px;
-  height: auto;
+  height: 90vh;
   border: none;
   top: clamp(80px, 17.5vw, 250px);
   left: clamp(8px, 2.5vw, 55px);
@@ -67,7 +67,6 @@
 
 .main-contact-details {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -84,6 +83,13 @@
   display: flex;
   flex-direction: column;
   gap: clamp(8px, 1.3vw, 15px);
+
+}
+
+.contact-phone,
+.contact-email {
+  font-size: 16px;
+  font-weight: 700;
 }
 
 .h1-contact-details {
@@ -146,7 +152,7 @@
     height: 24px;
     color: var(--primary-color);
     background-image: url('../assets/img/icons/contacts/delete.svg');
-     }
+  }
 
   &:hover::before {
     background-image: url('../assets/img/icons/contacts/delete-blue.svg');
@@ -162,8 +168,6 @@
 li {
   list-style-type: none;
 }
-
-
 
 /* RESPONSIVE */
 
@@ -308,9 +312,10 @@ li {
   .back-arrow {
     width: 24.6px;
     height: 23.92px;
-   background: none;
+    background: none;
   }
 }
+
 
 @media(max-width: 427px) {
   .aside-h2-edit {
@@ -333,5 +338,9 @@ li {
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
+  }
+
+  .right-content {
+    overflow-y: auto;
   }
 }
