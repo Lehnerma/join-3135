@@ -19,8 +19,8 @@ const getTaskURL = (key = "", section = "") => {
  */
 function initBoard() {
   initBoardTask();
-  loadTasksFromFirebase();
   loadUsersFromFirebase();
+  loadTasksFromFirebase();
 }
 
 /**
@@ -364,8 +364,14 @@ function clearDragState() {
  * @param {Array} allTasks - All tasks from sessionStorage.
  */
 function updateTaskColumns(oldStatus, newStatus, allTasks) {
-  renderColumn(oldStatus, allTasks.filter((t) => t.status === oldStatus));
-  renderColumn(newStatus, allTasks.filter((t) => t.status === newStatus));
+  renderColumn(
+    oldStatus,
+    allTasks.filter((t) => t.status === oldStatus),
+  );
+  renderColumn(
+    newStatus,
+    allTasks.filter((t) => t.status === newStatus),
+  );
 }
 
 /**
