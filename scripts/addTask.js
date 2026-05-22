@@ -26,6 +26,25 @@ function btnInit() {
   registerClearFormListener(CLEAR_FORM);
 }
 
+
+function setError(input, errorId) {
+  input.classList.add("input-invalid");
+
+  const errorEl = document.getElementById(errorId);
+  if (errorEl) {
+    errorEl.classList.remove("dnone");
+  }
+}
+
+function clearError(input, errorId) {
+  input.classList.remove("input-invalid");
+
+  const errorEl = document.getElementById(errorId);
+  if (errorEl) {
+    errorEl.classList.add("dnone");
+  }
+}
+
 /**
  * Registers the submit event listener on the task form.
  * Prevents the default submission and triggers task creation.
@@ -423,10 +442,33 @@ async function createTask() {
   const dueDate = document.getElementById("dueDate");
   const category = document.getElementById("category");
 
-  if (!title.value.trim() || !dueDate.value || !category.value) {
-    alert("Please fill all required fields");
-    return;
+  let isValid = true;
+
+  // TITLE
+  if (!title.value.trim()) {
+    setError(title, "title_error", "This field is required");
+    isValid = false;
+  } else {
+    clearError(title, "title_error");
   }
+
+  // DUE DATE
+  if (!dueDate.value) {
+    setError(dueDate, "date_error", "This field is required");
+    isValid = false;
+  } else {
+    clearError(dueDate, "date_error");
+  }
+
+  // CATEGORY
+  if (!category.value) {
+    setError(category, "category_error", "This field is required");
+    isValid = false;
+  } else {
+    clearError(category, "category_error");
+  }
+
+  if (!isValid) return;
 
   const task = buildTaskObj();
 
@@ -441,7 +483,6 @@ async function createTask() {
 
     if (response.ok) {
       const toast = document.getElementById("toast");
-
       toast?.classList.add("show");
 
       setTimeout(() => {
@@ -451,7 +492,7 @@ async function createTask() {
   } catch (error) {
     console.error(error);
   }
-}
+} 
 
 /**
  * Helper function for sending a task to the database via POST.

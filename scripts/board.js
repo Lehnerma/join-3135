@@ -237,12 +237,9 @@ async function deleteTask(firebaseKey) {
     if (!response.ok) {
       throw new Error(`Delete failed: ${response.status}`);
     }
-
     TASKS = TASKS.filter((task) => task.firebaseKey !== firebaseKey);
     renderBoard(TASKS);
     closeTaskDialog();
-
-    console.log("Task deleted");
   } catch (error) {
     console.error(error);
   }
