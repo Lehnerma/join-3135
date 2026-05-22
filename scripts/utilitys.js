@@ -99,7 +99,6 @@ function renderHeadInitals() {
  */
 function showExternalUtilityPages() {
   const ID = sessionStorage.getItem("user_id");
-  console.log(ID);
   let VIEW_USER = document.getElementById("view-user");
   let VIEW_EXTERNAL = document.getElementById("view-external");
   let USER_MENU_BUTTON = document.getElementById("user_menu_button");
