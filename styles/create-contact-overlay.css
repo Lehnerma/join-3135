@@ -166,6 +166,7 @@ form {
     border: none;
     outline: none;
     font-size: 20px;
+    cursor: pointer;
 }
 
 .dialog-input::placeholder {
