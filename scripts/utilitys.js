@@ -147,3 +147,4 @@ function logOut() {
   sessionStorage.clear();
   window.location.href = "../index.html";
 }
+
