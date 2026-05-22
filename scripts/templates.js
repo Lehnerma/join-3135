@@ -222,11 +222,12 @@ function getDetailTaskTemplate(task) {
  * @param {number} id - The parent task's id (used for the checkbox id).
  * @returns {string} HTML string for a subtask list item.
  */
-function getDetailSubtaskTemplate(title, checked = false, id) {
+function getDetailSubtaskTemplate(title, checked = false, taskId, subtaskIndex) {
+  const isChecked = checked === true || checked === "true";
   return `
     <li class="detail-task--subtask-item f-row">
-      <input type="checkbox" id="sub_check${id}" class="detail-task--subtask-checkbox"${checked ? " checked" : ""} />
-      <p for="sub_check${id}" class="detail-task--subtask-text">${title}</p>
+      <input type="checkbox" id="sub_check_${taskId}_${subtaskIndex}" class="detail-task--subtask-checkbox"${isChecked ? " checked" : ""} onchange="toggleSubtaskDone(${taskId}, ${subtaskIndex})" />
+      <label for="sub_check_${taskId}_${subtaskIndex}" class="detail-task--subtask-text">${title}</label>
     </li>`;
 }
 

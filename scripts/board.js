@@ -17,10 +17,9 @@ const getTaskURL = (key = "", section = "") => {
 /**
  * Initialises the board: sets up UI interactions and loads data from Firebase.
  */
-function initBoard() {
+async function initBoard() {
+  await loadUsersFromFirebase();
   initBoardTask();
-  loadUsersFromFirebase();
-  initDateInput();
   loadTasksFromFirebase();
 }
 
@@ -56,7 +55,7 @@ async function loadUsersFromFirebase() {
       throw new Error(`loading users failed: ${RESPONSE.status}`);
     }
     const RESULT = await RESPONSE.json();
-    const USER_ARRY = getUserArry(RESULT);
+    const USER_ARRY = await getUserArry(RESULT);
 
     sessionStorage.setItem("users", JSON.stringify(USER_ARRY));
   } catch (er) {
@@ -161,7 +160,8 @@ function renderColumn(status, tasks) {
  * @returns {string} A CSS color string, or "#ccc" if the user is not found.
  */
 function getAssigneeColor(name) {
-  const users = JSON.parse(sessionStorage.getItem("users"));
+  const usersData = sessionStorage.getItem("users");
+  const users = usersData ? JSON.parse(usersData) : [];
   const user = users.find((u) => u.name === name);
   return user ? user.color : "#ccc";
 }

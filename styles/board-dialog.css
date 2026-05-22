@@ -44,7 +44,6 @@
   width: clamp(310px, calc(228.571px + 25.446vw), 595px);
   max-width: 525px;
   max-height: 95vh;
-  overflow-y: hidden;
 }
 
 .dialog .slide-in {
@@ -118,6 +117,12 @@
 .assignee--name {
   font-family: "Open Sans", sans-serif;
   font-size: 19px;
+}
+
+.detail-task--subtasks-list {
+  height: 100%;
+  max-height: 100px;
+  overflow: auto;
 }
 
 .detail-task--subtask-item {
@@ -281,7 +286,7 @@
   .detail-task--title {
     font-size: 36px;
   }
-  .detail-task--subheading{
+  .detail-task--subheading {
     color: var(--board-title-col);
   }
   .detail-task--description,
