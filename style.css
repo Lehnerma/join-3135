@@ -9,37 +9,6 @@
   font-family: "Inter", sans-serif;
 }
 
-@media screen and (orientation: landscape) and (max-width: 768px) {
-    
-    html::before {
-        content: "🔄 \A \A Bitte drehen Sie Ihr Gerät. \A Die Seite ist für das Hochformat optimiert.";
-        white-space: pre-wrap;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: white;
-        color: black;
-        z-index: 9999999; 
-        display: flex !important;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        font-family: sans-serif;
-        font-size: 20px;
-        font-weight: bold;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-
-    
-    body {
-        display: none !important;
-    }
-}
-
-
 
 button {
   cursor: pointer;
