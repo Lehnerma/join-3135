@@ -1,10 +1,15 @@
 let SHOW_SIGNUP = false;
 let USERS = [];
 
+/**
+ * Builds the Firebase REST API URL for a specific user.
+ * @param {string} [id=""] - Optional user id. Omit to target the entire users collection.
+ * @returns {string} The full Firebase URL.
+ */
 const USERS_URL = (id = "") => "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/" + id + ".json";
 
 /**
- * Initializes the page functions.
+ * Initialises the login page: attaches all button listeners and starts the intro animations.
  */
 function init() {
   btnInit();
@@ -13,7 +18,7 @@ function init() {
 
 
 /**
- * initial all buttons for eventlisteners
+ * Attaches all event listeners to the login and signup buttons and forms.
  */
 function btnInit() {
   const SIGNUP = document.getElementById("signup_btn");
@@ -32,7 +37,8 @@ function btnInit() {
 
 
 /**
- * function to trigger the animation on the beginning.
+ * Triggers intro animations for the logo, form container, nav, and footer.
+ * On mobile (≤ 600 px) an additional mobile-specific animation class is added.
  */
 function triggerAnimations() {
   const JOIN_LOGO = document.querySelector(".join-logo");
@@ -50,8 +56,8 @@ function triggerAnimations() {
 
 
 /**
- * Remove the fade of the forms to swap between the login in and sign up form.
- * @param {*} container - is the container for the style
+ * Removes the fade-in class from a container so it stays visible after the animation.
+ * @param {HTMLElement} container - The element to un-fade.
  */
 function removeFade(container) {
   container.classList.remove("fade-in");
@@ -75,8 +81,7 @@ function toggleForms(event) {
 
 
 /**
- * to show or hide the forms
- * @param {*} event -> to disable the reload for the switching
+ * Shows or hides the login and signup forms and updates related nav elements.
  */
 function updateToggleUI() {
   const LOGIN_FORM = document.getElementById("login");
@@ -97,8 +102,9 @@ function updateToggleUI() {
 
 
 /**
- * Workaround to get no Errors in the console
- * @param {*} condition -> is the condition if the form is hide or not
+ * Toggles the required attribute on all signup inputs to avoid browser validation
+ * errors on the hidden form.
+ * @param {boolean} condition - true to make inputs required, false to remove it.
  */
 function setRequired(condition) {
   const INPUTS = document.querySelectorAll(".input_signup");
@@ -111,7 +117,7 @@ function setRequired(condition) {
 
 
 /**
- * redirect for the guest login and set id for the session storage
+ * Redirects the guest user to the summary page and stores guest session data.
  */
 function guestLogin() {
   window.location.href = "./html/summary.html";
@@ -122,8 +128,10 @@ function guestLogin() {
 
 
 /**
- *To sign up a new user.
- * @param {*} ev -> need for disable the reload of the side.
+ * Handles the signup form submission: validates the password, creates the user, shows a
+ * success message, and switches back to the login form.
+ * @param {Event} ev - The form submit event.
+ * @returns {Promise<void>}
  */
 async function creatUser(ev) {
   ev.preventDefault();
@@ -177,8 +185,8 @@ function confirmPassword() {
 
 
 /**
- * To generate a unique id for evry user witch is create from the time
- * @returns -> uniqe id
+ * Generates a short unique id from the current timestamp and a random value.
+ * @returns {string} A 6-character alphanumeric id.
  */
 function generateId() {
   return (Date.now().toString(36) + Math.random().toString(36)).substring(0, 6);
@@ -239,7 +247,8 @@ function showFailEntriesLogin() {
 
 
 /**
- * Loads all users from the server.
+ * Fetches all users from Firebase and stores them in the module-level USERS array.
+ * @returns {Promise<void>}
  */
 async function getUsers() {
   const RESPONSE = await fetch(USERS_URL());
@@ -300,10 +309,6 @@ function showPasswordInput(inputID, icon) {
 }
 
 
-/**
- * Clears all text from both the login and signup forms
- * and resets all password icons back to their original state.
- */
 /**
  * Clears all text from both the login and signup forms
  * and resets all password icons and error styles.
