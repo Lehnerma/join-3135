@@ -1,3 +1,6 @@
+/**
+ * Status label map for the move-task dropdown.
+ */
 const STATUS_LABELS = {
   todo: "To-do",
   progress: "Progress",
@@ -66,40 +69,6 @@ function positionDropdown(dropdown, btn) {
 
   const overflowsRight = rect.left + dropdown.offsetWidth > window.innerWidth - 8;
   dropdown.style.left = overflowsRight ? `${rect.right - dropdown.offsetWidth + 24}px` : `${rect.left}px`;
-}
-
-/**
- * Builds the inner HTML for the move dropdown.
- * @param {number} taskId - The id of the task.
- * @param {Array<Object>} targets - List of move targets.
- * @returns {string} HTML string for the dropdown content.
- */
-function getMoveDropdownTemplate(taskId, targets) {
-  const btns = targets.map((t) => getMoveButtonTemplate(taskId, t)).join("");
-  return `
-    <p class="moveTaskDropdown--label">Move to</p>
-    <ul class="moveTaskDropdown--list">${btns}</ul>
-  `;
-}
-
-/**
- * Builds a single move button HTML string.
- * @param {number} taskId - The id of the task.
- * @param {Object} target - Move target with status and direction.
- * @param {string} target.status - The target status key.
- * @param {string} target.direction - "up" or "down".
- * @returns {string} HTML string for one list item button.
- */
-function getMoveButtonTemplate(taskId, { status, direction }) {
-  const icon = direction === "up" ? "arrow_upward" : "arrow_downward";
-  return `
-    <li>
-      <button type="button" class="btn--moveTaskDropdown" onclick="moveTaskToStatus(${taskId}, '${status}')">
-        <img src="../assets/img/icons/general/${icon}.svg" alt="${direction}" class="moveTaskDropdown--arrow">
-        <span>${STATUS_LABELS[status]}</span>
-      </button>
-    </li>
-  `;
 }
 
 /**

@@ -1,13 +1,12 @@
-document.addEventListener('DOMContentLoaded', () => {
-    init();
+document.addEventListener("DOMContentLoaded", () => {
+  init();
 });
-
 
 /**
  * Entry point called on DOMContentLoaded. Runs the logo animation.
  */
 function init() {
-    logoAnimation();
+  logoAnimation();
 }
 
 /**
@@ -15,18 +14,12 @@ function init() {
  * If the animation has already played this session, it is skipped via a sessionStorage flag.
  */
 function logoAnimation() {
-    const joinLogoFadeInElements = document.querySelectorAll('.join-logo, .nav-login, .login-content, .form-login ');
-        if (sessionStorage.getItem('animationPlayed')){
-        joinLogoFadeInElements.forEach(fadeInOff => {
-            fadeInOff.classList.add('no-animation')
-        })
-    } else {
-        sessionStorage.setItem('animationPlayed', 'true');
-    }
-};
-
-
-
-
-
-
+  const joinLogoFadeInElements = document.querySelectorAll(".join-logo, .nav-login, .login-content, .form-login ");
+  if (sessionStorage.getItem("animationPlayed")) {
+    joinLogoFadeInElements.forEach((fadeInOff) => {
+      fadeInOff.classList.add("no-animation");
+    });
+  } else {
+    sessionStorage.setItem("animationPlayed", "true");
+  }
+}

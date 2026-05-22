@@ -1,32 +1,3 @@
-const contactColors = {
-  A: "rgba(147, 39, 255, 1)",
-  B: "rgba(110, 82, 255, 1)",
-  C: "rgba(252, 113, 255, 1)",
-  D: "rgba(255, 187, 43, 1)",
-  E: "rgba(31, 215, 193, 1)",
-  F: "rgba(70, 47, 138, 1)",
-  G: "rgba(255, 70, 70, 1)",
-  H: "rgba(0, 190, 232, 1)",
-  I: "rgba(42, 61, 89, 1)",
-  J: "rgba(255, 94, 179, 1)",
-  K: "rgba(255, 116, 94, 1)",
-  L: "rgba(255, 163, 94, 1)",
-  M: "rgba(255, 199, 1, 1)",
-  N: "rgba(0, 56, 255, 1)",
-  O: "rgba(195, 255, 43, 1)",
-  P: "rgba(255, 230, 43, 1)",
-  Q: "rgba(255, 70, 150, 1)",
-  R: "rgba(0, 150, 130, 1)",
-  S: "rgba(255, 120, 0, 1)",
-  T: "rgba(0, 120, 255, 1)",
-  U: "rgba(180, 40, 40, 1)",
-  V: "rgba(100, 200, 0, 1)",
-  W: "rgba(150, 0, 255, 1)",
-  X: "rgba(0, 255, 200, 1)",
-  Y: "rgba(200, 150, 0, 1)",
-  Z: "rgba(120, 120, 120, 1)",
-};
-
 /**
  * Returns the HTML for a user row in the "Assigned To" dropdown.
  * @param {string} color - CSS color for the initials badge.
@@ -456,6 +427,40 @@ function getAddTaskDialogTemplate() {
         </div>
       </section>
     </div>
+  `;
+}
+
+/**
+ * Returns the inner HTML for the move-task dropdown.
+ * @param {number} taskId - The id of the task.
+ * @param {Array<Object>} targets - List of move targets with status and direction.
+ * @returns {string} HTML string for the dropdown content.
+ */
+function getMoveDropdownTemplate(taskId, targets) {
+  const btns = targets.map((t) => getMoveButtonTemplate(taskId, t)).join("");
+  return `
+    <p class="moveTaskDropdown--label">Move to</p>
+    <ul class="moveTaskDropdown--list">${btns}</ul>
+  `;
+}
+
+/**
+ * Returns the HTML for a single move button in the move-task dropdown.
+ * @param {number} taskId - The id of the task.
+ * @param {Object} target - Move target with status and direction.
+ * @param {string} target.status - The target status key.
+ * @param {string} target.direction - "up" or "down".
+ * @returns {string} HTML string for one list item button.
+ */
+function getMoveButtonTemplate(taskId, { status, direction }) {
+  const icon = direction === "up" ? "arrow_upward" : "arrow_downward";
+  return `
+    <li>
+      <button type="button" class="btn--moveTaskDropdown" onclick="moveTaskToStatus(${taskId}, '${status}')">
+        <img src="../assets/img/icons/general/${icon}.svg" alt="${direction}" class="moveTaskDropdown--arrow">
+        <span>${STATUS_LABELS[status]}</span>
+      </button>
+    </li>
   `;
 }
 

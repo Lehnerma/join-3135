@@ -1,3 +1,9 @@
+let TASKS = [];
+let DRAG_ID;
+let DRAG_OLD_STATUS;
+let DRAG_HEIGHT;
+const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users" + ".json";
+
 /**
  * Builds the Firebase REST API URL for tasks.
  * @param {string} [key=""] - Optional Firebase key of a specific task.
@@ -8,19 +14,13 @@ const getTaskURL = (key = "", section = "") => {
   return `https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks/${key ? key + "/" : ""}${section ? section + "/" : ""}.json`;
 };
 
-let TASKS = [];
-let DRAG_ID;
-let DRAG_OLD_STATUS;
-let DRAG_HEIGHT;
-const USERS=[]
-
 /**
  * Initialises the board: sets up UI interactions and loads data from Firebase.
  */
 function initBoard() {
   initBoardTask();
   loadTasksFromFirebase();
-  loadUsersFromFirebase()
+  loadUsersFromFirebase();
 }
 
 /**
@@ -43,7 +43,6 @@ async function loadTasksFromFirebase() {
   }
 }
 
-const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users"+".json"
 /**
  * Fetches all users from Firebase and stores them in session storage.
  * @returns {Promise<void>}
@@ -55,8 +54,8 @@ async function loadUsersFromFirebase() {
       throw new Error(`loading users failed: ${RESPONSE.status}`);
     }
     const RESULT = await RESPONSE.json();
-    const USER_ARRY = getUserArry(RESULT)
-    USERS.push(...USER_ARRY)
+    const USER_ARRY = getUserArry(RESULT);
+
     sessionStorage.setItem("users", JSON.stringify(USER_ARRY));
   } catch (er) {
     console.error(er);
@@ -75,6 +74,7 @@ function getArryFromResult(result) {
     ...values,
   }));
 }
+
 /**
  * Converts the Firebase users object into a flat array.
  * @param {Object} result - Raw Firebase response object.
@@ -84,7 +84,7 @@ function getUserArry(result) {
   return Object.entries(result).map(([key, values], index) => ({
     id: index,
     name: values.name,
-    color: values.color
+    color: values.color,
   }));
 }
 
@@ -158,8 +158,8 @@ function renderColumn(status, tasks) {
  * @param {string} name - The full name of the user.
  * @returns {string} A CSS color string, or "#ccc" if the user is not found.
  */
-function getAssigneeColor(name){
-  const users = JSON.parse(sessionStorage.getItem('users'))
+function getAssigneeColor(name) {
+  const users = JSON.parse(sessionStorage.getItem("users"));
   const user = users.find((u) => u.name === name);
   return user ? user.color : "#ccc";
 }
@@ -172,20 +172,34 @@ function getAssigneeColor(name){
 function buildTaskCard(task) {
   const WRAPPER = document.createElement("div");
   WRAPPER.innerHTML = getTaskCardTemplet(task.title, task.description, task.category, task.id, getPriority(task.priority));
+  addSubtaskProgress(WRAPPER, task.subtasks);
+  addAssignees(WRAPPER, task.assignedTo);
+  return WRAPPER.innerHTML;
+}
 
-  const SUBTASKS = Array.isArray(task.subtasks) ? task.subtasks : [];
-  const SUB_TOTAL = SUBTASKS.length;
+/**
+ * Adds subtask progress to the task card.
+ * @param {HTMLElement} wrapper - The task card wrapper element.
+ * @param {Array<Object>} subtasks - The subtasks array.
+ */
+function addSubtaskProgress(wrapper, subtasks) {
+  const SUBTASKS = Array.isArray(subtasks) ? subtasks : [];
   const SUB_DONE = SUBTASKS.filter((s) => s.done === true).length;
-  WRAPPER.querySelector(".subtask--progress-container").innerHTML = getSubtaskProgressTemplate(SUB_DONE, SUB_TOTAL);
+  wrapper.querySelector(".subtask--progress-container").innerHTML = getSubtaskProgressTemplate(SUB_DONE, SUBTASKS.length);
+}
 
-  const ASSIGNEES_LIST = WRAPPER.querySelector(".task--assignees");
-  if (task.assignedTo) {
-    task.assignedTo.forEach((name) => {
+/**
+ * Adds assignees to the task card.
+ * @param {HTMLElement} wrapper - The task card wrapper element.
+ * @param {Array<string>} assignedTo - The assignees array.
+ */
+function addAssignees(wrapper, assignedTo) {
+  const ASSIGNEES_LIST = wrapper.querySelector(".task--assignees");
+  if (assignedTo) {
+    assignedTo.forEach((name) => {
       ASSIGNEES_LIST.innerHTML += getTaskAssignToTemplet(name, getInitials(name), getAssigneeColor(name));
     });
   }
-
-  return WRAPPER.innerHTML;
 }
 
 /**
@@ -195,7 +209,6 @@ function buildTaskCard(task) {
 function openTaskDialog(id) {
   const task = TASKS.find((t) => t.id === id);
   if (!task) return;
-
   const dialog = document.getElementById("taskDialog");
   dialog.classList.remove("d-none");
   dialog.innerHTML = getTaskDialogTemplate(task);
@@ -289,7 +302,6 @@ function taskDragStart(ev, id) {
  */
 function getDragAfterElement(list, y) {
   const tasks = [...list.querySelectorAll(".task")];
-
   return (
     tasks.reduce(
       (closest, child) => {
@@ -338,24 +350,35 @@ function columnDragLeave(ev) {
 }
 
 /**
+ * Clears drag-related UI elements and styles.
+ */
+function clearDragState() {
+  document.querySelectorAll(".drag-placeholder").forEach((el) => el.remove());
+  document.querySelectorAll(".task--dragging").forEach((el) => el.classList.remove("task--dragging"));
+}
+
+/**
+ * Updates task status and re-renders affected columns.
+ * @param {string} oldStatus - The previous column's status key.
+ * @param {string} newStatus - The target column's status key.
+ * @param {Array} allTasks - All tasks from sessionStorage.
+ */
+function updateTaskColumns(oldStatus, newStatus, allTasks) {
+  renderColumn(oldStatus, allTasks.filter((t) => t.status === oldStatus));
+  renderColumn(newStatus, allTasks.filter((t) => t.status === newStatus));
+}
+
+/**
  * Handles a drop on a board column: updates the task status locally and in Firebase.
  * @param {string} status - The target column's status key.
  */
 function taskDragDrop(status) {
-  document.querySelectorAll(".drag-placeholder").forEach((el) => el.remove());
-  document.querySelectorAll(".task--dragging").forEach((el) => el.classList.remove("task--dragging"));
+  clearDragState();
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const CURRENT_TASK = ALL_TASKS.find((el) => el.id === DRAG_ID);
   if (!CURRENT_TASK || CURRENT_TASK.status === status) return;
   CURRENT_TASK.status = status;
   sessionStorage.setItem("tasks", JSON.stringify(ALL_TASKS));
-  renderColumn(
-    DRAG_OLD_STATUS,
-    ALL_TASKS.filter((t) => t.status === DRAG_OLD_STATUS),
-  );
-  renderColumn(
-    status,
-    ALL_TASKS.filter((t) => t.status === status),
-  );
+  updateTaskColumns(DRAG_OLD_STATUS, status, ALL_TASKS);
   updateTaskStatus(CURRENT_TASK.firebaseKey, status);
 }
