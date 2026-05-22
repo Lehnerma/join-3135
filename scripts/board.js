@@ -17,9 +17,9 @@ const getTaskURL = (key = "", section = "") => {
 /**
  * Initialises the board: sets up UI interactions and loads data from Firebase.
  */
-function initBoard() {
+async function initBoard() {
+  await loadUsersFromFirebase();
   initBoardTask();
-  loadUsersFromFirebase();
   loadTasksFromFirebase();
 }
 
@@ -54,7 +54,7 @@ async function loadUsersFromFirebase() {
       throw new Error(`loading users failed: ${RESPONSE.status}`);
     }
     const RESULT = await RESPONSE.json();
-    const USER_ARRY = getUserArry(RESULT);
+    const USER_ARRY = await getUserArry(RESULT);
 
     sessionStorage.setItem("users", JSON.stringify(USER_ARRY));
   } catch (er) {
