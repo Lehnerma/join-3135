@@ -160,13 +160,33 @@ function toggleSubtaskDone(taskId, subtaskIndex) {
 
 /**
  * Closes the task detail dialog using the slide-out animation.
+ * Syncs the current task's subtasks to both SessionStorage and Firebase,
+ * then re-renders the board.
  *
  * @returns {Promise} Resolves when the dialog is closed.
  */
-function closeTaskDetailDialog() {
+async function closeTaskDetailDialog() {
   const TASK_DETAIL_DIALOG = document.getElementById("task_detail_dialog");
+  if (CURRENT_DETAIL_TASK) {
+    const ALL_TASKS = JSON.parse(sessionStorage.tasks);
+    const TASK = ALL_TASKS.find((t) => t.id === CURRENT_DETAIL_TASK.id);
+    if (TASK) {
+      sessionStorage.tasks = JSON.stringify(ALL_TASKS);
+      renderBoard(ALL_TASKS);
+      try {
+        await fetch(getTaskURL(TASK.firebaseKey), {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ subtasks: TASK.subtasks }),
+        });
+      } catch (err) {
+        console.error("Error syncing subtasks with Firebase:", err);
+      }
+    }
+  }
   return slideOutDialog(TASK_DETAIL_DIALOG);
 }
+
 
 /**
  * Creates the HTML content for the task detail window.
@@ -188,8 +208,8 @@ function buildTaskDetailDialog(task) {
   const SUB_TOTAL = SUBTASKS.length;
   const SUBTASK_LIST = WRAPPER.querySelector("#detail_subtask_list");
   if (SUB_TOTAL > 0) {
-    SUBTASKS.forEach((subtask) => {
-      SUBTASK_LIST.innerHTML += getDetailSubtaskTemplate(subtask.title, subtask.done, taskID);
+    SUBTASKS.forEach((subtask, index) => {
+      SUBTASK_LIST.innerHTML += getDetailSubtaskTemplate(subtask.title, subtask.done, taskID, index);
     });
   }
   return WRAPPER.innerHTML;
