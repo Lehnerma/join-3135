@@ -472,7 +472,7 @@ function getMoveButtonTemplate(taskId, { status, direction }) {
  */
 function getTaskDialogTemplate(task) {
   const assignedNames = task.assignedTo ? task.assignedTo.join(", ") : "None";
-  const subtaskNames = task.subtasks ? task.subtasks.map(s => s.title).join(", ") : "None";
+  const subtaskNames = task.subtasks ? task.subtasks.map((s) => s.title).join(", ") : "None";
   return `
     <p>Category: ${escapeHtml(task.category)}</p>
     <h2>${escapeHtml(task.title)}</h2>

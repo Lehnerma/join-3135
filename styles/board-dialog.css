@@ -38,12 +38,34 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
 }
 
 .dialog--task {
   width: clamp(310px, calc(228.571px + 25.446vw), 595px);
   max-width: 525px;
   max-height: 95vh;
+  overflow-y: hidden;
+  /* Scrollbar styling */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.dialog-wrapper{
+  overflow-y: auto
+}
+
+.dialog--task::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dialog--task::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dialog--task::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 }
 
 .dialog .slide-in {
@@ -119,11 +141,11 @@
   font-size: 19px;
 }
 
-.detail-task--subtasks-list {
+/* .detail-task--subtasks-list {
   height: 100%;
   max-height: 100px;
   overflow: auto;
-}
+} */
 
 .detail-task--subtask-item {
   gap: 16px;
