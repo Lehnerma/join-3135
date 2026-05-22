@@ -77,7 +77,7 @@ function renderHtmlContactDialogTpl() {
           <section class="dialog-login-buttons">
             <button id="cancelButton" type="reset" class="btn btn--secondary btn--login btn--x btn-cancel" 
               onclick="closeContactDialog()">Cancel</button>
-            <button type="submit" class="btn btn--primary btn--check btn--login">Create contact</button>
+            <button id="btnCreateContact"  type="submit" class="btn btn--primary btn--check btn--login">Create contact</button>
           </section>
         </form>
       </main>
@@ -139,7 +139,7 @@ function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
         <button type="button" class="btn btn--secondary btn--login" onclick="deleteContact(${editUserIndex})">
           Delete
         </button>
-        <button type="submit" class="btn btn--primary btn--login btn--check"
+        <button  id="btnEditSave"type="submit" class="btn btn--primary btn--login btn--check"
           onclick="saveNewContactData(${editUserIndex})">
           Save
         </button>
