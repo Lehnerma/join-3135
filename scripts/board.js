@@ -159,7 +159,8 @@ function renderColumn(status, tasks) {
  * @returns {string} A CSS color string, or "#ccc" if the user is not found.
  */
 function getAssigneeColor(name) {
-  const users = sessionStorage.getItem("users") ? JSON.parse(sessionStorage.getItem("users")) : [];
+  const usersData = sessionStorage.getItem("users");
+  const users = usersData ? JSON.parse(usersData) : [];
   const user = users.find((u) => u.name === name);
   return user ? user.color : "#ccc";
 }
