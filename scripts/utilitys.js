@@ -1,5 +1,8 @@
 checkAuth();
 
+/**
+ * Initialises the utility module: renders the header initials and applies login-state CSS classes.
+ */
 function initUtilitys() {
   renderHeadInitals();
   showExternalUtilityPages();
@@ -16,8 +19,7 @@ async function checkAuth() {
     return;
   } else if (window.location.pathname.includes("privacyPolicy.html") || window.location.pathname.includes("legalNotice.html")) {
     return;
-  }
-  else {
+  } else {
     window.location.href = "../index.html";
   }
 }
@@ -61,43 +63,39 @@ function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+/**
+ * Extracts user initials from the user name.
+ * @param {string} userName
+ * @returns {string}
+ */
+function extractInitials(userName) {
+  const SPLITTED_NAME = userName.split(" ");
+  let INITIALS = SPLITTED_NAME[0][0];
+  if (SPLITTED_NAME.length > 1) {
+    INITIALS += SPLITTED_NAME[SPLITTED_NAME.length - 1][0];
+  }
+  return INITIALS.toUpperCase();
+}
+
+/**
+ * Renders the logged-in user's initials into the header avatar button.
+ * Does nothing if no user id is stored in session storage.
+ */
 function renderHeadInitals() {
   const ID = sessionStorage.getItem("user_id");
   if (ID == null) {
     return;
-  } else {
-    const USER_NAME = sessionStorage.getItem("activeUserName");
-    const USER_INITIALS = document.getElementById("user_menu_button");
-    const SPLITTED_NAME = USER_NAME.split(" ");
-    let INITIALS = SPLITTED_NAME[0][0];
-    if (SPLITTED_NAME.length > 1) {
-      INITIALS += SPLITTED_NAME[SPLITTED_NAME.length - 1][0];
-    }
-    INITIALS = INITIALS.toUpperCase();
-    USER_INITIALS.innerText = INITIALS;
-    if (USER_NAME === "Guest") {
-      USER_INITIALS.innerText = "G";
-    }
   }
+  const USER_NAME = sessionStorage.getItem("activeUserName");
+  const USER_INITIALS = document.getElementById("user_menu_button");
+  const INITIALS = USER_NAME === "Guest" ? "G" : extractInitials(USER_NAME);
+  USER_INITIALS.innerText = INITIALS;
 }
 
-function showExternalUtilityPages() {
-  const ID = sessionStorage.getItem("user_id");
-  console.log(ID);
-  let VIEW_USER = document.getElementById("view-user");
-  let VIEW_EXTERNAL = document.getElementById("view-external");
-  let USER_MENU_BUTTON = document.getElementById("user_menu_button");
-  if (ID !== null) {
-    VIEW_USER.classList.remove("d-none");
-    VIEW_EXTERNAL.classList.add("d-none");
-    USER_MENU_BUTTON.classList.remove("d-none");
-  } else {
-    VIEW_USER.classList.add("d-none");
-    VIEW_EXTERNAL.classList.remove("d-none");
-    USER_MENU_BUTTON.classList.add("d-none");
-  }
-}
-
+/**
+ * Applies login-state CSS classes to <body> based on whether a user is logged in.
+ * Adds "user-logged-in" when a session id is present, "user-not-logged-in" otherwise.
+ */
 function showExternalUtilityPages() {
   const ID = sessionStorage.getItem("user_id");
   const BODY = document.body;
@@ -110,24 +108,41 @@ function showExternalUtilityPages() {
   }
 }
 
+/**
+ * Opens the user menu dialog.
+ */
 function openUserMenu() {
   const DIALOG = document.getElementById("user-menu-dialog");
   DIALOG.showModal();
 }
 
+/**
+ * Closes the user menu dialog.
+ */
 function closeDialog() {
-    const DIALOG = document.getElementById("user-menu-dialog");
-    DIALOG.close();
+  const DIALOG = document.getElementById("user-menu-dialog");
+  DIALOG.close();
 }
 
+/**
+ * Stops click events inside the user menu dialog from bubbling to the backdrop,
+ * preventing an accidental dialog close.
+ * @param {Event} event - The click event.
+ */
 function preventCloseDialogOnDialog(event) {
-    event.stopPropagation();
+  event.stopPropagation();
 }
 
+/**
+ * Navigates back to the previous page in browser history.
+ */
 function goBack() {
   window.history.back();
 }
 
+/**
+ * Clears session storage and redirects to the login page.
+ */
 function logOut() {
   sessionStorage.clear();
   window.location.href = "../index.html";

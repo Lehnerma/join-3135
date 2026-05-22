@@ -58,7 +58,7 @@ function renderHtmlContactDialogTpl() {
           <div class="person-logo-ellipse">
                <img class="person-logo large-profile-icon" src="../assets/img/icons/contacts/person.svg" alt="Profile">
            </div>
-        <form id="formRef">
+        <form id="formRef" onsubmit="event.preventDefault(); createContact();">
           <section class="dialog-input-container">
             <div class="dialog-input-section">
               <input class="dialog-input" id="createName" type="text" name="name" placeholder="Name" required />
@@ -77,7 +77,7 @@ function renderHtmlContactDialogTpl() {
           <section class="dialog-login-buttons">
             <button id="cancelButton" type="reset" class="btn btn--secondary btn--login btn--x btn-cancel" 
               onclick="closeContactDialog()">Cancel</button>
-            <button type="button" class="btn btn--primary btn--check btn--login " onclick="createContact()">Create contact</button>
+            <button type="submit" class="btn btn--primary btn--check btn--login">Create contact</button>
           </section>
         </form>
       </main>

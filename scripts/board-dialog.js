@@ -65,13 +65,13 @@ function initBoardTask() {
 }
 
 /**
- * We set the status into the session storage and redirect to addtask.html.
+ * We set the status into the session storage and redirect to addtask.html. Important for the add tasks function from a addTask status column.
  *
  * @param {string} status - The status for the new task (e.g., 'inProgress').
  */
 function addStatusTask(status) {
   sessionStorage.setItem("task-status", status);
-  window.location.href = "../html/addTaskPage.html";
+  window.location.href = "../html/addTaskPage.html"
 }
 
 /**
@@ -160,30 +160,11 @@ function toggleSubtaskDone(taskId, subtaskIndex) {
 
 /**
  * Closes the task detail dialog using the slide-out animation.
- * Syncs the current task's subtasks to both SessionStorage and Firebase,
- * then re-renders the board.
  *
  * @returns {Promise} Resolves when the dialog is closed.
  */
-async function closeTaskDetailDialog() {
+function closeTaskDetailDialog() {
   const TASK_DETAIL_DIALOG = document.getElementById("task_detail_dialog");
-  if (CURRENT_DETAIL_TASK) {
-    const ALL_TASKS = JSON.parse(sessionStorage.tasks);
-    const TASK = ALL_TASKS.find((t) => t.id === CURRENT_DETAIL_TASK.id);
-    if (TASK) {
-      sessionStorage.tasks = JSON.stringify(ALL_TASKS);
-      renderBoard(ALL_TASKS);
-      try {
-        await fetch(getTaskURL(TASK.firebaseKey), {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ subtasks: TASK.subtasks }),
-        });
-      } catch (err) {
-        console.error("Error syncing subtasks with Firebase:", err);
-      }
-    }
-  }
   return slideOutDialog(TASK_DETAIL_DIALOG);
 }
 
@@ -207,8 +188,8 @@ function buildTaskDetailDialog(task) {
   const SUB_TOTAL = SUBTASKS.length;
   const SUBTASK_LIST = WRAPPER.querySelector("#detail_subtask_list");
   if (SUB_TOTAL > 0) {
-    SUBTASKS.forEach((subtask, index) => {
-      SUBTASK_LIST.innerHTML += getDetailSubtaskTemplate(subtask.title, subtask.done, taskID, index);
+    SUBTASKS.forEach((subtask) => {
+      SUBTASK_LIST.innerHTML += getDetailSubtaskTemplate(subtask.title, subtask.done, taskID);
     });
   }
   return WRAPPER.innerHTML;
@@ -223,14 +204,10 @@ function buildTaskDetailDialog(task) {
 function openEditTaskDialog(taskId) {
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const task = ALL_TASKS.find((t) => t.id === taskId);
-
   if (!task) return;
   const dialog = document.getElementById("edit_task_dialog");
-
   dialog.addEventListener("click", closeEditDialogOnBackdropClick);
   dialog.showModal();
-  const subtask_list = document.getElementById("subtask_list");
-  subtask_list.innerHTML = "";
   fillEditFormFields(task);
   setupEditTaskInteractions(task);
 }
@@ -258,7 +235,7 @@ function fillEditFormFields(task) {
  * @param {Object} task - The task object with all information.
  */
 function setupEditTaskInteractions(task) {
-  subtasksList = (task.subtasks || []).map((st) => ({ title: st.title, done: st.done }));
+  subtasksList = (task.subtasks || []).map((s) => ({ title: s.title, done: s.done }));
   subtaskInit();
   subtasksList.forEach((sub, i) => renderSubtaskItem(i, sub.title));
   loadUsersForEdit(task.assignedTo || []);
@@ -306,8 +283,7 @@ async function loadUsersForEdit(assignedTo) {
     const response = await fetch(USER_URL);
     const data = await response.json();
     remoteUsers = Object.values(data);
-    const sorted_users = sortUsersWithActiveFirst(remoteUsers);
-    fillUserDropdown(sorted_users);
+    fillUserDropdown(data);
     document.querySelectorAll("#assignedToList label.user-item").forEach((label) => {
       const checkbox = label.querySelector("input[type='checkbox']");
       if (checkbox && assignedTo.includes(checkbox.value)) {

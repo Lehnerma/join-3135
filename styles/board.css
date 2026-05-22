@@ -233,8 +233,9 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    overflow-x: scroll;
+    overflow-x: auto;
     height: auto;
+    white-space: nowrap;
 
     .task {
       width: 252px;
@@ -243,6 +244,14 @@
     .no-task {
       max-width: 100%;
     }
+
+      &::-webkit-scrollbar {
+        display: none;
+    }
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
   }
 }
 
