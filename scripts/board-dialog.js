@@ -65,7 +65,7 @@ function initBoardTask() {
 }
 
 /**
- * We set the status into the session storage and redirect to addtask.html.
+ * We set the status into the session storage and redirect to addtask.html. Important for the add tasks function from a addTask status column.
  *
  * @param {string} status - The status for the new task (e.g., 'inProgress').
  */
