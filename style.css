@@ -92,6 +92,7 @@ button {
   height: 32px;
   background-color: transparent;
   border-radius: 50%;
+
   &:hover {
     background-color: var(--btn-arrow-hover);
     border-radius: 50%;
@@ -263,3 +264,57 @@ input:focus {
   width: 1px;
   height: 24px;
 }
+
+
+.landscape-warning {
+  display: none;
+}
+
+@media (orientation: landscape) and (max-width: 768px) {
+  .landscape-warning {
+    display: flex !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    background-color: rgba(0, 0, 0, 0.98);
+    z-index: 9999999;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .landscape-warning h1 {
+    color: #ffffff !important;
+    font-family: "Inter", sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  body {
+    overflow: hidden !important;
+    touch-action: none;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
