@@ -60,7 +60,7 @@ function init() {
 async function getUsers() {
   const RESPONSE = await fetch(USERS_URL);
   let RESULT = await RESPONSE.json();
-      USERS = [];
+  USERS = [];
   for (let key in RESULT) {
     let person = RESULT[key];
     person.firebaseKey = key;
@@ -71,7 +71,7 @@ async function getUsers() {
   }
   sortUserContactList();
   await loadUsers();
-  }
+}
 
 
 /**
@@ -241,9 +241,9 @@ function getUserDetails(userIndex) {
  * Controls the display of contact details in the mobile view.
  */
 function mobileDetails() {
-    let index  = editUserIndex;
-        index = true;
-    const isMobileView = window.innerWidth <= 650 && index;
+  let index = editUserIndex;
+  index = true;
+  const isMobileView = window.innerWidth <= 650 && index;
   if (isMobileView) {
     activateMobileView();
   } else {
@@ -344,21 +344,39 @@ function addShowDetails() {
 
 
 /**
- * Collects the data from the form and creates a new contact object.
+ * Gets values from the input fields and builds a contact object.
+ * @returns {Object|null} The contact object or null if fields are empty.
  */
-function createContact() {
-  const name = document.getElementById('createName').value;
-  const email = document.getElementById('createEmail').value;
-  const phone = document.getElementById('createPhone').value;
-  const id = Math.floor(1000 + Math.random() * 9000);
-  newContact = ({
+function buildContactObject() {
+  const name = document.getElementById('createName')?.value.trim();
+  const email = document.getElementById('createEmail')?.value.trim();
+  const phone = document.getElementById('createPhone')?.value.trim();
+  if (!name || !email) return null;
+  return {
     name: name,
     email: email,
     phone: phone,
-    id: id,
+    id: Math.floor(1000 + Math.random() * 9000),
     color: contactColors[Math.floor(Math.random() * contactColors.length)]
-  });
-  addNewContact(newContact);
+  };
+}
+
+
+/**
+ * Main function to create and save a new contact.
+ */
+async function createContact() {
+  const btn = document.getElementById('btnCreateContact');
+  const contactData = buildContactObject();
+  if (!contactData) return;
+  if (btn) btn.disabled = true;
+  try {
+    newContact = contactData; // Sets the global variable from your code
+    await addNewContact(newContact);
+  } catch (error) {
+    console.error("Error creating contact:", error);
+    if (btn) btn.disabled = false;
+  }
 }
 
 
@@ -460,26 +478,48 @@ function showSuccessBanner() {
   }, 900);
 }
 
-
 /**
- * Saves the edited data of a contact and updates the view.
- * @param {number} index - The index of the user to be saved.
+ * Gathers the input values from the edit form.
+ * @param {string} color - The user's current color.
+ * @returns {Object} The updated data object.
  */
-async function saveNewContactData(index) {
-  let user = USERS[index];
-  let key = user.firebaseKey;
-  let updatedData = {
+function getUpdatedContactData(color) {
+  return {
     name: document.getElementById('editName').value,
     email: document.getElementById('editEmail').value,
     phone: document.getElementById('editPhone').value,
-    color: user.color
+    color
   };
-  const response = await updateFirebaseContact(key, updatedData);
-  if (response.ok) {
-    await getUsers();
-    await closeEditDialog();
-  } else {
-    console.error('Fehler beim Updaten');
+}
+
+
+/**
+ * Closes the edit view by checking available functions.
+ */
+function closeEditView() {
+  typeof closeEditDialog === 'function' ? closeEditDialog() : closeContactDialog();
+}
+
+
+/**
+ * Handles the saving process for an edited contact.
+ * @param {number} index - The user's index in the global array.
+ */
+async function saveNewContactData(index) {
+  const btn = document.getElementById('btnEditSaveContact');
+  if (btn) btn.disabled = true;
+  try {
+    const user = USERS[index];
+    const response = await updateFirebaseContact(user.firebaseKey, getUpdatedContactData(user.color));
+        if (response.ok) {
+      await getUsers();
+      closeEditView();
+    } else if (btn) {
+      btn.disabled = false;
+    }
+  } catch (error) {
+    console.error('Update failed:', error);
+    if (btn) btn.disabled = false;
   }
 }
 
