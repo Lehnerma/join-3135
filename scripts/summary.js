@@ -116,21 +116,14 @@ async function fetchTasks() {
  * into the respective summary dashboard DOM elements.
  */
 function renderAmountOfTasks() {
-  fetchTasks().then(tasksData => {
-    const TODO_AMOUNT = document.getElementById('todo-amount');
-    const DONE_AMOUNT = document.getElementById('done-amount');
-    const URGENT_AMOUNT = document.getElementById('urgent-amount');
-    const BOARD_AMOUNT = document.getElementById('board-amount');
-    const PROGRESS_AMOUNT = document.getElementById('progress-amount');
-    const FEEDBACK_AMOUNT = document.getElementById('feedback-amount');
-    const URGENT_TEXT = document.getElementById('summary-urgent-text');
-    TODO_AMOUNT.innerHTML = showAmountOfTasks(tasksData, 'todo');
-    DONE_AMOUNT.innerHTML = showAmountOfTasks(tasksData, 'done');
-    URGENT_AMOUNT.innerHTML = showAmountOfUrgentTasks(tasksData, "urgent");
-    BOARD_AMOUNT.innerHTML = showAmountOnBoard(tasksData);
-    PROGRESS_AMOUNT.innerHTML = showAmountOfTasks(tasksData, 'progress');
-    FEEDBACK_AMOUNT.innerHTML = showAmountOfTasks(tasksData, 'feedback');
-    showDeadlineOfUrgentTasks(tasksData, URGENT_TEXT);
+ fetchTasks().then(tasksData => {
+    document.getElementById('todo-amount').innerHTML = showAmountOfTasks(tasksData, 'todo');
+    document.getElementById('done-amount').innerHTML = showAmountOfTasks(tasksData, 'done');
+    document.getElementById('urgent-amount').innerHTML = showAmountOfUrgentTasks(tasksData, "urgent");
+    document.getElementById('board-amount').innerHTML = showAmountOnBoard(tasksData);
+    document.getElementById('progress-amount').innerHTML = showAmountOfTasks(tasksData, 'progress');
+    document.getElementById('feedback-amount').innerHTML = showAmountOfTasks(tasksData, 'feedback');
+    showDeadlineOfUrgentTasks(tasksData, document.getElementById('summary-urgent-text'));
   });
 }
 
@@ -177,6 +170,17 @@ function openBoard(currentTab) {
 }
 
 /**
+ * Filters incomplete urgent tasks with valid due dates and sorts them chronologically.
+ * @param {Object} data - The raw tasks database object.
+ * @returns {Array} Sorted array of urgent task objects.
+ */
+function getSortedUrgentTasks(data) {
+  return Object.values(data)
+    .filter(t => t.priority === 'urgent' && t.status !== 'done' && t.dueDate && !isNaN(new Date(t.dueDate).getTime()))
+    .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+}
+
+/**
  * Filters out incomplete, urgent tasks, determines the earliest upcoming 
  * deadline date, and renders it inside the UI.
  * @param {Object} data - The raw tasks database object.
@@ -184,21 +188,12 @@ function openBoard(currentTab) {
  */
 function showDeadlineOfUrgentTasks(data, URGENT_TEXT) {
   const URGENT_DATE = document.getElementById('summary-urgent-date');
-  const TASKS = Object.values(data);
-  const URGENT_TASKS = TASKS.filter(task => {
-    if (task.priority !== 'urgent' || task.status === 'done' || !task.dueDate) {
-      return false;
-    }
-    const taskDate = new Date(task.dueDate);
-    return !isNaN(taskDate.getTime());
-  });
+  const URGENT_TASKS = getSortedUrgentTasks(data);
+  
   if (URGENT_TASKS.length === 0) {
     URGENT_DATE.innerHTML = "";
     URGENT_TEXT.innerHTML = "No upcoming deadlines";
   } else {
-    URGENT_TASKS.sort((a, b) => {
-      return new Date(a.dueDate) - new Date(b.dueDate);
-    });
     URGENT_DATE.innerHTML = formatDate(URGENT_TASKS[0].dueDate);
     URGENT_TEXT.innerHTML = "Upcoming deadline";
   }
