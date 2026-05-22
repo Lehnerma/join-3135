@@ -31,17 +31,18 @@ async function loadTasksFromFirebase() {
   try {
     const RESPONSE = await fetch(getTaskURL());
     if (!RESPONSE.ok) {
-      throw new Error(`loading task faild: ${RESPONSE.status}`);
+      throw new Error(`loading task failed: ${RESPONSE.status}`);
     }
     const RESULT = await RESPONSE.json();
     const TASKS_ARRAY = getArryFromResult(RESULT);
     sessionStorage.setItem("tasks", JSON.stringify(TASKS_ARRAY));
-    TASKS.push(...TASKS_ARRAY);
-    renderBoard(TASKS_ARRAY);
+    TASKS = TASKS_ARRAY;
+    renderBoard(TASKS);
   } catch (er) {
     console.error(er);
   }
 }
+
 
 /**
  * Fetches all users from Firebase and stores them in session storage.
