@@ -2,6 +2,8 @@ const ADDTASK_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabas
 let selectedPriority = "medium";
 let subtasksList = [];
 let remoteUsers = [];
+let initialTaskStatus = sessionStorage.getItem("task-status") ?? "todo";
+sessionStorage.removeItem("task-status");
 
 /**
  * Initializes the page and all necessary functions.
@@ -14,26 +16,40 @@ function init() {
   initDropdownOutsideClick();
 }
 
-
 /**
  * Initializes the event listeners for the main form and the clear button.
  */
 function btnInit() {
   const FORM = document.getElementById("form_task");
   const CLEAR_FORM = document.getElementById("form_clear");
-  if (FORM) {
-    FORM.addEventListener("submit", (event) => {
-      event.preventDefault();
-      createTask();
-    });
-  }
-  if (CLEAR_FORM) {
-    CLEAR_FORM.addEventListener("click", () => {
-      clearForm();
-    });
-  }
+  registerFormSubmitListener(FORM);
+  registerClearFormListener(CLEAR_FORM);
 }
 
+/**
+ * Registers the submit event listener on the task form.
+ * Prevents the default submission and triggers task creation.
+ *
+ * @param {HTMLFormElement|null} form - The task form element to attach the listener to.
+ */
+function registerFormSubmitListener(form) {
+  if (!form) return;
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    createTask();
+  });
+}
+
+/**
+ * Registers the click event listener on the clear-form button.
+ * Triggers the form reset when the button is clicked.
+ *
+ * @param {HTMLElement|null} clearBtn - The clear button element to attach the listener to.
+ */
+function registerClearFormListener(clearBtn) {
+  if (!clearBtn) return;
+  clearBtn.addEventListener("click", () => clearForm());
+}
 
 /**
  * Initializes the date input field: Sets the minimum date and the default value to today.
@@ -45,7 +61,6 @@ function initDateInput() {
   dueDateInput.min = today;
   dueDateInput.value = today;
 }
-
 
 /**
  * Sets the task priority and updates the visual appearance of the buttons.
@@ -60,22 +75,40 @@ function selectPriority(priority) {
   selectedPriority = priority;
 }
 
+/**
+ * Sorts users with the active user first, followed by alphabetically sorted contacts.
+ * @param {Array} users - The array of user objects to sort.
+ * @returns {Array} - Sorted array with active user at position 0.
+ */
+function sortUsersWithActiveFirst(users) {
+  const ACTIV_USER = sessionStorage.getItem("activeUserName");
+  const sorted = users.toSorted((a, b) => a.name.localeCompare(b.name));
+
+  if (ACTIV_USER) {
+    const activeUserIndex = sorted.findIndex((user) => user.name == ACTIV_USER);
+
+    const activeUser = sorted.splice(activeUserIndex, 1)[0];
+    sorted.unshift(activeUser);
+  }
+
+  return sorted;
+}
 
 /**
  * Loads the user list from the Firebase database.
  */
-function loadUsers() {
+async function loadUsers() {
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
-  fetch(USER_URL)
-    .then((response) => response.json())
-    .then((data) => {
-        remoteUsers = Object.entries(data).map(([id, user]) => ({ id, ...user }));
-      console.log("Firebase remoteUsers :", data);
-      fillUserDropdown(data);
-    })
-    .catch((error) => console.error("Fehler beim Laden der Benutzer:", error));
+  try {
+    const response = await fetch(USER_URL);
+    const data = await response.json();
+    remoteUsers = Object.values(data);
+    const SORTET_USERS = sortUsersWithActiveFirst(remoteUsers);
+    fillUserDropdown(SORTET_USERS);
+  } catch (error) {
+    console.error("Fehler beim Laden der Benutzer:", error);
+  }
 }
-
 
 /**
  * Populates the dropdown menu with the list of available users.
@@ -100,18 +133,14 @@ function fillUserDropdown(users) {
   container.innerHTML = html;
 }
 
-
 /**
  * Filters the user list based on the search input in the dropdown menu.
  */
 function filterUsers() {
-  let search = document.getElementById('assignedToSearch').value.toLowerCase();
-  let filteredUsers = remoteUsers.filter(user =>
-    user.name.toLowerCase().includes(search)
-  );
+  let search = document.getElementById("assignedToSearch").value.toLowerCase();
+  let filteredUsers = remoteUsers.filter((user) => user.name.toLowerCase().includes(search));
   fillUserDropdown(filteredUsers);
 }
-
 
 /**
  * Toggles the selection status of a user in the dropdown menu.
@@ -128,27 +157,14 @@ function toggleUser(el) {
   updateAssignedPreview();
 }
 
-
 /**
  * Retrieves all currently selected users from the checklist.
  * @returns {string[]} An array containing the names of the selected users.
  */
 function getAssignedUsers() {
-  const checkboxes = document.querySelectorAll(
-    "#assignedToList input[type='checkbox']:checked"
-  );
-
-  console.log("CHECKBOXES:", checkboxes);
-
-  const values = Array.from(checkboxes).map((cb) => {
-    console.log("VALUE:", cb.value);
-    return cb.value;
-  });
-
-  console.log("FINAL ASSIGNED:", values);
-  return values;
+  const checkboxes = document.querySelectorAll("#assignedToList input[type='checkbox']:checked");
+  return Array.from(checkboxes).map((cb) => cb.value);
 }
-
 
 /**
  * Opens or closes the user dropdown menu.
@@ -157,9 +173,10 @@ function getAssignedUsers() {
 function toggleDropdown(e) {
   e.stopPropagation();
   const dropdown = document.getElementById("assignedToDropdown");
+  const assigneeList = document.getElementById("assignedToList");
   dropdown.classList.toggle("open");
+  assigneeList.scrollTo({ top: 0 });
 }
-
 
 /**
  * Event listener for the Escape key to close the dropdown menu.
@@ -169,7 +186,6 @@ document.addEventListener("keydown", (e) => {
     document.getElementById("assignedToDropdown")?.classList.remove("open");
   }
 });
-
 
 /**
  * Initializes the closing of the dropdown menu when a click is made outside the element.
@@ -185,7 +201,6 @@ function initDropdownOutsideClick() {
   });
 }
 
-
 /**
  * Updates the preview icons of the assigned users below the dropdown.
  */
@@ -194,7 +209,6 @@ function updateAssignedPreview() {
   const selected = getAssignedUsers();
   container.innerHTML = renderAssignedUsers(selected);
 }
-
 
 /**
  * Creates the basic HTML structure for a task card.
@@ -212,7 +226,6 @@ function buildTaskCard(task) {
     </div>
   `;
 }
-
 
 /**
  * Creates the HTML icons (circles with initials) for assigned users.
@@ -242,7 +255,6 @@ function renderAssignedUsers(users = []) {
   return `<div class="assigned-wrapper">${html}</div>`;
 }
 
-
 /**
  * Initializes the event listeners for subtask input.
  */
@@ -259,7 +271,6 @@ function subtaskInit() {
   });
 }
 
-
 /**
  * Collects all form data and creates a task object for the database.
  * @returns {Object} The finished task object.
@@ -273,7 +284,7 @@ function buildTaskObj() {
     category: val("category"),
     assignedTo: getAssignedUsers() || [],
     priority: selectedPriority,
-    status: "todo",
+    status: initialTaskStatus,
     subtasks: subtasksList,
   };
 }
@@ -296,7 +307,6 @@ function addSubtask(ev) {
   renderSubtaskItem(INDEX, title);
 }
 
-
 /**
  * Creates a list item for a subtask and adds it to the DOM.
  * @param {number} index - The index in the subtasksList array.
@@ -304,6 +314,7 @@ function addSubtask(ev) {
  */
 function renderSubtaskItem(index, title) {
   const LIST = document.getElementById("subtask_list");
+
   const LI = document.createElement("li");
   LI.className = "subtask-item input--section";
   LI.dataset.index = index;
@@ -312,7 +323,6 @@ function renderSubtaskItem(index, title) {
   addSubtaskEventListener(LI);
   LIST.appendChild(LI);
 }
-
 
 /**
  * Adds event listeners for edit and delete to a subtask element.
@@ -330,7 +340,6 @@ function addSubtaskEventListener(LI) {
   });
 }
 
-
 /**
  * Converts special characters to HTML entities to prevent XSS.
  * @param {string} str - The text to be sanitized.
@@ -341,7 +350,6 @@ function escapeHtml(str) {
   div.textContent = str;
   return div.innerHTML;
 }
-
 
 /**
  * Enables edit mode for a subtask.
@@ -365,7 +373,6 @@ function startEditSubtask(li) {
   input.select();
 }
 
-
 /**
  * Cancels the editing mode of a subtask and restores the original text.
  * @param {HTMLLIElement} li - The list element of the subtask.
@@ -379,7 +386,6 @@ function cancelEditSubtask(li) {
   li.replaceChild(span, input);
 }
 
-
 /**
  * Removes a subtask from the array and from the DOM.
  * @param {HTMLLIElement} li - The list element of the subtask.
@@ -388,7 +394,6 @@ function deleteSubtask(li) {
   subtasksList.splice(parseInt(li.dataset.index), 1);
   li.remove();
 }
-
 
 /**
  * Saves the modified text of a subtask and exits edit mode.
@@ -409,30 +414,43 @@ function saveSubtask(li) {
   li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
 }
 
-
 /**
  * Sends the new task object to the database and forwards it to the board.
  */
 async function createTask() {
+  const title = document.getElementById("title");
+  const dueDate = document.getElementById("dueDate");
+  const category = document.getElementById("category");
+
+  if (!title.value.trim() || !dueDate.value || !category.value) {
+    alert("Please fill all required fields");
+    return;
+  }
+
   const task = buildTaskObj();
+
   try {
     const response = await fetch(ADDTASK_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(task)
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(task),
     });
+
     if (response.ok) {
       const toast = document.getElementById("toast");
-      if (toast) toast.classList.add("show");
+
+      toast?.classList.add("show");
+
       setTimeout(() => {
         window.location.href = "board.html";
       }, 1000);
     }
   } catch (error) {
-    console.error("Fehler beim Speichern:", error);
+    console.error(error);
   }
 }
-
 
 /**
  * Helper function for sending a task to the database via POST.
@@ -448,7 +466,6 @@ async function postTask(task) {
   return response.json();
 }
 
-
 /**
  * Resets the form to its default state.
  */
@@ -461,7 +478,6 @@ function clearForm() {
   subtasksList = [];
   document.getElementById("subtask_list").innerHTML = "";
 }
-
 
 /**
  * Clears the input field for subtasks.
