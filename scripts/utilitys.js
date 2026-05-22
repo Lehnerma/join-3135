@@ -1,11 +1,19 @@
 checkAuth();
 
+/**
+ * Initializes general utility configurations by rendering user initials 
+ * and setting up the responsive layout for external or logged-in pages.
+ */
 function initUtilitys() {
   renderHeadInitals();
   showExternalUtilityPages();
 }
+
 /**
- * Check if the User can enter the side or not
+ * Checks if the current visitor is authorized to view the page.
+ * Redirects unauthorized users to the landing page, while allowing access 
+ * for valid users, guests, and public legal/privacy pages.
+ * @returns {Promise<void>}
  */
 async function checkAuth() {
   const ID = sessionStorage.getItem("user_id");
@@ -23,9 +31,9 @@ async function checkAuth() {
 }
 
 /**
- *Function to check if the user id is available in the backend
- * @param {string} id
- * @returns Bool if the id is true ore false
+ * Fetches all registered users from the backend and checks if the provided ID exists.
+ * @param {string|null} id - The user ID to look for in the database.
+ * @returns {Promise<boolean>} Resolves to true if the ID exists, otherwise false.
  */
 async function checkUserId(id) {
   try {
@@ -44,8 +52,8 @@ async function checkUserId(id) {
 /**
  * Converts a display name to a CSS-compatible class name.
  * Example: 'Technical Task' => 'technical-task'
- * @param {string} name
- * @returns {string}
+ * @param {string} name - The raw string name.
+ * @returns {string} The formatted, lowercased string with hyphens.
  */
 function toClassName(name) {
   return name.trim().toLowerCase().replace(" ", "-");
@@ -54,13 +62,17 @@ function toClassName(name) {
 /**
  * Capitalizes the first letter of a string.
  * Example: 'hello' => 'Hello'
- * @param {string} str
- * @returns {string}
+ * @param {string} str - The target string.
+ * @returns {string} String with the first letter capitalized.
  */
 function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+/**
+ * Extracts the first letters of the user's first and last name from session storage
+ * and renders them as uppercase initials inside the header profile button.
+ */
 function renderHeadInitals() {
   const ID = sessionStorage.getItem("user_id");
   if (ID == null) {
@@ -81,6 +93,11 @@ function renderHeadInitals() {
   }
 }
 
+/**
+ * Toggles the visibility of navigation and menu elements depending on 
+ * whether a user ID is found in the session storage.
+ * (Note: First variation found in the code)
+ */
 function showExternalUtilityPages() {
   const ID = sessionStorage.getItem("user_id");
   console.log(ID);
@@ -98,6 +115,11 @@ function showExternalUtilityPages() {
   }
 }
 
+/**
+ * Toggles specific authentication styling classes on the document body 
+ * based on the user's login state.
+ * (Note: Second variation found in the code)
+ */
 function showExternalUtilityPages() {
   const ID = sessionStorage.getItem("user_id");
   const BODY = document.body;
@@ -110,24 +132,42 @@ function showExternalUtilityPages() {
   }
 }
 
+/**
+ * Opens the profile options menu dialog overlay.
+ */
 function openUserMenu() {
   const DIALOG = document.getElementById("user-menu-dialog");
   DIALOG.showModal();
 }
 
+/**
+ * Closes the profile options menu dialog overlay.
+ */
 function closeDialog() {
     const DIALOG = document.getElementById("user-menu-dialog");
     DIALOG.close();
 }
 
+/**
+ * Prevents click events from bubbling up, stopping a dialog container 
+ * from closing automatically when clicking inside its content zone.
+ * @param {Event} event - The triggered interaction or click event.
+ */
 function preventCloseDialogOnDialog(event) {
     event.stopPropagation();
 }
 
+/**
+ * Navigates the browser window back one step in the session history.
+ */
 function goBack() {
   window.history.back();
 }
 
+/**
+ * Logs out the current user by clearing the session storage 
+ * and redirecting the browser to the index landing page.
+ */
 function logOut() {
   sessionStorage.clear();
   window.location.href = "../index.html";
