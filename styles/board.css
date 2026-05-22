@@ -11,6 +11,7 @@
   @media (max-width: 900px) {
     grid-template-rows: auto 1fr;
     justify-content: normal;
+
   }
 }
 
@@ -102,6 +103,8 @@
     border-radius: 10px;
   }
 
+  
+
   @media (max-width: 900px) {
     grid-template-columns: 1fr auto;
     grid-template-rows: 80px auto;
@@ -132,6 +135,7 @@
     width: 40px;
     height: 40px;
   }
+
   .btn--primary-text {
     display: none;
   }
@@ -245,8 +249,8 @@
       max-width: 100%;
     }
 
-      &::-webkit-scrollbar {
-        display: none;
+    &::-webkit-scrollbar {
+      display: none;
     }
 
     scrollbar-width: none;
@@ -442,6 +446,7 @@
 }
 
 @media (min-width: 900px) {
+
   .task:last-child,
   .drag-placeholder:last-child,
   .no-task:last-child {

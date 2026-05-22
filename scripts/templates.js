@@ -316,7 +316,7 @@ function getEditTaskDialogTemplate() {
       </form>
 
       <footer class="edit-task-dialog__footer">
-        <button type="submit" form="form_edit_task" class="btn btn--ok">
+        <button id="btnEditTaskOk" type="submit" form="form_edit_task" class="btn btn--ok">
           Ok <img src="../assets/img/icons/subtask/check.svg" alt="✓">
         </button>
       </footer>
@@ -423,7 +423,7 @@ function getAddTaskDialogTemplate() {
       <section class="form-footer">
         <div class="action-btns">
           <button id="form_clear" type="button" class="btn btn--secondary clear" onclick="clearForm()">Clear</button>
-          <button type="submit" form="form_task" class="btn btn--primary">Create Task</button>
+          <button id="btnCreateTask" type="submit" form="form_task" class="btn btn--primary">Create Task</button>
         </div>
       </section>
     </div>

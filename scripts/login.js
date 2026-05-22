@@ -1,6 +1,7 @@
 let SHOW_SIGNUP = false;
 let USERS = [];
 
+
 /**
  * Builds the Firebase REST API URL for a specific user.
  * @param {string} [id=""] - Optional user id. Omit to target the entire users collection.
@@ -65,7 +66,6 @@ function removeFade(container) {
 }
 
 
-
 /**
  * Switches between the login and signup forms.
  * @param {Event} event - The click event.
@@ -128,25 +128,84 @@ function guestLogin() {
 
 
 /**
- * Handles the signup form submission: validates the password, creates the user, shows a
- * success message, and switches back to the login form.
+ * Gathers input data from the signup form and creates a user object.
+ * @param {HTMLFormElement} formElement - The signup form.
+ * @returns {Object} The fresh user object with a unique ID.
+ */
+function buildUserData(formElement) {
+  const FORM = new FormData(formElement);
+  const NEW_USER = Object.fromEntries(FORM.entries());
+  NEW_USER.id = generateId();
+  return NEW_USER;
+}
+
+
+/**
+ * Resets the signup form and reactivates the submit button.
+ * @param {HTMLFormElement} form - The signup form.
+ * @param {HTMLElement|null} btn - The submit button.
+ */
+function finalizeSignup(form, btn) {
+  toggleForms();
+  form.reset();
+  if (btn) btn.disabled = false;
+}
+
+
+/**
+ * Handles the signup form submission and prevents double submits.
  * @param {Event} ev - The form submit event.
- * @returns {Promise<void>}
  */
 async function creatUser(ev) {
   ev.preventDefault();
-  if (!verifyPassword()) {
-    return;
+  if (!verifyPassword()) return;
+  const btn = ev.target.querySelector('button[type="submit"]');
+  if (btn) btn.disabled = true;
+  try {
+    const newUser = buildUserData(ev.target);
+    await pushUser(newUser);
+    successMessage();
+    setTimeout(() => finalizeSignup(ev.target, btn), 1200);
+  } catch (error) {
+    console.error("Signup failed:", error);
+    if (btn) btn.disabled = false;
   }
-  const FORM = new FormData(ev.target);
-  const NEW_USER = Object.fromEntries(FORM.entries());
-  NEW_USER.id = generateId();
-  await pushUser(NEW_USER);
-  successMessage();
-  setTimeout(() => {
-    toggleForms();
-    ev.target.reset();
-  }, 1200);
+}
+
+
+/**
+ * Validates the user credentials against the loaded users list.
+ * @param {FormData} formData - The login form data.
+ * @returns {Object|undefined} The matched user object or undefined.
+ */
+function findActiveUser(formData) {
+  return USERS.find((u) => u.email === formData.get("email"));
+}
+
+
+/**
+ * Handles user login, checks credentials, and blocks double clicks.
+ * @param {Event} ev - The submit event.
+ */
+async function loginUser(ev) {
+  ev.preventDefault();
+  const btn = ev.target.querySelector('button[type="submit"]');
+  if (btn) btn.disabled = true;
+  try {
+    const FORM = new FormData(ev.target);
+    await getUsers();
+    const ACTIV_USER = findActiveUser(FORM);
+    if (!ACTIV_USER || ACTIV_USER.password !== FORM.get("password")) {
+      showFailEntriesLogin();
+      if (btn) btn.disabled = false;
+      return;
+    }
+    saveSession(ACTIV_USER);
+    window.location.href = "./html/summary.html";
+  } catch (error) {
+    console.error("Login process failed:", error);
+    if (btn) btn.disabled = false;
+  }
 }
 
 
@@ -209,26 +268,6 @@ async function pushUser(user) {
   } catch (er) {
     console.error(`the function pushUser() don't worke see: ${er}`);
   }
-}
-
-
-/**
- * Checks login data and logs the user in.
- * @param {Event} ev - The submit event.
- */
-async function loginUser(ev) {
-  ev.preventDefault();
-  const FORM = new FormData(ev.target);
-  const EMAIL = FORM.get("email");
-  const PW = FORM.get("password");
-  await getUsers();
-  const ACTIV_USER = USERS.find((u) => u.email == EMAIL);
-  if (!ACTIV_USER || !(ACTIV_USER.password === PW)) {
-    showFailEntriesLogin();
-    return;
-  }
-  saveSession(ACTIV_USER);
-  window.location.href = "./html/summary.html";
 }
 
 
@@ -351,6 +390,7 @@ function resetPasswordVisibility(pwInputID, iconID) {
     icon.src = "../assets/img/icons/input/visibility_off.svg";
   }
 }
+
 
 /**
  * Shows a success message banner and a dark background shadow.

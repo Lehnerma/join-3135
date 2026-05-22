@@ -435,64 +435,64 @@ function saveSubtask(li) {
 }
 
 /**
- * Sends the new task object to the database and forwards it to the board.
+ * Validates the task form inputs.
+ * @param {HTMLElement} title
+ * @param {HTMLElement} dueDate
+ * @param {HTMLElement} category
+ * @returns {boolean} True if all fields are valid.
+ */
+function validateTaskForm(title, dueDate, category) {
+  const hasTitle = !!title.value.trim();
+  const hasDate = !!dueDate.value;
+  const hasCategory = !!category.value;
+
+  hasTitle ? clearError(title, "title_error") : setError(title, "title_error", "This field is required");
+  hasDate ? clearError(dueDate, "date_error") : setError(dueDate, "date_error", "This field is required");
+  hasCategory ? clearError(category, "category_error") : setError(category, "category_error", "This field is required");
+
+  return hasTitle && hasDate && hasCategory;
+}
+
+/**
+ * Sends the task data to the server.
+ * @param {Object} task
+ * @param {HTMLElement|null} btn
+ */
+async function sendTaskRequest(task, btn) {
+  try {
+    const response = await fetch(ADDTASK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(task),
+    });
+    if (response.ok) {
+      document.getElementById("toast")?.classList.add("show");
+      setTimeout(() => { window.location.href = "board.html"; }, 1000);
+    } else if (btn) {
+      btn.disabled = false;
+    }
+  } catch (error) {
+    console.error(error);
+    if (btn) btn.disabled = false;
+  }
+}
+
+/**
+ * Main function to handle the task creation process.
  */
 async function createTask() {
   const title = document.getElementById("title");
   const dueDate = document.getElementById("dueDate");
   const category = document.getElementById("category");
-
-  let isValid = true;
-
-  // TITLE
-  if (!title.value.trim()) {
-    setError(title, "title_error", "This field is required");
-    isValid = false;
-  } else {
-    clearError(title, "title_error");
+  const btn = document.getElementById("btnCreateTask");
+  if (btn) btn.disabled = true;
+  if (!validateTaskForm(title, dueDate, category)) {
+    if (btn) btn.disabled = false; // Fix: Button wird bei Fehlern wieder freigegeben
+    return;
   }
+  await sendTaskRequest(buildTaskObj(), btn);
+}
 
-  // DUE DATE
-  if (!dueDate.value) {
-    setError(dueDate, "date_error", "This field is required");
-    isValid = false;
-  } else {
-    clearError(dueDate, "date_error");
-  }
-
-  // CATEGORY
-  if (!category.value) {
-    setError(category, "category_error", "This field is required");
-    isValid = false;
-  } else {
-    clearError(category, "category_error");
-  }
-
-  if (!isValid) return;
-
-  const task = buildTaskObj();
-
-  try {
-    const response = await fetch(ADDTASK_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(task),
-    });
-
-    if (response.ok) {
-      const toast = document.getElementById("toast");
-      toast?.classList.add("show");
-
-      setTimeout(() => {
-        window.location.href = "board.html";
-      }, 1000);
-    }
-  } catch (error) {
-    console.error(error);
-  }
-} 
 
 /**
  * Helper function for sending a task to the database via POST.
@@ -520,6 +520,7 @@ function clearForm() {
   subtasksList = [];
   document.getElementById("subtask_list").innerHTML = "";
 }
+
 
 /**
  * Clears the input field for subtasks.
