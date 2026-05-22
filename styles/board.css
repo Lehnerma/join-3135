@@ -312,7 +312,7 @@
     color: white;
   }
 
-  &.technical-task {
+  &.technical-tasks {
     background-color: var(--task-technicaltask-bg);
     color: white;
   }
