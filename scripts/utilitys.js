@@ -1,14 +1,19 @@
 checkAuth();
 
 /**
- * Initialises the utility module: renders the header initials and applies login-state CSS classes.
+ * Initializes general utility configurations by rendering user initials 
+ * and setting up the responsive layout for external or logged-in pages.
  */
 function initUtilitys() {
   renderHeadInitals();
   showExternalUtilityPages();
 }
+
 /**
- * Check if the User can enter the side or not
+ * Checks if the current visitor is authorized to view the page.
+ * Redirects unauthorized users to the landing page, while allowing access 
+ * for valid users, guests, and public legal/privacy pages.
+ * @returns {Promise<void>}
  */
 async function checkAuth() {
   const ID = sessionStorage.getItem("user_id");
@@ -25,9 +30,9 @@ async function checkAuth() {
 }
 
 /**
- *Function to check if the user id is available in the backend
- * @param {string} id
- * @returns Bool if the id is true ore false
+ * Fetches all registered users from the backend and checks if the provided ID exists.
+ * @param {string|null} id - The user ID to look for in the database.
+ * @returns {Promise<boolean>} Resolves to true if the ID exists, otherwise false.
  */
 async function checkUserId(id) {
   try {
@@ -46,8 +51,8 @@ async function checkUserId(id) {
 /**
  * Converts a display name to a CSS-compatible class name.
  * Example: 'Technical Task' => 'technical-task'
- * @param {string} name
- * @returns {string}
+ * @param {string} name - The raw string name.
+ * @returns {string} The formatted, lowercased string with hyphens.
  */
 function toClassName(name) {
   return name.trim().toLowerCase().replace(" ", "-");
@@ -56,45 +61,63 @@ function toClassName(name) {
 /**
  * Capitalizes the first letter of a string.
  * Example: 'hello' => 'Hello'
- * @param {string} str
- * @returns {string}
+ * @param {string} str - The target string.
+ * @returns {string} String with the first letter capitalized.
  */
 function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 /**
- * Extracts user initials from the user name.
- * @param {string} userName
- * @returns {string}
- */
-function extractInitials(userName) {
-  const SPLITTED_NAME = userName.split(" ");
-  let INITIALS = SPLITTED_NAME[0][0];
-  if (SPLITTED_NAME.length > 1) {
-    INITIALS += SPLITTED_NAME[SPLITTED_NAME.length - 1][0];
-  }
-  return INITIALS.toUpperCase();
-}
-
-/**
- * Renders the logged-in user's initials into the header avatar button.
- * Does nothing if no user id is stored in session storage.
+ * Extracts the first letters of the user's first and last name from session storage
+ * and renders them as uppercase initials inside the header profile button.
  */
 function renderHeadInitals() {
   const ID = sessionStorage.getItem("user_id");
   if (ID == null) {
     return;
+  } else {
+    const USER_NAME = sessionStorage.getItem("activeUserName");
+    const USER_INITIALS = document.getElementById("user_menu_button");
+    const SPLITTED_NAME = USER_NAME.split(" ");
+    let INITIALS = SPLITTED_NAME[0][0];
+    if (SPLITTED_NAME.length > 1) {
+      INITIALS += SPLITTED_NAME[SPLITTED_NAME.length - 1][0];
+    }
+    INITIALS = INITIALS.toUpperCase();
+    USER_INITIALS.innerText = INITIALS;
+    if (USER_NAME === "Guest") {
+      USER_INITIALS.innerText = "G";
+    }
   }
-  const USER_NAME = sessionStorage.getItem("activeUserName");
-  const USER_INITIALS = document.getElementById("user_menu_button");
-  const INITIALS = USER_NAME === "Guest" ? "G" : extractInitials(USER_NAME);
-  USER_INITIALS.innerText = INITIALS;
 }
 
 /**
- * Applies login-state CSS classes to <body> based on whether a user is logged in.
- * Adds "user-logged-in" when a session id is present, "user-not-logged-in" otherwise.
+ * Toggles the visibility of navigation and menu elements depending on 
+ * whether a user ID is found in the session storage.
+ * (Note: First variation found in the code)
+ */
+function showExternalUtilityPages() {
+  const ID = sessionStorage.getItem("user_id");
+  console.log(ID);
+  let VIEW_USER = document.getElementById("view-user");
+  let VIEW_EXTERNAL = document.getElementById("view-external");
+  let USER_MENU_BUTTON = document.getElementById("user_menu_button");
+  if (ID !== null) {
+    VIEW_USER.classList.remove("d-none");
+    VIEW_EXTERNAL.classList.add("d-none");
+    USER_MENU_BUTTON.classList.remove("d-none");
+  } else {
+    VIEW_USER.classList.add("d-none");
+    VIEW_EXTERNAL.classList.remove("d-none");
+    USER_MENU_BUTTON.classList.add("d-none");
+  }
+}
+
+/**
+ * Toggles specific authentication styling classes on the document body 
+ * based on the user's login state.
+ * (Note: Second variation found in the code)
  */
 function showExternalUtilityPages() {
   const ID = sessionStorage.getItem("user_id");
@@ -109,7 +132,7 @@ function showExternalUtilityPages() {
 }
 
 /**
- * Opens the user menu dialog.
+ * Opens the profile options menu dialog overlay.
  */
 function openUserMenu() {
   const DIALOG = document.getElementById("user-menu-dialog");
@@ -117,7 +140,7 @@ function openUserMenu() {
 }
 
 /**
- * Closes the user menu dialog.
+ * Closes the profile options menu dialog overlay.
  */
 function closeDialog() {
   const DIALOG = document.getElementById("user-menu-dialog");
@@ -125,23 +148,24 @@ function closeDialog() {
 }
 
 /**
- * Stops click events inside the user menu dialog from bubbling to the backdrop,
- * preventing an accidental dialog close.
- * @param {Event} event - The click event.
+ * Prevents click events from bubbling up, stopping a dialog container 
+ * from closing automatically when clicking inside its content zone.
+ * @param {Event} event - The triggered interaction or click event.
  */
 function preventCloseDialogOnDialog(event) {
   event.stopPropagation();
 }
 
 /**
- * Navigates back to the previous page in browser history.
+ * Navigates the browser window back one step in the session history.
  */
 function goBack() {
   window.history.back();
 }
 
 /**
- * Clears session storage and redirects to the login page.
+ * Logs out the current user by clearing the session storage 
+ * and redirecting the browser to the index landing page.
  */
 function logOut() {
   sessionStorage.clear();
