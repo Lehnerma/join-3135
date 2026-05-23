@@ -74,7 +74,7 @@ function registerClearFormListener(clearBtn) {
  * Initializes the date input field: Sets the minimum date and the default value to today.
  */
 function initDateInput() {
-  const dueDateInput = document.getElementById("dueDate");
+  const dueDateInput = document.getElementById("due_date");
   const now = new Date();
   const today = now.toISOString().split("T")[0];
   dueDateInput.min = today;
@@ -134,7 +134,7 @@ async function loadUsers() {
  * @param {Object} users - An object containing user data.
  */
 function fillUserDropdown(users) {
-  const container = document.getElementById("assignedToList");
+  const container = document.getElementById("assigned_to_list");
   if (!container) {
     console.error("assignedToList Element nicht gefunden!");
     return;
@@ -156,7 +156,7 @@ function fillUserDropdown(users) {
  * Filters the user list based on the search input in the dropdown menu.
  */
 function filterUsers() {
-  let search = document.getElementById("assignedToSearch").value.toLowerCase();
+  let search = document.getElementById("assigned_to_search").value.toLowerCase();
   let filteredUsers = remoteUsers.filter((user) => user.name.toLowerCase().includes(search));
   fillUserDropdown(filteredUsers);
 }
@@ -181,7 +181,7 @@ function toggleUser(el) {
  * @returns {string[]} An array containing the names of the selected users.
  */
 function getAssignedUsers() {
-  const checkboxes = document.querySelectorAll("#assignedToList input[type='checkbox']:checked");
+  const checkboxes = document.querySelectorAll("#assigned_to_list input[type='checkbox']:checked");
   return Array.from(checkboxes).map((cb) => cb.value);
 }
 
@@ -191,8 +191,8 @@ function getAssignedUsers() {
  */
 function toggleDropdown(e) {
   e.stopPropagation();
-  const dropdown = document.getElementById("assignedToDropdown");
-  const assigneeList = document.getElementById("assignedToList");
+  const dropdown = document.getElementById("assigned_to_dropdown");
+  const assigneeList = document.getElementById("assigned_to_list");
   dropdown.classList.toggle("open");
   assigneeList.scrollTo({ top: 0 });
 }
@@ -202,7 +202,7 @@ function toggleDropdown(e) {
  */
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
-    document.getElementById("assignedToDropdown")?.classList.remove("open");
+    document.getElementById("assigned_to_dropdown")?.classList.remove("open");
   }
 });
 
@@ -211,7 +211,7 @@ document.addEventListener("keydown", (e) => {
  */
 function initDropdownOutsideClick() {
   document.addEventListener("click", (e) => {
-    const dropdown = document.getElementById("assignedToDropdown");
+    const dropdown = document.getElementById("assigned_to_dropdown");
     if (!dropdown) return;
     const clickedInside = dropdown.contains(e.target);
     if (!clickedInside) {
@@ -224,7 +224,7 @@ function initDropdownOutsideClick() {
  * Updates the preview icons of the assigned users below the dropdown.
  */
 function updateAssignedPreview() {
-  const container = document.getElementById("assignedPreview");
+  const container = document.getElementById("assigned_preview");
   const selected = getAssignedUsers();
   container.innerHTML = renderAssignedUsers(selected);
 }
@@ -278,8 +278,8 @@ function renderAssignedUsers(users = []) {
  * Initializes the event listeners for subtask input.
  */
 function subtaskInit() {
-  const SUBTASK_SAVE = document.getElementById("subtask-save");
-  const SUBTASK_CLEAR = document.getElementById("subtask-close");
+  const SUBTASK_SAVE = document.getElementById("subtask_save");
+  const SUBTASK_CLEAR = document.getElementById("subtask_close");
   const SUBTASK_INPUT = document.getElementById("subtask_input");
   SUBTASK_SAVE.addEventListener("click", (event) => addSubtask(event));
   SUBTASK_CLEAR.addEventListener("click", (event) => clearSubtaskInput(event));
@@ -300,7 +300,7 @@ function buildTaskObj() {
   return {
     title: val("title"),
     description: val("description"),
-    dueDate: val("dueDate"),
+    dueDate: val("due_date"),
     category: val("category"),
     assignedTo: getAssignedUsers() || [],
     priority: selectedPriority,
@@ -482,12 +482,12 @@ async function sendTaskRequest(task, btn) {
  */
 async function createTask() {
   const title = document.getElementById("title");
-  const dueDate = document.getElementById("dueDate");
+  const dueDate = document.getElementById("due_date");
   const category = document.getElementById("category");
   const btn = document.getElementById("btnCreateTask");
   if (btn) btn.disabled = true;
   if (!validateTaskForm(title, dueDate, category)) {
-    if (btn) btn.disabled = false; // Fix: Button wird bei Fehlern wieder freigegeben
+    if (btn) btn.disabled = false;
     return;
   }
   await sendTaskRequest(buildTaskObj(), btn);
@@ -515,7 +515,7 @@ function clearForm() {
   document.getElementById("form_task").reset();
   initDateInput();
   selectPriority("medium");
-  document.getElementById("assignedPreview").innerHTML = "";
+  document.getElementById("assigned_preview").innerHTML = "";
   fillUserDropdown(remoteUsers);
   subtasksList = [];
   document.getElementById("subtask_list").innerHTML = "";

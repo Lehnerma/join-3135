@@ -1,7 +1,7 @@
-let TASKS = [];
-let DRAG_ID;
-let DRAG_OLD_STATUS;
-let DRAG_HEIGHT;
+let tasks = [];
+let dragId;
+let dragOldStatus;
+let dragHeight;
 const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users" + ".json";
 
 /**
@@ -36,8 +36,8 @@ async function loadTasksFromFirebase() {
     const RESULT = await RESPONSE.json();
     const TASKS_ARRAY = getArryFromResult(RESULT);
     sessionStorage.setItem("tasks", JSON.stringify(TASKS_ARRAY));
-    TASKS = TASKS_ARRAY;
-    renderBoard(TASKS);
+    tasks = TASKS_ARRAY;
+    renderBoard(tasks);
   } catch (er) {
     console.error(er);
   }
@@ -209,7 +209,7 @@ function addAssignees(wrapper, assignedTo) {
  * @param {number} id - The local id of the task.
  */
 function openTaskDialog(id) {
-  const task = TASKS.find((t) => t.id === id);
+  const task = tasks.find((t) => t.id === id);
   if (!task) return;
   const dialog = document.getElementById("taskDialog");
   dialog.classList.remove("d-none");
@@ -239,8 +239,8 @@ async function deleteTask(firebaseKey) {
     if (!response.ok) {
       throw new Error(`Delete failed: ${response.status}`);
     }
-    TASKS = TASKS.filter((task) => task.firebaseKey !== firebaseKey);
-    renderBoard(TASKS);
+    tasks = tasks.filter((task) => task.firebaseKey !== firebaseKey);
+    renderBoard(tasks);
     closeTaskDialog();
   } catch (error) {
     console.error(error);
@@ -286,11 +286,11 @@ function renderNoTasksElemt(status) {
  * @param {number} id - The id of the task being dragged.
  */
 function taskDragStart(ev, id) {
-  DRAG_ID = id;
-  DRAG_HEIGHT = ev.currentTarget.offsetHeight;
+  dragId = id;
+  dragHeight = ev.currentTarget.offsetHeight;
   ev.currentTarget.classList.add("task--dragging");
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
-  DRAG_OLD_STATUS = ALL_TASKS.find((el) => el.id === id)?.status;
+  dragOldStatus = ALL_TASKS.find((el) => el.id === id)?.status;
 }
 
 /**
@@ -323,7 +323,7 @@ function getDragAfterElement(list, y) {
  */
 function columnDragOver(ev, status) {
   ev.preventDefault();
-  if (status === DRAG_OLD_STATUS) return;
+  if (status === dragOldStatus) return;
   const LIST = document.getElementById(status + "_list");
   LIST.querySelector(".no-task")?.style.setProperty("display", "none");
 
@@ -331,7 +331,7 @@ function columnDragOver(ev, status) {
   if (!placeholder) {
     placeholder = document.createElement("li");
     placeholder.classList.add("drag-placeholder");
-    if (DRAG_HEIGHT) placeholder.style.height = DRAG_HEIGHT + "px";
+    if (dragHeight) placeholder.style.height = dragHeight + "px";
   }
 
   const afterElement = getDragAfterElement(LIST, ev.clientY);
@@ -380,10 +380,10 @@ function updateTaskColumns(oldStatus, newStatus, allTasks) {
 function taskDragDrop(status) {
   clearDragState();
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
-  const CURRENT_TASK = ALL_TASKS.find((el) => el.id === DRAG_ID);
+  const CURRENT_TASK = ALL_TASKS.find((el) => el.id === dragId);
   if (!CURRENT_TASK || CURRENT_TASK.status === status) return;
   CURRENT_TASK.status = status;
   sessionStorage.setItem("tasks", JSON.stringify(ALL_TASKS));
-  updateTaskColumns(DRAG_OLD_STATUS, status, ALL_TASKS);
+  updateTaskColumns(dragOldStatus, status, ALL_TASKS);
   updateTaskStatus(CURRENT_TASK.firebaseKey, status);
 }

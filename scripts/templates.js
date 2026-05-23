@@ -202,7 +202,7 @@ function getDetailTaskTemplate(task) {
     </article>
 
     <footer class="detail-task--footer f-row">
-        <button type="button" class="btn btn--delete f-row" onclick="deleteTask(CURRENT_DETAIL_TASK)">
+        <button type="button" class="btn btn--delete f-row" onclick="deleteTask(currentDetailTask)">
           <img src="../assets/img/icons/subtask/bin.svg" alt="delete" />
           Delete
         </button>
@@ -258,8 +258,8 @@ function getEditTaskDialogTemplate() {
         </div>
 
         <div class="input-section">
-          <label for="dueDate" class="required">Due date</label>
-          <input id="dueDate" class="input input-date" type="date" required />
+          <label for="due_date" class="required">Due date</label>
+          <input id="due_date" class="input input-date" type="date" required />
           <span class="field-error">This field is required</span>
         </div>
 
@@ -279,17 +279,17 @@ function getEditTaskDialogTemplate() {
         </div>
 
         <div class="input-section">
-          <label for="assignedToSearch">Assigned to</label>
-          <div class="custom-dropdown" id="assignedToDropdown">
+          <label for="assigned_to_search">Assigned to</label>
+          <div class="custom-dropdown" id="assigned_to_dropdown">
             <div class="custom-dropdown__trigger">
-              <input type="text" id="assignedToSearch" onkeyup="filterUsers()" class="input custom-dropdown__input" onclick="toggleDropdown(event)" placeholder="Select contacts to assign" autocomplete="off" />
+              <input type="text" id="assigned_to_search" onkeyup="filterUsers()" class="input custom-dropdown__input" onclick="toggleDropdown(event)" placeholder="Select contacts to assign" autocomplete="off" />
               <button type="button" class="custom-dropdown__toggle" onclick="toggleDropdown(event)">
                 <span class="custom-dropdown__arrow"></span>
               </button>
             </div>
-            <ul class="custom-dropdown__list" id="assignedToList"></ul>
+            <ul class="custom-dropdown__list" id="assigned_to_list"></ul>
           </div>
-          <div id="assignedPreview"></div>
+          <div id="assigned_preview"></div>
         </div>
 
         <div class="input-section">
@@ -307,9 +307,9 @@ function getEditTaskDialogTemplate() {
           <div class="input--section">
             <input id="subtask_input" class="input" type="text" placeholder="Add subtask" />
             <div class="subtask--btns">
-              <button type="button" id="subtask-close" class="btn--subtask close" onclick="clearSubtaskInput(event)"><img src="../assets/img/icons/subtask/close.svg"></button>
+              <button type="button" id="subtask_close" class="btn--subtask close" onclick="clearSubtaskInput(event)"><img src="../assets/img/icons/subtask/close.svg"></button>
               <span class="div-vert"></span>
-              <button type="button" id="subtask-save" class="btn--subtask check" onclick="addSubtask(event)"><img src="../assets/img/icons/subtask/check.svg"></button>
+              <button type="button" id="subtask_save" class="btn--subtask check" onclick="addSubtask(event)"><img src="../assets/img/icons/subtask/check.svg"></button>
             </div>
           </div>
           <ul id="subtask_list" class="subtask-list"></ul>
@@ -354,8 +354,8 @@ function getAddTaskDialogTemplate() {
             <textarea id="description" class="input" placeholder="Enter a Description" rows="3"></textarea>
           </div>
           <div class="input-section">
-            <label for="dueDate" class="required">Due date</label>
-            <input id="dueDate" class="input input-date" type="date" required />
+            <label for="due_date" class="required">Due date</label>
+            <input id="due_date" class="input input-date" type="date" required />
             <span class="field-error">This field is required</span>
           </div>
         </section>
@@ -380,16 +380,16 @@ function getAddTaskDialogTemplate() {
           </div>
 
           <div class="input-section">
-            <label for="assignedToSearch">Assigned to</label>
-            <div class="custom-dropdown" id="assignedToDropdown">
+            <label for="assigned_to_search">Assigned to</label>
+            <div class="custom-dropdown" id="assigned_to_dropdown">
               <div class="custom-dropdown__trigger">
-                <input type="text" id="assignedToSearch" onkeyup="filterUsers()" class="input custom-dropdown__input" onclick="toggleDropdown(event)" placeholder="Select contacts to assign" autocomplete="off" />
+                <input type="text" id="assigned_to_search" onkeyup="filterUsers()" class="input custom-dropdown__input" onclick="toggleDropdown(event)" placeholder="Select contacts to assign" autocomplete="off" />
                 <button type="button" class="custom-dropdown__toggle" onclick="toggleDropdown(event)">
                   <span class="custom-dropdown__arrow"></span>
                 </button>
               </div>
-              <div id="assignedPreview"></div>
-              <ul class="custom-dropdown__list" id="assignedToList"></ul>
+              <div id="assigned_preview"></div>
+              <ul class="custom-dropdown__list" id="assigned_to_list"></ul>
             </div>
           </div>
 
@@ -407,9 +407,9 @@ function getAddTaskDialogTemplate() {
             <div class="input--section">
               <input id="subtask_input" class="input" type="text" placeholder="Add subtask" />
               <div class="subtask--btns">
-                <button type="button" id="subtask-close" class="btn--subtask close" onclick="clearSubtaskInput(event)"><img src="../assets/img/icons/subtask/close.svg"></button>
+                <button type="button" id="subtask_close" class="btn--subtask close" onclick="clearSubtaskInput(event)"><img src="../assets/img/icons/subtask/close.svg"></button>
                 <span class="div-vert"></span>
-                <button type="button" id="subtask-save" class="btn--subtask check" onclick="addSubtask(event)"><img src="../assets/img/icons/subtask/check.svg"></button>
+                <button type="button" id="subtask_save" class="btn--subtask check" onclick="addSubtask(event)"><img src="../assets/img/icons/subtask/check.svg"></button>
               </div>
             </div>
             <ul id="subtask_list" class="subtask-list"></ul>

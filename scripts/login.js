@@ -1,4 +1,4 @@
-let SHOW_SIGNUP = false;
+let showSignup = false;
 let USERS = [];
 
 
@@ -75,7 +75,7 @@ function toggleForms(event) {
     event.preventDefault();
   };
   clearAndResetForms();
-  SHOW_SIGNUP = !SHOW_SIGNUP;
+  showSignup = !showSignup;
   updateToggleUI();
 }
 
@@ -88,16 +88,16 @@ function updateToggleUI() {
   const SIGNUP_FORM = document.getElementById("signup");
   const NAV_LOGIN = document.getElementById("nav_login");
   const NAV_PHONE = document.getElementById("phone_signup");
-  LOGIN_FORM.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
-  SIGNUP_FORM.classList[SHOW_SIGNUP ? "remove" : "add"]("dnone");
+  LOGIN_FORM.classList[showSignup ? "add" : "remove"]("dnone");
+  SIGNUP_FORM.classList[showSignup ? "remove" : "add"]("dnone");
   if (NAV_LOGIN) {
-    NAV_LOGIN.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
+    NAV_LOGIN.classList[showSignup ? "add" : "remove"]("dnone");
   } if (NAV_PHONE) {
-    NAV_PHONE.classList[SHOW_SIGNUP ? "add" : "remove"]("dnone");
+    NAV_PHONE.classList[showSignup ? "add" : "remove"]("dnone");
   }
   removeFade(LOGIN_FORM);
   if (NAV_LOGIN) removeFade(NAV_LOGIN);
-  setRequired(SHOW_SIGNUP);
+  setRequired(showSignup);
 }
 
 
@@ -375,7 +375,7 @@ function clearAndResetForms() {
  * @param {string} iconID - ID of the icon image.
  */
 function resetPasswordVisibility(pwInputID, iconID) {
-  const pwConfirmContainer = document.getElementById('pwConfirmSignup'); // Container suchen
+  const pwConfirmContainer = document.getElementById('pwConfirmSignup');
   const input = document.getElementById(pwInputID);
   const icon = document.getElementById(iconID);
   if (!input || !icon) return;

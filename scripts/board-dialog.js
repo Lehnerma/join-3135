@@ -1,4 +1,4 @@
-let CURRENT_DETAIL_TASK = null;
+let currentDetailTask = null;
 
 /**
  * Closes a dialog with a slide-out animation.
@@ -44,24 +44,58 @@ function showTaskCreatedToast() {
 }
 
 /**
- * Initializes the event listeners for the board.
- * It sets up buttons for adding tasks, searching, and clicking on task details.
+ * Initializes all event listeners for the board by splitting search and dialog logic.
+ * 
+ * @function initBoardTask
+ * @returns {void}
  */
 function initBoardTask() {
-  const ADD_BTN_HEAD = document.getElementById("add_task_head");
-  ADD_BTN_HEAD.addEventListener("click", () => {
-    window.location.href = "../html/addTaskPage.html";
-  });
+  initBoardSearch();
+  initBoardDialogs();
+}
 
+/**
+ * Handles the search input and search button event listeners.
+ * 
+ * @function initBoardSearch
+ * @returns {void}
+ */
+function initBoardSearch() {
   const SEARCH_TASKS_BTN = document.getElementById("search_tasks_btn");
-  SEARCH_TASKS_BTN.addEventListener("click", () => searchTasks());
-
+  if (SEARCH_TASKS_BTN) {
+    SEARCH_TASKS_BTN.addEventListener("click", () => searchTasks());
+  }
   const SEARCH_INPUT = document.getElementById("search_tasks");
-  SEARCH_INPUT.addEventListener("input", searchTasks); //check if input or change is better for the search function.
+  if (SEARCH_INPUT) {
+    SEARCH_INPUT.addEventListener("input", searchTasks); 
+  }
+}
 
+
+/**
+ * Handles the add-task button and task-detail dialog event listeners.
+ * 
+ * @function initBoardDialogs
+ * @returns {void}
+ */
+function initBoardDialogs() {
+  const ADD_BTN_HEAD = document.getElementById("add_task_head");
+  if (ADD_BTN_HEAD) {
+    ADD_BTN_HEAD.addEventListener("click", (e) => {
+      e.preventDefault(); 
+      
+      /** @type {HTMLDialogElement} */
+      const dialog = document.getElementById("edit_task_dialog");
+      if (dialog) {
+        dialog.showModal(); 
+      }
+    });
+  }
   const TASK_DETAIL_DIALOG = document.getElementById("task_detail_dialog");
-  TASK_DETAIL_DIALOG.addEventListener("click", closeTaskDetailDialogOnBackdropClick);
-  TASK_DETAIL_DIALOG.addEventListener("cancel", handleTaskDetailDialogEscape);
+  if (TASK_DETAIL_DIALOG) {
+    TASK_DETAIL_DIALOG.addEventListener("click", closeTaskDetailDialogOnBackdropClick);
+    TASK_DETAIL_DIALOG.addEventListener("cancel", handleTaskDetailDialogEscape);
+  }
 }
 
 /**
@@ -111,7 +145,7 @@ function openTaskDetailDialog(taskId) {
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const TASK = ALL_TASKS.find((task) => task.id === taskId);
   if (TASK) {
-    CURRENT_DETAIL_TASK = TASK;
+    currentDetailTask = TASK;
     TASK_DETAIL_DIALOG.innerHTML = buildTaskDetailDialog(TASK);
     TASK_DETAIL_DIALOG.showModal();
     TASK_DETAIL_DIALOG.querySelector(".detail-task--content").scrollTop = 0;
@@ -155,7 +189,7 @@ function toggleSubtaskDone(taskId, subtaskIndex) {
   const current = TASK.subtasks[subtaskIndex].done;
   TASK.subtasks[subtaskIndex].done = !(current === true || current === "true");
   sessionStorage.tasks = JSON.stringify(ALL_TASKS);
-  CURRENT_DETAIL_TASK = TASK;
+  currentDetailTask = TASK;
 }
 
 /**
@@ -167,9 +201,9 @@ function toggleSubtaskDone(taskId, subtaskIndex) {
  */
 async function closeTaskDetailDialog() {
   const TASK_DETAIL_DIALOG = document.getElementById("task_detail_dialog");
-  if (CURRENT_DETAIL_TASK) {
+  if (currentDetailTask) {
     const ALL_TASKS = JSON.parse(sessionStorage.tasks);
-    const TASK = ALL_TASKS.find((t) => t.id === CURRENT_DETAIL_TASK.id);
+    const TASK = ALL_TASKS.find((t) => t.id === currentDetailTask.id);
     if (TASK) {
       sessionStorage.tasks = JSON.stringify(ALL_TASKS);
       renderBoard(ALL_TASKS);
@@ -304,7 +338,7 @@ async function loadUsersForEdit(assignedTo) {
     const data = await response.json();
     remoteUsers = Object.values(data);
     fillUserDropdown(data);
-    document.querySelectorAll("#assignedToList label.user-item").forEach((label) => {
+    document.querySelectorAll("#assigned_to_list label.user-item").forEach((label) => {
       const checkbox = label.querySelector("input[type='checkbox']");
       if (checkbox && assignedTo.includes(checkbox.value)) {
         checkbox.checked = true;
@@ -343,7 +377,7 @@ function refreshTaskDetailDialog(taskId) {
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const TASK = ALL_TASKS.find((task) => task.id === taskId);
   if (TASK) {
-    CURRENT_DETAIL_TASK = TASK;
+    currentDetailTask = TASK;
     TASK_DETAIL_DIALOG.innerHTML = buildTaskDetailDialog(TASK);
     TASK_DETAIL_DIALOG.querySelector(".detail-task--content").scrollTop = 0;
   }
