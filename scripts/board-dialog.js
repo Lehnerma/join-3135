@@ -35,7 +35,7 @@ function showTaskCreatedToast() {
     toast.addEventListener(
       "animationend",
       () => {
-        toast.classList.add = "dnone";
+        toast.classList.add("dnone");
         toast.classList.remove("taskCreatedToast--hidden");
       },
       { once: true },

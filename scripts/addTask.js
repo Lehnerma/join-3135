@@ -257,9 +257,20 @@ function renderAssignedUsers(users = []) {
   if (!Array.isArray(users) || users.length === 0) return "";
   let html = "";
   users.forEach((name) => {
-    const firstLetter = name.charAt(0).toUpperCase();
-    const color = contactColors?.[firstLetter] || "#ccc";
     if (!name) return;
+    
+    const firstLetter = name.charAt(0).toUpperCase();
+    
+    // 1. SCHRITT: Versuche die Farbe über die Board-Funktion 'getAssigneeColor' zu holen.
+    // 2. SCHRITT: Falls das fehlschlägt (z.B. auf der reinen AddTask-Seite), nutze 'contactColors'.
+    // 3. SCHRITT: Erst wenn beides fehlt, nimm Grau (#ccc) als allerletzten Notnagel.
+    let color = "#ccc"; 
+    if (typeof getAssigneeColor === 'function') {
+      color = getAssigneeColor(name);
+    } else if (typeof contactColors !== 'undefined' && contactColors) {
+      color = contactColors[firstLetter] || "#ccc";
+    }
+
     const parts = name.trim().split(" ");
     let initials = "";
     if (parts.length > 1) {
