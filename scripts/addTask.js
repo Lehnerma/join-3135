@@ -258,12 +258,7 @@ function renderAssignedUsers(users = []) {
   let html = "";
   users.forEach((name) => {
     if (!name) return;
-    
     const firstLetter = name.charAt(0).toUpperCase();
-    
-    // 1. SCHRITT: Versuche die Farbe über die Board-Funktion 'getAssigneeColor' zu holen.
-    // 2. SCHRITT: Falls das fehlschlägt (z.B. auf der reinen AddTask-Seite), nutze 'contactColors'.
-    // 3. SCHRITT: Erst wenn beides fehlt, nimm Grau (#ccc) als allerletzten Notnagel.
     let color = "#ccc"; 
     if (typeof getAssigneeColor === 'function') {
       color = getAssigneeColor(name);
@@ -296,9 +291,6 @@ function subtaskInit() {
   const SUBTASK_INPUT = document.getElementById("subtask_input");
 
   if (!SUBTASK_SAVE || !SUBTASK_CLEAR || !SUBTASK_INPUT) return;
-
-  // Nutze onclick / onkeydown statt addEventListener. 
-  // Das überschreibt alte Event-Listener und verhindert das "Stapeln".
   SUBTASK_SAVE.onclick = (event) => addSubtask(event);
   SUBTASK_CLEAR.onclick = (event) => clearSubtaskInput(event);
   
