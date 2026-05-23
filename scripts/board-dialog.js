@@ -140,8 +140,7 @@ function searchTasks() {
  */
 function openTaskDetailDialog(taskId) {
   const TASK_DETAIL_DIALOG = document.getElementById("task_detail_dialog");
-  TASK_DETAIL_DIALOG.innerHTML = ""; // Clear previous content
-
+  TASK_DETAIL_DIALOG.innerHTML = "";
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const TASK = ALL_TASKS.find((task) => task.id === taskId);
   if (TASK) {
@@ -262,8 +261,6 @@ function openEditTaskDialog(taskId) {
   const dialog = document.getElementById("edit_task_dialog");
   dialog.addEventListener("click", closeEditDialogOnBackdropClick);
   dialog.showModal();
-  
-  //  LÖSUNG: Erst den alten Inhalt der Vorschau komplett löschen!
   const previewContainer = document.getElementById("assigned_preview");
   if (previewContainer) {
     previewContainer.innerHTML = "";
@@ -297,31 +294,15 @@ function fillEditFormFields(task) {
  * @param {Object} task - The task object with all information.
  */
 function setupEditTaskInteractions(task) {
-  // 1. Das globale Array sauber aus dem aktuellen Task befüllen
   subtasksList = (task.subtasks || []).map((s) => ({ title: s.title, done: s.done }));
-  
-  // 2. Event-Listener für die Subtask-Eingabe initialisieren
   subtaskInit();
-  
-  // 3. Das HTML-Element der Subtask-Liste finden und komplett leeren,
-  //    damit keine alten Einträge oder Duplikate im UI stehen bleiben.
   const subtaskListContainer = document.getElementById("subtask_list");
   if (subtaskListContainer) {
     subtaskListContainer.innerHTML = "";
   }
-  
-  // 4. Jetzt erst die Subtasks des aktuellen Tasks frisch rendern
   subtasksList.forEach((sub, i) => renderSubtaskItem(i, sub.title));
-  
-  // 5. Die zugewiesenen Nutzer für das Bearbeiten laden
   loadUsersForEdit(task.assignedTo || []);
-  
-  // 6. Klick-Verhalten für das Dropdown-Menü vorbereiten
   initDropdownOutsideClick();
-  
-  // 7. Das Formular anpassen: Wir nutzen hier '.onsubmit' statt '.addEventListener'.
-  //    Das löscht eventuell alte Listener von zuvor geöffneten Tasks und verhindert,
-  //    dass beim Speichern im Hintergrund die falschen (alten) Daten abgeschickt werden.
   const form = document.getElementById("form_edit_task");
   if (form) {
     form.onsubmit = async (event) => {
