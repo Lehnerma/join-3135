@@ -294,13 +294,19 @@ function subtaskInit() {
   const SUBTASK_SAVE = document.getElementById("subtask_save");
   const SUBTASK_CLEAR = document.getElementById("subtask_close");
   const SUBTASK_INPUT = document.getElementById("subtask_input");
-  SUBTASK_SAVE.addEventListener("click", (event) => addSubtask(event));
-  SUBTASK_CLEAR.addEventListener("click", (event) => clearSubtaskInput(event));
-  SUBTASK_INPUT.addEventListener("keydown", (e) => {
+
+  if (!SUBTASK_SAVE || !SUBTASK_CLEAR || !SUBTASK_INPUT) return;
+
+  // Nutze onclick / onkeydown statt addEventListener. 
+  // Das überschreibt alte Event-Listener und verhindert das "Stapeln".
+  SUBTASK_SAVE.onclick = (event) => addSubtask(event);
+  SUBTASK_CLEAR.onclick = (event) => clearSubtaskInput(event);
+  
+  SUBTASK_INPUT.onkeydown = (e) => {
     if (e.key === "Enter") {
       addSubtask(e);
     }
-  });
+  };
 }
 
 /**
