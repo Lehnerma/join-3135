@@ -193,8 +193,10 @@ function toggleDropdown(e) {
   e.stopPropagation();
   const dropdown = document.getElementById("assigned_to_dropdown");
   const assigneeList = document.getElementById("assigned_to_list");
-  dropdown.classList.toggle("open");
-  assigneeList.scrollTo({ top: 0 });
+ if (dropdown) {
+    dropdown.classList.toggle("open");
+    assigneeList?.scrollTo({ top: 0 });
+  }
 }
 
 /**
@@ -338,7 +340,7 @@ function renderSubtaskItem(index, title) {
   const LI = document.createElement("li");
   LI.className = "subtask-item input--section";
   LI.dataset.index = index;
-  LI.id = "subtask" + index;
+  LI.id = "subtask_" + index;
   LI.innerHTML = getSubtaskTemplate(title, index);
   addSubtaskEventListener(LI);
   LIST.appendChild(LI);
@@ -484,7 +486,7 @@ async function createTask() {
   const title = document.getElementById("title");
   const dueDate = document.getElementById("due_date");
   const category = document.getElementById("category");
-  const btn = document.getElementById("btnCreateTask");
+  const btn = document.getElementById("btn_create_task");
   if (btn) btn.disabled = true;
   if (!validateTaskForm(title, dueDate, category)) {
     if (btn) btn.disabled = false;

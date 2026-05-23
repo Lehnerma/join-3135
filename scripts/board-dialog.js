@@ -277,7 +277,7 @@ function fillEditFormFields(task) {
   document.getElementById("title").value = task.title || "";
   document.getElementById("description").value = task.description || "";
   document.getElementById("category").value = task.category || "";
-  const dueDateInput = document.getElementById("dueDate");
+  const dueDateInput = document.getElementById("due_date");
   dueDateInput.min = new Date().toISOString().split("T")[0];
   dueDateInput.value = task.dueDate || "";
   selectPriority(task.priority || "medium");

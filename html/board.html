@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../assets/img/favicon/favicon-join.svg" type="image/x-icon" />
     <title>Join - Board</title>
-    <script src="../scripts/utilitys.js"></script>
 
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../styles/fonts.css" />
@@ -163,8 +162,8 @@
           </section>
 
           <section class="input-section">
-            <label for="dueDate" class="">Due date</label>
-            <input id="dueDate" class="input input-date" type="date" required />
+            <label for="due_date" class="">Due date</label>
+            <input id="due_date" class="input input-date" type="date" required />
             <span class="field-error">This field is required</span>
           </section>
 
@@ -178,17 +177,17 @@
           </section>
 
           <section class="input-section">
-            <label for="assignedToSearch">Assigned to</label>
-            <div class="custom-dropdown" id="assignedToDropdown">
+            <label for="assigned_to_search">Assigned to</label>
+            <div class="custom-dropdown" id="assigned_to_dropdown">
               <div class="custom-dropdown__trigger">
-                <input type="text" id="assignedToSearch" onkeyup="filterUsers()" class="input custom-dropdown__input" onclick="toggleDropdown(event)" placeholder="Select contacts to assign" autocomplete="off" />
+                <input type="text" id="assigned_to_search" onkeyup="filterUsers()" class="input custom-dropdown__input" onclick="toggleDropdown(event)" placeholder="Select contacts to assign" autocomplete="off" />
                 <button type="button" class="custom-dropdown__toggle" onclick="toggleDropdown(event)">
                   <span class="custom-dropdown__arrow"></span>
                 </button>
               </div>
-              <ul class="custom-dropdown__list" id="assignedToList"></ul>
+              <ul class="custom-dropdown__list" id="assigned_to_list"></ul>
             </div>
-            <div id="assignedPreview"></div>
+            <div id="assigned_preview"></div>
           </section>
 
           <section class="input-section">
@@ -205,9 +204,9 @@
             <div class="input--section">
               <input id="subtask_input" class="input" type="text" placeholder="Add subtask" />
               <div class="subtask--btns">
-                <button type="button" id="subtask-close" class="btn--subtask close" onclick="clearSubtaskInput(event)"><img src="../assets/img/icons/subtask/close.svg" /></button>
+                <button type="button" id="subtask_close" class="btn--subtask close" onclick="clearSubtaskInput(event)"><img src="../assets/img/icons/subtask/close.svg" /></button>
                 <span class="div-vert"></span>
-                <button type="button" id="subtask-save" class="btn--subtask check" onclick="addSubtask(event)"><img src="../assets/img/icons/subtask/check.svg" /></button>
+                <button type="button" id="subtask_save" class="btn--subtask check" onclick="addSubtask(event)"><img src="../assets/img/icons/subtask/check.svg" /></button>
               </div>
             </div>
             <ul id="subtask_list" class="subtask-list"></ul>
