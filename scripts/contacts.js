@@ -35,12 +35,12 @@ let user = {};
 let userSelectionID = {};
 let colorIsAlreadyActive;
 let detailAnimation = false;
-const leftContent = document.getElementById('leftContent');
-const backArrowButton = document.getElementById('backArrowButton');
-const editMenuButton = document.getElementById('editMenuButton');
-const editMenuIcon = document.getElementById('editMenuIcon');
-const backArrowIcon = document.getElementById('backArrowIcon');
-let USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+const LEFT_CONTENT = document.getElementById('left_content');
+const BACK_ARROW_BUTTON = document.getElementById('back_arrow_button');
+const EDIT_MENU_BUTTON = document.getElementById('edit_menu_button');
+const EDIT_MENU_ICON = document.getElementById('edit_menu_icon');
+const BACK_ARROW_ICON = document.getElementById('back_arrow_icon');
+const USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
 
 /**
@@ -58,16 +58,16 @@ function init() {
  * @returns {Promise}
  */
 async function getUsers() {
-  const RESPONSE = await fetch(USERS_URL);
-  let RESULT = await RESPONSE.json();
+    const RESPONSE = await fetch(USERS_URL);
+  const RESULT = await RESPONSE.json();
   USERS = [];
   for (let key in RESULT) {
-    let person = RESULT[key];
-    person.firebaseKey = key;
-    person.color ??= contactColors[Math.floor(Math.random() * contactColors.length)]
-    person.phone ??= person.phone = "";
-    updateFirebaseContact(key, { color: person.color }, { phone: person.email });
-    USERS.push(person)
+    const PERSON = RESULT[key];
+    PERSON.firebaseKey = key;
+    PERSON.color ??= contactColors[Math.floor(Math.random() * contactColors.length)]
+    PERSON.phone ??= PERSON.phone = "";
+    updateFirebaseContact(key, { color: PERSON.color }, { phone: PERSON.email });
+    USERS.push(PERSON)
   }
   sortUserContactList();
   await loadUsers();
@@ -79,10 +79,10 @@ async function getUsers() {
  */
 function sortUserContactList() {
   USERS.sort(function (a, b) {
-    let x = a.name.toLowerCase();
-    let y = b.name.toLowerCase();
-    if (x < y) { return -1; }
-    if (x > y) { return 1; }
+    const X = a.name.toLowerCase();
+    const Y = b.name.toLowerCase();
+    if (X < Y) { return -1; }
+    if (X > Y) { return 1; }
     return 0;
   })
   addAlphabetTable();
@@ -93,10 +93,10 @@ function sortUserContactList() {
  * Creates the letter containers for the contact list based on the alphabet.
  */
 function addAlphabetTable() {
-  let singleContacts = document.getElementById('singleContacts');
-  singleContacts.innerHTML = '';
+  const SINGLE_CONTACTS = document.getElementById('single_contacts');
+  SINGLE_CONTACTS.innerHTML = '';
   for (let i = 0; i < alphabet.length; i++) {
-    singleContacts.innerHTML += renderAlphabetTableTpl(alphabet[i]);
+    SINGLE_CONTACTS.innerHTML += renderAlphabetTableTpl(alphabet[i]);
   }
   userContectList();
 }
@@ -150,7 +150,7 @@ function getInitials(name) {
  * opens the dialog box for creating a new contact.
  */
 function openContactDialog() {
-  const dialogRef = document.getElementById('openNewDialog');
+  const dialogRef = document.getElementById('open_new_dialog');
   dialogRef.classList.remove('hide');
   dialogRef.innerHTML = renderHtmlContactDialogTpl();
   dialogRef.showModal();
@@ -164,13 +164,13 @@ function openContactDialog() {
  * @param {string} color - The user's assigned color.
  */
 function openEditDialog(editUserIndex, initials, color) {
-  const dialogRef = document.getElementById('openNewDialog');
+  const dialogRef = document.getElementById('open_new_dialog');
   dialogRef.classList.remove('hide');
   dialogRef.innerHTML = renderHtmlEditContactDialogTpl(editUserIndex, initials, color);
   dialogRef.showModal();
-  document.getElementById('editName').value = editName;
-  document.getElementById('editEmail').value = editEmail;
-  document.getElementById('editPhone').value = editPhone;
+  document.getElementById('edit_name').value = editName;
+  document.getElementById('edit_email').value = editEmail;
+  document.getElementById('edit_phone').value = editPhone;
 }
 
 
@@ -198,10 +198,10 @@ function openEditContactDialog() {
  * Closes the contact dialog box and resets the form.
  */
 function closeContactDialog() {
-  const dialogRef = document.getElementById('openNewDialog');
+  const dialogRef = document.getElementById('open_new_dialog');
   dialogRef.close();
   dialogRef.classList.add('hide');
-  const formRef = document.getElementById('formRef');
+  const formRef = document.getElementById('form_ref');
   if (formRef) {
     formRef.reset();
   }
@@ -257,10 +257,10 @@ function mobileDetails() {
  * Activates the classes for the mobile detail view.
  */
 function activateMobileView() {
-  leftContent.classList.add('contact-list-off');
-  backArrowButton.classList.add('btn--arrow', 'btn', 'mobile-buttons-on');
-  editMenuButton.classList.add('edit-menu-box', 'btn--addPerson', 'mobile-buttons-on');
-  [editMenuIcon, backArrowIcon].forEach(el => el.classList.add('mobile-buttons-on'));
+  LEFT_CONTENT.classList.add('contact-list-off');
+  BACK_ARROW_BUTTON.classList.add('btn--arrow', 'btn', 'mobile-buttons-on');
+  EDIT_MENU_BUTTON.classList.add('edit-menu-box', 'btn--addPerson', 'mobile-buttons-on');
+  [EDIT_MENU_ICON, BACK_ARROW_ICON].forEach(el => el.classList.add('mobile-buttons-on'));
   removeAllBgColors();
 }
 
@@ -269,10 +269,10 @@ function activateMobileView() {
  * Disables classes for the mobile detail view.
  */
 function deactivateMobileView() {
-  leftContent.classList.remove('contact-list-off');
-  backArrowButton.classList.remove('btn--arrow', 'btn', 'mobile-buttons-on');
-  editMenuButton.classList.remove('edit-menu-box', 'btn--addPerson', 'mobile-buttons-on');
-  [editMenuIcon, backArrowIcon].forEach(el => el.classList.remove('mobile-buttons-on'));
+  LEFT_CONTENT.classList.remove('contact-list-off');
+  BACK_ARROW_BUTTON.classList.remove('btn--arrow', 'btn', 'mobile-buttons-on');
+  EDIT_MENU_BUTTON.classList.remove('edit-menu-box', 'btn--addPerson', 'mobile-buttons-on');
+  [EDIT_MENU_ICON, BACK_ARROW_ICON].forEach(el => el.classList.remove('mobile-buttons-on'));
 }
 
 
@@ -280,9 +280,9 @@ function deactivateMobileView() {
  * Returns from the detailed view to the contact list in the mobile view.
  */
 function backToContactlist() {
-  leftContent.classList.remove('contact-list-off');
-  backArrowButton.classList.remove('btn--arrow', 'btn');
-  editMenuButton.classList.remove('edit-menu-box', 'btn--addPerson');
+  LEFT_CONTENT.classList.remove('contact-list-off');
+  BACK_ARROW_BUTTON.classList.remove('btn--arrow', 'btn');
+  EDIT_MENU_BUTTON.classList.remove('edit-menu-box', 'btn--addPerson');
 }
 
 
@@ -302,7 +302,7 @@ function removeAllBgColors() {
  * Displays the details of the selected user in the details container.
  */
 function showDetails() {
-  const dialogRef = document.getElementById('contactDetailsDialog');
+  const dialogRef = document.getElementById('contact_details_dialog');
   if (!colorIsAlreadyActive && window.innerWidth >= 651) {
     userSelectionID.classList.add('bg-color-active');
     dialogRef.innerHTML = addShowDetails();
@@ -321,7 +321,7 @@ function showDetails() {
  * Checks and disables the detail box's pop-up animation, if necessary.
  */
 function checkDetailAnimation() {
-  const dialogRef = document.getElementById('contactDetailsDialog');
+  const dialogRef = document.getElementById('contact_details_dialog');
   const detailBox = dialogRef.querySelector('.contact-details-box');
   if (detailAnimation && detailBox) {
     if (detailBox) {
@@ -348,9 +348,9 @@ function addShowDetails() {
  * @returns {Object|null} The contact object or null if fields are empty.
  */
 function buildContactObject() {
-  const name = document.getElementById('createName')?.value.trim();
-  const email = document.getElementById('createEmail')?.value.trim();
-  const phone = document.getElementById('createPhone')?.value.trim();
+  const name = document.getElementById('create_name')?.value.trim();
+  const email = document.getElementById('create_email')?.value.trim();
+  const phone = document.getElementById('create_phone')?.value.trim();
   if (!name || !email) return null;
   return {
     name: name,
@@ -366,7 +366,7 @@ function buildContactObject() {
  * Main function to create and save a new contact.
  */
 async function createContact() {
-  const btn = document.getElementById('btnCreateContact');
+  const btn = document.getElementById('btn_create_contact');
   const contactData = buildContactObject();
   if (!contactData) return;
   if (btn) btn.disabled = true;
@@ -416,15 +416,15 @@ function scrollToUser(index) {
  * @param {Object} newContact - The contact to be saved. 
  */
 async function syncNewContact(newContact) {
-  const response = await fetch(USERS_URL, {
+  const RESPONSE = await fetch(USERS_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(newContact)
   });
-  if (response.ok) {
-    const RESULT = await response.json();
+  if (RESPONSE.ok) {
+    const RESULT = await RESPONSE.json();
     const generatedKey = await RESULT.name;
     newContact.firebaseKey = generatedKey;
   }
@@ -440,7 +440,7 @@ async function deleteContact(index) {
   const success = await deleteUserFromDatabase(userKey);
   if (success) {
     document.getElementById(index).remove();
-    document.getElementById('contactDetailsDialog').innerHTML = '';
+    document.getElementById('contact_details_dialog').innerHTML = '';
     await getUsers();
     closeContactDialog();
     backToContactlist();
@@ -471,7 +471,7 @@ async function deleteUserFromDatabase(firebaseKey) {
  * Displays a success banner for a short time after creating a contact.
  */
 function showSuccessBanner() {
-  const banner = document.getElementById('contactSuccessOverlay');
+  const banner = document.getElementById('contact_success_overlay');
   banner.classList.remove('hide-overlay');
   setTimeout(() => {
     banner.classList.add('hide-overlay');
@@ -485,9 +485,9 @@ function showSuccessBanner() {
  */
 function getUpdatedContactData(color) {
   return {
-    name: document.getElementById('editName').value,
-    email: document.getElementById('editEmail').value,
-    phone: document.getElementById('editPhone').value,
+    name: document.getElementById('edit_name').value,
+    email: document.getElementById('edit_email').value,
+    phone: document.getElementById('edit_phone').value,
     color
   };
 }
@@ -506,7 +506,7 @@ function closeEditView() {
  * @param {number} index - The user's index in the global array.
  */
 async function saveNewContactData(index) {
-  const btn = document.getElementById('btnEditSaveContact');
+  const btn = document.getElementById('btn_edit_save_contact');
   if (btn) btn.disabled = true;
   try {
     const user = USERS[index];

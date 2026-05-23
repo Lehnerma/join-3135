@@ -77,9 +77,9 @@
 
   <main class="main-content">
 
-    <div id="leftContent" class="left-content">
+    <div id="left_content" class="left-content">
       <div class="add-button-container">
-        <button id="addButton" type="button" class="desktop-only btn btn--primary add-button-size btn-add-contact"
+        <button id="add_button" type="button" class="desktop-only btn btn--primary add-button-size btn-add-contact"
           onclick="openContactDialog()">
           <span class="add-button-text">Add new contact</span>
           <img  src="../assets/img/icons/contacts/person_add.svg" alt="contact icon">
@@ -89,35 +89,35 @@
         </button>
       </div>
 
-      <div id="contactList" class="contact-list">
-        <div id="singleContacts" class="single-contacts"></div>
+      <div id="contact_list" class="contact-list">
+        <div id="single_contacts" class="single-contacts"></div>
       </div>
     </div>
 
-    <div id="rightContent" class="right-content" onclick="closeMobileMenu()">
+    <div id="right_content" class="right-content" onclick="closeMobileMenu()">
       <div class="headline">
         <h1 class="contacts-title">Contacts</h1>
         <div class="vertical-divider"></div>
         <span class="contacts-subtitle">Better with a team</span>
-        <button id="backArrowButton" type="button" aria-label="Back to Contact list Button"
+        <button id="back_arrow_button" type="button" aria-label="Back to Contact list Button"
           onclick="backToContactlist()">
-          <img id="backArrowIcon" alt="back-arrow-icon" class="back-arrow"
+          <img id="back_arrow_icon" alt="back-arrow-icon" class="back-arrow"
             src="../assets/img/icons/contacts/Vector.svg">
         </button>
-        <button id="editMenuButton" type="button" class="mobile-only" onclick="openEditMenu(event)">
-          <img id="editMenuIcon" alt="edit-meni-icon" class="edit-menu"
+        <button id="edit_menu_button" type="button" class="mobile-only" onclick="openEditMenu(event)">
+          <img id="edit_menu_icon" alt="edit-meni-icon" class="edit-menu"
             src="../assets/img/icons/contacts/more_vert.svg">
         </button>
-        <div id="contactSuccessOverlay" class="contact-success-overlay hide-overlay">
+        <div id="contact_success_overlay" class="contact-success-overlay hide-overlay">
           <span>Contact successfully created</span>
         </div>
       </div>
-      <div id="contactDetailsDialog"></div>
+      <div id="contact_details_dialog"></div>
     </div>
 
   </main>
 
-  <dialog class="dialog-content" id="openNewDialog" onclick="closeContactDialog()">
+  <dialog class="dialog-content" id="open_new_dialog" onclick="closeContactDialog()">
   </dialog>
 
 </body>

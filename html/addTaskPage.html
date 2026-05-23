@@ -93,7 +93,7 @@
 
           <div class="input-section">
             <label for="dueDate" class="required">Due date</label>
-            <input id="dueDate" class="input input-date" type="date"  />
+            <input id="due_date" class="input input-date" type="date"  />
             <span id="date_error" class="field-error dnone">This field is required</span>
           </div>
         </section>
@@ -125,17 +125,17 @@
           <!-- assignt to -->
           <div class="input-section">
             <label for="assignedToSearch">Assigned to</label>
-            <div class="custom-dropdown" id="assignedToDropdown">
+            <div class="custom-dropdown" id="assigned_to_dropdown">
               <div class="custom-dropdown__trigger">
-                <input type="text" id="assignedToSearch" onkeyup="filterUsers()" class="input custom-dropdown__input"
+                <input type="text" id="assigned_to_search" onkeyup="filterUsers()" class="input custom-dropdown__input"
                   onclick="toggleDropdown(event)" placeholder="Select contacts to assign" autocomplete="off" />
                 <button type="button" class="custom-dropdown__toggle" aria-label="Toggle dropdown">
                   <span class="custom-dropdown__arrow"></span>
                 </button>
 
               </div>
-              <div id="assignedPreview"></div>
-              <ul class="custom-dropdown__list" id="assignedToList">
+              <div id="assigned_preview"></div>
+              <ul class="custom-dropdown__list" id="assigned_to_list">
                 <!-- <li class="custom-dropdown__item" data-value="1" data-name="Max Mustermann">
                   <span class="contact-badge" style="background-color: var(--contact-color-1)">MA</span>
                   <span class="custom-dropdown__name">Max Mustermann</span>
