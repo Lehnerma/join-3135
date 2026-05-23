@@ -1,7 +1,7 @@
 let tasks = [];
-let dragId;
-let dragOldStatus;
-let dragHeight;
+let drag_id;
+let drag_old_status;
+let drag_height;
 const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users" + ".json";
 
 /**
@@ -36,6 +36,8 @@ async function loadTasksFromFirebase() {
     const RESULT = await RESPONSE.json();
     const TASKS_ARRAY = getArryFromResult(RESULT);
     sessionStorage.setItem("tasks", JSON.stringify(TASKS_ARRAY));
+    tasks.push(...TASKS_ARRAY);
+    renderBoard(TASKS_ARRAY);
     tasks = TASKS_ARRAY;
     renderBoard(tasks);
   } catch (er) {
@@ -160,10 +162,9 @@ function renderColumn(status, tasks) {
  * @returns {string} A CSS color string, or "#ccc" if the user is not found.
  */
 function getAssigneeColor(name) {
-  const usersData = sessionStorage.getItem("users");
-  const users = usersData ? JSON.parse(usersData) : [];
-  const user = users.find((u) => u.name === name);
-  return user ? user.color : "#ccc";
+  const USERS = sessionStorage.getItem("users") ? JSON.parse(sessionStorage.getItem("users")) : [];
+  const USER = USERS.find((u) => u.name === name);
+  return USER ? USER.color : "#ccc";
 }
 
 /**
@@ -209,21 +210,21 @@ function addAssignees(wrapper, assignedTo) {
  * @param {number} id - The local id of the task.
  */
 function openTaskDialog(id) {
-  const task = tasks.find((t) => t.id === id);
-  if (!task) return;
-  const dialog = document.getElementById("taskDialog");
-  dialog.classList.remove("d-none");
-  dialog.innerHTML = getTaskDialogTemplate(task);
+  const TASK = tasks.find((t) => t.id === id);
+  if (!TASK) return;
+  const DIALOG = document.getElementById("taskDialog");
+  DIALOG.classList.remove("d-none");
+  DIALOG.innerHTML = getTaskDialogTemplate(TASK);
 }
 
 /**
  * Hides and clears the task overview dialog.
  */
 function closeTaskDialog() {
-  const dialog = document.getElementById("taskDialog");
+  const DIALOG = document.getElementById("taskDialog");
 
-  dialog.classList.add("d-none");
-  dialog.innerHTML = "";
+  DIALOG.classList.add("d-none");
+  DIALOG.innerHTML = "";
 }
 
 /**
@@ -233,11 +234,11 @@ function closeTaskDialog() {
  */
 async function deleteTask(firebaseKey) {
   try {
-    const response = await fetch(getBoardTaskURL(firebaseKey), {
+    const RESPONSE = await fetch(getBoardTaskURL(firebaseKey), {
       method: "DELETE",
     });
-    if (!response.ok) {
-      throw new Error(`Delete failed: ${response.status}`);
+    if (!RESPONSE.ok) {
+      throw new Error(`Delete failed: ${RESPONSE.status}`);
     }
     tasks = tasks.filter((task) => task.firebaseKey !== firebaseKey);
     renderBoard(tasks);
@@ -264,10 +265,10 @@ function getPriority(priority) {
  */
 function getInitials(name = "") {
   if (typeof name !== "string") return "";
-  const parts = name.trim().split(" ");
-  if (!parts[0]) return "";
-  const last = parts.length > 1 ? parts[parts.length - 1].charAt(0).toUpperCase() : "";
-  return parts[0].charAt(0).toUpperCase() + last;
+  const PARTS = name.trim().split(" ");
+  if (!PARTS[0]) return "";
+  const LAST = PARTS.length > 1 ? PARTS[PARTS.length - 1].charAt(0).toUpperCase() : "";
+  return PARTS[0].charAt(0).toUpperCase() + LAST;
 }
 
 /**
@@ -275,7 +276,7 @@ function getInitials(name = "") {
  * @param {string} status - The column status key.
  */
 function renderNoTasksElemt(status) {
-  let LIST = document.getElementById(status + "_list");
+  const LIST = document.getElementById(status + "_list");
   LIST.innerHTML = "";
   LIST.innerHTML += getNoTasksTemplate(status);
 }
@@ -286,11 +287,11 @@ function renderNoTasksElemt(status) {
  * @param {number} id - The id of the task being dragged.
  */
 function taskDragStart(ev, id) {
-  dragId = id;
-  dragHeight = ev.currentTarget.offsetHeight;
+  drag_id = id;
+  drag_height = ev.currentTarget.offsetHeight;
   ev.currentTarget.classList.add("task--dragging");
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
-  dragOldStatus = ALL_TASKS.find((el) => el.id === id)?.status;
+  drag_old_status = ALL_TASKS.find((el) => el.id === id)?.status;
 }
 
 /**
@@ -323,7 +324,7 @@ function getDragAfterElement(list, y) {
  */
 function columnDragOver(ev, status) {
   ev.preventDefault();
-  if (status === dragOldStatus) return;
+  if (status === drag_old_status) return;
   const LIST = document.getElementById(status + "_list");
   LIST.querySelector(".no-task")?.style.setProperty("display", "none");
 
@@ -331,11 +332,11 @@ function columnDragOver(ev, status) {
   if (!placeholder) {
     placeholder = document.createElement("li");
     placeholder.classList.add("drag-placeholder");
-    if (dragHeight) placeholder.style.height = dragHeight + "px";
+    if (drag_height) placeholder.style.height = drag_height + "px";
   }
 
-  const afterElement = getDragAfterElement(LIST, ev.clientY);
-  afterElement ? LIST.insertBefore(placeholder, afterElement) : LIST.appendChild(placeholder);
+  const AFTER_ELEMENT = getDragAfterElement(LIST, ev.clientY);
+  AFTER_ELEMENT ? LIST.insertBefore(placeholder, AFTER_ELEMENT) : LIST.appendChild(placeholder);
 }
 
 /**
@@ -380,10 +381,10 @@ function updateTaskColumns(oldStatus, newStatus, allTasks) {
 function taskDragDrop(status) {
   clearDragState();
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
-  const CURRENT_TASK = ALL_TASKS.find((el) => el.id === dragId);
+  const CURRENT_TASK = ALL_TASKS.find((el) => el.id === drag_id);
   if (!CURRENT_TASK || CURRENT_TASK.status === status) return;
   CURRENT_TASK.status = status;
   sessionStorage.setItem("tasks", JSON.stringify(ALL_TASKS));
-  updateTaskColumns(dragOldStatus, status, ALL_TASKS);
+  updateTaskColumns(drag_old_status, status, ALL_TASKS);
   updateTaskStatus(CURRENT_TASK.firebaseKey, status);
 }

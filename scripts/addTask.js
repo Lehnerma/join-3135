@@ -30,18 +30,18 @@ function btnInit() {
 function setError(input, errorId) {
   input.classList.add("input-invalid");
 
-  const errorEl = document.getElementById(errorId);
-  if (errorEl) {
-    errorEl.classList.remove("dnone");
+  const ERROR_EL = document.getElementById(errorId);
+  if (ERROR_EL) {
+    ERROR_EL.classList.remove("dnone");
   }
 }
 
 function clearError(input, errorId) {
   input.classList.remove("input-invalid");
 
-  const errorEl = document.getElementById(errorId);
-  if (errorEl) {
-    errorEl.classList.add("dnone");
+  const ERROR_EL = document.getElementById(errorId);
+  if (ERROR_EL) {
+    ERROR_EL.classList.add("dnone");
   }
 }
 
@@ -74,11 +74,11 @@ function registerClearFormListener(clearBtn) {
  * Initializes the date input field: Sets the minimum date and the default value to today.
  */
 function initDateInput() {
-  const dueDateInput = document.getElementById("due_date");
-  const now = new Date();
-  const today = now.toISOString().split("T")[0];
-  dueDateInput.min = today;
-  dueDateInput.value = today;
+  const DUE_DATE_INPUT = document.getElementById("due_date");
+  const NOW = new Date();
+  const TODAY = NOW.toISOString().split("T")[0];
+  DUE_DATE_INPUT.min = TODAY;
+  DUE_DATE_INPUT.value = TODAY;
 }
 
 /**
@@ -86,8 +86,8 @@ function initDateInput() {
  * @param {string} priority - The selected priority ('urgent', 'medium', or 'low').
  */
 function selectPriority(priority) {
-  const priorities = ["urgent", "medium", "low"];
-  priorities.forEach((prio) => {
+  const PRIORITIES = ["urgent", "medium", "low"];
+  PRIORITIES.forEach((prio) => {
     document.getElementById(`btn_${prio}`).classList.remove(`${prio}-active`);
   });
   document.getElementById(`btn_${priority}`).classList.add(`${priority}-active`);
@@ -101,16 +101,16 @@ function selectPriority(priority) {
  */
 function sortUsersWithActiveFirst(users) {
   const ACTIV_USER = sessionStorage.getItem("activeUserName");
-  const sorted = users.toSorted((a, b) => a.name.localeCompare(b.name));
+  const SORTED = users.toSorted((a, b) => a.name.localeCompare(b.name));
 
   if (ACTIV_USER) {
-    const activeUserIndex = sorted.findIndex((user) => user.name == ACTIV_USER);
+    const ACTIVE_USER_INDEX = SORTED.findIndex((user) => user.name == ACTIV_USER);
 
-    const activeUser = sorted.splice(activeUserIndex, 1)[0];
-    sorted.unshift(activeUser);
+    const ACTIVE_USER = SORTED.splice(ACTIVE_USER_INDEX, 1)[0];
+    SORTED.unshift(ACTIVE_USER);
   }
 
-  return sorted;
+  return SORTED;
 }
 
 /**
@@ -119,9 +119,9 @@ function sortUsersWithActiveFirst(users) {
 async function loadUsers() {
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
   try {
-    const response = await fetch(USER_URL);
-    const data = await response.json();
-    remoteUsers = Object.values(data);
+    const RESPONSE = await fetch(USER_URL);
+    const DATA = await RESPONSE.json();
+    remoteUsers = Object.values(DATA);
     const SORTET_USERS = sortUsersWithActiveFirst(remoteUsers);
     fillUserDropdown(SORTET_USERS);
   } catch (error) {
@@ -134,31 +134,31 @@ async function loadUsers() {
  * @param {Object} users - An object containing user data.
  */
 function fillUserDropdown(users) {
-  const container = document.getElementById("assigned_to_list");
-  if (!container) {
+  const CONTAINER = document.getElementById("assigned_to_list");
+  if (!CONTAINER) {
     console.error("assignedToList Element nicht gefunden!");
     return;
   }
   let html = "";
-  for (const userId in users) {
-    const user = users[userId];
-    if (!user || !user.name) continue;
+  for (const USER_ID in users) {
+    const USER = users[USER_ID];
+    if (!USER || !USER.name) continue;
 
-    const firstLetter = user.name.charAt(0).toUpperCase();
-    const color = user.color || "#ccc";
-    const initials = user.name.charAt(0);
-    html += getFillUserDropown(color, initials, user);
+    const FIRST_LETTER = USER.name.charAt(0).toUpperCase();
+    const COLOR = USER.color || "#ccc";
+    const INITIALS = USER.name.charAt(0);
+    html += getFillUserDropown(COLOR, INITIALS, USER);
   }
-  container.innerHTML = html;
+  CONTAINER.innerHTML = html;
 }
 
 /**
  * Filters the user list based on the search input in the dropdown menu.
  */
 function filterUsers() {
-  let search = document.getElementById("assigned_to_search").value.toLowerCase();
-  let filteredUsers = remoteUsers.filter((user) => user.name.toLowerCase().includes(search));
-  fillUserDropdown(filteredUsers);
+  const SEARCH = document.getElementById("assigned_to_search").value.toLowerCase();
+  const FILTERED_USERS = remoteUsers.filter((user) => user.name.toLowerCase().includes(SEARCH));
+  fillUserDropdown(FILTERED_USERS);
 }
 
 /**
@@ -166,9 +166,9 @@ function filterUsers() {
  * @param {HTMLElement} el - The element selected by the user.
  */
 function toggleUser(el) {
-  const checkbox = el.querySelector("input");
-  checkbox.checked = !checkbox.checked;
-  if (checkbox.checked) {
+  const CHECKBOX = el.querySelector("input");
+  CHECKBOX.checked = !CHECKBOX.checked;
+  if (CHECKBOX.checked) {
     el.classList.add("selected");
   } else {
     el.classList.remove("selected");
@@ -181,8 +181,8 @@ function toggleUser(el) {
  * @returns {string[]} An array containing the names of the selected users.
  */
 function getAssignedUsers() {
-  const checkboxes = document.querySelectorAll("#assigned_to_list input[type='checkbox']:checked");
-  return Array.from(checkboxes).map((cb) => cb.value);
+  const CHECKBOXES = document.querySelectorAll("#assigned_to_list input[type='checkbox']:checked");
+  return Array.from(CHECKBOXES).map((cb) => cb.value);
 }
 
 /**
@@ -191,10 +191,10 @@ function getAssignedUsers() {
  */
 function toggleDropdown(e) {
   e.stopPropagation();
-  const dropdown = document.getElementById("assigned_to_dropdown");
-  const assigneeList = document.getElementById("assigned_to_list");
-  dropdown.classList.toggle("open");
-  assigneeList.scrollTo({ top: 0 });
+  const DROPDOWN = document.getElementById("assigned_to_dropdown");
+  const ASSIGNEE_LIST = document.getElementById("assigned_to_list");
+  DROPDOWN.classList.toggle("open");
+  ASSIGNEE_LIST.scrollTo({ top: 0 });
 }
 
 /**
@@ -211,11 +211,11 @@ document.addEventListener("keydown", (e) => {
  */
 function initDropdownOutsideClick() {
   document.addEventListener("click", (e) => {
-    const dropdown = document.getElementById("assigned_to_dropdown");
-    if (!dropdown) return;
-    const clickedInside = dropdown.contains(e.target);
-    if (!clickedInside) {
-      dropdown.classList.remove("open");
+    const DROPDOWN = document.getElementById("assigned_to_dropdown");
+    if (!DROPDOWN) return;
+    const CLICKED_INSIDE = DROPDOWN.contains(e.target);
+    if (!CLICKED_INSIDE) {
+      DROPDOWN.classList.remove("open");
     }
   });
 }
@@ -224,9 +224,9 @@ function initDropdownOutsideClick() {
  * Updates the preview icons of the assigned users below the dropdown.
  */
 function updateAssignedPreview() {
-  const container = document.getElementById("assigned_preview");
-  const selected = getAssignedUsers();
-  container.innerHTML = renderAssignedUsers(selected);
+  const CONTAINER = document.getElementById("assigned_preview");
+  const SELECTED = getAssignedUsers();
+  CONTAINER.innerHTML = renderAssignedUsers(SELECTED);
 }
 
 /**
@@ -255,18 +255,18 @@ function renderAssignedUsers(users = []) {
   if (!Array.isArray(users) || users.length === 0) return "";
   let html = "";
   users.forEach((name) => {
-    const firstLetter = name.charAt(0).toUpperCase();
-    const color = contactColors?.[firstLetter] || "#ccc";
+    const FIRST_LETTER = name.charAt(0).toUpperCase();
+    const COLOR = contactColors?.[FIRST_LETTER] || "#ccc";
     if (!name) return;
-    const parts = name.trim().split(" ");
+    const PARTS = name.trim().split(" ");
     let initials = "";
-    if (parts.length > 1) {
-      initials = (parts[0][0] + parts[1][0]).toUpperCase();
+    if (PARTS.length > 1) {
+      initials = (PARTS[0][0] + PARTS[1][0]).toUpperCase();
     } else {
-      initials = parts[0].slice(0, 2).toUpperCase();
+      initials = PARTS[0].slice(0, 2).toUpperCase();
     }
     html += `
-      <div class="assigned-circle" style="background-color:${color}" title="${name}">
+      <div class="assigned-circle" style="background-color:${COLOR}" title="${name}">
         ${initials}
       </div>
     `;
@@ -366,9 +366,9 @@ function addSubtaskEventListener(LI) {
  * @returns {string} The sanitized text.
  */
 function escapeHtml(str) {
-  const div = document.createElement("div");
-  div.textContent = str;
-  return div.innerHTML;
+  const DIV = document.createElement("div");
+  DIV.textContent = str;
+  return DIV.innerHTML;
 }
 
 /**
@@ -378,19 +378,19 @@ function escapeHtml(str) {
 function startEditSubtask(li) {
   if (li.classList.contains("editing")) return;
   li.classList.add("editing");
-  const span = li.querySelector(".subtask-text");
-  const input = document.createElement("input");
-  input.type = "text";
-  input.className = "subtask-edit-input";
-  input.value = span.textContent;
-  input.addEventListener("keydown", (e) => {
+  const SPAN = li.querySelector(".subtask-text");
+  const INPUT = document.createElement("input");
+  INPUT.type = "text";
+  INPUT.className = "subtask-edit-input";
+  INPUT.value = SPAN.textContent;
+  INPUT.addEventListener("keydown", (e) => {
     if (e.key === "Enter") saveSubtask(li);
     if (e.key === "Escape") cancelEditSubtask(li);
   });
-  li.replaceChild(input, span);
+  li.replaceChild(INPUT, SPAN);
   li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/check.svg";
-  input.focus();
-  input.select();
+  INPUT.focus();
+  INPUT.select();
 }
 
 /**
@@ -398,12 +398,12 @@ function startEditSubtask(li) {
  * @param {HTMLLIElement} li - The list element of the subtask.
  */
 function cancelEditSubtask(li) {
-  const input = li.querySelector(".subtask-edit-input");
-  if (!input) return;
-  const span = document.createElement("span");
-  span.className = "subtask-text";
-  span.textContent = subtasksList[parseInt(li.dataset.index)].title;
-  li.replaceChild(span, input);
+  const INPUT = li.querySelector(".subtask-edit-input");
+  if (!INPUT) return;
+  const SPAN = document.createElement("span");
+  SPAN.className = "subtask-text";
+  SPAN.textContent = subtasksList[parseInt(li.dataset.index)].title;
+  li.replaceChild(SPAN, INPUT);
 }
 
 /**
@@ -420,16 +420,16 @@ function deleteSubtask(li) {
  * @param {HTMLLIElement} li - The list item of the subtask.
  */
 function saveSubtask(li) {
-  const input = li.querySelector(".subtask-edit-input");
-  if (!input) return;
-  const newTitle = input.value.trim();
-  if (!newTitle) return;
-  subtasksList[parseInt(li.dataset.index)].title = newTitle;
-  const span = document.createElement("span");
-  span.className = "subtask-text";
-  span.textContent = newTitle;
-  span.addEventListener("dblclick", () => startEditSubtask(li));
-  li.replaceChild(span, input);
+  const INPUT = li.querySelector(".subtask-edit-input");
+  if (!INPUT) return;
+  const NEW_TITLE = INPUT.value.trim();
+  if (!NEW_TITLE) return;
+  subtasksList[parseInt(li.dataset.index)].title = NEW_TITLE;
+  const SPAN = document.createElement("span");
+  SPAN.className = "subtask-text";
+  SPAN.textContent = NEW_TITLE;
+  SPAN.addEventListener("dblclick", () => startEditSubtask(li));
+  li.replaceChild(SPAN, INPUT);
   li.classList.remove("editing");
   li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
 }
@@ -442,15 +442,15 @@ function saveSubtask(li) {
  * @returns {boolean} True if all fields are valid.
  */
 function validateTaskForm(title, dueDate, category) {
-  const hasTitle = !!title.value.trim();
-  const hasDate = !!dueDate.value;
-  const hasCategory = !!category.value;
+  const HAS_TITLE = !!title.value.trim();
+  const HAS_DATE = !!dueDate.value;
+  const HAS_CATEGORY = !!category.value;
 
-  hasTitle ? clearError(title, "title_error") : setError(title, "title_error", "This field is required");
-  hasDate ? clearError(dueDate, "date_error") : setError(dueDate, "date_error", "This field is required");
-  hasCategory ? clearError(category, "category_error") : setError(category, "category_error", "This field is required");
+  HAS_TITLE ? clearError(title, "title_error") : setError(title, "title_error", "This field is required");
+  HAS_DATE ? clearError(dueDate, "date_error") : setError(dueDate, "date_error", "This field is required");
+  HAS_CATEGORY ? clearError(category, "category_error") : setError(category, "category_error", "This field is required");
 
-  return hasTitle && hasDate && hasCategory;
+  return HAS_TITLE && HAS_DATE && HAS_CATEGORY;
 }
 
 /**
@@ -460,12 +460,12 @@ function validateTaskForm(title, dueDate, category) {
  */
 async function sendTaskRequest(task, btn) {
   try {
-    const response = await fetch(ADDTASK_URL, {
+    const RESPONSE = await fetch(ADDTASK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(task),
     });
-    if (response.ok) {
+    if (RESPONSE.ok) {
       document.getElementById("toast")?.classList.add("show");
       setTimeout(() => { window.location.href = "board.html"; }, 1000);
     } else if (btn) {
@@ -481,16 +481,16 @@ async function sendTaskRequest(task, btn) {
  * Main function to handle the task creation process.
  */
 async function createTask() {
-  const title = document.getElementById("title");
-  const dueDate = document.getElementById("due_date");
-  const category = document.getElementById("category");
-  const btn = document.getElementById("btn_create_task");
-  if (btn) btn.disabled = true;
-  if (!validateTaskForm(title, dueDate, category)) {
-    if (btn) btn.disabled = false;
+  const TITLE = document.getElementById("title");
+  const DUE_DATE = document.getElementById("due_date");
+  const CATEGORY = document.getElementById("category");
+  const BTN = document.getElementById("btnCreateTask");
+  if (BTN) BTN.disabled = true;
+  if (!validateTaskForm(TITLE, DUE_DATE, CATEGORY)) {
+    if (BTN) BTN.disabled = false; // Fix: Button wird bei Fehlern wieder freigegeben
     return;
   }
-  await sendTaskRequest(buildTaskObj(), btn);
+  await sendTaskRequest(buildTaskObj(), BTN);
 }
 
 
@@ -500,12 +500,12 @@ async function createTask() {
  * @returns {Promise<Object>} The JSON result of the response.
  */
 async function postTask(task) {
-  const response = await fetch(ADDTASK_URL, {
+  const RESPONSE = await fetch(ADDTASK_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(task),
   });
-  return response.json();
+  return RESPONSE.json();
 }
 
 /**

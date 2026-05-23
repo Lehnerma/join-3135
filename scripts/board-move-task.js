@@ -38,10 +38,10 @@ function openMoveTaskDialog(event, taskId, btn) {
 
   closeMoveDropdown();
 
-  const targets = MOVE_TARGETS[TASK.status] ?? [];
-  const dropdown = buildMoveDropdown(taskId, targets);
-  document.body.appendChild(dropdown);
-  positionDropdown(dropdown, btn);
+  const TARGETS = MOVE_TARGETS[TASK.status] ?? [];
+  const DROPDOWN = buildMoveDropdown(taskId, TARGETS);
+  document.body.appendChild(DROPDOWN);
+  positionDropdown(DROPDOWN, btn);
 
   setTimeout(() => document.addEventListener("click", closeMoveDropdownOnOutside), 0);
   document.addEventListener("scroll", closeMoveDropdown, { capture: true, once: true });
@@ -54,11 +54,11 @@ function openMoveTaskDialog(event, taskId, btn) {
  * @returns {HTMLElement} The constructed dropdown element.
  */
 function buildMoveDropdown(taskId, targets) {
-  const element = document.createElement("div");
-  element.id = "move_task_dropdown";
-  element.className = "moveTaskDropdown";
-  element.innerHTML = getMoveDropdownTemplate(taskId, targets);
-  return element;
+  const ELEMENT = document.createElement("div");
+  ELEMENT.id = "move_task_dropdown";
+  ELEMENT.className = "moveTaskDropdown";
+  ELEMENT.innerHTML = getMoveDropdownTemplate(taskId, targets);
+  return ELEMENT;
 }
 
 /**
@@ -67,11 +67,11 @@ function buildMoveDropdown(taskId, targets) {
  * @param {HTMLElement} btn - The button element to position relative to.
  */
 function positionDropdown(dropdown, btn) {
-  const rect = btn.getBoundingClientRect();
-  dropdown.style.top = `${rect.bottom - 24}px`;
+  const RECT = btn.getBoundingClientRect();
+  dropdown.style.top = `${RECT.bottom - 24}px`;
 
-  const overflowsRight = rect.left + dropdown.offsetWidth > window.innerWidth - 8;
-  dropdown.style.left = overflowsRight ? `${rect.right - dropdown.offsetWidth + 24}px` : `${rect.left}px`;
+  const OVERFLOWS_RIGHT = RECT.left + dropdown.offsetWidth > window.innerWidth - 8;
+  dropdown.style.left = OVERFLOWS_RIGHT ? `${RECT.right - dropdown.offsetWidth + 24}px` : `${RECT.left}px`;
 }
 
 /**

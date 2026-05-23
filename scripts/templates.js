@@ -202,7 +202,7 @@ function getDetailTaskTemplate(task) {
     </article>
 
     <footer class="detail-task--footer f-row">
-        <button type="button" class="btn btn--delete f-row" onclick="deleteTask(currentDetailTask)">
+        <button type="button" class="btn btn--delete f-row" onclick="deleteTask(current_detail_task)">
           <img src="../assets/img/icons/subtask/bin.svg" alt="delete" />
           Delete
         </button>
@@ -223,10 +223,10 @@ function getDetailTaskTemplate(task) {
  * @returns {string} HTML string for a subtask list item.
  */
 function getDetailSubtaskTemplate(title, checked = false, taskId, subtaskIndex) {
-  const isChecked = checked === true || checked === "true";
+  const IS_CHECKED = checked === true || checked === "true";
   return `
     <li class="detail-task--subtask-item f-row">
-      <input type="checkbox" id="sub_check_${taskId}_${subtaskIndex}" class="detail-task--subtask-checkbox"${isChecked ? " checked" : ""} onchange="toggleSubtaskDone(${taskId}, ${subtaskIndex})" />
+      <input type="checkbox" id="sub_check_${taskId}_${subtaskIndex}" class="detail-task--subtask-checkbox"${IS_CHECKED ? " checked" : ""} onchange="toggleSubtaskDone(${taskId}, ${subtaskIndex})" />
       <label for="sub_check_${taskId}_${subtaskIndex}" class="detail-task--subtask-text">${title}</label>
     </li>`;
 }
@@ -353,7 +353,7 @@ function getAddTaskDialogTemplate() {
           <div class="input-section">
             <label for="due_date" class="required">Due date</label>
             <input id="due_date" class="input input-date" type="date" required />
-            <span id="date_error" class="field-error dnone">This field is required</span>
+            <span class="field-error">This field is required</span>
           </div>
         </section>
 
@@ -429,10 +429,10 @@ function getAddTaskDialogTemplate() {
  * @returns {string} HTML string for the dropdown content.
  */
 function getMoveDropdownTemplate(taskId, targets) {
-  const btns = targets.map((t) => getMoveButtonTemplate(taskId, t)).join("");
+  const BTNS = targets.map((t) => getMoveButtonTemplate(taskId, t)).join("");
   return `
     <p class="moveTaskDropdown--label">Move to</p>
-    <ul class="moveTaskDropdown--list">${btns}</ul>
+    <ul class="moveTaskDropdown--list">${BTNS}</ul>
   `;
 }
 
@@ -445,11 +445,11 @@ function getMoveDropdownTemplate(taskId, targets) {
  * @returns {string} HTML string for one list item button.
  */
 function getMoveButtonTemplate(taskId, { status, direction }) {
-  const icon = direction === "up" ? "arrow_upward" : "arrow_downward";
+  const ICON = direction === "up" ? "arrow_upward" : "arrow_downward";
   return `
     <li>
       <button type="button" class="btn--moveTaskDropdown" onclick="moveTaskToStatus(${taskId}, '${status}')">
-        <img src="../assets/img/icons/general/${icon}.svg" alt="${direction}" class="moveTaskDropdown--arrow">
+        <img src="../assets/img/icons/general/${ICON}.svg" alt="${direction}" class="moveTaskDropdown--arrow">
         <span>${STATUS_LABELS[status]}</span>
       </button>
     </li>
@@ -462,16 +462,16 @@ function getMoveButtonTemplate(taskId, { status, direction }) {
  * @returns {string} HTML string for the dialog.
  */
 function getTaskDialogTemplate(task) {
-  const assignedNames = task.assignedTo ? task.assignedTo.join(", ") : "None";
-  const subtaskNames = task.subtasks ? task.subtasks.map((s) => s.title).join(", ") : "None";
+  const ASSIGNED_NAMES = task.assignedTo ? task.assignedTo.join(", ") : "None";
+  const SUBTASK_NAMES = task.subtasks ? task.subtasks.map(s => s.title).join(", ") : "None";
   return `
     <p>Category: ${escapeHtml(task.category)}</p>
     <h2>${escapeHtml(task.title)}</h2>
     <p>${escapeHtml(task.description)}</p>
     <p>Due Date: ${escapeHtml(task.dueDate)}</p>
     <p>Priority: ${escapeHtml(task.priority)}</p>
-    <p>Assigned To: ${escapeHtml(assignedNames)}</p>
-    <p>Subtasks: ${escapeHtml(subtaskNames)}</p>
+    <p>Assigned To: ${escapeHtml(ASSIGNED_NAMES)}</p>
+    <p>Subtasks: ${escapeHtml(SUBTASK_NAMES)}</p>
     
     <button onclick="closeTaskDialog()">X</button>
     <button onclick="deleteTask('${task.firebaseKey}')">Delete</button>

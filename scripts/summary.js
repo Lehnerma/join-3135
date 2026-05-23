@@ -1,6 +1,6 @@
-const GREETING = document.getElementById('summary-greeting');
-const OVERVIEW = document.getElementById('summary-overview');
-const HEADLINE = document.getElementById('summary-headline');
+const GREETING = document.getElementById('summary_greeting');
+const OVERVIEW = document.getElementById('summary_overview');
+const HEADLINE = document.getElementById('summary_headline');
 const TASKS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks" + ".json";
 
 /**
@@ -18,15 +18,15 @@ function initSummary() {
  * based on the current time, and updates the DOM greeting elements.
  */
 function loggedInUserName() {
-  const GREETING_NAME = document.getElementById("greeting-name");
-  const GREETING_TEXT = document.getElementById("greeting-text");
+  const GREETING_NAME = document.getElementById("greeting_name");
+  const GREETING_TEXT = document.getElementById("greeting_text");
   const FULL_NAME = sessionStorage.getItem('activeUserName');
-  let current_greeting = showGreetingText();
+  const CURRENT_GREETING = showGreetingText();
   if (FULL_NAME !== "Guest") {
-    GREETING_TEXT.innerHTML = current_greeting + ",";
+    GREETING_TEXT.innerHTML = CURRENT_GREETING + ",";
     GREETING_NAME.innerHTML = FULL_NAME;
   } else {
-    GREETING_TEXT.innerHTML = current_greeting + "!";
+    GREETING_TEXT.innerHTML = CURRENT_GREETING + "!";
     GREETING_NAME.innerHTML = "";
   }
 }
@@ -57,14 +57,14 @@ function showGreetingText() {
  */
 function showGreeting() {
   const WIDTH = window.innerWidth;
-  const referrer = document.referrer;
+  const REFERRER = document.referrer;
   if (WIDTH >= 1024) {
     GREETING.classList.remove('d-none');
     OVERVIEW.classList.remove('d-none');
     HEADLINE.classList.remove('d-none');
     return;
   }
-  else if (WIDTH < 1024 && referrer.includes('index.html') && sessionStorage.getItem('justLoggedIn') === 'true') {
+  else if (WIDTH < 1024 && REFERRER.includes('index.html') && sessionStorage.getItem('justLoggedIn') === 'true') {
     showMobileWithGreeting();
   } else {
     showMobileWithoutGreeting();
@@ -106,9 +106,9 @@ function showMobileWithoutGreeting() {
  * @returns {Promise<Object>} A promise resolving to the tasks data.
  */
 async function fetchTasks() {
-  let tasksResult = await fetch(TASKS_URL);
-  let tasksData = await tasksResult.json();
-  return tasksData;
+  const TASKS_RESULT = await fetch(TASKS_URL);
+  const TASKS_DATA = await TASKS_RESULT.json();
+  return TASKS_DATA;
 }
 
 /**
@@ -116,14 +116,14 @@ async function fetchTasks() {
  * into the respective summary dashboard DOM elements.
  */
 function renderAmountOfTasks() {
- fetchTasks().then(tasksData => {
-    document.getElementById('todo-amount').innerHTML = showAmountOfTasks(tasksData, 'todo');
-    document.getElementById('done-amount').innerHTML = showAmountOfTasks(tasksData, 'done');
-    document.getElementById('urgent-amount').innerHTML = showAmountOfUrgentTasks(tasksData, "urgent");
-    document.getElementById('board-amount').innerHTML = showAmountOnBoard(tasksData);
-    document.getElementById('progress-amount').innerHTML = showAmountOfTasks(tasksData, 'progress');
-    document.getElementById('feedback-amount').innerHTML = showAmountOfTasks(tasksData, 'feedback');
-    showDeadlineOfUrgentTasks(tasksData, document.getElementById('summary-urgent-text'));
+ fetchTasks().then(tasks_data => {
+    document.getElementById('todo_amount').innerHTML = showAmountOfTasks(tasks_data, 'todo');
+    document.getElementById('done_amount').innerHTML = showAmountOfTasks(tasks_data, 'done');
+    document.getElementById('urgent_amount').innerHTML = showAmountOfUrgentTasks(tasks_data, "urgent");
+    document.getElementById('board_amount').innerHTML = showAmountOnBoard(tasks_data);
+    document.getElementById('progress_amount').innerHTML = showAmountOfTasks(tasks_data, 'progress');
+    document.getElementById('feedback_amount').innerHTML = showAmountOfTasks(tasks_data, 'feedback');
+    showDeadlineOfUrgentTasks(tasks_data, document.getElementById('summary_urgent_text'));
   });
 }
 
@@ -134,8 +134,9 @@ function renderAmountOfTasks() {
  * @returns {number} Amount of tasks matching the status.
  */
 function showAmountOfTasks(data, status) {
-  let amountStatus = Object.values(data).filter(task => task.status === status).length;
-  return amountStatus;
+  // const TASKS = JSON.parse('tasksData');
+  const AMOUNT_STATUS = Object.values(data).filter(task => task.status === status).length;
+  return AMOUNT_STATUS;
 }
 
 /**
@@ -144,8 +145,8 @@ function showAmountOfTasks(data, status) {
  * @returns {number} Amount of active board tasks.
  */
 function showAmountOnBoard(data) {
-  let amountOnBoard = Object.values(data).filter(task => task.status !== 'done').length;
-  return amountOnBoard;
+  const AMOUNT_ON_BOARD = Object.values(data).filter(task => task.status !== 'done').length;
+  return AMOUNT_ON_BOARD;
 }
 
 /**
@@ -155,8 +156,8 @@ function showAmountOnBoard(data) {
  * @returns {number} Amount of tasks matching the priority.
  */
 function showAmountOfUrgentTasks(data, priority) {
-  let amountUrgent = Object.values(data).filter(task => task.priority === priority && task.status !== 'done').length;
-  return amountUrgent;
+  const AMOUNT_URGENT = Object.values(data).filter(task => task.priority === priority && task.status !== 'done').length;
+  return AMOUNT_URGENT;
 }
 
 /**
@@ -186,7 +187,7 @@ function getSortedUrgentTasks(data) {
  * @param {HTMLElement} URGENT_TEXT - The DOM element where the status text is displayed.
  */
 function showDeadlineOfUrgentTasks(data, URGENT_TEXT) {
-  const URGENT_DATE = document.getElementById('summary-urgent-date');
+  const URGENT_DATE = document.getElementById('summary_urgent_date');
   const URGENT_TASKS = getSortedUrgentTasks(data);
   
   if (URGENT_TASKS.length === 0) {
@@ -205,9 +206,9 @@ function showDeadlineOfUrgentTasks(data, URGENT_TEXT) {
  */
 function formatDate(dateString) {
   if (!dateString) return "";
-  const date = new Date(dateString);
-  if (isNaN(date.getTime())) return "";
+  const DATE = new Date(dateString);
+  if (isNaN(DATE.getTime())) return "";
 
-  const options = { month: 'long', day: 'numeric', year: 'numeric' };
-  return date.toLocaleDateString('en-US', options);
+  const OPTIONS = { month: 'long', day: 'numeric', year: 'numeric' };
+  return DATE.toLocaleDateString('en-US', OPTIONS);
 }

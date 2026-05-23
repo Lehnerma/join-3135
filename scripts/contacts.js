@@ -40,7 +40,7 @@ const BACK_ARROW_BUTTON = document.getElementById('back_arrow_button');
 const EDIT_MENU_BUTTON = document.getElementById('edit_menu_button');
 const EDIT_MENU_ICON = document.getElementById('edit_menu_icon');
 const BACK_ARROW_ICON = document.getElementById('back_arrow_icon');
-let users_url = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+const USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
 
 /**
@@ -58,16 +58,16 @@ function init() {
  * @returns {Promise}
  */
 async function getUsers() {
-  const response = await fetch(users_url);
-  let result = await response.json();
-  users = [];
-  for (let key in result) {
-    let person = result[key];
-    person.firebaseKey = key;
-    person.color ??= contactColors[Math.floor(Math.random() * contactColors.length)]
-    person.phone ??= "";
-    updateFirebaseContact(key, { color: person.color, phone: person.phone });
-    users.push(person)
+    const RESPONSE = await fetch(USERS_URL);
+  const RESULT = await RESPONSE.json();
+  USERS = [];
+  for (let key in RESULT) {
+    const PERSON = RESULT[key];
+    PERSON.firebaseKey = key;
+    PERSON.color ??= contactColors[Math.floor(Math.random() * contactColors.length)]
+    PERSON.phone ??= PERSON.phone = "";
+    updateFirebaseContact(key, { color: PERSON.color }, { phone: PERSON.email });
+    USERS.push(PERSON)
   }
   sortUserContactList();
 }
@@ -77,11 +77,11 @@ async function getUsers() {
  * Sorts the global USERS list alphabetically by name.
  */
 function sortUserContactList() {
-  users.sort(function (a, b) {
-    let x = a.name.toLowerCase();
-    let y = b.name.toLowerCase();
-    if (x < y) { return -1; }
-    if (x > y) { return 1; }
+  USERS.sort(function (a, b) {
+    const X = a.name.toLowerCase();
+    const Y = b.name.toLowerCase();
+    if (X < Y) { return -1; }
+    if (X > Y) { return 1; }
     return 0;
   })
   addAlphabetTable();
@@ -92,10 +92,10 @@ function sortUserContactList() {
  * Creates the letter containers for the contact list based on the alphabet.
  */
 function addAlphabetTable() {
-  let single_contacts = document.getElementById('single_contacts');
-  single_contacts.innerHTML = '';
-  for (let i = 0; i < ALPHABET.length; i++) {
-    single_contacts.innerHTML += renderAlphabetTableTpl(ALPHABET[i]);
+  const SINGLE_CONTACTS = document.getElementById('single_contacts');
+  SINGLE_CONTACTS.innerHTML = '';
+  for (let i = 0; i < alphabet.length; i++) {
+    SINGLE_CONTACTS.innerHTML += renderAlphabetTableTpl(alphabet[i]);
   }
   userContectList();
 }
@@ -415,16 +415,16 @@ function scrollToUser(index) {
  * @param {Object} newContact - The contact to be saved. 
  */
 async function syncNewContact(newContact) {
-  const response = await fetch(users_url, {
+  const RESPONSE = await fetch(USERS_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(newContact)
   });
-  if (response.ok) {
-    const result = await response.json();
-    const generatedKey = await result.name;
+  if (RESPONSE.ok) {
+    const RESULT = await RESPONSE.json();
+    const generatedKey = await RESULT.name;
     newContact.firebaseKey = generatedKey;
   }
 }

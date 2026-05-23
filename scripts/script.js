@@ -14,9 +14,9 @@ function init() {
  * If the animation has already played this session, it is skipped via a sessionStorage flag.
  */
 function logoAnimation() {
-  const joinLogoFadeInElements = document.querySelectorAll(".join-logo, .nav-login, .login-content, .form-login ");
+  const JOIN_LOGO_FADE_IN_ELEMENTS = document.querySelectorAll(".join-logo, .nav-login, .login-content, .form-login ");
   if (sessionStorage.getItem("animationPlayed")) {
-    joinLogoFadeInElements.forEach((fadeInOff) => {
+    JOIN_LOGO_FADE_IN_ELEMENTS.forEach((fadeInOff) => {
       fadeInOff.classList.add("no-animation");
     });
   } else {

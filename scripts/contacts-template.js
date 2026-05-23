@@ -75,7 +75,7 @@ function renderHtmlContactDialogTpl() {
             </div>
           </section>
           <section class="dialog-login-buttons">
-            <button id="cancelButton" type="reset" class="btn btn--secondary btn--login btn--x btn-cancel" 
+            <button id="cancel_button" type="reset" class="btn btn--secondary btn--login btn--x btn-cancel" 
               onclick="closeContactDialog()">Cancel</button>
             <button id="btn_create_contact"  type="submit" class="btn btn--primary btn--check btn--login">Create contact</button>
           </section>

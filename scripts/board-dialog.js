@@ -1,4 +1,4 @@
-let currentDetailTask = null;
+let current_detail_task = null;
 
 /**
  * Closes a dialog with a slide-out animation.
@@ -27,16 +27,16 @@ function slideOutDialog(dialog) {
  * The message fades in, stays for 1.5 seconds, and then fades out.
  */
 function showTaskCreatedToast() {
-  const toast = document.getElementById("task_created_toast");
-  toast.classList.add("taskCreatedToast--visible");
+  const TOAST = document.getElementById("task_created_toast");
+  TOAST.classList.add("taskCreatedToast--visible");
   setTimeout(() => {
-    toast.classList.remove("taskCreatedToast--visible");
-    toast.classList.add("taskCreatedToast--hidden");
-    toast.addEventListener(
+    TOAST.classList.remove("taskCreatedToast--visible");
+    TOAST.classList.add("taskCreatedToast--hidden");
+    TOAST.addEventListener(
       "animationend",
       () => {
-        toast.classList.add = "dnone";
-        toast.classList.remove("taskCreatedToast--hidden");
+        TOAST.classList.add = "dnone";
+        TOAST.classList.remove("taskCreatedToast--hidden");
       },
       { once: true },
     );
@@ -145,7 +145,7 @@ function openTaskDetailDialog(taskId) {
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const TASK = ALL_TASKS.find((task) => task.id === taskId);
   if (TASK) {
-    currentDetailTask = TASK;
+    current_detail_task = TASK;
     TASK_DETAIL_DIALOG.innerHTML = buildTaskDetailDialog(TASK);
     TASK_DETAIL_DIALOG.showModal();
     TASK_DETAIL_DIALOG.querySelector(".detail-task--content").scrollTop = 0;
@@ -186,10 +186,10 @@ function toggleSubtaskDone(taskId, subtaskIndex) {
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const TASK = ALL_TASKS.find((t) => t.id === taskId);
   if (!TASK?.subtasks?.[subtaskIndex]) return;
-  const current = TASK.subtasks[subtaskIndex].done;
-  TASK.subtasks[subtaskIndex].done = !(current === true || current === "true");
+  const CURRENT = TASK.subtasks[subtaskIndex].done;
+  TASK.subtasks[subtaskIndex].done = !(CURRENT === true || CURRENT === "true");
   sessionStorage.tasks = JSON.stringify(ALL_TASKS);
-  currentDetailTask = TASK;
+  current_detail_task = TASK;
 }
 
 /**
@@ -201,9 +201,9 @@ function toggleSubtaskDone(taskId, subtaskIndex) {
  */
 async function closeTaskDetailDialog() {
   const TASK_DETAIL_DIALOG = document.getElementById("task_detail_dialog");
-  if (currentDetailTask) {
+  if (current_detail_task) {
     const ALL_TASKS = JSON.parse(sessionStorage.tasks);
-    const TASK = ALL_TASKS.find((t) => t.id === currentDetailTask.id);
+    const TASK = ALL_TASKS.find((t) => t.id === current_detail_task.id);
     if (TASK) {
       sessionStorage.tasks = JSON.stringify(ALL_TASKS);
       renderBoard(ALL_TASKS);
@@ -231,7 +231,7 @@ async function closeTaskDetailDialog() {
  * @returns {string} The finished HTML code for the dialog.
  */
 function buildTaskDetailDialog(task) {
-  let taskID = task.id;
+  let task_id = task.id;
   const WRAPPER = document.createElement("div");
   WRAPPER.innerHTML = getDetailTaskTemplate(task);
   const ASSIGNEES_LIST = WRAPPER.querySelector("#detail_task_assignees");
@@ -243,7 +243,7 @@ function buildTaskDetailDialog(task) {
   const SUBTASK_LIST = WRAPPER.querySelector("#detail_subtask_list");
   if (SUB_TOTAL > 0) {
     SUBTASKS.forEach((subtask, index) => {
-      SUBTASK_LIST.innerHTML += getDetailSubtaskTemplate(subtask.title, subtask.done, taskID, index);
+      SUBTASK_LIST.innerHTML += getDetailSubtaskTemplate(subtask.title, subtask.done, task_id, index);
     });
   }
   return WRAPPER.innerHTML;
@@ -257,13 +257,13 @@ function buildTaskDetailDialog(task) {
  */
 function openEditTaskDialog(taskId) {
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
-  const task = ALL_TASKS.find((t) => t.id === taskId);
-  if (!task) return;
-  const dialog = document.getElementById("edit_task_dialog");
-  dialog.addEventListener("click", closeEditDialogOnBackdropClick);
-  dialog.showModal();
-  fillEditFormFields(task);
-  setupEditTaskInteractions(task);
+  const TASK = ALL_TASKS.find((t) => t.id === taskId);
+  if (!TASK) return;
+  const DIALOG = document.getElementById("edit_task_dialog");
+  DIALOG.addEventListener("click", closeEditDialogOnBackdropClick);
+  DIALOG.showModal();
+  fillEditFormFields(TASK);
+  setupEditTaskInteractions(TASK);
 }
 
 /**
@@ -272,14 +272,14 @@ function openEditTaskDialog(taskId) {
  * @param {Object} task - The task object with all information.
  */
 function fillEditFormFields(task) {
-  const form = document.getElementById("form_edit_task");
-  if (form) form.scrollTop = 0;
+  const FORM = document.getElementById("form_edit_task");
+  if (FORM) FORM.scrollTop = 0;
   document.getElementById("title").value = task.title || "";
   document.getElementById("description").value = task.description || "";
   document.getElementById("category").value = task.category || "";
-  const dueDateInput = document.getElementById("dueDate");
-  dueDateInput.min = new Date().toISOString().split("T")[0];
-  dueDateInput.value = task.dueDate || "";
+  const DUE_DATE_INPUT = document.getElementById("due_date");
+  DUE_DATE_INPUT.min = new Date().toISOString().split("T")[0];
+  DUE_DATE_INPUT.value = task.dueDate || "";
   selectPriority(task.priority || "medium");
 }
 
@@ -294,9 +294,9 @@ function setupEditTaskInteractions(task) {
   subtasksList.forEach((sub, i) => renderSubtaskItem(i, sub.title));
   loadUsersForEdit(task.assignedTo || []);
   initDropdownOutsideClick();
-  const form = document.getElementById("form_edit_task");
-  if (form) {
-    form.addEventListener("submit", async (event) => {
+  const FORM = document.getElementById("form_edit_task");
+  if (FORM) {
+    FORM.addEventListener("submit", async (event) => {
       event.preventDefault();
       await saveEditedTask(task);
     });
@@ -308,8 +308,8 @@ function setupEditTaskInteractions(task) {
  * The detail dialog remains open underneath.
  */
 function closeEditTaskDialog() {
-  const dialog = document.getElementById("edit_task_dialog");
-  dialog.close();
+  const DIALOG = document.getElementById("edit_task_dialog");
+  DIALOG.close();
 }
 
 /**
@@ -334,10 +334,10 @@ function closeEditDialogOnBackdropClick(event) {
 async function loadUsersForEdit(assignedTo) {
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
   try {
-    const response = await fetch(USER_URL);
-    const data = await response.json();
-    remoteUsers = Object.values(data);
-    fillUserDropdown(data);
+    const RESPONSE = await fetch(USER_URL);
+    const DATA = await RESPONSE.json();
+    remoteUsers = Object.values(DATA);
+    fillUserDropdown(DATA);
     document.querySelectorAll("#assigned_to_list label.user-item").forEach((label) => {
       const checkbox = label.querySelector("input[type='checkbox']");
       if (checkbox && assignedTo.includes(checkbox.value)) {
@@ -356,15 +356,15 @@ async function loadUsersForEdit(assignedTo) {
  * Coordinates data building, saving, and UI updates.
  */
 async function saveEditedTask(task) {
-  const updated = buildTaskObj();
-  updated.id = task.id;
-  updated.status = task.status;
-  updated.firebaseKey = task.firebaseKey;
-  await updateTaskData(updated);
+  const UPDATED = buildTaskObj();
+  UPDATED.id = task.id;
+  UPDATED.status = task.status;
+  UPDATED.firebaseKey = task.firebaseKey;
+  await updateTaskData(UPDATED);
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   renderBoard(ALL_TASKS);
   closeEditTaskDialog();
-  refreshTaskDetailDialog(updated.id);
+  refreshTaskDetailDialog(UPDATED.id);
 }
 
 /**
@@ -377,7 +377,7 @@ function refreshTaskDetailDialog(taskId) {
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const TASK = ALL_TASKS.find((task) => task.id === taskId);
   if (TASK) {
-    currentDetailTask = TASK;
+    current_detail_task = TASK;
     TASK_DETAIL_DIALOG.innerHTML = buildTaskDetailDialog(TASK);
     TASK_DETAIL_DIALOG.querySelector(".detail-task--content").scrollTop = 0;
   }
@@ -388,13 +388,13 @@ function refreshTaskDetailDialog(taskId) {
  */
 async function updateTaskData(updatedTask) {
   const ALL_TASKS = JSON.parse(sessionStorage.tasks || "[]");
-  const idx = ALL_TASKS.findIndex((t) => t.id === updatedTask.id);
-  if (idx !== -1) {
-    ALL_TASKS[idx] = updatedTask;
+  const IDX = ALL_TASKS.findIndex((t) => t.id === updatedTask.id);
+  if (IDX !== -1) {
+    ALL_TASKS[IDX] = updatedTask;
     sessionStorage.tasks = JSON.stringify(ALL_TASKS);
   }
   try {
-    const response = await fetch(getTaskURL(updatedTask.firebaseKey), {
+    const RESPONSE = await fetch(getTaskURL(updatedTask.firebaseKey), {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

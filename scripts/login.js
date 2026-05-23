@@ -1,5 +1,5 @@
-let showSignup = false;
-let USERS = [];
+let show_signup = false;
+let users = [];
 
 
 /**
@@ -75,7 +75,7 @@ function toggleForms(event) {
     event.preventDefault();
   };
   clearAndResetForms();
-  showSignup = !showSignup;
+  show_signup = !show_signup;
   updateToggleUI();
 }
 
@@ -88,16 +88,16 @@ function updateToggleUI() {
   const SIGNUP_FORM = document.getElementById("signup");
   const NAV_LOGIN = document.getElementById("nav_login");
   const NAV_PHONE = document.getElementById("phone_signup");
-  LOGIN_FORM.classList[showSignup ? "add" : "remove"]("dnone");
-  SIGNUP_FORM.classList[showSignup ? "remove" : "add"]("dnone");
+  LOGIN_FORM.classList[show_signup ? "add" : "remove"]("dnone");
+  SIGNUP_FORM.classList[show_signup ? "remove" : "add"]("dnone");
   if (NAV_LOGIN) {
-    NAV_LOGIN.classList[showSignup ? "add" : "remove"]("dnone");
+    NAV_LOGIN.classList[show_signup ? "add" : "remove"]("dnone");
   } if (NAV_PHONE) {
-    NAV_PHONE.classList[showSignup ? "add" : "remove"]("dnone");
+    NAV_PHONE.classList[show_signup ? "add" : "remove"]("dnone");
   }
   removeFade(LOGIN_FORM);
   if (NAV_LOGIN) removeFade(NAV_LOGIN);
-  setRequired(showSignup);
+  setRequired(show_signup);
 }
 
 
@@ -179,7 +179,7 @@ async function creatUser(ev) {
  * @returns {Object|undefined} The matched user object or undefined.
  */
 function findActiveUser(formData) {
-  return USERS.find((u) => u.email === formData.get("email"));
+  return users.find((u) => u.email === formData.get("email"));
 }
 
 
@@ -214,9 +214,9 @@ async function loginUser(ev) {
  * @returns {boolean} - true if passwords match, false otherwise
  */
 function verifyPassword() {
-  const password = document.getElementById("pwInput");
-  const confirmPassword = document.getElementById("pwInputConfirm");
-  return password.value === confirmPassword.value;
+  const PASSWORD = document.getElementById("pwInput");
+  const CONFIRM_PASSWORD = document.getElementById("pwInputConfirm");
+  return PASSWORD.value === CONFIRM_PASSWORD.value;
 }
 
 
@@ -225,19 +225,19 @@ function verifyPassword() {
  * Adds an error class if passwords don't match, removes it if they do.
  */
 function confirmPassword() {
-  const password = document.getElementById("pwInput");
-  const confirmPassword = document.getElementById("pwInputConfirm");
-  const confirmPasswordContainer = document.getElementById("pwConfirmSignup");
-  confirmPasswordContainer.classList.remove("invalid-signup-pw");
-  if (password.value.length === 0) {
+  const PASSWORD = document.getElementById("pwInput");
+  const CONFIRM_PASSWORD = document.getElementById("pwInputConfirm");
+  const CONFIRM_PASSWORD_CONTAINER = document.getElementById("pwConfirmSignup");
+  CONFIRM_PASSWORD_CONTAINER.classList.remove("invalid-signup-pw");
+  if (PASSWORD.value.length === 0) {
     return;
-  } if (password.value === confirmPassword.value) {
-    confirmPasswordContainer.classList.remove("invalid-signup-pw");
-    confirmPasswordContainer.classList.add("success-signup-pw");
+  } if (PASSWORD.value === CONFIRM_PASSWORD.value) {
+    CONFIRM_PASSWORD_CONTAINER.classList.remove("invalid-signup-pw");
+    CONFIRM_PASSWORD_CONTAINER.classList.add("success-signup-pw");
     return true;
-  } if (confirmPassword.value.length >= password.value.length) {
-    confirmPasswordContainer.classList.add("invalid-signup-pw");
-    confirmPasswordContainer.classList.remove("success-signup-pw");
+  } if (CONFIRM_PASSWORD.value.length >= PASSWORD.value.length) {
+    CONFIRM_PASSWORD_CONTAINER.classList.add("invalid-signup-pw");
+    CONFIRM_PASSWORD_CONTAINER.classList.remove("success-signup-pw");
     return false;
   }
 }
@@ -292,7 +292,7 @@ function showFailEntriesLogin() {
 async function getUsers() {
   const RESPONSE = await fetch(USERS_URL());
   const RESULT = await RESPONSE.json();
-  USERS = Object.values(RESULT);
+  users = Object.values(RESULT);
 }
 
 
@@ -313,17 +313,17 @@ function saveSession(user) {
  * @param {string} iconID - ID of the icon image.
  */
 function changeLockToEye(pwInputID, iconID) {
-  let inputPW = document.getElementById(pwInputID);
+  let input_pw = document.getElementById(pwInputID);
   let lock = document.getElementById(iconID);
-  const lockIcon = "../assets/img/icons/input/lock.svg";
-  const eyeOFF = "../assets/img/icons/input/visibility_off.svg";
-  const eyeON = "../assets/img/icons/input/visibility.svg";
-  if (inputPW.value.length === 0) {
-    lock.src = lockIcon;
-  } else if (inputPW.type === "password") {
-    lock.src = eyeOFF;
+  const LOCK_ICON = "../assets/img/icons/input/lock.svg";
+  const EYE_OFF = "../assets/img/icons/input/visibility_off.svg";
+  const EYE_ON = "../assets/img/icons/input/visibility.svg";
+  if (input_pw.value.length === 0) {
+    lock.src = LOCK_ICON;
+  } else if (input_pw.type === "password") {
+    lock.src = EYE_OFF;
   } else {
-    lock.src = eyeON;
+    lock.src = EYE_ON;
   }
 }
 
@@ -334,16 +334,16 @@ function changeLockToEye(pwInputID, iconID) {
  * @param {string} icon - ID of the icon image.
  */
 function showPasswordInput(inputID, icon) {
-  const eyeON = "../assets/img/icons/input/visibility.svg";
-  const eyeOFF = "../assets/img/icons/input/visibility_off.svg";
-  const input = document.getElementById(inputID);
-  const changeIcon = document.getElementById(icon);
-  if (input.type === "password") {
-    input.type = "text";
-    changeIcon.src = eyeON;
+  const EYE_ON = "../assets/img/icons/input/visibility.svg";
+  const EYE_OFF = "../assets/img/icons/input/visibility_off.svg";
+  const INPUT = document.getElementById(inputID);
+  const CHANGE_ICON = document.getElementById(icon);
+  if (INPUT.type === "password") {
+    INPUT.type = "text";
+    CHANGE_ICON.src = EYE_ON;
   } else {
-    input.type = "password";
-    changeIcon.src = eyeOFF;
+    INPUT.type = "password";
+    CHANGE_ICON.src = EYE_OFF;
   }
 }
 
@@ -375,19 +375,19 @@ function clearAndResetForms() {
  * @param {string} iconID - ID of the icon image.
  */
 function resetPasswordVisibility(pwInputID, iconID) {
-  const pwConfirmContainer = document.getElementById('pwConfirmSignup');
-  const input = document.getElementById(pwInputID);
-  const icon = document.getElementById(iconID);
-  if (!input || !icon) return;
-  input.type = 'password';
-  if (input.value.length === 0) {
-    icon.src = "../assets/img/icons/input/lock.svg";
-    if (pwConfirmContainer) {
-      pwConfirmContainer.classList.remove('invalid-signup-pw');
-      pwConfirmContainer.classList.remove('success-signup-pw');
+  const PW_CONFIRM_CONTAINER = document.getElementById('pwConfirmSignup');
+  const INPUT = document.getElementById(pwInputID);
+  const ICON = document.getElementById(iconID);
+  if (!INPUT || !ICON) return;
+  INPUT.type = 'password';
+  if (INPUT.value.length === 0) {
+    ICON.src = "../assets/img/icons/input/lock.svg";
+    if (PW_CONFIRM_CONTAINER) {
+      PW_CONFIRM_CONTAINER.classList.remove('invalid-signup-pw');
+      PW_CONFIRM_CONTAINER.classList.remove('success-signup-pw');
     }
   } else {
-    icon.src = "../assets/img/icons/input/visibility_off.svg";
+    ICON.src = "../assets/img/icons/input/visibility_off.svg";
   }
 }
 
@@ -397,12 +397,12 @@ function resetPasswordVisibility(pwInputID, iconID) {
  * Both elements disappear automatically after 1.6 seconds.
  */
 function successMessage() {
-  const banner = document.getElementById('success_message');
-  const dim = document.getElementById('dim'); 
-  banner.classList.add('show-animation');
-  dim.classList.remove('dnone');
+  const BANNER = document.getElementById('success_message');
+  const DIM = document.getElementById('dim'); 
+  BANNER.classList.add('show-animation');
+  DIM.classList.remove('dnone');
   setTimeout(() => {
-    banner.classList.remove('show-animation');
-    dim.classList.add('dnone');
+    BANNER.classList.remove('show-animation');
+    DIM.classList.add('dnone');
   }, 1200);
 }

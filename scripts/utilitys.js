@@ -99,17 +99,17 @@ function renderHeadInitals() {
  */
 function showExternalUtilityPages() {
   const ID = sessionStorage.getItem("user_id");
-  let VIEW_USER = document.getElementById("view-user");
-  let VIEW_EXTERNAL = document.getElementById("view-external");
-  let USER_MENU_BUTTON = document.getElementById("user_menu_button");
+  let view_user = document.getElementById("view-user");
+  let view_external = document.getElementById("view-external");
+  let user_menu_button = document.getElementById("user_menu_button");
   if (ID !== null) {
-    VIEW_USER.classList.remove("d-none");
-    VIEW_EXTERNAL.classList.add("d-none");
-    USER_MENU_BUTTON.classList.remove("d-none");
+    view_user.classList.remove("d-none");
+    view_external.classList.add("d-none");
+    user_menu_button.classList.remove("d-none");
   } else {
-    VIEW_USER.classList.add("d-none");
-    VIEW_EXTERNAL.classList.remove("d-none");
-    USER_MENU_BUTTON.classList.add("d-none");
+    view_user.classList.add("d-none");
+    view_external.classList.remove("d-none");
+    user_menu_button.classList.add("d-none");
   }
 }
 
