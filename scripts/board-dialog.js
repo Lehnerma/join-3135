@@ -82,14 +82,14 @@ function initBoardDialogs() {
   const ADD_BTN_HEAD = document.getElementById("add_task_head");
   if (ADD_BTN_HEAD) {
     ADD_BTN_HEAD.addEventListener("click", (e) => {
-      e.preventDefault(); 
-      
-      /** @type {HTMLDialogElement} */
-      const dialog = document.getElementById("edit_task_dialog");
-      if (dialog) {
-        dialog.showModal(); 
-      }
+      e.preventDefault();
+      openAddTaskDialog();
     });
+  }
+  const ADD_TASK_DIALOG = document.getElementById("add_task_dialog");
+  if (ADD_TASK_DIALOG) {
+    ADD_TASK_DIALOG.addEventListener("click", closeAddTaskDialogOnBackdropClick);
+    ADD_TASK_DIALOG.addEventListener("cancel", closeAddTaskDialog);
   }
   const TASK_DETAIL_DIALOG = document.getElementById("task_detail_dialog");
   if (TASK_DETAIL_DIALOG) {
@@ -409,6 +409,45 @@ async function updateTaskData(updatedTask) {
     });
   } catch (err) {
     console.error("Error saving edited task to Firebase:", err);
+  }
+}
+
+/**
+ * Opens the add task dialog centered on the board page.
+ * Renders the add-task form inside the dialog.
+ */
+function openAddTaskDialog() {
+  const dialog = document.getElementById("add_task_dialog");
+  if (!dialog) return;
+  dialog.innerHTML = getAddTaskDialogTemplate();
+  dialog.showModal();
+  initDateInput();
+  btnInit();
+  loadUsers();
+  subtaskInit();
+  initDropdownOutsideClick();
+  selectedPriority = "medium";
+  subtasksList = [];
+}
+
+/**
+ * Closes the add task dialog when the user clicks the backdrop.
+ * @param {Event} event - The click event.
+ */
+function closeAddTaskDialogOnBackdropClick(event) {
+  const dialog = document.getElementById("add_task_dialog");
+  if (event.target === dialog) {
+    closeAddTaskDialog();
+  }
+}
+
+/**
+ * Closes the add task dialog immediately.
+ */
+function closeAddTaskDialog() {
+  const dialog = document.getElementById("add_task_dialog");
+  if (dialog && dialog.open) {
+    dialog.close();
   }
 }
 

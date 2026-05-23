@@ -484,7 +484,7 @@ async function createTask() {
   const title = document.getElementById("title");
   const dueDate = document.getElementById("due_date");
   const category = document.getElementById("category");
-  const btn = document.getElementById("btnCreateTask");
+  const btn = document.getElementById("btn_create_task");
   if (btn) btn.disabled = true;
   if (!validateTaskForm(title, dueDate, category)) {
     if (btn) btn.disabled = false;

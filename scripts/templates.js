@@ -331,23 +331,20 @@ function getEditTaskDialogTemplate() {
  */
 function getAddTaskDialogTemplate() {
   return /*html*/ `
-    <div class="task-container-dialog">
-      <!-- Schließbutton oben rechts -->
-      <div class="dialog-add-headline">
+    <div class="dat-container">
+      <div class="dat-headline">
         <button class="btn btn--close" onclick="closeAddTaskDialog()">
           <img src="../assets/img/icons/subtask/close.svg" alt="X">
         </button>
-
-        <h1 class="input--title">Add Task</h1>
+        <h1 class="dat-title">Add Task</h1>
       </div>
 
-      <form class="form-task form-columns" id="form_task">
-        <!-- Linke Spalte -->
-        <section class="column left">
+      <form class="dat-form" id="form_task" onsubmit="event.preventDefault(); createTask();" novalidate>
+        <section class="dat-col">
           <div class="input-section">
             <label for="title" class="required">Title</label>
             <input id="title" class="input" type="text" placeholder="Enter a title" required />
-            <span class="field-error">This field is required</span>
+            <span id="title_error" class="field-error dnone">This field is required</span>
           </div>
           <div class="input-section">
             <label for="description">Description</label>
@@ -356,14 +353,11 @@ function getAddTaskDialogTemplate() {
           <div class="input-section">
             <label for="due_date" class="required">Due date</label>
             <input id="due_date" class="input input-date" type="date" required />
-            <span class="field-error">This field is required</span>
+            <span id="date_error" class="field-error dnone">This field is required</span>
           </div>
         </section>
 
-        <div class="divider"></div>
-
-        <!-- Rechte Spalte -->
-        <section class="column right">
+        <section class="dat-col">
           <div class="input-section">
             <label for="priority">Priority</label>
             <div class="priority-group">
@@ -400,6 +394,7 @@ function getAddTaskDialogTemplate() {
               <option value="Technical Task">Technical Task</option>
               <option value="User Story">User Story</option>
             </select>
+            <span id="category_error" class="field-error dnone">This field is required</span>
           </div>
 
           <div class="input-section">
@@ -415,18 +410,14 @@ function getAddTaskDialogTemplate() {
             <ul id="subtask_list" class="subtask-list"></ul>
           </div>
         </section>
-
-        <section class="form-info-section">
-          <p><b class="form-info">*</b> This field is required</p>
-        </section>
       </form>
 
-      <section class="form-footer">
-        <div class="action-btns">
-          <button id="form_clear" type="button" class="btn btn--secondary clear" onclick="clearForm()">Clear</button>
-          <button id="btnCreateTask" type="submit" form="form_task" class="btn btn--primary">Create Task</button>
-        </div>
-      </section>
+      <p class="dat-info"><b class="form-info">*</b> This field is required</p>
+
+      <div class="dat-footer">
+        <button id="form_clear" type="button" class="btn btn--secondary clear" onclick="clearForm()">Clear</button>
+        <button id="btn_create_task" type="submit" form="form_task" class="btn btn--primary">Create Task</button>
+      </div>
     </div>
   `;
 }
