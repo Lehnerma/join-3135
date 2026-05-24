@@ -18,7 +18,6 @@ const getTaskURL = (key = "", section = "") => {
  * Initialises the board: sets up UI interactions and loads data from Firebase.
  */
 async function initBoard() {
-  await loadUsersFromFirebase();
   initBoardTask();
   loadTasksFromFirebase();
 }
@@ -47,47 +46,17 @@ async function loadTasksFromFirebase() {
 
 
 /**
- * Fetches all users from Firebase and stores them in session storage.
- * @returns {Promise<void>}
- */
-async function loadUsersFromFirebase() {
-  try {
-    const RESPONSE = await fetch(USER_URL);
-    if (!RESPONSE.ok) {
-      throw new Error(`loading users failed: ${RESPONSE.status}`);
-    }
-    const RESULT = await RESPONSE.json();
-    const USER_ARRY = await getUserArry(RESULT);
-
-    sessionStorage.setItem("users", JSON.stringify(USER_ARRY));
-  } catch (er) {
-    console.error(er);
-  }
-}
-
-/**
  * Converts the Firebase result object into an array with id and firebaseKey added.
  * @param {Object} result - Raw Firebase response object.
  * @returns {Array<Object>} Array of task objects enriched with id and firebaseKey.
  */
 function getArryFromResult(result) {
+  if (!result) return [];
+  
   return Object.entries(result).map(([key, values], index) => ({
     id: index,
     firebaseKey: key,
     ...values,
-  }));
-}
-
-/**
- * Converts the Firebase users object into a flat array.
- * @param {Object} result - Raw Firebase response object.
- * @returns {Array<Object>} Array of user objects with id, name, and color.
- */
-function getUserArry(result) {
-  return Object.entries(result).map(([key, values], index) => ({
-    id: index,
-    name: values.name,
-    color: values.color,
   }));
 }
 
@@ -156,16 +125,6 @@ function renderColumn(status, tasks) {
   tasks.forEach((task) => (LIST.innerHTML += buildTaskCard(task)));
 }
 
-/**
- * Looks up the avatar color for a user by name from session storage.
- * @param {string} name - The full name of the user.
- * @returns {string} A CSS color string, or "#ccc" if the user is not found.
- */
-function getAssigneeColor(name) {
-  const USERS = sessionStorage.getItem("users") ? JSON.parse(sessionStorage.getItem("users")) : [];
-  const USER = USERS.find((u) => u.name === name);
-  return USER ? USER.color : "#ccc";
-}
 
 /**
  * Builds the HTML string for a single task card, including subtask progress and assignees.
@@ -173,7 +132,7 @@ function getAssigneeColor(name) {
  * @returns {string} HTML string for the task card.
  */
 function buildTaskCard(task) {
-  const WRAPPER = document.createElement("div");
+  const WRAPPER = document.createElement("div");  
   WRAPPER.innerHTML = getTaskCardTemplet(task.title, task.description, task.category, task.id, getPriority(task.priority));
   addSubtaskProgress(WRAPPER, task.subtasks);
   addAssignees(WRAPPER, task.assignedTo);
@@ -194,15 +153,14 @@ function addSubtaskProgress(wrapper, subtasks) {
 /**
  * Adds assignees to the task card.
  * @param {HTMLElement} wrapper - The task card wrapper element.
- * @param {Array<string>} assignedTo - The assignees array.
+ * @param {Array<{name: string, color: string}>} assignedTo - The assignees array.
  */
 function addAssignees(wrapper, assignedTo) {
   const ASSIGNEES_LIST = wrapper.querySelector(".task--assignees");
-  if (assignedTo) {
-    assignedTo.forEach((name) => {
-      ASSIGNEES_LIST.innerHTML += getTaskAssignToTemplet(name, getInitials(name), getAssigneeColor(name));
-    });
-  }
+  if (!ASSIGNEES_LIST || !assignedTo?.length) return;
+  ASSIGNEES_LIST.innerHTML = assignedTo
+    .map(({ name, color }) => getTaskAssignToTemplet(name, getInitials(name), color))
+    .join("");
 }
 
 /**

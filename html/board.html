@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../assets/img/favicon/favicon-join.svg" type="image/x-icon" />
     <title>Join - Board</title>
-    <script src="../scripts/utilitys.js"></script>
 
     <link rel="stylesheet" href="../style.css" />
     <link rel="stylesheet" href="../styles/fonts.css" />
@@ -18,6 +17,8 @@
     <link rel="stylesheet" href="../styles/addTask.css" />
     <link rel="stylesheet" href="../styles/subtasks.css" />
 
+    <script src="../scripts/templates.js"></script>
+    <script src="../scripts/contacts-template.js"></script>
     <script src="../scripts/templates.js"></script>
     <script src="../scripts/addTask.js"></script>
     <script src="../scripts/board.js"></script>
@@ -136,7 +137,7 @@
       ######### add task dialog ##########
       -------------------------------------->
 
-      <dialog id="add_task_dialog" class="dialog dialog--add-task"></dialog>
+      <dialog id="add_task_dialog" class="dialog dialog--add-task slide-in"></dialog>
 
       <!-------------------------------------
       ######### detail task dialog ##########
@@ -159,7 +160,7 @@
           <section class="input-section">
             <label for="title" class="">Title</label>
             <input id="title" class="input" type="text" placeholder="Enter a title" required />
-            <span class="field-error">This field is required</span>
+            <span class="field-error dnone">This field is required</span>
           </section>
 
           <section class="input-section">
@@ -168,9 +169,9 @@
           </section>
 
           <section class="input-section">
-            <label for="dueDate" class="">Due date</label>
+            <label for="due_date" class="">Due date</label>
             <input id="due_date" class="input input-date" type="date" required />
-            <span class="field-error">This field is required</span>
+            <span class="field-error dnone">This field is required</span>
           </section>
 
           <section class="input-section">
@@ -183,7 +184,7 @@
           </section>
 
           <section class="input-section">
-            <label for="assignedToSearch">Assigned to</label>
+            <label for="assigned_to_search">Assigned to</label>
             <div class="custom-dropdown" id="assigned_to_dropdown">
               <div class="custom-dropdown__trigger">
                 <input type="text" id="assigned_to_search" onkeyup="filterUsers()" class="input custom-dropdown__input" onclick="toggleDropdown(event)" placeholder="Select contacts to assign" autocomplete="off" />
@@ -198,7 +199,7 @@
 
           <section class="input-section">
             <label for="category" class="">Category</label>
-            <select id="category" class="input dropdown form--select">
+            <select id="category" class="input dropdown form--select" required>
               <option value="" selected disabled>Select task category</option>
               <option value="Technical Task">Technical Task</option>
               <option value="User Story">User Story</option>
@@ -210,9 +211,9 @@
             <div class="input--section">
               <input id="subtask_input" class="input" type="text" placeholder="Add subtask" />
               <div class="subtask--btns">
-                <button type="button" id="subtask-close" class="btn--subtask close" onclick="clearSubtaskInput(event)"><img src="../assets/img/icons/subtask/close.svg" /></button>
+                <button type="button" id="subtask_close" class="btn--subtask close" onclick="clearSubtaskInput(event)"><img src="../assets/img/icons/subtask/close.svg" /></button>
                 <span class="div-vert"></span>
-                <button type="button" id="subtask-save" class="btn--subtask check" onclick="addSubtask(event)"><img src="../assets/img/icons/subtask/check.svg" /></button>
+                <button type="button" id="subtask_save" class="btn--subtask check" onclick="addSubtask(event)"><img src="../assets/img/icons/subtask/check.svg" /></button>
               </div>
             </div>
             <ul id="subtask_list" class="subtask-list"></ul>
