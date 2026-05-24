@@ -463,8 +463,15 @@ async function sendTaskRequest(task, btn) {
       body: JSON.stringify(task),
     });
     if (response.ok) {
-      document.getElementById("toast")?.classList.add("show");
-      setTimeout(() => { window.location.href = "board.html"; }, 1000);
+      const onBoard = !!document.getElementById("task_created_toast");
+      if (onBoard) {
+        closeAddTaskDialog();
+        await showBoardToast();
+        loadTasksFromFirebase();
+      } else {
+        document.getElementById("toast")?.classList.add("show");
+        setTimeout(() => { window.location.href = "board.html"; }, 1000);
+      }
     } else if (btn) {
       btn.disabled = false;
     }

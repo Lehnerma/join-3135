@@ -359,7 +359,7 @@ function getAddTaskDialogTemplate() {
         <h1 class="dat-title">Add Task</h1>
       </div>
 
-      <form class="dat-form" id="form_task" onsubmit="event.preventDefault(); createTask();" novalidate>
+      <form class="dat-form" id="form_task" novalidate>
         <section class="dat-col">
           <div class="input-section">
             <label for="title" class="required">Title</label>

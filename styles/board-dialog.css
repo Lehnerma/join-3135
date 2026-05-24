@@ -350,12 +350,14 @@
 
 .taskCreatedToast--visible {
   display: flex;
-  animation: slideFromRight 175ms ease-in-out forwards;
+  opacity: 1;
+  transition: opacity 300ms ease;
 }
 
 .taskCreatedToast--hidden {
   display: flex;
-  animation: slideToRight 175ms ease-in-out forwards;
+  opacity: 0;
+  transition: opacity 300ms ease;
 }
 
 .taskCreatedToast__icon {

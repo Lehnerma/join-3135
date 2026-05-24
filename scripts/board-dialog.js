@@ -492,6 +492,25 @@ function closeAddTaskDialog() {
 }
 
 /**
+ * Shows the board toast centered on screen for 1.5s using an opacity fade.
+ * @returns {Promise<void>} Resolves after the toast has faded out.
+ */
+function showBoardToast() {
+  return new Promise((resolve) => {
+    const toast = document.getElementById("task_created_toast");
+    if (!toast) return resolve();
+    toast.classList.add("taskCreatedToast--visible");
+    setTimeout(() => {
+      toast.classList.replace("taskCreatedToast--visible", "taskCreatedToast--hidden");
+      setTimeout(() => {
+        toast.classList.remove("taskCreatedToast--hidden");
+        resolve();
+      }, 300);
+    }, 1500);
+  });
+}
+
+/**
  * Deletes a task from the board and the database.
  * It removes the task from the local storage, updates the board view,
  * closes the detail window, and deletes the task from Firebase.
