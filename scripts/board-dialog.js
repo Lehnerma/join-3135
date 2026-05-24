@@ -385,8 +385,6 @@ function preselectAssignedUsers(assignedTo) {
     const checkbox = label.querySelector("input[type='checkbox']");
     if (!checkbox) return;
     const isAssigned = assignedNames.includes(checkbox.value);
-    console.log(isAssigned);
-    
     checkbox.checked = isAssigned;
     label.classList.toggle("selected", isAssigned);
   });
