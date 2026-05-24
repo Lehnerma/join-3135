@@ -351,31 +351,45 @@ function closeEditDialogOnBackdropClick(event) {
 }
 
 /**
- * Loads all users from the database to edit a task.
- * It fills the dropdown menu and checks the boxes for users already assigned to the task.
- * Finally, it updates the small preview icons.
+ * Loads all users, fills the dropdown, pre-selects already-assigned users,
+ * and updates the preview icons.
  *
- * @param {Array} assignedTo - A list of user names already assigned to this task.
+ * @param {Array<{name: string, color: string}|string>} assignedTo - Users already assigned to the task.
  */
-async function loadUsersForEdit(assignedTo) {
+async function loadUsersForEdit(assignedTo) {  
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
   try {
     const response = await fetch(USER_URL);
     const data = await response.json();
     remoteUsers = Object.values(data);
-    const SORTED_USERS = sortUsersWithActiveFirst(remoteUsers);
-    fillUserDropdown(SORTED_USERS);
-    document.querySelectorAll("#assigned_to_list label.user-item").forEach((label) => {
-      const checkbox = label.querySelector("input[type='checkbox']");
-      if (checkbox && assignedTo.includes(checkbox.value)) {
-        checkbox.checked = true;
-        label.classList.add("selected");
-      }
-    });
+    fillUserDropdown(sortUsersWithActiveFirst(remoteUsers)); // fülln des dropdown
+
+    preselectAssignedUsers(assignedTo);
+
     updateAssignedPreview();
+
   } catch (err) {
     console.error("Error in loadUsersForEdit:", err);
   }
+}
+
+/**
+ * Marks the checkboxes of already-assigned users as checked in the dropdown.
+ *
+ * @param {Array<{name: string, color: string}|string>} assignedTo - Users to pre-select.
+ */
+function preselectAssignedUsers(assignedTo) {
+  const assignedNames = (assignedTo || []).map((user) => (typeof user === "string" ? user : user.name));
+  const USERS =  document.querySelectorAll(".assignedTo");
+ USERS.forEach((label) => {
+    const checkbox = label.querySelector("input[type='checkbox']");
+    if (!checkbox) return;
+    const isAssigned = assignedNames.includes(checkbox.value);
+    console.log(isAssigned);
+    
+    checkbox.checked = isAssigned;
+    label.classList.toggle("selected", isAssigned);
+  });
 }
 
 /**
