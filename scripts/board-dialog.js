@@ -45,7 +45,7 @@ function showTaskCreatedToast() {
 
 /**
  * Initializes all event listeners for the board by splitting search and dialog logic.
- * 
+ *
  * @function initBoardTask
  * @returns {void}
  */
@@ -56,7 +56,7 @@ function initBoardTask() {
 
 /**
  * Handles the search input and search button event listeners.
- * 
+ *
  * @function initBoardSearch
  * @returns {void}
  */
@@ -67,14 +67,13 @@ function initBoardSearch() {
   }
   const SEARCH_INPUT = document.getElementById("search_tasks");
   if (SEARCH_INPUT) {
-    SEARCH_INPUT.addEventListener("input", searchTasks); 
+    SEARCH_INPUT.addEventListener("input", searchTasks);
   }
 }
 
-
 /**
  * Handles the add-task button and task-detail dialog event listeners.
- * 
+ *
  * @function initBoardDialogs
  * @returns {void}
  */
@@ -86,6 +85,7 @@ function initBoardDialogs() {
       openAddTaskDialog();
     });
   }
+  
   const ADD_TASK_DIALOG = document.getElementById("add_task_dialog");
   if (ADD_TASK_DIALOG) {
     ADD_TASK_DIALOG.addEventListener("click", closeAddTaskDialogOnBackdropClick);
@@ -105,7 +105,7 @@ function initBoardDialogs() {
  */
 function addStatusTask(status) {
   sessionStorage.setItem("task-status", status);
-  window.location.href = "../html/addTaskPage.html"
+  window.location.href = "../html/addTaskPage.html";
 }
 
 /**
@@ -220,6 +220,35 @@ async function closeTaskDetailDialog() {
   return slideOutDialog(TASK_DETAIL_DIALOG);
 }
 
+/**
+ * Adds assigned users to the task detail dialog.
+ *
+ * @param {HTMLElement} wrapper - The wrapper element containing the assignees list.
+ * @param {Array} assignedTo - Array of assigned users.
+ */
+function addAssigneesToDetail(wrapper, assignedTo) {
+  const ASSIGNEES_LIST = wrapper.querySelector("#detail_task_assignees");
+  (assignedTo || [])
+    .filter(({ name } = {}) => name)
+    .forEach(({ name, color }) => {
+      const initials = getInitials(name);
+      ASSIGNEES_LIST.innerHTML += getTaskAssignToTempletWithName(name, initials, color);
+    });
+}
+
+/**
+ * Adds subtasks to the task detail dialog.
+ *
+ * @param {HTMLElement} wrapper - The wrapper element containing the subtask list.
+ * @param {Array} subtasks - Array of subtasks.
+ * @param {string} taskID - The ID of the task.
+ */
+function addSubtasksToDetail(wrapper, subtasks, taskID) {
+  const SUBTASK_LIST = wrapper.querySelector("#detail_subtask_list");
+  (subtasks || []).forEach((subtask, index) => {
+    SUBTASK_LIST.innerHTML += getDetailSubtaskTemplate(subtask.title, subtask.done, taskID, index);
+  });
+}
 
 /**
  * Creates the HTML content for the task detail window.
@@ -230,21 +259,10 @@ async function closeTaskDetailDialog() {
  * @returns {string} The finished HTML code for the dialog.
  */
 function buildTaskDetailDialog(task) {
-  let taskID = task.id;
   const WRAPPER = document.createElement("div");
   WRAPPER.innerHTML = getDetailTaskTemplate(task);
-  const ASSIGNEES_LIST = WRAPPER.querySelector("#detail_task_assignees");
-  (task.assignedTo || []).filter(Boolean).forEach((name) => {
-    ASSIGNEES_LIST.innerHTML += getTaskAssignToTempletWithName(name, getInitials(name), getAssigneeColor(name));
-  });
-  const SUBTASKS = task.subtasks || [];
-  const SUB_TOTAL = SUBTASKS.length;
-  const SUBTASK_LIST = WRAPPER.querySelector("#detail_subtask_list");
-  if (SUB_TOTAL > 0) {
-    SUBTASKS.forEach((subtask, index) => {
-      SUBTASK_LIST.innerHTML += getDetailSubtaskTemplate(subtask.title, subtask.done, taskID, index);
-    });
-  }
+  addAssigneesToDetail(WRAPPER, task.assignedTo);
+  addSubtasksToDetail(WRAPPER, task.subtasks, task.id);
   return WRAPPER.innerHTML;
 }
 
@@ -286,7 +304,6 @@ function fillEditFormFields(task) {
   dueDateInput.value = task.dueDate || "";
   selectPriority(task.priority || "medium");
 }
-
 
 /**
  * Prepares the subtasks, users, and the save button for the edit form.
@@ -346,7 +363,8 @@ async function loadUsersForEdit(assignedTo) {
     const response = await fetch(USER_URL);
     const data = await response.json();
     remoteUsers = Object.values(data);
-    fillUserDropdown(data);
+    const SORTED_USERS = sortUsersWithActiveFirst(remoteUsers);
+    fillUserDropdown(SORTED_USERS);
     document.querySelectorAll("#assigned_to_list label.user-item").forEach((label) => {
       const checkbox = label.querySelector("input[type='checkbox']");
       if (checkbox && assignedTo.includes(checkbox.value)) {

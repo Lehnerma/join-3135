@@ -122,8 +122,8 @@ async function loadUsers() {
     const response = await fetch(USER_URL);
     const data = await response.json();
     remoteUsers = Object.values(data);
-    const SORTET_USERS = sortUsersWithActiveFirst(remoteUsers);
-    fillUserDropdown(SORTET_USERS);
+    const SORTED_USERS = sortUsersWithActiveFirst(remoteUsers);
+    fillUserDropdown(SORTED_USERS);
   } catch (error) {
     console.error("Fehler beim Laden der Benutzer:", error);
   }
@@ -182,7 +182,7 @@ function toggleUser(el) {
  */
 function getAssignedUsers() {
   const checkboxes = document.querySelectorAll("#assigned_to_list input[type='checkbox']:checked");
-  return Array.from(checkboxes).map((cb) => cb.value);
+  return Array.from(checkboxes).map((cb) => ({ name: cb.value, color: cb.dataset.color }));
 }
 
 /**
@@ -227,7 +227,7 @@ function initDropdownOutsideClick() {
  */
 function updateAssignedPreview() {
   const container = document.getElementById("assigned_preview");
-  const selected = getAssignedUsers();
+  const selected = getAssignedUsers();  
   container.innerHTML = renderAssignedUsers(selected);
 }
 
@@ -248,38 +248,25 @@ function buildTaskCard(task) {
   `;
 }
 
+function getUserInitials(name) {
+  const parts = name.trim().split(" ");
+  return parts.length > 1
+    ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+    : parts[0].slice(0, 2).toUpperCase();
+}
+
 /**
  * Creates the HTML icons (circles with initials) for assigned users.
- * @param {string[]} users - Array of usernames.
+ * @param {Array<{name: string, color: string}>} users - Array of user objects.
  * @returns {string} HTML string of user icons.
  */
 function renderAssignedUsers(users = []) {
   if (!Array.isArray(users) || users.length === 0) return "";
-  let html = "";
-  users.forEach((name) => {
-    if (!name) return;
-    const firstLetter = name.charAt(0).toUpperCase();
-    let color = "#ccc"; 
-    if (typeof getAssigneeColor === 'function') {
-      color = getAssigneeColor(name);
-    } else if (typeof contactColors !== 'undefined' && contactColors) {
-      color = contactColors[firstLetter] || "#ccc";
-    }
-
-    const parts = name.trim().split(" ");
-    let initials = "";
-    if (parts.length > 1) {
-      initials = (parts[0][0] + parts[1][0]).toUpperCase();
-    } else {
-      initials = parts[0].slice(0, 2).toUpperCase();
-    }
-    html += `
-      <div class="assigned-circle" style="background-color:${color}" title="${name}">
-        ${initials}
-      </div>
-    `;
-  });
-  return `<div class="assigned-wrapper">${html}</div>`;
+  const circles = users
+    .filter(({ name }) => name)
+    .map(({ name, color }) => getUserCircleTemplate(name, getUserInitials(name), color))
+    .join("");
+  return getAssignedUsersTemplate(circles);
 }
 
 /**

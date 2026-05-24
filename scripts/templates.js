@@ -7,7 +7,7 @@
  */
 function getFillUserDropown(color, initials, user) {
   return `
-      <label class="user-item assignedTo" onclick="toggleUser(this)">
+      <li class="user-item assignedTo" onclick="toggleUser(this)">
         <div class="logoNameField">
           <div class="initials" style="background-color:${color}">
             ${initials}
@@ -18,8 +18,8 @@ function getFillUserDropown(color, initials, user) {
           </div>
         </div>
 
-        <input type="checkbox" value="${user.name}">
-      </label>
+        <input type="checkbox" value="${user.name}" data-color="${color}">
+      </li>
     `;
 }
 
@@ -52,11 +52,31 @@ function getSubtaskTemplate(title, index) {
  */
 function getAssignedToItemTemplate(id, name, initials, color, checked = false) {
   return `
-    <li class="custom-dropdown__item${checked ? " selected" : ""}" data-value="${id}" data-name="${name}">
+    <li class="custom-dropdown__item${checked ? " selected" : ""}" data-value="${id}" data-name="${name}" data-color="${color}">
       <span class="contact-badge" style="background-color: ${color}">${initials}</span>
       <span class="custom-dropdown__name">${name}</span>
       <input type="checkbox" class="custom-dropdown__checkbox"${checked ? " checked" : ""} />
     </li>`;
+}
+
+/**
+ * Returns the HTML for a single assigned-user circle badge.
+ * @param {string} name     - Full name of the user (used for title attribute).
+ * @param {string} initials - 1–2 letter initials.
+ * @param {string} color    - CSS background color.
+ * @returns {string} HTML string for one circle.
+ */
+function getUserCircleTemplate(name, initials, color) {
+  return `<div class="assigned-circle" style="background-color:${color}" title="${name}">${initials}</div>`;
+}
+
+/**
+ * Returns the HTML wrapper containing all assigned-user circles.
+ * @param {string} circlesHtml - Concatenated circle HTML strings.
+ * @returns {string} HTML string for the wrapper div.
+ */
+function getAssignedUsersTemplate(circlesHtml) {
+  return `<div class="assigned-wrapper">${circlesHtml}</div>`;
 }
 
 /**
@@ -249,7 +269,7 @@ function getEditTaskDialogTemplate() {
         <div class="input-section">
           <label for="title" class="required">Title</label>
           <input id="title" class="input" type="text" placeholder="Enter a title" required />
-          <span class="field-error">This field is required</span>
+          <span class="field-error dnone">This field is required</span>
         </div>
 
         <div class="input-section">
@@ -260,7 +280,7 @@ function getEditTaskDialogTemplate() {
         <div class="input-section">
           <label for="due_date" class="required">Due date</label>
           <input id="due_date" class="input input-date" type="date" required />
-          <span class="field-error">This field is required</span>
+          <span class="field-error dnone">This field is required</span>
         </div>
 
         <div class="input-section">

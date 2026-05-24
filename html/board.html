@@ -137,7 +137,7 @@
       ######### add task dialog ##########
       -------------------------------------->
 
-      <dialog id="add_task_dialog" class="dialog dialog--add-task"></dialog>
+      <dialog id="add_task_dialog" class="dialog dialog--add-task slide-in"></dialog>
 
       <!-------------------------------------
       ######### detail task dialog ##########
@@ -160,7 +160,7 @@
           <section class="input-section">
             <label for="title" class="">Title</label>
             <input id="title" class="input" type="text" placeholder="Enter a title" required />
-            <span class="field-error">This field is required</span>
+            <span class="field-error dnone">This field is required</span>
           </section>
 
           <section class="input-section">
@@ -171,7 +171,7 @@
           <section class="input-section">
             <label for="due_date" class="">Due date</label>
             <input id="due_date" class="input input-date" type="date" required />
-            <span class="field-error">This field is required</span>
+            <span class="field-error dnone">This field is required</span>
           </section>
 
           <section class="input-section">
@@ -199,7 +199,7 @@
 
           <section class="input-section">
             <label for="category" class="">Category</label>
-            <select id="category" class="input dropdown form--select">
+            <select id="category" class="input dropdown form--select" required>
               <option value="" selected disabled>Select task category</option>
               <option value="Technical Task">Technical Task</option>
               <option value="User Story">User Story</option>

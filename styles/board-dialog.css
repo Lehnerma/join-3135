@@ -39,20 +39,20 @@
   left: 50%;
   transform: translate(-50%, -50%);
 
-}
-
-.dialog--task {
   width: clamp(310px, calc(228.571px + 25.446vw), 595px);
-  max-width: 525px;
+
   max-height: 95vh;
-  overflow-y: hidden;
-  /* Scrollbar styling */
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
 }
 
-.dialog-wrapper{
-  overflow-y: auto
+.dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+
+.dialog-wrapper {
+  overflow-y: auto;
 }
 
 .dialog--task::-webkit-scrollbar {
@@ -76,22 +76,11 @@
   animation: slideToRight 175ms ease-in-out forwards;
 }
 
-.dialog--add-task {
-  max-width: 1116px;
-  width: clamp(500px, 95vw, 1116px);
-  max-height: 870px;
-  height: auto;
-}
-
-.dialog--add-task::backdrop {
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
 @media (max-width: 650px) {
-  .dialog--add-task {
+  .dialog {
     width: 100vw;
     height: 100vh;
-    border-radius: 0;
+    border-radius: 8px;
   }
 }
 
@@ -158,12 +147,10 @@
   }
 }
 
-.dialog::backdrop {
-  background-color: rgba(0, 0, 0, 0.4);
-}
 .detail-task--header {
   padding: 8px;
 }
+
 .detail-task--category {
   display: flex;
   align-items: center;
@@ -191,9 +178,6 @@
   display: flex;
   flex-direction: column;
   margin: 24px 0;
-  overflow-x: auto;
-  max-height: 60dvh;
-  height: 64%;
 }
 
 .detail-task--prio-content {
