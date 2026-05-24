@@ -58,16 +58,16 @@ function init() {
  * @returns {Promise}
  */
 async function getUsers() {
-    const RESPONSE = await fetch(USERS_URL);
+  const RESPONSE = await fetch(USERS_URL);
   const RESULT = await RESPONSE.json();
-  USERS = [];
+  users = []; 
   for (let key in RESULT) {
     const PERSON = RESULT[key];
     PERSON.firebaseKey = key;
-    PERSON.color ??= contactColors[Math.floor(Math.random() * contactColors.length)]
-    PERSON.phone ??= PERSON.phone = "";
+    PERSON.color ??= contactColors[Math.floor(Math.random() * contactColors.length)];
+    PERSON.phone ??= ""; 
     updateFirebaseContact(key, { color: PERSON.color }, { phone: PERSON.email });
-    USERS.push(PERSON)
+    users.push(PERSON); 
   }
   sortUserContactList();
 }
@@ -77,7 +77,7 @@ async function getUsers() {
  * Sorts the global USERS list alphabetically by name.
  */
 function sortUserContactList() {
-  USERS.sort(function (a, b) {
+  users.sort(function (a, b) {
     const X = a.name.toLowerCase();
     const Y = b.name.toLowerCase();
     if (X < Y) { return -1; }
@@ -94,8 +94,8 @@ function sortUserContactList() {
 function addAlphabetTable() {
   const SINGLE_CONTACTS = document.getElementById('single_contacts');
   SINGLE_CONTACTS.innerHTML = '';
-  for (let i = 0; i < alphabet.length; i++) {
-    SINGLE_CONTACTS.innerHTML += renderAlphabetTableTpl(alphabet[i]);
+  for (let i = 0; i < ALPHABET.length; i++) {
+    SINGLE_CONTACTS.innerHTML += renderAlphabetTableTpl(ALPHABET[i]);
   }
   userContectList();
 }
