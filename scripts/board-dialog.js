@@ -35,8 +35,8 @@ function showTaskCreatedToast() {
     TOAST.addEventListener(
       "animationend",
       () => {
-        TOAST.classList.add = "dnone";
-        TOAST.classList.remove("taskCreatedToast--hidden");
+        toast.classList.add("dnone");
+        toast.classList.remove("taskCreatedToast--hidden");
       },
       { once: true },
     );
@@ -45,7 +45,7 @@ function showTaskCreatedToast() {
 
 /**
  * Initializes all event listeners for the board by splitting search and dialog logic.
- * 
+ *
  * @function initBoardTask
  * @returns {void}
  */
@@ -56,7 +56,7 @@ function initBoardTask() {
 
 /**
  * Handles the search input and search button event listeners.
- * 
+ *
  * @function initBoardSearch
  * @returns {void}
  */
@@ -67,14 +67,13 @@ function initBoardSearch() {
   }
   const SEARCH_INPUT = document.getElementById("search_tasks");
   if (SEARCH_INPUT) {
-    SEARCH_INPUT.addEventListener("input", searchTasks); 
+    SEARCH_INPUT.addEventListener("input", searchTasks);
   }
 }
 
-
 /**
  * Handles the add-task button and task-detail dialog event listeners.
- * 
+ *
  * @function initBoardDialogs
  * @returns {void}
  */
@@ -86,6 +85,7 @@ function initBoardDialogs() {
       openAddTaskDialog();
     });
   }
+  
   const ADD_TASK_DIALOG = document.getElementById("add_task_dialog");
   if (ADD_TASK_DIALOG) {
     ADD_TASK_DIALOG.addEventListener("click", closeAddTaskDialogOnBackdropClick);
@@ -96,16 +96,6 @@ function initBoardDialogs() {
     TASK_DETAIL_DIALOG.addEventListener("click", closeTaskDetailDialogOnBackdropClick);
     TASK_DETAIL_DIALOG.addEventListener("cancel", handleTaskDetailDialogEscape);
   }
-}
-
-/**
- * We set the status into the session storage and redirect to addtask.html. Important for the add tasks function from a addTask status column.
- *
- * @param {string} status - The status for the new task (e.g., 'inProgress').
- */
-function addStatusTask(status) {
-  sessionStorage.setItem("task-status", status);
-  window.location.href = "../html/addTaskPage.html"
 }
 
 /**
@@ -140,8 +130,7 @@ function searchTasks() {
  */
 function openTaskDetailDialog(taskId) {
   const TASK_DETAIL_DIALOG = document.getElementById("task_detail_dialog");
-  TASK_DETAIL_DIALOG.innerHTML = ""; // Clear previous content
-
+  TASK_DETAIL_DIALOG.innerHTML = "";
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
   const TASK = ALL_TASKS.find((task) => task.id === taskId);
   if (TASK) {
@@ -221,6 +210,35 @@ async function closeTaskDetailDialog() {
   return slideOutDialog(TASK_DETAIL_DIALOG);
 }
 
+/**
+ * Adds assigned users to the task detail dialog.
+ *
+ * @param {HTMLElement} wrapper - The wrapper element containing the assignees list.
+ * @param {Array} assignedTo - Array of assigned users.
+ */
+function addAssigneesToDetail(wrapper, assignedTo) {
+  const ASSIGNEES_LIST = wrapper.querySelector("#detail_task_assignees");
+  (assignedTo || [])
+    .filter(({ name } = {}) => name)
+    .forEach(({ name, color }) => {
+      const initials = getInitials(name);
+      ASSIGNEES_LIST.innerHTML += getTaskAssignToTempletWithName(name, initials, color);
+    });
+}
+
+/**
+ * Adds subtasks to the task detail dialog.
+ *
+ * @param {HTMLElement} wrapper - The wrapper element containing the subtask list.
+ * @param {Array} subtasks - Array of subtasks.
+ * @param {string} taskID - The ID of the task.
+ */
+function addSubtasksToDetail(wrapper, subtasks, taskID) {
+  const SUBTASK_LIST = wrapper.querySelector("#detail_subtask_list");
+  (subtasks || []).forEach((subtask, index) => {
+    SUBTASK_LIST.innerHTML += getDetailSubtaskTemplate(subtask.title, subtask.done, taskID, index);
+  });
+}
 
 /**
  * Creates the HTML content for the task detail window.
@@ -231,21 +249,10 @@ async function closeTaskDetailDialog() {
  * @returns {string} The finished HTML code for the dialog.
  */
 function buildTaskDetailDialog(task) {
-  let task_id = task.id;
   const WRAPPER = document.createElement("div");
   WRAPPER.innerHTML = getDetailTaskTemplate(task);
-  const ASSIGNEES_LIST = WRAPPER.querySelector("#detail_task_assignees");
-  (task.assignedTo || []).filter(Boolean).forEach((name) => {
-    ASSIGNEES_LIST.innerHTML += getTaskAssignToTempletWithName(name, getInitials(name), getAssigneeColor(name));
-  });
-  const SUBTASKS = task.subtasks || [];
-  const SUB_TOTAL = SUBTASKS.length;
-  const SUBTASK_LIST = WRAPPER.querySelector("#detail_subtask_list");
-  if (SUB_TOTAL > 0) {
-    SUBTASKS.forEach((subtask, index) => {
-      SUBTASK_LIST.innerHTML += getDetailSubtaskTemplate(subtask.title, subtask.done, task_id, index);
-    });
-  }
+  addAssigneesToDetail(WRAPPER, task.assignedTo);
+  addSubtasksToDetail(WRAPPER, task.subtasks, task.id);
   return WRAPPER.innerHTML;
 }
 
@@ -257,13 +264,18 @@ function buildTaskDetailDialog(task) {
  */
 function openEditTaskDialog(taskId) {
   const ALL_TASKS = JSON.parse(sessionStorage.tasks);
-  const TASK = ALL_TASKS.find((t) => t.id === taskId);
-  if (!TASK) return;
-  const DIALOG = document.getElementById("edit_task_dialog");
-  DIALOG.addEventListener("click", closeEditDialogOnBackdropClick);
-  DIALOG.showModal();
-  fillEditFormFields(TASK);
-  setupEditTaskInteractions(TASK);
+  const task = ALL_TASKS.find((t) => t.id === taskId);
+  if (!task) return;
+  const dialog = document.getElementById("edit_task_dialog");
+  dialog.addEventListener("click", closeEditDialogOnBackdropClick);
+  dialog.showModal();
+  const previewContainer = document.getElementById("assigned_preview");
+  if (previewContainer) {
+    previewContainer.innerHTML = "";
+  }
+
+  fillEditFormFields(task);
+  setupEditTaskInteractions(task);
 }
 
 /**
@@ -277,9 +289,9 @@ function fillEditFormFields(task) {
   document.getElementById("title").value = task.title || "";
   document.getElementById("description").value = task.description || "";
   document.getElementById("category").value = task.category || "";
-  const DUE_DATE_INPUT = document.getElementById("due_date");
-  DUE_DATE_INPUT.min = new Date().toISOString().split("T")[0];
-  DUE_DATE_INPUT.value = task.dueDate || "";
+  const dueDateInput = document.getElementById("due_date");
+  dueDateInput.min = new Date().toISOString().split("T")[0];
+  dueDateInput.value = task.dueDate || "";
   selectPriority(task.priority || "medium");
 }
 
@@ -291,15 +303,19 @@ function fillEditFormFields(task) {
 function setupEditTaskInteractions(task) {
   subtasksList = (task.subtasks || []).map((s) => ({ title: s.title, done: s.done }));
   subtaskInit();
+  const subtaskListContainer = document.getElementById("subtask_list");
+  if (subtaskListContainer) {
+    subtaskListContainer.innerHTML = "";
+  }
   subtasksList.forEach((sub, i) => renderSubtaskItem(i, sub.title));
   loadUsersForEdit(task.assignedTo || []);
   initDropdownOutsideClick();
-  const FORM = document.getElementById("form_edit_task");
-  if (FORM) {
-    FORM.addEventListener("submit", async (event) => {
+  const form = document.getElementById("form_edit_task");
+  if (form) {
+    form.onsubmit = async (event) => {
       event.preventDefault();
       await saveEditedTask(task);
-    });
+    };
   }
 }
 
@@ -325,30 +341,43 @@ function closeEditDialogOnBackdropClick(event) {
 }
 
 /**
- * Loads all users from the database to edit a task.
- * It fills the dropdown menu and checks the boxes for users already assigned to the task.
- * Finally, it updates the small preview icons.
+ * Loads all users, fills the dropdown, pre-selects already-assigned users,
+ * and updates the preview icons.
  *
- * @param {Array} assignedTo - A list of user names already assigned to this task.
+ * @param {Array<{name: string, color: string}|string>} assignedTo - Users already assigned to the task.
  */
-async function loadUsersForEdit(assignedTo) {
+async function loadUsersForEdit(assignedTo) {  
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
   try {
-    const RESPONSE = await fetch(USER_URL);
-    const DATA = await RESPONSE.json();
-    remoteUsers = Object.values(DATA);
-    fillUserDropdown(DATA);
-    document.querySelectorAll("#assigned_to_list label.user-item").forEach((label) => {
-      const checkbox = label.querySelector("input[type='checkbox']");
-      if (checkbox && assignedTo.includes(checkbox.value)) {
-        checkbox.checked = true;
-        label.classList.add("selected");
-      }
-    });
+    const response = await fetch(USER_URL);
+    const data = await response.json();
+    remoteUsers = Object.values(data);
+    fillUserDropdown(sortUsersWithActiveFirst(remoteUsers)); // fülln des dropdown
+
+    preselectAssignedUsers(assignedTo);
+
     updateAssignedPreview();
+
   } catch (err) {
     console.error("Error in loadUsersForEdit:", err);
   }
+}
+
+/**
+ * Marks the checkboxes of already-assigned users as checked in the dropdown.
+ *
+ * @param {Array<{name: string, color: string}|string>} assignedTo - Users to pre-select.
+ */
+function preselectAssignedUsers(assignedTo) {
+  const assignedNames = (assignedTo || []).map((user) => (typeof user === "string" ? user : user.name));
+  const USERS =  document.querySelectorAll(".assignedTo");
+ USERS.forEach((label) => {
+    const checkbox = label.querySelector("input[type='checkbox']");
+    if (!checkbox) return;
+    const isAssigned = assignedNames.includes(checkbox.value);
+    checkbox.checked = isAssigned;
+    label.classList.toggle("selected", isAssigned);
+  });
 }
 
 /**
@@ -413,6 +442,16 @@ async function updateTaskData(updatedTask) {
 }
 
 /**
+ * We set the status into the session storage and redirect to addtask.html. Important for the add tasks function from a addTask status column.
+ *
+ * @param {string} status - The status for the new task (e.g., 'inProgress').
+ */
+function addStatusTask(status) {
+  sessionStorage.setItem("task-status", status);
+  openAddTaskDialog();
+}
+
+/**
  * Opens the add task dialog centered on the board page.
  * Renders the add-task form inside the dialog.
  */
@@ -449,6 +488,26 @@ function closeAddTaskDialog() {
   if (dialog && dialog.open) {
     dialog.close();
   }
+  sessionStorage.removeItem("task-status");
+}
+
+/**
+ * Shows the board toast centered on screen for 1.5s using an opacity fade.
+ * @returns {Promise<void>} Resolves after the toast has faded out.
+ */
+function showBoardToast() {
+  return new Promise((resolve) => {
+    const toast = document.getElementById("task_created_toast");
+    if (!toast) return resolve();
+    toast.classList.add("taskCreatedToast--visible");
+    setTimeout(() => {
+      toast.classList.replace("taskCreatedToast--visible", "taskCreatedToast--hidden");
+      setTimeout(() => {
+        toast.classList.remove("taskCreatedToast--hidden");
+        resolve();
+      }, 300);
+    }, 1500);
+  });
 }
 
 /**
