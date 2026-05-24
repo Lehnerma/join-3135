@@ -31,7 +31,7 @@
   border: none;
   border-radius: 30px;
 
-  padding: clamp(4px, calc(-8.571px + 3.929vw), 48px) clamp(8px, calc(-1.143px + 2.857vw), 40px);
+  padding: clamp(16px, calc(-8.571px + 3.929vw), 48px) clamp(8px, calc(-1.143px + 2.857vw), 40px);
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
   z-index: 11;
 
@@ -77,13 +77,13 @@
   animation: slideToRight 175ms ease-in-out forwards;
 }
 
-@media (max-width: 650px) {
+/* @media (max-width: 650px) {
   .dialog {
     width: 100vw;
     height: 100vh;
-    border-radius: 8px;
-  }
-}
+    border-radius: 16px;
+  } 
+}*/
 
 /* ── Add Task Dialog Template ─────────────────────────── */
 

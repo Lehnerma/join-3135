@@ -99,16 +99,6 @@ function initBoardDialogs() {
 }
 
 /**
- * We set the status into the session storage and redirect to addtask.html. Important for the add tasks function from a addTask status column.
- *
- * @param {string} status - The status for the new task (e.g., 'inProgress').
- */
-function addStatusTask(status) {
-  sessionStorage.setItem("task-status", status);
-  window.location.href = "../html/addTaskPage.html";
-}
-
-/**
  * Filters the tasks on the board based on the user's search input.
  * It searches through titles and descriptions and updates the view.
  */
@@ -452,6 +442,16 @@ async function updateTaskData(updatedTask) {
 }
 
 /**
+ * We set the status into the session storage and redirect to addtask.html. Important for the add tasks function from a addTask status column.
+ *
+ * @param {string} status - The status for the new task (e.g., 'inProgress').
+ */
+function addStatusTask(status) {
+  sessionStorage.setItem("task-status", status);
+  openAddTaskDialog();
+}
+
+/**
  * Opens the add task dialog centered on the board page.
  * Renders the add-task form inside the dialog.
  */
@@ -488,6 +488,7 @@ function closeAddTaskDialog() {
   if (dialog && dialog.open) {
     dialog.close();
   }
+  sessionStorage.removeItem("task-status");
 }
 
 /**
