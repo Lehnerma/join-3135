@@ -275,12 +275,12 @@ function showFailEntriesLogin() {
 }
 
 
-function showFailEntriesSignUp(){
- const  SIGNUPNAME = 
+// function showFailEntriesSignUp(){
+//  const  SIGNUPNAME = 
 
 
 
-}
+// }
 
 
 /**
