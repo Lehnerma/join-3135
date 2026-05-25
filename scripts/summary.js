@@ -145,7 +145,7 @@ function showAmountOfTasks(data, status) {
  * @returns {number} Amount of active board tasks.
  */
 function showAmountOnBoard(data) {
-  const AMOUNT_ON_BOARD = Object.values(data).filter(task => task.status !== 'done').length;
+  const AMOUNT_ON_BOARD = Object.values(data).filter(task => task.status).length;
   return AMOUNT_ON_BOARD;
 }
 
