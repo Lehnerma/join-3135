@@ -97,23 +97,7 @@ function updateToggleUI() {
   }
   removeFade(LOGIN_FORM);
   if (NAV_LOGIN) removeFade(NAV_LOGIN);
-  setRequired(show_signup);
-}
-
-
-/**
- * Toggles the required attribute on all signup inputs to avoid browser validation
- * errors on the hidden form.
- * @param {boolean} condition - true to make inputs required, false to remove it.
- */
-function setRequired(condition) {
-  const INPUTS = document.querySelectorAll(".input_signup");
-  if (condition) {
-    INPUTS.forEach((e) => (e.required = true));
-  } else {
-    INPUTS.forEach((e) => (e.required = false));
   }
-}
 
 
 /**
@@ -158,6 +142,7 @@ function finalizeSignup(form, btn) {
  */
 async function creatUser(ev) {
   ev.preventDefault();
+   showFailEntriesSignUp();
   if (!verifyPassword()) return;
   const btn = ev.target.querySelector('button[type="submit"]');
   if (btn) btn.disabled = true;
@@ -282,6 +267,19 @@ function showFailEntriesLogin() {
   PASSWORD.classList.add("invalid-login");
   PASSWORD_CONTAINER.classList.add("invalid-login-pw");
   changeLockToEye('pwInputLogin', 'lockLogin');
+  MAIL.addEventListener('input', function(){
+  MAIL.classList.remove('invalid-login');
+  PASSWORD.classList.remove('invalid-login');
+  PASSWORD_CONTAINER.classList.remove('invalid-login-pw');
+  });
+}
+
+
+function showFailEntriesSignUp(){
+ const  SIGNUPNAME = 
+
+
+
 }
 
 

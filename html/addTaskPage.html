@@ -22,7 +22,7 @@
 </head>
 
 <body class="app" onload="(init(), initUtilitys())">
-<div class="landscape-warning">
+  <div class="landscape-warning">
     <div class="warning-message">
       <div class="phone-icon"></div>
       <p>Use portrait mode.</p>
@@ -83,7 +83,7 @@
         <section class="column left">
           <div class="input-section">
             <label for="title" class="required">Title</label>
-            <input id="title" class="input" type="text" placeholder="Enter a title"  />
+            <input id="title" class="input" type="text" placeholder="Enter a title" />
             <span id="title_error" class="field-error dnone">This field is required</span>
           </div>
           <div class="input-section">
@@ -93,7 +93,7 @@
 
           <div class="input-section">
             <label for="dueDate" class="required">Due date</label>
-            <input id="due_date" class="input input-date" type="date"  />
+            <input id="due_date" class="input input-date" type="date" />
             <span id="date_error" class="field-error dnone">This field is required</span>
           </div>
         </section>
@@ -132,40 +132,16 @@
                 <button type="button" class="custom-dropdown__toggle" aria-label="Toggle dropdown">
                   <span class="custom-dropdown__arrow"></span>
                 </button>
-
               </div>
               <div id="assigned_preview"></div>
               <ul class="custom-dropdown__list" id="assigned_to_list">
-                <!-- <li class="custom-dropdown__item" data-value="1" data-name="Max Mustermann">
-                  <span class="contact-badge" style="background-color: var(--contact-color-1)">MA</span>
-                  <span class="custom-dropdown__name">Max Mustermann</span>
-                  <input type="checkbox" class="custom-dropdown__checkbox" />
-                </li>
-                <li class="custom-dropdown__item" data-value="2" data-name="Maria Weber">
-                  <span class="contact-badge" style="background-color: var(--contact-color-4)">MW</span>
-                  <span class="custom-dropdown__name">Maria Weber</span>
-                  <input type="checkbox" class="custom-dropdown__checkbox" />
-                </li>
-                <li class="custom-dropdown__item" data-value="3" data-name="John Doe">
-                  <span class="contact-badge" style="background-color: var(--contact-color-2)">JD</span>
-                  <span class="custom-dropdown__name">John Doe</span>
-                  <input type="checkbox" class="custom-dropdown__checkbox" />
-                </li>
-                <li class="custom-dropdown__item" data-value="4" data-name="Anna Schmidt">
-                  <span class="contact-badge" style="background-color: var(--contact-color-3)">AS</span>
-                  <span class="custom-dropdown__name">Anna Schmidt</span>
-                  <input type="checkbox" class="custom-dropdown__checkbox" />
-                </li> -->
-              </div>
+
             </div>
           </div>
-
-          <!-- <div id="dropdown" class="dropdown hidden"> </div>
-          <div></div> -->
-
           </div>
 
-          <!-- category -->
+          </div>
+         
           <div class="input-section">
             <label for="category" class="required">Category</label>
             <select id="category" class="input dropdown form--select" required>
@@ -175,7 +151,6 @@
             </select>
             <span id="category_error" class="field-error dnone">This field is required</span>
           </div>
-
           <!-- subtask -->
           <div class="input-section">
             <label for="subtask_input">Subtasks</label>
@@ -206,7 +181,7 @@
         </div>
       </section>
     </article>
-    
+
   </main>
 
   <div id="toast" class="toast">Task added to board ✅</div>
