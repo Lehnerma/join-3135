@@ -22,6 +22,7 @@
   width: 100px;
   height: auto;
   padding-top: 64px;
+  padding-bottom: 48px;
   justify-self: center;
 }
 
@@ -97,13 +98,22 @@
 
 .app--title {
   grid-area: title;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   background-color: var(--input-text-color);
   z-index: 10;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
-  padding-right: calc((100% - 1208px));
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.app--title-wrapper {
+  max-width: 1440px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: clamp(32px, 8vw, 116px);
+  padding-right: clamp(16px, 4vw, 40px);
 }
 
 .app--title .title-logo {
@@ -113,23 +123,19 @@
 .app--title-headline {
   font-size: 20px;
   font-weight: 400;
-  padding-left: clamp(0px, 6vw, 116px);
   color: var(--primary-text-color);
 }
 
-
-/* only for testing */
-.app--content {
+ .app--content {
   grid-area: content;
   overflow-y: auto;
   background-color: var(--third-background-color);
-}
+} 
 
 .app--icons {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding-right: 16px;
   transition: transform 0.7s ease-in-out;
 }
 
@@ -185,7 +191,7 @@
     .title-logo {
       display: block;
       width: 32px;
-      height: 32px;
+      height: 39px;
     }
   }
 
@@ -222,8 +228,8 @@
   }
 
   .app--icons {
-  padding-right: 0;
-}
+    padding-right: 0;
+  }
 
   .user-not-logged-in .sidebar {
     display: flex;
@@ -266,6 +272,17 @@
 
   #view-external li {
     margin-top: 0;
+  }
+
+  .btn--user {
+
+    width: 40px;
+    height: 40px;
+    border-width: 2px;
+  }
+
+  .app--title-wrapper{
+    padding: 0;
   }
 
 }

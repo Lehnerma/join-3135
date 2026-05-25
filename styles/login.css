@@ -419,10 +419,12 @@ input {
   .phone-signup {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 32px;
     margin-bottom: 20px;
   }
 
+  
   @media(max-width:418px) {
     .form--container {
       gap: 52px;

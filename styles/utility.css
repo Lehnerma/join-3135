@@ -40,13 +40,12 @@
 }
 
 .utility-content {
-  padding-top: clamp(20px, calc(-8.571px + 8.929vw), 120px);
-  padding-left: clamp(20px, calc(-2.857px + 7.143vw), 100px);
-  padding-right: clamp(20px,
-      calc((100% - 1208px) / 2),
-      calc((100% - 1208px) / 2));
+  width: 100%;
+  max-width: 1440px;
+  padding-top: 110px;
+  padding-left: clamp(16px,  5vw, 96px);
+   padding-right: clamp(16px,  5vw, 96px);
   padding-bottom: clamp(12px, calc(1.143px + 3.393vw), 50px);
-  margin-right: clamp(0px, calc(-6.857px + 2.143vw), 24px);
 }
 
 .utility-ol {

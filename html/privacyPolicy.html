@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../styles/sidebar.css" />
 </head>
 
-<body class="app" onload="(initUtilitys())">
+<body class="app user-not-logged-in" onload="(initUtilitys())">
   <div class="landscape-warning">
     <div class="warning-message">
       <div class="phone-icon"></div>
@@ -22,11 +22,13 @@
     </div>
   </div>
   <header class="app--title">
-    <h1 class="app--title-headline">Kanban Project Management Tool</h1>
-    <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
-    <div class="app--icons">
-      <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="help" class="app--icon" /></a>
-      <button id="user_menu_button" class="btn btn--user" onclick="openUserMenu()" aria-label="Show User Menu"></button>
+    <div class="app--title-wrapper">
+      <h1 class="app--title-headline">Kanban Project Management Tool</h1>
+      <img src="../assets/img/logo-join-dark.svg" alt="join logo" class="title-logo" />
+      <div class="app--icons">
+        <a href="./help.html"><img src="../assets/img/icons/general/help.svg" alt="help" class="app--icon" /></a>
+        <button id="user_menu_button" class="btn btn--user" onclick="openUserMenu()" aria-label="Show User Menu"></button>
+      </div>
     </div>
   </header>
 

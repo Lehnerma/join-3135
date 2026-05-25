@@ -4,13 +4,16 @@ main {
 
 .task-container {
   max-width: var(--max-dp-width);
-  padding: 0 16px;
+  padding-left: 16px;
+  padding-right: 16px;
 
   h1 {
-    font-size: 47px;
+    font-size: 61px;
     font-family: "Inter", sans-serif;
     font-weight: 700;
-    padding-top: 48px;
+    padding-top: 110px;
+    padding-bottom: 32px;
+     white-space: nowrap;
   }
 }
 
@@ -38,7 +41,7 @@ main {
 }
 
 .input-invalid {
-    border: 1px solid red;
+  border: 1px solid red;
 }
 
 .field-error {
@@ -278,7 +281,7 @@ main {
   justify-content: flex-end;
   align-items: center;
 
-  gap: clamp(8px, 3vw, 32px);
+  gap: clamp(8px, 3vw, 16px);
 
   position: sticky;
   bottom: 0;
@@ -290,7 +293,7 @@ main {
   width: 110px;
   height: 56px;
   font-size: clamp(16px, calc(14.545px + 0.455vw), 20px);
-  gap: 8px;
+  gap: 4px;
 
   &::after {
     content: "";
@@ -311,14 +314,13 @@ main {
   width: 183px;
   height: 56px;
   font-size: 20px;
-  gap: 8px;
+  gap: 4px;
   font-weight: 700;
 
   &::after {
     content: "";
     width: 24px;
     height: 24px;
-
     background: url("../assets/img/icons/subtask/check-light.svg");
     background-position: center;
     background-size: contain;
@@ -352,9 +354,16 @@ main {
   transform: translateX(-50%) translateY(-10px);
 }
 
-@media (min-width: 1000px) {
+@media (min-width: 1024px) {
   .task-container {
-    margin-left: clamp(16px, 5vw, 96px);
+    margin-left: clamp(16px, 7vw, 96px);
+  padding-right: 16px;
+  }   
+
+  h1{
+   font-weight: 47px;
+   white-space: nowrap;
+
   }
 
   .form-task {
@@ -431,6 +440,14 @@ main {
 
   .priority-group {
     justify-content: flex-start;
+  }
+}
+
+@media(max-width: 380px) {
+
+  .btn--primary,
+  .btn--secondary {
+    font-size: 16px;
   }
 }
 
