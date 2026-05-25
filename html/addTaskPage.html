@@ -17,8 +17,8 @@
 
   <script src="../scripts/utilitys.js"></script>
   <script src="../scripts/templates.js"></script>
-  <script src="../scripts/addTask.js"></script>
   <script src="../scripts/subtask.js"></script>
+  <script src="../scripts/addTask.js"></script>
 </head>
 
 <body class="app" onload="init(), initUtilitys()">
@@ -85,7 +85,6 @@
           <div class="input-section">
             <label for="title" class="required">Title</label>
             <input id="title" class="input" type="text" placeholder="Enter a title" />
-            <input id="title" class="input" type="text" placeholder="Enter a title" />
             <span id="title_error" class="field-error dnone">This field is required</span>
           </div>
           <div class="input-section">
@@ -137,13 +136,10 @@
               </div>
               <div id="assigned_preview"></div>
               <ul class="custom-dropdown__list" id="assigned_to_list">
-
+              </ul>
             </div>
           </div>
-          </div>
 
-          </div>
-         
           <div class="input-section">
             <label for="category" class="required">Category</label>
             <select id="category" class="input dropdown form--select" required>
@@ -179,7 +175,7 @@
         <div class="action-btns">
           <button id="form_clear" type="reset" class="btn btn--secondary clear" form="form_task"
             onclick="clearForm()">Clear</button>
-          <button type="submit" class="btn btn--primary" form="form_task">Create Task</button>
+          <button type="submit" id="btnCreateTask" class="btn btn--primary" form="form_task">Create Task</button>
         </div>
       </section>
     </article>
