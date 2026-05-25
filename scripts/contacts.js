@@ -19,13 +19,13 @@ const contactColors = [
 ];
 
 
-const alphabet = [
+const ALPHABET = [
   "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
 ];
 
 
-USERS = [];
+users = [];
 let newContact = "";
 let editName = '';
 let editEmail = '';
@@ -70,7 +70,6 @@ async function getUsers() {
     USERS.push(PERSON)
   }
   sortUserContactList();
-  await loadUsers();
 }
 
 
@@ -106,8 +105,8 @@ function addAlphabetTable() {
  * Assigns users to the corresponding letter containers in the list.
  */
 function userContectList() {
-  for (let i = 0; i < USERS.length; i++) {
-    let user = USERS[i];
+  for (let i = 0; i < users.length; i++) {
+    let user = users[i];
     let firstLetter = user.name.charAt(0).toUpperCase();
     let targetContainer = document.getElementById(firstLetter);
     if (targetContainer) {
@@ -179,7 +178,7 @@ function openEditDialog(editUserIndex, initials, color) {
  * @param {number} editUserIndex - The user's index.
  */
 function addEditContactDetails(editUserIndex) {
-  let user = USERS[editUserIndex];
+  let user = users[editUserIndex];
   let initials = getInitials(user.name);
   let firstLetter = user.name.charAt(0).toUpperCase();
   openEditDialog(editUserIndex, initials, user.color);
@@ -223,7 +222,7 @@ function closeDialogOutsite(event) {
  */
 function getUserDetails(userIndex) {
   editUserIndex = userIndex;
-  user = USERS[userIndex];
+  user = users[userIndex];
   editName = user.name;
   editEmail = user.email;
   editPhone = user.phone;
@@ -385,9 +384,9 @@ async function createContact() {
  * @param {Object} newContact - The new contact to be created.
  */
 async function addNewContact(newContact) {
-  USERS.push(newContact);
+  users.push(newContact);
   sortUserContactList();
-  const addNewContactUser = USERS.findIndex(user => user.id === newContact.id);
+  const addNewContactUser = users.findIndex(user => user.id === newContact.id);
   if (addNewContactUser !== -1) {
     detailAnimation = true;
     getUserDetails(addNewContactUser);
@@ -436,7 +435,7 @@ async function syncNewContact(newContact) {
  * @param {number} index - The index of the user to be deleted.
  */
 async function deleteContact(index) {
-  const userKey = USERS[index].firebaseKey;
+  const userKey = users[index].firebaseKey;
   const success = await deleteUserFromDatabase(userKey);
   if (success) {
     document.getElementById(index).remove();
@@ -509,7 +508,7 @@ async function saveNewContactData(index) {
   const btn = document.getElementById('btn_edit_save_contact');
   if (btn) btn.disabled = true;
   try {
-    const user = USERS[index];
+    const user = users[index];
     const response = await updateFirebaseContact(user.firebaseKey, getUpdatedContactData(user.color));
         if (response.ok) {
       await getUsers();

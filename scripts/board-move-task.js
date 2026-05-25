@@ -8,6 +8,9 @@ const STATUS_LABELS = {
   done: "Done",
 };
 
+/**
+ * Move targets configuration for each task status.
+ */
 const MOVE_TARGETS = {
   todo: [{ status: "progress", direction: "down" }],
   progress: [

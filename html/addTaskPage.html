@@ -23,6 +23,7 @@
 
 <body class="app" onload="(init(), initUtilitys())">
   <div class="landscape-warning">
+  <div class="landscape-warning">
     <div class="warning-message">
       <div class="phone-icon"></div>
       <p>Use portrait mode.</p>
@@ -84,6 +85,7 @@
           <div class="input-section">
             <label for="title" class="required">Title</label>
             <input id="title" class="input" type="text" placeholder="Enter a title" />
+            <input id="title" class="input" type="text" placeholder="Enter a title" />
             <span id="title_error" class="field-error dnone">This field is required</span>
           </div>
           <div class="input-section">
@@ -122,7 +124,7 @@
               </button>
             </div>
           </div>
-          <!-- assignt to -->
+
           <div class="input-section">
             <label for="assignedToSearch">Assigned to</label>
             <div class="custom-dropdown" id="assigned_to_dropdown">
@@ -146,7 +148,7 @@
             <label for="category" class="required">Category</label>
             <select id="category" class="input dropdown form--select" required>
               <option value="" selected>Select task category</option>
-              <option value="Technical Tasks">Technical Task</option>
+              <option value="Technical Task">Technical Task</option>
               <option value="User Story">User Story</option>
             </select>
             <span id="category_error" class="field-error dnone">This field is required</span>
@@ -157,10 +159,10 @@
             <div class="input--section">
               <input id="subtask_input" class="input" type="text" placeholder="Add subtask" />
               <div class="subtask--btns">
-                <button id="subtask-close" class="btn--subtask close"><img src="../assets/img/icons/subtask/close.svg"
+                <button id="subtask_close" class="btn--subtask close"><img src="../assets/img/icons/subtask/close.svg"
                     alt="x" /></button>
                 <span class="div-vert"></span>
-                <button id="subtask-save" class="btn--subtask check"><img src="../assets/img/icons/subtask/check.svg"
+                <button id="subtask_save" class="btn--subtask check"><img src="../assets/img/icons/subtask/check.svg"
                     alt="check" /></button>
               </div>
             </div>
@@ -168,11 +170,11 @@
           </div>
         </section>
 
-        <!-- info -->
         <section class="form-info-section">
           <p><b class="form-info">*</b> This field is required</p>
         </section>
       </form>
+
       <section class="form-footer">
         <div class="action-btns">
           <button id="form_clear" type="reset" class="btn btn--secondary clear" form="form_task"
@@ -183,7 +185,6 @@
     </article>
 
   </main>
-
   <div id="toast" class="toast">Task added to board ✅</div>
 </body>
 

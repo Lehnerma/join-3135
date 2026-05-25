@@ -2,8 +2,8 @@
  * Initial all subtasks function after loading the body
  */
 function subtaskInit() {
-  const SUBTASK_SAVE = document.getElementById("subtask-save");
-  const SUBTASK_CLEAR = document.getElementById("subtask-close");
+  const SUBTASK_SAVE = document.getElementById("subtask_save");
+  const SUBTASK_CLEAR = document.getElementById("subtask_close");
   const SUBTASK_INPUT = document.getElementById("subtask_input");
   SUBTASK_SAVE.addEventListener("click", (event) => addSubtask(event));
   SUBTASK_CLEAR.addEventListener("click", (event) => clearSubtaskInput(event));

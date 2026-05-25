@@ -31,19 +31,42 @@
   border: none;
   border-radius: 30px;
 
-  padding: clamp(4px, calc(-8.571px + 3.929vw), 48px) clamp(8px, calc(-1.143px + 2.857vw), 40px);
+  padding: clamp(16px, calc(-8.571px + 3.929vw), 48px) clamp(8px, calc(-1.143px + 2.857vw), 40px);
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
   z-index: 11;
 
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  width: clamp(310px, calc(228.571px + 25.446vw), 595px);
+
+  max-height: 95vh;
+  max-width: 525px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
 }
 
-.dialog--task {
-  width: clamp(310px, calc(228.571px + 25.446vw), 595px);
-  max-width: 525px;
-  max-height: 95vh;
+.dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+
+.dialog-wrapper {
+  overflow-y: auto;
+}
+
+.dialog--task::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dialog--task::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dialog--task::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 }
 
 .dialog .slide-in {
@@ -54,12 +77,85 @@
   animation: slideToRight 175ms ease-in-out forwards;
 }
 
-.dialog::backdrop {
-  background-color: rgba(0, 0, 0, 0.4);
+/* @media (max-width: 650px) {
+  .dialog {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 16px;
+  } 
+}*/
+
+/* ── Add Task Dialog Template ─────────────────────────── */
+
+.dialog--add-task{
+  width: 100%;
+  max-width: 1116px;
 }
+.dat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dat-headline {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-direction: row-reverse;
+}
+
+.dat-headline h1 {
+  font-size: 47px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  margin: 0;
+}
+
+.dat-title {
+  font-size: 47px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+}
+
+.dat-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dat-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dat-info {
+  padding-top: 8px;
+}
+
+.dat-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: clamp(8px, 3vw, 32px);
+  padding: 16px 0;
+}
+
+@media (min-width: 700px) {
+  .dat-form {
+    flex-direction: row;
+    gap: 32px;
+  }
+
+  .dat-col {
+    flex: 1;
+  }
+}
+
 .detail-task--header {
   padding: 8px;
 }
+
 .detail-task--category {
   display: flex;
   align-items: center;
@@ -67,7 +163,7 @@
 }
 
 .detail-task--title {
-  font-size: 61px;
+  font-size: 56px;
   font-weight: 700;
 }
 
@@ -87,9 +183,6 @@
   display: flex;
   flex-direction: column;
   margin: 24px 0;
-  overflow-y: auto;
-  max-height: 64dvh;
-  height: 100%;
 }
 
 .detail-task--prio-content {
@@ -119,12 +212,6 @@
   font-size: 19px;
 }
 
-.detail-task--subtasks-list {
-  height: 100%;
-  max-height: 100px;
-  overflow: auto;
-}
-
 .detail-task--subtask-item {
   gap: 16px;
   padding: 8px 16px;
@@ -142,7 +229,7 @@
   width: 24px;
   height: 24px;
   cursor: pointer;
-  appearance: none;
+  /* appearance: none; */
   background-repeat: no-repeat;
   background-position: center;
   object-fit: contain;
@@ -263,12 +350,14 @@
 
 .taskCreatedToast--visible {
   display: flex;
-  animation: slideFromRight 175ms ease-in-out forwards;
+  opacity: 1;
+  transition: opacity 300ms ease;
 }
 
 .taskCreatedToast--hidden {
   display: flex;
-  animation: slideToRight 175ms ease-in-out forwards;
+  opacity: 0;
+  transition: opacity 300ms ease;
 }
 
 .taskCreatedToast__icon {
@@ -294,5 +383,22 @@
   .detail-task--text,
   .assignee--name {
     font-size: 16px;
+  }
+}
+
+
+
+
+@media (min-width: 900px) and (max-height: 800px) {
+ 
+
+  .detail-task--content {
+    max-height: 40vh; 
+    height: auto;
+    
+  }
+
+  .detail-task--title {
+    font-size: 40px; 
   }
 }

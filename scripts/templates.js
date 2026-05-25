@@ -7,7 +7,7 @@
  */
 function getFillUserDropown(color, initials, user) {
   return `
-      <label class="user-item assignedTo" onclick="toggleUser(this)">
+      <li class="user-item assignedTo" onclick="toggleUser(this)">
         <div class="logoNameField">
           <div class="initials" style="background-color:${color}">
             ${initials}
@@ -18,8 +18,8 @@ function getFillUserDropown(color, initials, user) {
           </div>
         </div>
 
-        <input type="checkbox" value="${user.name}">
-      </label>
+        <input type="checkbox" value="${user.name}" data-color="${color}">
+      </li>
     `;
 }
 
@@ -29,7 +29,7 @@ function getFillUserDropown(color, initials, user) {
  */
 function getSubtaskTemplate(title, index) {
   return `
-    <span id="subtask${index}" class="subtask-text">${escapeHtml(title)}</span>
+    <span id="subtask_${index}" class="subtask-text">${escapeHtml(title)}</span>
     <div class="subtask-item--btns">
       <button type="button" class="btn--subtask btn--delete">
         <img src="../assets/img/icons/subtask/bin.svg" alt="delete" />
@@ -52,11 +52,31 @@ function getSubtaskTemplate(title, index) {
  */
 function getAssignedToItemTemplate(id, name, initials, color, checked = false) {
   return `
-    <li class="custom-dropdown__item${checked ? " selected" : ""}" data-value="${id}" data-name="${name}">
+    <li class="custom-dropdown__item${checked ? " selected" : ""}" data-value="${id}" data-name="${name}" data-color="${color}">
       <span class="contact-badge" style="background-color: ${color}">${initials}</span>
       <span class="custom-dropdown__name">${name}</span>
       <input type="checkbox" class="custom-dropdown__checkbox"${checked ? " checked" : ""} />
     </li>`;
+}
+
+/**
+ * Returns the HTML for a single assigned-user circle badge.
+ * @param {string} name     - Full name of the user (used for title attribute).
+ * @param {string} initials - 1–2 letter initials.
+ * @param {string} color    - CSS background color.
+ * @returns {string} HTML string for one circle.
+ */
+function getUserCircleTemplate(name, initials, color) {
+  return `<div class="assigned-circle" style="background-color:${color}" title="${name}">${initials}</div>`;
+}
+
+/**
+ * Returns the HTML wrapper containing all assigned-user circles.
+ * @param {string} circlesHtml - Concatenated circle HTML strings.
+ * @returns {string} HTML string for the wrapper div.
+ */
+function getAssignedUsersTemplate(circlesHtml) {
+  return `<div class="assigned-wrapper">${circlesHtml}</div>`;
 }
 
 /**
@@ -249,7 +269,7 @@ function getEditTaskDialogTemplate() {
         <div class="input-section">
           <label for="title" class="required">Title</label>
           <input id="title" class="input" type="text" placeholder="Enter a title" required />
-          <span class="field-error">This field is required</span>
+          <span class="field-error dnone">This field is required</span>
         </div>
 
         <div class="input-section">
@@ -260,7 +280,7 @@ function getEditTaskDialogTemplate() {
         <div class="input-section">
           <label for="due_date" class="required">Due date</label>
           <input id="due_date" class="input input-date" type="date" required />
-          <span class="field-error">This field is required</span>
+          <span class="field-error dnone">This field is required</span>
         </div>
 
         <div class="input-section">
@@ -307,9 +327,9 @@ function getEditTaskDialogTemplate() {
           <div class="input--section">
             <input id="subtask_input" class="input" type="text" placeholder="Add subtask" />
             <div class="subtask--btns">
-              <button type="button" id="subtask-close" class="btn--subtask close" onclick="clearSubtaskInput(event)"><img src="../assets/img/icons/subtask/close.svg"></button>
+              <button type="button" id="subtask_close" class="btn--subtask close" onclick="clearSubtaskInput(event)"><img src="../assets/img/icons/subtask/close.svg"></button>
               <span class="div-vert"></span>
-              <button type="button" id="subtask-save" class="btn--subtask check" onclick="addSubtask(event)"><img src="../assets/img/icons/subtask/check.svg"></button>
+              <button type="button" id="subtask_save" class="btn--subtask check" onclick="addSubtask(event)"><img src="../assets/img/icons/subtask/check.svg"></button>
             </div>
           </div>
           <ul id="subtask_list" class="subtask-list"></ul>
@@ -317,7 +337,7 @@ function getEditTaskDialogTemplate() {
       </form>
 
       <footer class="edit-task-dialog__footer">
-        <button id="btnEditTaskOk" type="submit" form="form_edit_task" class="btn btn--ok">
+        <button id="btn_edit_task_ok" type="submit" form="form_edit_task" class="btn btn--ok">
           Ok <img src="../assets/img/icons/subtask/check.svg" alt="✓">
         </button>
       </footer>
@@ -331,23 +351,20 @@ function getEditTaskDialogTemplate() {
  */
 function getAddTaskDialogTemplate() {
   return /*html*/ `
-    <div class="task-container-dialog">
-      <!-- Schließbutton oben rechts -->
-      <div class="dialog-add-headline">
+    <div class="dat-container">
+      <div class="dat-headline">
         <button class="btn btn--close" onclick="closeAddTaskDialog()">
           <img src="../assets/img/icons/subtask/close.svg" alt="X">
         </button>
-
-        <h1 class="input--title">Add Task</h1>
+        <h1 class="dat-title">Add Task</h1>
       </div>
 
-      <form class="form-task form-columns" id="form_task">
-        <!-- Linke Spalte -->
-        <section class="column left">
+      <form class="dat-form" id="form_task" novalidate>
+        <section class="dat-col">
           <div class="input-section">
             <label for="title" class="required">Title</label>
             <input id="title" class="input" type="text" placeholder="Enter a title" required />
-            <span class="field-error">This field is required</span>
+            <span id="title_error" class="field-error dnone">This field is required</span>
           </div>
           <div class="input-section">
             <label for="description">Description</label>
@@ -360,10 +377,7 @@ function getAddTaskDialogTemplate() {
           </div>
         </section>
 
-        <div class="divider"></div>
-
-        <!-- Rechte Spalte -->
-        <section class="column right">
+        <section class="dat-col">
           <div class="input-section">
             <label for="priority">Priority</label>
             <div class="priority-group">
@@ -400,6 +414,7 @@ function getAddTaskDialogTemplate() {
               <option value="Technical Task">Technical Task</option>
               <option value="User Story">User Story</option>
             </select>
+            <span id="category_error" class="field-error dnone">This field is required</span>
           </div>
 
           <div class="input-section">
@@ -407,26 +422,22 @@ function getAddTaskDialogTemplate() {
             <div class="input--section">
               <input id="subtask_input" class="input" type="text" placeholder="Add subtask" />
               <div class="subtask--btns">
-                <button type="button" id="subtask-close" class="btn--subtask close" onclick="clearSubtaskInput(event)"><img src="../assets/img/icons/subtask/close.svg"></button>
+                <button type="button" id="subtask_close" class="btn--subtask close" onclick="clearSubtaskInput(event)"><img src="../assets/img/icons/subtask/close.svg"></button>
                 <span class="div-vert"></span>
-                <button type="button" id="subtask-save" class="btn--subtask check" onclick="addSubtask(event)"><img src="../assets/img/icons/subtask/check.svg"></button>
+                <button type="button" id="subtask_save" class="btn--subtask check" onclick="addSubtask(event)"><img src="../assets/img/icons/subtask/check.svg"></button>
               </div>
             </div>
             <ul id="subtask_list" class="subtask-list"></ul>
           </div>
         </section>
-
-        <section class="form-info-section">
-          <p><b class="form-info">*</b> This field is required</p>
-        </section>
       </form>
 
-      <section class="form-footer">
-        <div class="action-btns">
-          <button id="form_clear" type="button" class="btn btn--secondary clear" onclick="clearForm()">Clear</button>
-          <button id="btnCreateTask" type="submit" form="form_task" class="btn btn--primary">Create Task</button>
-        </div>
-      </section>
+      <p class="dat-info"><b class="form-info">*</b> This field is required</p>
+
+      <div class="dat-footer">
+        <button id="form_clear" type="button" class="btn btn--secondary clear" onclick="clearForm()">Clear</button>
+        <button id="btn_create_task" type="submit" form="form_task" class="btn btn--primary">Create Task</button>
+      </div>
     </div>
   `;
 }

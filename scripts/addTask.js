@@ -2,7 +2,6 @@ const ADDTASK_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabas
 let selectedPriority = "medium";
 let subtasksList = [];
 let remoteUsers = [];
-let initialTaskStatus = sessionStorage.getItem("task-status") ?? "todo";
 sessionStorage.removeItem("task-status");
 
 /**
@@ -119,11 +118,11 @@ function sortUsersWithActiveFirst(users) {
 async function loadUsers() {
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
   try {
-    const RESPONSE = await fetch(USER_URL);
-    const DATA = await RESPONSE.json();
-    remoteUsers = Object.values(DATA);
-    const SORTET_USERS = sortUsersWithActiveFirst(remoteUsers);
-    fillUserDropdown(SORTET_USERS);
+    const response = await fetch(USER_URL);
+    const data = await response.json();
+    remoteUsers = Object.values(data);
+    const SORTED_USERS = sortUsersWithActiveFirst(remoteUsers);
+    fillUserDropdown(SORTED_USERS);
   } catch (error) {
     console.error("Fehler beim Laden der Benutzer:", error);
   }
@@ -181,8 +180,8 @@ function toggleUser(el) {
  * @returns {string[]} An array containing the names of the selected users.
  */
 function getAssignedUsers() {
-  const CHECKBOXES = document.querySelectorAll("#assigned_to_list input[type='checkbox']:checked");
-  return Array.from(CHECKBOXES).map((cb) => cb.value);
+  const checkboxes = document.querySelectorAll("#assigned_to_list input[type='checkbox']:checked");
+  return Array.from(checkboxes).map((cb) => ({ name: cb.value, color: cb.dataset.color }));
 }
 
 /**
@@ -191,10 +190,12 @@ function getAssignedUsers() {
  */
 function toggleDropdown(e) {
   e.stopPropagation();
-  const DROPDOWN = document.getElementById("assigned_to_dropdown");
-  const ASSIGNEE_LIST = document.getElementById("assigned_to_list");
-  DROPDOWN.classList.toggle("open");
-  ASSIGNEE_LIST.scrollTo({ top: 0 });
+  const dropdown = document.getElementById("assigned_to_dropdown");
+  const assigneeList = document.getElementById("assigned_to_list");
+ if (dropdown) {
+    dropdown.classList.toggle("open");
+    assigneeList?.scrollTo({ top: 0 });
+  }
 }
 
 /**
@@ -224,9 +225,9 @@ function initDropdownOutsideClick() {
  * Updates the preview icons of the assigned users below the dropdown.
  */
 function updateAssignedPreview() {
-  const CONTAINER = document.getElementById("assigned_preview");
-  const SELECTED = getAssignedUsers();
-  CONTAINER.innerHTML = renderAssignedUsers(SELECTED);
+  const container = document.getElementById("assigned_preview");
+  const selected = getAssignedUsers();  
+  container.innerHTML = renderAssignedUsers(selected);
 }
 
 /**
@@ -246,55 +247,51 @@ function buildTaskCard(task) {
   `;
 }
 
+function getUserInitials(name) {
+  const parts = name.trim().split(" ");
+  return parts.length > 1
+    ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+    : parts[0].slice(0, 2).toUpperCase();
+}
+
 /**
  * Creates the HTML icons (circles with initials) for assigned users.
- * @param {string[]} users - Array of usernames.
+ * @param {Array<{name: string, color: string}>} users - Array of user objects.
  * @returns {string} HTML string of user icons.
  */
 function renderAssignedUsers(users = []) {
   if (!Array.isArray(users) || users.length === 0) return "";
-  let html = "";
-  users.forEach((name) => {
-    const FIRST_LETTER = name.charAt(0).toUpperCase();
-    const COLOR = contactColors?.[FIRST_LETTER] || "#ccc";
-    if (!name) return;
-    const PARTS = name.trim().split(" ");
-    let initials = "";
-    if (PARTS.length > 1) {
-      initials = (PARTS[0][0] + PARTS[1][0]).toUpperCase();
-    } else {
-      initials = PARTS[0].slice(0, 2).toUpperCase();
-    }
-    html += `
-      <div class="assigned-circle" style="background-color:${COLOR}" title="${name}">
-        ${initials}
-      </div>
-    `;
-  });
-  return `<div class="assigned-wrapper">${html}</div>`;
+  const circles = users
+    .filter(({ name }) => name)
+    .map(({ name, color }) => getUserCircleTemplate(name, getUserInitials(name), color))
+    .join("");
+  return getAssignedUsersTemplate(circles);
 }
 
 /**
  * Initializes the event listeners for subtask input.
  */
 function subtaskInit() {
-  const SUBTASK_SAVE = document.getElementById("subtask-save");
-  const SUBTASK_CLEAR = document.getElementById("subtask-close");
+  const SUBTASK_SAVE = document.getElementById("subtask_save");
+  const SUBTASK_CLEAR = document.getElementById("subtask_close");
   const SUBTASK_INPUT = document.getElementById("subtask_input");
-  SUBTASK_SAVE.addEventListener("click", (event) => addSubtask(event));
-  SUBTASK_CLEAR.addEventListener("click", (event) => clearSubtaskInput(event));
-  SUBTASK_INPUT.addEventListener("keydown", (e) => {
+
+  if (!SUBTASK_SAVE || !SUBTASK_CLEAR || !SUBTASK_INPUT) return;
+  SUBTASK_SAVE.onclick = (event) => addSubtask(event);
+  SUBTASK_CLEAR.onclick = (event) => clearSubtaskInput(event);
+  
+  SUBTASK_INPUT.onkeydown = (e) => {
     if (e.key === "Enter") {
       addSubtask(e);
     }
-  });
+  };
 }
 
 /**
  * Collects all form data and creates a task object for the database.
  * @returns {Object} The finished task object.
  */
-function buildTaskObj() {
+function buildTaskObj(status = "todo") {
 
   const val = (id) => document.getElementById(id).value;
   return {
@@ -304,7 +301,7 @@ function buildTaskObj() {
     category: val("category"),
     assignedTo: getAssignedUsers() || [],
     priority: selectedPriority,
-    status: initialTaskStatus,
+    status: status,
     subtasks: subtasksList,
   };
 }
@@ -338,7 +335,7 @@ function renderSubtaskItem(index, title) {
   const LI = document.createElement("li");
   LI.className = "subtask-item input--section";
   LI.dataset.index = index;
-  LI.id = "subtask" + index;
+  LI.id = "subtask_" + index;
   LI.innerHTML = getSubtaskTemplate(title, index);
   addSubtaskEventListener(LI);
   LIST.appendChild(LI);
@@ -465,9 +462,16 @@ async function sendTaskRequest(task, btn) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(task),
     });
-    if (RESPONSE.ok) {
-      document.getElementById("toast")?.classList.add("show");
-      setTimeout(() => { window.location.href = "board.html"; }, 1000);
+    if (response.ok) {
+      const onBoard = !!document.getElementById("task_created_toast");
+      if (onBoard) {
+        closeAddTaskDialog();
+        await showBoardToast();
+        loadTasksFromFirebase();
+      } else {
+        document.getElementById("toast")?.classList.add("show");
+        setTimeout(() => { window.location.href = "board.html"; }, 1000);
+      }
     } else if (btn) {
       btn.disabled = false;
     }
@@ -490,7 +494,8 @@ async function createTask() {
     if (BTN) BTN.disabled = false; // Fix: Button wird bei Fehlern wieder freigegeben
     return;
   }
-  await sendTaskRequest(buildTaskObj(), BTN);
+  const status = sessionStorage.getItem("task-status") ?? "todo";
+  await sendTaskRequest(buildTaskObj(status), btn);
 }
 
 
