@@ -37,12 +37,12 @@
       </section>
 
       <section class="input--container">
-        <div class="input--section">
-          <input class="input input--login" id="email_input_login" type="email" name="email" placeholder="Email"
-            autocomplete="email" pattern="[a-z0-9._%\+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
-            title="Please enter a valid email address (e.g., name@example.com)." />
-          <img src="./assets/img/icons/input/mail.svg" alt="letter icon" class="input--icon" />
-        </div>
+          <div class="input--section" id="email_container_login">
+            <input class="input input--login" id="email_input_login" type="email" name="email" placeholder="Email"
+              autocomplete="email" pattern="[a-z0-9._%\+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+              title="Please enter a valid email address (e.g., name@example.com)." />
+            <img src="./assets/img/icons/input/mail.svg" alt="letter icon" class="input--icon" />
+          </div>
 
         <div class="input--section" id="pw_container_login">
           <input id="pwInputLogin" class="input" oninput="changeLockToEye('pwInputLogin','lockLogin')" type="password"
