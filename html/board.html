@@ -162,8 +162,8 @@
         <form class="edit-task--form" id="form_edit_task">
           <section class="input-section">
             <label for="title" class="">Title</label>
-            <input id="title" class="input" type="text" placeholder="Enter a title" required />
-            <span class="field-error dnone">This field is required</span>
+            <input id="title" class="input" type="text" placeholder="Enter a title" required oninput="validetInput(this)"/>
+            <span id="title_er" class="field-error dnone">This field is required</span>
           </section>
 
           <section class="input-section">
@@ -174,7 +174,7 @@
           <section class="input-section">
             <label for="due_date" class="">Due date</label>
             <input id="due_date" class="input input-date" type="date" required />
-            <span class="field-error dnone">This field is required</span>
+            <span id="due_date_er" class="field-error dnone">This field is required</span>
           </section>
 
           <section class="input-section">
@@ -208,6 +208,7 @@
               <option value="Technical Task">Technical Task</option>
               <option value="User Story">User Story</option>
             </select>
+            <span id="category_er" class="field-error dnone">This field is required</span>
           </section>
 
           <section class="input-section">

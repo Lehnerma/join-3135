@@ -1,6 +1,18 @@
 let current_detail_task = null;
 
 /**
+ * Initializes all event listeners for the board by splitting search and dialog logic.
+ *
+ * @function initBoardTask
+ * @returns {void}
+ */
+function initBoardTask() {
+  initBoardSearch();
+  initBoardDialogs();
+  validetInput();
+}
+
+/**
  * Closes a dialog with a slide-out animation.
  * It waits for the animation to finish before closing the dialog completely.
  *
@@ -43,16 +55,6 @@ function showTaskCreatedToast() {
   }, 1500);
 }
 
-/**
- * Initializes all event listeners for the board by splitting search and dialog logic.
- *
- * @function initBoardTask
- * @returns {void}
- */
-function initBoardTask() {
-  initBoardSearch();
-  initBoardDialogs();
-}
 
 /**
  * Handles the search input and search button event listeners.

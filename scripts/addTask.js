@@ -14,7 +14,7 @@ function init() {
   loadUsers();
   initDropdownOutsideClick();
   initAssignedPreviewResize();
-  initValidationClearListeners();
+  validetInput();
 }
 
 /**
@@ -27,53 +27,6 @@ function btnInit() {
   registerClearFormListener(CLEAR_FORM);
 }
 
-/**
- * Adds the red error border to an input and shows the error message.
- * @param {HTMLElement} input - The input element to mark invalid.
- * @param {string} errorId - The ID of the error message span.
- * @param {string} message - The error text to display (optional).
- */
-function setError(input, errorId, message = "") {
-  input.classList.add("input-invalid");
-
-  const ERROR_EL = document.getElementById(errorId);
-  if (ERROR_EL) {
-    ERROR_EL.classList.remove("dnone");
-    if (message) {
-      ERROR_EL.textContent = message;
-    }
-  }
-}
-
-/**
- * Removes the red error border from an input and hides the error message.
- * @param {HTMLElement} input - The input element to clear.
- * @param {string} errorId - The ID of the error message span.
- */
-function clearError(input, errorId) {
-  input.classList.remove("input-invalid");
-  const ERROR_EL = document.getElementById(errorId);
-  if (ERROR_EL) {
-    ERROR_EL.classList.add("dnone");
-  }
-}
-
-/**
- * Attaches input/change listeners to required fields so validation errors
- * are cleared as soon as the user starts filling in the field.
- */
-function initValidationClearListeners() {
-  const fields = [
-    { id: "title",    errorId: "title_error",    event: "input"  },
-    { id: "due_date", errorId: "date_error",     event: "input"  },
-    { id: "category", errorId: "category_error", event: "change" },
-  ];
-  fields.forEach(({ id, errorId, event }) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.addEventListener(event, () => clearError(el, errorId));
-  });
-}
 
 /**
  * Registers the submit event listener on the task form.
@@ -352,6 +305,9 @@ function buildTaskObj(status = "todo") {
   };
 }
 
+
+// ###### Validate Tasks ########
+
 /**
  * Checks all three required fields and shows/hides error messages.
  * @param {HTMLElement} title - The title input.
@@ -369,6 +325,74 @@ function validateTaskForm(title, dueDate, category) {
   HAS_CATEGORY ? clearError(category, "category_error") : setError(category, "category_error", "This field is required");
 
   return HAS_TITLE && HAS_DATE && HAS_CATEGORY;
+}
+
+
+/**
+ * Adds the red error border to an input and shows the error message.
+ * @param {HTMLElement} input - The input element to mark invalid.
+ * @param {string} errorId - The ID of the error message span.
+ * @param {string} message - The error text to display (optional).
+ */
+function setError(input, errorId, message = "") {
+  input.classList.add("input-invalid");
+
+  const ERROR_EL = document.getElementById(errorId);
+  if (ERROR_EL) {
+    ERROR_EL.classList.remove("dnone");
+    if (message) {
+      ERROR_EL.textContent = message;
+    }
+  }
+}
+
+/**
+ * Removes the red error border from an input and hides the error message.
+ * @param {HTMLElement} input - The input element to clear.
+ * @param {string} errorId - The ID of the error message span.
+ */
+function clearError(input, errorId) {
+  input.classList.remove("input-invalid");
+  const ERROR_EL = document.getElementById(errorId);
+  if (ERROR_EL) {
+    ERROR_EL.classList.add("dnone");
+  }
+}
+
+/**
+ * Attaches input/change listeners to required fields.
+ * Shows the error message when the field is empty, hides it when filled.
+ */
+// function initValidationClearListeners() {
+//   const fields = [
+//     { id: "title",    errorId: "title_er",    event: "input"  },
+//     { id: "due_date", errorId: "due_date_er", event: "input"  },
+//     { id: "category", errorId: "category_er", event: "change" },
+//   ];
+//   fields.forEach(({ id, errorId, event }) => {
+//     const el = document.getElementById(id);
+//     if (!el) return;
+//     el.addEventListener(event, () => {
+//       const hasValue = el.value.trim() !== "";
+//       hasValue ? clearError(el, errorId) : setError(el, errorId);
+//     });
+//   });
+// }
+
+function validetInput(){
+    const fields = [
+    { id: "title",    errorId: "title_er",    event: "input"  },
+    { id: "due_date", errorId: "due_date_er", event: "onchange"  },
+    { id: "category", errorId: "category_er", event: "change" },
+  ];
+  fields.forEach(({ id, errorId, event }) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener(event, () => {
+      const hasValue = el.value.trim() !== "";
+      hasValue ? clearError(el, errorId) : setError(el, errorId);
+    });
+  });
 }
 
 /**

@@ -143,7 +143,7 @@ function getTaskCardTemplet(title, description, category, id, priority) {
     </section>
     <footer class="task--footer">
       <ul class="task--assignees" aria-label="Zugewiesene Personen">
-
+        
       </ul>
       <img src="../assets/img/icons/prio/${priority}.svg" alt="${priority} priority" class="prio-icon">
     </footer>
