@@ -383,18 +383,18 @@ function getAddTaskDialogTemplate() {
       <form class="dat-form" id="form_task" novalidate>
         <section class="dat-col">
           <div class="input-section">
-            <label for="title" class="required">Title</label>
-            <input id="title" class="input" type="text" placeholder="Enter a title" required />
-            <span id="title_error" class="field-error dnone">This field is required</span>
+            <label for="title_edit" class="required">Title</label>
+            <input id="title_edit" class="input" type="text" placeholder="Enter a title" required />
+            <span id="title_edit_er" class="field-error dnone">This field is required</span>
           </div>
           <div class="input-section">
             <label for="description">Description</label>
             <textarea id="description" class="input" placeholder="Enter a Description" rows="3"></textarea>
           </div>
           <div class="input-section">
-            <label for="due_date" class="required">Due date</label>
-            <input id="due_date" class="input input-date" type="date" required />
-            <span class="field-error">This field is required</span>
+            <label for="due_date_edit" class="required">Due date</label>
+            <input id="due_date_edit" class="input input-date" type="date" required />
+            <span id="date_edit_er" class="field-error dnone">This field is required</span>
           </div>
         </section>
 
@@ -429,13 +429,13 @@ function getAddTaskDialogTemplate() {
           </div>
 
           <div class="input-section">
-            <label for="category" class="required">Category</label>
-            <select id="category" class="input dropdown form--select" required>
+            <label for="category_edit" class="required">Category</label>
+            <select id="category_edit" class="input dropdown form--select" required>
               <option value="" selected disabled>Select task category</option>
               <option value="Technical Task">Technical Task</option>
               <option value="User Story">User Story</option>
             </select>
-            <span id="category_error" class="field-error dnone">This field is required</span>
+            <span id="category_edit_er" class="field-error dnone">This field is required</span>
           </div>
 
           <div class="input-section">

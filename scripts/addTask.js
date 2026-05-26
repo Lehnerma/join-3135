@@ -128,7 +128,6 @@ function fillUserDropdown(users) {
     const USER = users[USER_ID];
     if (!USER || !USER.name) continue;
 
-    const FIRST_LETTER = USER.name.charAt(0).toUpperCase();
     const COLOR = USER.color || "#ccc";
     const INITIALS = USER.name.charAt(0);
     html += getFillUserDropown(COLOR, INITIALS, USER);
@@ -237,23 +236,6 @@ function getAssignedDropdownCapacity() {
 }
 
 /**
- * Builds a basic task card HTML string.
- * @param {Object} task - The task object with title, description and assignedTo.
- * @returns {string} HTML for the task card.
- */
-function buildTaskCard(task) {
-  return `
-    <div class="task-card">
-      <div class="task-title">${task.title}</div>
-      <div class="task-desc">${task.description}</div>
-      <div class="assigned-users">
-        ${renderAssignedUsers(task.assignedTo)}
-      </div>
-    </div>
-  `;
-}
-
-/**
  * Extracts initials from a full name.
  * @param {string} name - The user's full name.
  * @returns {string} One or two uppercase letters.
@@ -292,12 +274,14 @@ function renderAssignedUsers(users = []) {
  * @returns {Object} The task object.
  */
 function buildTaskObj(status = "todo") {
-  const val = (id) => document.getElementById(id).value;
+  const val = (id) => document.getElementById(id)?.value ?? "";
+  const isDialog = !!document.getElementById("title_edit");
+  const sfx = isDialog ? "_edit" : "";
   return {
-    title: val("title"),
+    title: val("title" + sfx),
     description: val("description"),
-    dueDate: val("due_date"),
-    category: val("category"),
+    dueDate: val("due_date" + sfx),
+    category: val("category" + sfx),
     assignedTo: getAssignedUsers() || [],
     priority: selectedPriority,
     status: status,
@@ -320,9 +304,9 @@ function validateTaskForm(title, dueDate, category) {
   const HAS_DATE = !!dueDate.value;
   const HAS_CATEGORY = !!category.value;
 
-  HAS_TITLE ? clearError(title, "title_error") : setError(title, "title_error", "This field is required");
-  HAS_DATE ? clearError(dueDate, "date_error") : setError(dueDate, "date_error", "This field is required");
-  HAS_CATEGORY ? clearError(category, "category_error") : setError(category, "category_error", "This field is required");
+  HAS_TITLE ? clearError(title, "title_er") : setError(title, "title_er");
+  HAS_DATE ? clearError(dueDate, "date_er") : setError(dueDate, "date_er");
+  HAS_CATEGORY ? clearError(category, "category_er") : setError(category, "category_er");
 
   return HAS_TITLE && HAS_DATE && HAS_CATEGORY;
 }
@@ -332,18 +316,10 @@ function validateTaskForm(title, dueDate, category) {
  * Adds the red error border to an input and shows the error message.
  * @param {HTMLElement} input - The input element to mark invalid.
  * @param {string} errorId - The ID of the error message span.
- * @param {string} message - The error text to display (optional).
  */
-function setError(input, errorId, message = "") {
+function setError(input, errorId) {
   input.classList.add("input-invalid");
-
-  const ERROR_EL = document.getElementById(errorId);
-  if (ERROR_EL) {
-    ERROR_EL.classList.remove("dnone");
-    if (message) {
-      ERROR_EL.textContent = message;
-    }
-  }
+  document.getElementById(errorId)?.classList.remove("dnone");
 }
 
 /**
@@ -360,37 +336,26 @@ function clearError(input, errorId) {
 }
 
 /**
- * Attaches input/change listeners to required fields.
- * Shows the error message when the field is empty, hides it when filled.
+ * Attaches input/change/blur listeners to required fields.
+ * Clears error when a value is entered; shows error when field is left empty.
  */
-// function initValidationClearListeners() {
-//   const fields = [
-//     { id: "title",    errorId: "title_er",    event: "input"  },
-//     { id: "due_date", errorId: "due_date_er", event: "input"  },
-//     { id: "category", errorId: "category_er", event: "change" },
-//   ];
-//   fields.forEach(({ id, errorId, event }) => {
-//     const el = document.getElementById(id);
-//     if (!el) return;
-//     el.addEventListener(event, () => {
-//       const hasValue = el.value.trim() !== "";
-//       hasValue ? clearError(el, errorId) : setError(el, errorId);
-//     });
-//   });
-// }
-
-function validetInput(){
-    const fields = [
-    { id: "title",    errorId: "title_er",    event: "input"  },
-    { id: "due_date", errorId: "due_date_er", event: "onchange"  },
-    { id: "category", errorId: "category_er", event: "change" },
+function validetInput() {
+  const fields = [
+    { id: "title",          errorId: "title_er",        event: "input"  },
+    { id: "due_date",       errorId: "date_er",         event: "click" },
+    { id: "category",       errorId: "category_er",     event: "change" },
+    { id: "title_edit",     errorId: "title_edit_er",   event: "input"  },
+    { id: "due_date_edit",  errorId: "date_edit_er",    event: "click" },
+    { id: "category_edit",  errorId: "category_edit_er", event: "change" },
   ];
   fields.forEach(({ id, errorId, event }) => {
     const el = document.getElementById(id);
     if (!el) return;
     el.addEventListener(event, () => {
-      const hasValue = el.value.trim() !== "";
-      hasValue ? clearError(el, errorId) : setError(el, errorId);
+      el.value.trim() ? clearError(el, errorId) : setError(el, errorId);
+    });
+    el.addEventListener("blur", () => {
+      if (!el.value.trim()) setError(el, errorId);
     });
   });
 }
@@ -430,31 +395,34 @@ async function sendTaskRequest(task, btn) {
  * Validates the form and, if valid, sends the task to the backend.
  */
 async function createTask() {
-  const TITLE = document.getElementById("title");
-  const DUE_DATE = document.getElementById("due_date");
-  const CATEGORY = document.getElementById("category");
+  const isDialog = !!document.getElementById("title_edit");
+  const sfx = isDialog ? "_edit" : "";
+  const TITLE    = document.getElementById("title"    + sfx);
+  const DUE_DATE = document.getElementById("due_date" + sfx);
+  const CATEGORY = document.getElementById("category" + sfx);
   const BTN = document.getElementById("btnCreateTask");
   if (BTN) BTN.disabled = true;
-  if (!validateTaskForm(TITLE, DUE_DATE, CATEGORY)) {
+
+  const HAS_TITLE    = !!TITLE?.value.trim();
+  const HAS_DATE     = !!DUE_DATE?.value;
+  const HAS_CATEGORY = !!CATEGORY?.value;
+
+  if (isDialog) {
+    HAS_TITLE    ? clearError(TITLE, "title_edit_er")       : setError(TITLE, "title_edit_er");
+    HAS_DATE     ? clearError(DUE_DATE, "date_edit_er")     : setError(DUE_DATE, "date_edit_er");
+    HAS_CATEGORY ? clearError(CATEGORY, "category_edit_er") : setError(CATEGORY, "category_edit_er");
+  } else {
+    HAS_TITLE    ? clearError(TITLE, "title_er")       : setError(TITLE, "title_er");
+    HAS_DATE     ? clearError(DUE_DATE, "date_er")     : setError(DUE_DATE, "date_er");
+    HAS_CATEGORY ? clearError(CATEGORY, "category_er") : setError(CATEGORY, "category_er");
+  }
+
+  if (!HAS_TITLE || !HAS_DATE || !HAS_CATEGORY) {
     if (BTN) BTN.disabled = false;
     return;
   }
   const status = sessionStorage.getItem("task-status") ?? "todo";
   await sendTaskRequest(buildTaskObj(status), BTN);
-}
-
-/**
- * Posts a task object directly and returns the parsed JSON response.
- * @param {Object} task - The task to save.
- * @returns {Promise<Object>} The response body as JSON.
- */
-async function postTask(task) {
-  const RESPONSE = await fetch(ADDTASK_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(task),
-  });
-  return RESPONSE.json();
 }
 
 /**
@@ -471,7 +439,7 @@ function clearForm() {
   clearSubtaskInput(new Event("reset"));
 
   /* Reset all validation errors */
-  clearError(document.getElementById("title"), "title_error");
-  clearError(document.getElementById("due_date"), "date_error");
-  clearError(document.getElementById("category"), "category_error");
+  clearError(document.getElementById("title"), "title_er");
+  clearError(document.getElementById("due_date"), "date_er");
+  clearError(document.getElementById("category"), "category_er");
 }

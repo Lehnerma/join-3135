@@ -472,6 +472,7 @@ function openAddTaskDialog() {
   initDropdownOutsideClick();
   selectedPriority = "medium";
   subtasksList = [];
+  validetInput();
 }
 
 /**
