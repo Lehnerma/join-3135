@@ -227,9 +227,9 @@ input:focus {
 }
 
 .invalid-contact-form::after {
-  content: "Check your name and email. Please try again.";
+  content: "Check your name and email.";
   position: absolute;
-  bottom: -28px;
+  bottom: -24px;
   left: 0;
   color: var(--faulty-entry-color);
   font-size: 16px;
