@@ -141,7 +141,7 @@ function fillUserDropdown(users) {
 function filterUsers() {
   const SEARCH = document.getElementById("assigned_to_search").value.toLowerCase();
   const FILTERED_USERS = remoteUsers.filter((user) => user.name.toLowerCase().includes(SEARCH));
-  fillUserDropdown(FILTERED_USERS);
+  fillUserDropdown(sortUsersWithActiveFirst(FILTERED_USERS));
 }
 
 /**
