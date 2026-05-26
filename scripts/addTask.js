@@ -13,6 +13,7 @@ function init() {
   initDateInput();
   loadUsers();
   initDropdownOutsideClick();
+  initAssignedPreviewResize();
 }
 
 /**
@@ -245,6 +246,27 @@ function updateAssignedPreview() {
 }
 
 /**
+ * Re-renders the assigned preview on window resize using debounce.
+ */
+function initAssignedPreviewResize() {
+  let debounceTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(updateAssignedPreview, 150);
+  });
+}
+
+/**
+ * Returns how many 36px slots fit inside the #assigned_to_dropdown width.
+ * @returns {number} Number of visible badge slots (minimum 1).
+ */
+function getAssignedDropdownCapacity() {
+  const dropdown = document.getElementById("assigned_to_dropdown");
+  const width = dropdown?.offsetWidth ?? 0;
+  return Math.max(1, Math.floor(width / 34));
+}
+
+/**
  * Builds a basic task card HTML string.
  * @param {Object} task - The task object with title, description and assignedTo.
  * @returns {string} HTML for the task card.
@@ -275,17 +297,24 @@ function getUserInitials(name) {
 
 /**
  * Creates the colored circles with initials for assigned users.
+ * Shows up to 10 circles; if more exist, appends a "+N" overflow badge.
  * @param {Array<{name: string, color: string}>} users - List of user objects.
  * @returns {string} HTML string with user badges.
  */
 function renderAssignedUsers(users = []) {
   if (!Array.isArray(users) || users.length === 0) return "";
-  const circles = users
-    .filter(({ name }) => name)
+  const MAX_VISIBLE = getAssignedDropdownCapacity()
+  const valid = users.filter(({ name }) => name);
+  const visible = valid.slice(0, MAX_VISIBLE);
+  const remaining = valid.length - MAX_VISIBLE;
+  const circles = visible
     .map(({ name, color }) => getUserCircleTemplate(name, getUserInitials(name), color))
     .join("");
-  return getAssignedUsersTemplate(circles);
+  const more = remaining > 0 ? getAssignedUsersMoreTemplate(remaining) : "";
+  return getAssignedUsersTemplate(circles + more);
 }
+
+
 
 /**
  * Gathers all form values and builds a task object ready for the API.

@@ -234,6 +234,12 @@ main {
   font-size: 12px;
 }
 
+.assigned-circle--more {
+  background: #e0e0e0;
+  color: #333;
+  font-weight: 600;
+}
+
 .option {
   display: flex;
   gap: 10px;
@@ -409,6 +415,9 @@ main {
   .medium-active,
   .low-active {
     font-size: 21px;
+  }
+  #assigned_to_dropdown{
+    max-width: 464px;
   }
 }
 

@@ -76,7 +76,16 @@ function getUserCircleTemplate(name, initials, color) {
  * @returns {string} HTML string for the wrapper div.
  */
 function getAssignedUsersTemplate(circlesHtml) {
-  return `<div class="assigned-wrapper">${circlesHtml}</div>`;
+  return `<ul class="assigned-wrapper">${circlesHtml}</ul>`;
+}
+
+/**
+ * Returns the HTML for a "+N" overflow circle badge.
+ * @param {number} count - Number of hidden users.
+ * @returns {string} HTML string for the overflow circle.
+ */
+function getAssignedUsersMoreTemplate(count) {
+  return `<li class="assigned-circle assigned-circle--more" title="+${count} weitere">+${count}</li>`;
 }
 
 /**
@@ -139,6 +148,18 @@ function getTaskCardTemplet(title, description, category, id, priority) {
       <img src="../assets/img/icons/prio/${priority}.svg" alt="${priority} priority" class="prio-icon">
     </footer>
   </article>
+</li>`;
+}
+
+/**
+ * Returns the HTML for the "+N" overflow badge when more assignees exist than are shown.
+ * @param {number} count - Number of hidden assignees.
+ * @returns {string} HTML string for the overflow list item.
+ */
+function getAssigneeMoreTemplate(count) {
+  return `
+<li class="assignee">
+  <abbr class="assignee--initials assignee--more" title="+${count} weitere">+${count}</abbr>
 </li>`;
 }
 
