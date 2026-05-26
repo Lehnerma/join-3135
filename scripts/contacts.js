@@ -9,7 +9,7 @@ const contactColors = [
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-let users = []; 
+let users = [];
 let editName = '', editEmail = '', editPhone = '', editUserIndex = '';
 let user = {};
 let colorIsAlreadyActive;
@@ -39,7 +39,7 @@ async function getUsers() {
   try {
     const RESPONSE = await fetch(USERS_URL);
     const RESULT = await RESPONSE.json();
-    users = []; 
+    users = [];
     for (let key in RESULT) {
       const PERSON = RESULT[key];
       PERSON.firebaseKey = key;
@@ -124,6 +124,7 @@ function openContactDialog() {
   dialogRef.classList.remove('hide');
   dialogRef.innerHTML = renderHtmlContactDialogTpl();
   dialogRef.showModal();
+  initContactFormValidation();
 }
 
 /**
@@ -289,6 +290,7 @@ function buildContactObject() {
  * Main function to create and save a new contact.
  */
 async function createContact() {
+  if (!addContactCheckInputValue()) return;
   const contactData = buildContactObject();
   if (!contactData) return;
   const btn = document.getElementById('btn_create_contact');
@@ -426,3 +428,84 @@ function openEditMenu(event) {
   event.stopPropagation();
   document.querySelector('.edit-delete-container')?.classList.toggle('show');
 }
+
+/**
+ * Prevents the dialog from closing when clicking inside the dialog container.
+ * If the click is on the backdrop (outside .dialog-container), closes the dialog.
+ * @param {Event} event - The click event.
+ */
+function closeDialogOutsite(event) {
+  event.stopPropagation();
+}
+
+function getContactFormElements() {
+  return {
+    nameContainer: document.getElementById('add_name'),
+    emailContainer: document.getElementById('add_email'),
+    phoneContainer: document.getElementById('add_phone'),
+    nameInput: document.getElementById('create_name'),
+    emailInput: document.getElementById('create_email'),
+  };
+}
+
+function clearAllContactErrors() {
+  const els = getContactFormElements();
+  [els.nameContainer, els.emailContainer].forEach(el => el?.classList.remove('invalid-login'));
+  els.phoneContainer?.classList.remove('invalid-contact-form');
+}
+
+function initContactFormValidation() {
+  const els = getContactFormElements();
+  const inputs = [els.nameInput, els.emailInput];
+  inputs.forEach(input => {
+    if (!input) return;
+    input.addEventListener('input', clearAllContactErrors);
+  });
+  if (els.emailInput) {
+    els.emailInput.addEventListener('blur', validateContactEmailOnBlur);
+    els.emailInput.addEventListener('focus', clearContactEmailError);
+  }
+}
+
+function validateContactEmailOnBlur() {
+  const els = getContactFormElements();
+  const value = els.emailInput?.value.trim();
+  if (value.length > 0 && !els.emailInput.checkValidity()) {
+    els.emailContainer?.classList.add('invalid-login');
+    els.phoneContainer?.classList.add('invalid-contact-form');
+  }
+}
+
+function clearContactEmailError() {
+  const els = getContactFormElements();
+  els.emailContainer?.classList.remove('invalid-login');
+  els.phoneContainer?.classList.remove('invalid-contact-form');
+}
+
+function addContactCheckInputValue() {
+  clearAllContactErrors();
+  const els = getContactFormElements();
+  const nameVal = els.nameInput?.value.trim();
+  const emailVal = els.emailInput?.value.trim();
+  let hasError = false;
+
+  if (!nameVal) {
+    els.nameContainer?.classList.add('invalid-login');
+    hasError = true;
+  }
+
+  if (!emailVal) {
+    els.emailContainer?.classList.add('invalid-login');
+    hasError = true;
+  } else if (!els.emailInput.checkValidity()) {
+    els.emailContainer?.classList.add('invalid-login');
+    hasError = true;
+  }
+
+  if (hasError) {
+    els.phoneContainer?.classList.add('invalid-contact-form');
+  }
+
+  return !hasError;
+}
+
