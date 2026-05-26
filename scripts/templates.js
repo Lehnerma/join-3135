@@ -67,7 +67,7 @@ function getAssignedToItemTemplate(id, name, initials, color, checked = false) {
  * @returns {string} HTML string for one circle.
  */
 function getUserCircleTemplate(name, initials, color) {
-  return `<div class="assigned-circle" style="background-color:${color}" title="${name}">${initials}</div>`;
+  return `<li class="assigned-circle" style="background-color:${color}" title="${name}">${initials}</li>`;
 }
 
 /**
@@ -394,7 +394,7 @@ function getAddTaskDialogTemplate() {
           <div class="input-section">
             <label for="due_date_edit" class="required">Due date</label>
             <input id="due_date_edit" class="input input-date" type="date" required />
-            <span id="date_edit_er" class="field-error dnone">This field is required</span>
+            <span id="due_date_edit_er" class="field-error dnone">This field is required</span>
           </div>
         </section>
 

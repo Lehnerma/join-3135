@@ -304,7 +304,13 @@ async function createContact() {
   if (!contactData) return;
   const btn = document.getElementById('btn_create_contact');
   if (btn) btn.disabled = true;
-  await addNewContact(contactData);
+  try {
+    await addNewContact(contactData);
+  } catch (error) {
+    console.error("Fehler beim Erstellen des Kontakts:", error);
+  } finally {
+    if (btn) btn.disabled = false;
+  }
 }
 
 /**
@@ -312,6 +318,8 @@ async function createContact() {
  * @param {Object} newContact - The new contact to be created.
  */
 async function addNewContact(newContactData) {
+  const firebaseKey = await syncNewContact(newContactData);
+  newContactData.firebaseKey = firebaseKey;
   users.push(newContactData);
   sortUserContactList();
   const index = users.findIndex(u => u.id === newContactData.id);
@@ -321,7 +329,6 @@ async function addNewContact(newContactData) {
     setTimeout(() => scrollToUser(index), 100);
   }
   closeContactDialog();
-  await syncNewContact(newContactData);
   showSuccessBanner();
 }
 
@@ -343,10 +350,11 @@ async function syncNewContact(newContactData) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(newContactData)
   });
-  if (RESPONSE.ok) {
-    const RESULT = await RESPONSE.json();
-    newContactData.firebaseKey = RESULT.name;
+  if (!RESPONSE.ok) {
+    throw new Error(`Kontakt konnte nicht gespeichert werden (${RESPONSE.status})`);
   }
+  const RESULT = await RESPONSE.json();
+  return RESULT.name;
 }
 
 /**

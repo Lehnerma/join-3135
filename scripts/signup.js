@@ -265,10 +265,10 @@ async function pushUser(user) {
       body: JSON.stringify(user),
     });
     if (!RESPONSE.ok) {
-      throw new Error(`Push the User to Firebase don't work see: ${RESPONSE.status}`);
+      throw new Error(`Status: ${RESPONSE.status}`);
     }
   } catch (er) {
-    console.error(`the function pushUser() don't worke see: ${er}`);
+    console.error(`push user status: ${er}`);
   }
 }
 

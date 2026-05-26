@@ -21,12 +21,13 @@
 
   <script src="../scripts/contacts-template.js"></script>
   <script src="../scripts/templates.js"></script>
+    <script src="../scripts/subtask.js"></script>
   <script src="../scripts/addTask.js"></script>
   <script src="../scripts/board.js"></script>
   <script src="../scripts/utilitys.js"></script>
   <script src="../scripts/board-move-task.js"></script>
   <script src="../scripts/board-dialog.js"></script>
-  <script src="../scripts/subtask.js"></script>
+
 </head>
 
 <body class="app" onload="(initUtilitys(), initBoard())">
@@ -171,8 +172,7 @@
       <form class="edit-task--form" id="form_edit_task">
         <section class="input-section">
           <label for="title" class="">Title</label>
-          <input id="title" class="input" type="text" placeholder="Enter a title" required
-            oninput="validetInput(this)" />
+          <input id="title" class="input" type="text" placeholder="Enter a title" required />
           <span id="title_er" class="field-error dnone">This field is required</span>
         </section>
 

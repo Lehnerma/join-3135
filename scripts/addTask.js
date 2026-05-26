@@ -27,7 +27,6 @@ function btnInit() {
   registerClearFormListener(CLEAR_FORM);
 }
 
-
 /**
  * Registers the submit event listener on the task form.
  * Prevents the default submission and triggers task creation.
@@ -254,9 +253,7 @@ function getAssignedDropdownCapacity() {
  */
 function getUserInitials(name) {
   const parts = name.trim().split(" ");
-  return parts.length > 1
-    ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
-    : parts[0].slice(0, 2).toUpperCase();
+  return parts.length > 1 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : parts[0].slice(0, 2).toUpperCase();
 }
 
 /**
@@ -267,18 +264,14 @@ function getUserInitials(name) {
  */
 function renderAssignedUsers(users = []) {
   if (!Array.isArray(users) || users.length === 0) return "";
-  const MAX_VISIBLE = getAssignedDropdownCapacity()
+  const MAX_VISIBLE = Math.max(2, getAssignedDropdownCapacity());
   const valid = users.filter(({ name }) => name);
   const visible = valid.slice(0, MAX_VISIBLE);
   const remaining = valid.length - MAX_VISIBLE;
-  const circles = visible
-    .map(({ name, color }) => getUserCircleTemplate(name, getUserInitials(name), color))
-    .join("");
+  const circles = visible.map(({ name, color }) => getUserCircleTemplate(name, getUserInitials(name), color)).join("");
   const more = remaining > 0 ? getAssignedUsersMoreTemplate(remaining) : "";
   return getAssignedUsersTemplate(circles + more);
 }
-
-
 
 /**
  * Gathers all form values and builds a task object ready for the API.
@@ -301,7 +294,6 @@ function buildTaskObj(status = "todo") {
   };
 }
 
-
 // ###### Validate Tasks ########
 
 /**
@@ -322,7 +314,6 @@ function validateTaskForm(title, dueDate, category) {
 
   return HAS_TITLE && HAS_DATE && HAS_CATEGORY;
 }
-
 
 /**
  * Adds the red error border to an input and shows the error message.
@@ -353,12 +344,12 @@ function clearError(input, errorId) {
  */
 function validetInput() {
   const fields = [
-    { id: "title",          errorId: "title_er",        event: "input"  },
-    { id: "due_date",       errorId: "date_er",         event: "click" },
-    { id: "category",       errorId: "category_er",     event: "change" },
-    { id: "title_edit",     errorId: "title_edit_er",   event: "input"  },
-    { id: "due_date_edit",  errorId: "date_edit_er",    event: "click" },
-    { id: "category_edit",  errorId: "category_edit_er", event: "change" },
+    { id: "title", errorId: "title_er", event: "input" },
+    { id: "due_date", errorId: "date_er", event: "click" },
+    { id: "category", errorId: "category_er", event: "change" },
+    { id: "title_edit", errorId: "title_edit_er", event: "input" },
+    { id: "due_date_edit", errorId: "due_date_edit_er", event: "click" },
+    { id: "category_edit", errorId: "category_edit_er", event: "change" },
   ];
   fields.forEach(({ id, errorId, event }) => {
     const el = document.getElementById(id);
@@ -392,7 +383,9 @@ async function sendTaskRequest(task, btn) {
         loadTasksFromFirebase();
       } else {
         document.getElementById("toast")?.classList.add("show-animation");
-        setTimeout(() => { window.location.href = "board.html"; }, 1000);
+        setTimeout(() => {
+          window.location.href = "board.html";
+        }, 1000);
       }
     } else if (btn) {
       btn.disabled = false;
@@ -409,23 +402,23 @@ async function sendTaskRequest(task, btn) {
 async function createTask() {
   const isDialog = !!document.getElementById("title_edit");
   const sfx = isDialog ? "_edit" : "";
-  const TITLE    = document.getElementById("title"    + sfx);
+  const TITLE = document.getElementById("title" + sfx);
   const DUE_DATE = document.getElementById("due_date" + sfx);
   const CATEGORY = document.getElementById("category" + sfx);
   const BTN = document.getElementById("btnCreateTask");
   if (BTN) BTN.disabled = true;
 
-  const HAS_TITLE    = !!TITLE?.value.trim();
-  const HAS_DATE     = !!DUE_DATE?.value;
+  const HAS_TITLE = !!TITLE?.value.trim();
+  const HAS_DATE = !!DUE_DATE?.value;
   const HAS_CATEGORY = !!CATEGORY?.value;
 
   if (isDialog) {
-    HAS_TITLE    ? clearError(TITLE, "title_edit_er")       : setError(TITLE, "title_edit_er");
-    HAS_DATE     ? clearError(DUE_DATE, "date_edit_er")     : setError(DUE_DATE, "date_edit_er");
+    HAS_TITLE ? clearError(TITLE, "title_edit_er") : setError(TITLE, "title_edit_er");
+    HAS_DATE ? clearError(DUE_DATE, "date_edit_er") : setError(DUE_DATE, "date_edit_er");
     HAS_CATEGORY ? clearError(CATEGORY, "category_edit_er") : setError(CATEGORY, "category_edit_er");
   } else {
-    HAS_TITLE    ? clearError(TITLE, "title_er")       : setError(TITLE, "title_er");
-    HAS_DATE     ? clearError(DUE_DATE, "date_er")     : setError(DUE_DATE, "date_er");
+    HAS_TITLE ? clearError(TITLE, "title_er") : setError(TITLE, "title_er");
+    HAS_DATE ? clearError(DUE_DATE, "date_er") : setError(DUE_DATE, "date_er");
     HAS_CATEGORY ? clearError(CATEGORY, "category_er") : setError(CATEGORY, "category_er");
   }
 
