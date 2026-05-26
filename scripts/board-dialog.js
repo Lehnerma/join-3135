@@ -55,7 +55,6 @@ function showTaskCreatedToast() {
   }, 1500);
 }
 
-
 /**
  * Handles the search input and search button event listeners.
  *
@@ -139,7 +138,7 @@ function openTaskDetailDialog(taskId) {
     current_detail_task = TASK;
     TASK_DETAIL_DIALOG.innerHTML = buildTaskDetailDialog(TASK);
     TASK_DETAIL_DIALOG.showModal();
-    TASK_DETAIL_DIALOG.querySelector(".detail-task--content").scrollTop = 0;
+    TASK_DETAIL_DIALOG.querySelector("#detail_subtask_list").scrollTop = 0;
     const ASSIGNEES_ELEMENT = document.getElementById("detail_task_assignees");
     if (ASSIGNEES_ELEMENT) {
       ASSIGNEES_ELEMENT.scrollTop = 0;
@@ -325,7 +324,6 @@ function setupEditTaskInteractions(task) {
   }
 }
 
-
 /**
  * Closes the edit task dialog instantly (no animation).
  * The detail dialog remains open underneath.
@@ -334,7 +332,6 @@ function closeEditTaskDialog() {
   const DIALOG = document.getElementById("edit_task_dialog");
   if (DIALOG) {
     DIALOG.close();
-    
   }
 }
 
