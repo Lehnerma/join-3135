@@ -80,16 +80,18 @@ function renderHeadInitals() {
   } else {
     const USER_NAME = sessionStorage.getItem("activeUserName");
     const USER_INITIALS = document.getElementById("user_menu_button");
-    const SPLITTED_NAME = USER_NAME.split(" ");
+    if (!USER_INITIALS) return;
+    if (USER_NAME === "Guest") {
+      USER_INITIALS.innerText = "G";
+      return;
+    }
+    const SPLITTED_NAME = USER_NAME.trim().split(/\s+/);
     let INITIALS = SPLITTED_NAME[0][0];
     if (SPLITTED_NAME.length > 1) {
       INITIALS += SPLITTED_NAME[SPLITTED_NAME.length - 1][0];
     }
     INITIALS = INITIALS.toUpperCase();
     USER_INITIALS.innerText = INITIALS;
-    if (USER_NAME === "Guest") {
-      USER_INITIALS.innerText = "G";
-    }
   }
 }
 

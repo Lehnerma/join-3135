@@ -208,6 +208,24 @@ input:focus {
   font-size: 16px;
 }
 
+.invalid-signup-all::after {
+  content: "Check your name email and password. Please try again.";
+  position: absolute;
+  bottom: -24px;
+  left: 0;
+  color: var(--faulty-entry-color);
+  font-size: 16px;
+}
+
+.invalid-privacy::after {
+  content: "Please accept the privacy policy.";
+  position: absolute;
+  bottom: -24px;
+  left: 0;
+  color: var(--faulty-entry-color);
+  font-size: 16px;
+}
+
 @media (max-width:600px) {
   .invalid-login-pw::after {
     bottom: -48px;
@@ -217,7 +235,12 @@ input:focus {
 @media (max-width:418px) {
   .invalid-signup-pw::after {
     bottom: -48px;
-
+  }
+  .invalid-signup-all::after {
+    bottom: -48px;
+  }
+  .invalid-privacy::after {
+    bottom: -48px;
   }
 }
 

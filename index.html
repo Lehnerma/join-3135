@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="./styles/colors.css" />
   <link rel="stylesheet" href="./styles/login.css" />
   <script src="./scripts/login.js"></script>
+  <script src="./scripts/signup.js"></script>
 </head>
 
 <body onload="init()">
@@ -31,7 +32,7 @@
   </header>
 
   <main class="main-login">
-    <form class="form--container login" id="login">
+    <form class="form--container login" id="login" novalidate>
       <section class="form--title">
         <h1>Log in</h1>
       </section>
@@ -45,10 +46,10 @@
           </div>
 
         <div class="input--section" id="pw_container_login">
-          <input id="pwInputLogin" class="input" oninput="changeLockToEye('pwInputLogin','lockLogin')" type="password"
+          <input id="pw_input_login" class="input" oninput="changeLockToEye('pw_input_login','lock_login')" type="password"
             name="password" placeholder="Password" pattern="[a-zA-Z0-9]{3,}"
             title="Password must be at least 3 characters long and contain only letters and numbers." />
-          <img id="lockLogin" onclick="showPasswordInput('pwInputLogin', 'lockLogin')"
+          <img id="lock_login" onclick="showPasswordInput('pw_input_login', 'lock_login')"
             src="./assets/img/icons/input/lock.svg" alt="lock icon" class="input--icon" />
         </div>
       </section>
@@ -60,7 +61,7 @@
       </section>
     </form>
 
-    <form class="form--container signup dnone" id="signup">
+    <form class="form--container signup dnone" id="signup" novalidate>
       <section class="form--title">
         <button type="button" class="btn btn--arrow" id="signup_back"><img class="arrowBackToLogin"
             src="../assets/img/icons/general/Vector.svg" alt="zurück zum login" /></button>
@@ -69,33 +70,33 @@
       <div class="input--container-wrapper">
         <section class="input--container">
           <div class="input--section">
-            <input class="input input_signup" id="name" type="text" name="name" placeholder="Name" autocomplete="Name"
+            <input class="input input_signup" id="signup_name" type="text" name="name" placeholder="Name" autocomplete="Name"
               pattern="^[a-zA-ZÀ-ÿ\s\-\.]+$" title="Please enter a valid name (letters, spaces, and hyphens only)."/>
             <img class="input--icon" src="../assets/img/icons/input/person.svg" alt="letter icon" />
           </div>
 
           <div class="input--section">
-            <input class="input input_signup" id="singUpEmail" type="email" name="email" placeholder="Email"
+            <input class="input input_signup" id="signup_email" type="email" name="email" placeholder="Email"
               autocomplete="email" pattern="[a-z0-9._%\+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
               title="Bitte gib eine gültige E-Mail-Adresse ein (z.B. max@mustermann.de)" />
             <img class="input--icon" src="../assets/img/icons/input/mail.svg" alt="letter icon" />
           </div>
 
           <div class="input--section">
-            <input class="input input_signup" id="pwInput"
-              oninput=" confirmPassword(); changeLockToEye('pwInput','lock' )" type="password" name="password"
+            <input class="input input_signup" id="pw_input"
+              oninput=" confirmPassword(); changeLockToEye('pw_input','lock' )" type="password" name="password"
               placeholder="Password" pattern="[a-zA-Z0-9]{3,}"
               title="Password must be at least 3 characters long and contain only letters and numbers." />
-            <img class="input--icon" id="lock" onclick="showPasswordInput('pwInput', 'lock')"
+            <img class="input--icon" id="lock" onclick="showPasswordInput('pw_input', 'lock')"
               src="../assets/img/icons/input/lock.svg" alt="lock icon" />
           </div>
 
-          <div class="input--section" id="pwConfirmSignup">
-            <input class="input input_signup" id="pwInputConfirm"
-              oninput=" confirmPassword(); changeLockToEye('pwInputConfirm', 'lockConfirm')" type="password"
+          <div class="input--section" id="pw_confirm_signup">
+            <input class="input input_signup" id="pw_input_confirm"
+              oninput=" confirmPassword(); changeLockToEye('pw_input_confirm', 'lock_confirm')" type="password"
               name="password" placeholder="Confirm Password" pattern="[a-zA-Z0-9]{3,}"
               title="Password must be at least 3 characters long and contain only letters and numbers." />
-            <img class="input--icon" id="lockConfirm" onclick="showPasswordInput('pwInputConfirm', 'lockConfirm')"
+            <img class="input--icon" id="lock_confirm" onclick="showPasswordInput('pw_input_confirm', 'lock_confirm')"
               src="../assets/img/icons/input/lock.svg" alt="lock icon" />
           </div>
         </section>
@@ -106,12 +107,12 @@
 
         <div class="privacy-content">
           <input class="input_signup" title=" Please accept the Privacy policy " type="checkbox" id="privacy"
-            name="privacy" required />
+            name="privacy" />
           <span> I accept the </span>
           <a href="../html/privacyPolicy.html" class="acceptPrivacyPolicy">Privacy policy</a>
         </div>
       </div>
-      <button type="submit" class="btn btn--primary btn--signup">Sign up</button>
+      <button id="signup_submit_button" type="submit" class="btn btn--primary btn--signup">Sign up</button>
     </form>
   </main>
 

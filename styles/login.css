@@ -198,6 +198,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .privacy-content input[type="checkbox"] {

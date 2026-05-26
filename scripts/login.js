@@ -9,34 +9,54 @@ let users = [];
  */
 const USERS_URL = (id = "") => "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/" + id + ".json";
 
+
 /**
  * Initialises the login page: attaches all button listeners and starts the intro animations.
  */
 function init() {
-  btnInit();
   triggerAnimations();
+  btnInit();
 }
 
 
 /**
- * Attaches all event listeners to the login and signup buttons and forms.
+ * Main function to initialize login event listeners and the signup toggle button.
  */
 function btnInit() {
-  const SIGNUP = document.getElementById("signup_btn");
-  const SIGNUP_BACK = document.getElementById("signup_back");
-  const SIGNUP_PHONE = document.getElementById("signup_phone_btn");
+  initLoginEvents();
+  initSignupNavigation();
+}
+
+
+/**
+ * Initializes all event listeners for the login form and email validation.
+ */
+function initLoginEvents() {
   const FORM_LOGIN = document.getElementById("login");
-  const FORM_SIGNUP = document.getElementById("signup");
   const GUEST_LOGIN = document.getElementById("guest_login");
   const EMAIL_INPUT = document.getElementById("email_input_login");
-  SIGNUP_BACK.addEventListener("click", (event) => toggleForms(event));
-  SIGNUP.addEventListener("click", (event) => toggleForms(event));
-  SIGNUP_PHONE.addEventListener("click", (event) => toggleForms(event));
-  GUEST_LOGIN.addEventListener("click", guestLogin);
   FORM_LOGIN.addEventListener("submit", (event) => loginUser(event));
-  FORM_SIGNUP.addEventListener("submit", (event) => creatUser(event));
+  GUEST_LOGIN.addEventListener("click", guestLogin);
   EMAIL_INPUT.addEventListener("blur", validateEmailOnBlur);
   EMAIL_INPUT.addEventListener("focus", clearEmailErrorOnInput);
+}
+
+
+/**
+ * Binds a one‑time click listener to both signup toggle buttons (nav & mobile).
+ * On first click initSignupEvents() is called and the signup form is opened.
+ * listeners that initSignupEvents() registers on the same buttons.
+ */
+function initSignupNavigation() {
+  const SIGNUP = document.getElementById("signup_btn");
+  const SIGNUP_PHONE = document.getElementById("signup_phone_btn");
+  const handleFirst = function (event) {
+    event.stopImmediatePropagation();
+    initSignupEvents();
+    toggleForms(event);
+  };
+  SIGNUP.addEventListener("click", handleFirst, { once: true });
+  SIGNUP_PHONE.addEventListener("click", handleFirst, { once: true });
 }
 
 
@@ -76,7 +96,7 @@ function removeFade(container) {
 function toggleForms(event) {
   if (event && typeof event.preventDefault === 'function') {
     event.preventDefault();
-  };
+  }
   clearAndResetForms();
   show_signup = !show_signup;
   updateToggleUI();
@@ -95,12 +115,13 @@ function updateToggleUI() {
   SIGNUP_FORM.classList[show_signup ? "remove" : "add"]("dnone");
   if (NAV_LOGIN) {
     NAV_LOGIN.classList[show_signup ? "add" : "remove"]("dnone");
-  } if (NAV_PHONE) {
+  }
+  if (NAV_PHONE) {
     NAV_PHONE.classList[show_signup ? "add" : "remove"]("dnone");
   }
   removeFade(LOGIN_FORM);
   if (NAV_LOGIN) removeFade(NAV_LOGIN);
-  }
+}
 
 
 /**
@@ -111,53 +132,6 @@ function guestLogin() {
   sessionStorage.setItem("user_id", "guest");
   sessionStorage.setItem("activeUserName", "Guest");
   sessionStorage.setItem("justLoggedIn", "true");
-}
-
-
-/**
- * Gathers input data from the signup form and creates a user object.
- * @param {HTMLFormElement} formElement - The signup form.
- * @returns {Object} The fresh user object with a unique ID.
- */
-function buildUserData(formElement) {
-  const FORM = new FormData(formElement);
-  const NEW_USER = Object.fromEntries(FORM.entries());
-  NEW_USER.id = generateId();
-  return NEW_USER;
-}
-
-
-/**
- * Resets the signup form and reactivates the submit button.
- * @param {HTMLFormElement} form - The signup form.
- * @param {HTMLElement|null} btn - The submit button.
- */
-function finalizeSignup(form, btn) {
-  toggleForms();
-  form.reset();
-  if (btn) btn.disabled = false;
-}
-
-
-/**
- * Handles the signup form submission and prevents double submits.
- * @param {Event} ev - The form submit event.
- */
-async function creatUser(ev) {
-  ev.preventDefault();
-   showFailEntriesSignUp();
-  if (!verifyPassword()) return;
-  const btn = ev.target.querySelector('button[type="submit"]');
-  if (btn) btn.disabled = true;
-  try {
-    const newUser = buildUserData(ev.target);
-    await pushUser(newUser);
-    successMessage();
-    setTimeout(() => finalizeSignup(ev.target, btn), 1200);
-  } catch (error) {
-    console.error("Signup failed:", error);
-    if (btn) btn.disabled = false;
-  }
 }
 
 
@@ -184,12 +158,10 @@ async function loginUser(ev) {
     await getUsers();
     const ACTIV_USER = findActiveUser(FORM);
     if (!ACTIV_USER || ACTIV_USER.password !== FORM.get("password")) {
-      showFailEntriesLogin();
-      if (btn) btn.disabled = false;
+      handleLoginFail(btn);
       return;
     }
-    saveSession(ACTIV_USER);
-    window.location.href = "./html/summary.html";
+    handleLoginSuccess(ACTIV_USER);
   } catch (error) {
     console.error("Login process failed:", error);
     if (btn) btn.disabled = false;
@@ -198,64 +170,22 @@ async function loginUser(ev) {
 
 
 /**
- * Verifies that the password and confirm password fields match.
- * @returns {boolean} - true if passwords match, false otherwise
+ * Saves session data and redirects to summary page.
+ * @param {Object} user - The authenticated user.
  */
-function verifyPassword() {
-  const PASSWORD = document.getElementById("pwInput");
-  const CONFIRM_PASSWORD = document.getElementById("pwInputConfirm");
-  return PASSWORD.value === CONFIRM_PASSWORD.value;
+function handleLoginSuccess(user) {
+  saveSession(user);
+  window.location.href = "./html/summary.html";
 }
 
 
 /**
- * Validates that both password input fields match and updates the UI accordingly.
- * Adds an error class if passwords don't match, removes it if they do.
+ * Shows login error styling and re-enables the submit button.
+ * @param {HTMLElement|null} btn - The submit button to re-enable.
  */
-function confirmPassword() {
-  const PASSWORD = document.getElementById("pwInput");
-  const CONFIRM_PASSWORD = document.getElementById("pwInputConfirm");
-  const CONFIRM_PASSWORD_CONTAINER = document.getElementById("pwConfirmSignup");
-  CONFIRM_PASSWORD_CONTAINER.classList.remove("invalid-signup-pw");
-  if (PASSWORD.value.length === 0) {
-    return;
-  } if (PASSWORD.value === CONFIRM_PASSWORD.value) {
-    CONFIRM_PASSWORD_CONTAINER.classList.remove("invalid-signup-pw");
-    CONFIRM_PASSWORD_CONTAINER.classList.add("success-signup-pw");
-    return true;
-  } if (CONFIRM_PASSWORD.value.length >= PASSWORD.value.length) {
-    CONFIRM_PASSWORD_CONTAINER.classList.add("invalid-signup-pw");
-    CONFIRM_PASSWORD_CONTAINER.classList.remove("success-signup-pw");
-    return false;
-  }
-}
-
-
-/**
- * Generates a short unique id from the current timestamp and a random value.
- * @returns {string} A 6-character alphanumeric id.
- */
-function generateId() {
-  return (Date.now().toString(36) + Math.random().toString(36)).substring(0, 6);
-}
-
-
-/**
- * Sends user data to the database.
- * @param {Object} user - The user object to save.
- */
-async function pushUser(user) {
-  try {
-    const RESPONSE = await fetch(USERS_URL(user.id), {
-      method: "PUT",
-      body: JSON.stringify(user),
-    });
-    if (!RESPONSE.ok) {
-      throw new Error(`Push the User to Firebase don't work see: ${RESPONSE.status}`);
-    }
-  } catch (er) {
-    console.error(`the function pushUser() don't worke see: ${er}`);
-  }
+function handleLoginFail(btn) {
+  showFailEntriesLogin();
+  if (btn) btn.disabled = false;
 }
 
 
@@ -265,29 +195,21 @@ async function pushUser(user) {
 function showFailEntriesLogin() {
   const MAIL = document.getElementById("email_input_login");
   const PASSWORD_CONTAINER = document.getElementById("pw_container_login");
-  const PASSWORD = document.getElementById("pwInputLogin");
+  const PASSWORD = document.getElementById("pw_input_login");
   MAIL.classList.add("invalid-login");
   PASSWORD.classList.add("invalid-login");
   PASSWORD_CONTAINER.classList.add("invalid-login-pw");
-  changeLockToEye('pwInputLogin', 'lockLogin');
-  MAIL.addEventListener('input', function(){
-  MAIL.classList.remove('invalid-login');
-  PASSWORD.classList.remove('invalid-login');
-  PASSWORD_CONTAINER.classList.remove('invalid-login-pw');
+  changeLockToEye('pw_input_login', 'lock_login');
+  MAIL.addEventListener('input', function () {
+    MAIL.classList.remove('invalid-login');
+    PASSWORD.classList.remove('invalid-login');
+    PASSWORD_CONTAINER.classList.remove('invalid-login-pw');
   });
 }
 
 
-// function showFailEntriesSignUp(){
-//  const  SIGNUPNAME = 
-
-
-
-// }
-
-
 /**
- * Fetches all users from Firebase and stores them in the module-level USERS array.
+ * Fetches all users from Firebase and stores them in the module-level users array.
  * @returns {Promise<void>}
  */
 async function getUsers() {
@@ -356,17 +278,26 @@ function showPasswordInput(inputID, icon) {
 function clearAndResetForms() {
   const LOGIN_FORM = document.getElementById("login");
   const SIGNUP_FORM = document.getElementById("signup");
-  const MAIL = document.getElementById("email_input_login");
-  const PASSWORD_CONTAINER = document.getElementById("pw_container_login");
-  const PASSWORD = document.getElementById("pwInputLogin");
   LOGIN_FORM.reset();
   SIGNUP_FORM.reset();
+  clearLoginFormErrors();
+  clearSignupFormErrors();
+  resetPasswordVisibility('pw_input_login', 'lock_login');
+  resetPasswordVisibility('pw_input', 'lock');
+  resetPasswordVisibility('pw_input_confirm', 'lock_confirm');
+}
+
+
+/**
+ * Removes all error classes from the login form fields.
+ */
+function clearLoginFormErrors() {
+  const MAIL = document.getElementById("email_input_login");
+  const PASSWORD_CONTAINER = document.getElementById("pw_container_login");
+  const PASSWORD = document.getElementById("pw_input_login");
   MAIL.classList.remove("invalid-login");
   PASSWORD.classList.remove("invalid-login");
   PASSWORD_CONTAINER.classList.remove("invalid-login-pw");
-  resetPasswordVisibility('pwInputLogin', 'lockLogin');
-  resetPasswordVisibility('pwInput', 'lock');
-  resetPasswordVisibility('pwInputConfirm', 'lockConfirm');
 }
 
 
@@ -376,7 +307,7 @@ function clearAndResetForms() {
  * @param {string} iconID - ID of the icon image.
  */
 function resetPasswordVisibility(pwInputID, iconID) {
-  const PW_CONFIRM_CONTAINER = document.getElementById('pwConfirmSignup');
+  const PW_CONFIRM_CONTAINER = document.getElementById('pw_confirm_signup');
   const INPUT = document.getElementById(pwInputID);
   const ICON = document.getElementById(iconID);
   if (!INPUT || !ICON) return;
@@ -390,22 +321,6 @@ function resetPasswordVisibility(pwInputID, iconID) {
   } else {
     ICON.src = "../assets/img/icons/input/visibility_off.svg";
   }
-}
-
-
-/**
- * Shows a success message banner and a dark background shadow.
- * Both elements disappear automatically after 1.6 seconds.
- */
-function successMessage() {
-  const BANNER = document.getElementById('success_message');
-  const DIM = document.getElementById('dim'); 
-  BANNER.classList.add('show-animation');
-  DIM.classList.remove('dnone');
-  setTimeout(() => {
-    BANNER.classList.remove('show-animation');
-    DIM.classList.add('dnone');
-  }, 1200);
 }
 
 
@@ -434,9 +349,7 @@ function validateEmailOnBlur() {
 
 
 /**
- * Removes error styling from the email field and the error message
- * under the password field as soon as the user starts typing again.
- * The next blur event will re-validate and re-add the error if still invalid.
+ * Removes error styling from the email field as soon as the user starts typing.
  */
 function clearEmailErrorOnInput() {
   const MAIL = document.getElementById("email_input_login");
