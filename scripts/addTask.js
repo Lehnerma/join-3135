@@ -14,6 +14,7 @@ function init() {
   loadUsers();
   initDropdownOutsideClick();
   initAssignedPreviewResize();
+  initValidationClearListeners();
 }
 
 /**
@@ -51,11 +52,27 @@ function setError(input, errorId, message = "") {
  */
 function clearError(input, errorId) {
   input.classList.remove("input-invalid");
-
   const ERROR_EL = document.getElementById(errorId);
   if (ERROR_EL) {
     ERROR_EL.classList.add("dnone");
   }
+}
+
+/**
+ * Attaches input/change listeners to required fields so validation errors
+ * are cleared as soon as the user starts filling in the field.
+ */
+function initValidationClearListeners() {
+  const fields = [
+    { id: "title",    errorId: "title_error",    event: "input"  },
+    { id: "due_date", errorId: "date_error",     event: "input"  },
+    { id: "category", errorId: "category_error", event: "change" },
+  ];
+  fields.forEach(({ id, errorId, event }) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener(event, () => clearError(el, errorId));
+  });
 }
 
 /**
