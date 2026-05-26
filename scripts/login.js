@@ -200,11 +200,13 @@ function showFailEntriesLogin() {
   PASSWORD.classList.add("invalid-login");
   PASSWORD_CONTAINER.classList.add("invalid-login-pw");
   changeLockToEye('pw_input_login', 'lock_login');
-  MAIL.addEventListener('input', function () {
+  const removeErrors = function () {
     MAIL.classList.remove('invalid-login');
     PASSWORD.classList.remove('invalid-login');
     PASSWORD_CONTAINER.classList.remove('invalid-login-pw');
-  });
+  };
+  MAIL.addEventListener('input', removeErrors);
+  PASSWORD.addEventListener('input', removeErrors);
 }
 
 
