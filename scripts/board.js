@@ -152,15 +152,20 @@ function addSubtaskProgress(wrapper, subtasks) {
 
 /**
  * Adds assignees to the task card.
+ * Shows up to 4 circles; if more exist, appends a "+N" badge via getAssigneeMoreTemplate.
  * @param {HTMLElement} wrapper - The task card wrapper element.
  * @param {Array<{name: string, color: string}>} assignedTo - The assignees array.
  */
 function addAssignees(wrapper, assignedTo) {
   const ASSIGNEES_LIST = wrapper.querySelector(".task--assignees");
   if (!ASSIGNEES_LIST || !assignedTo?.length) return;
-  ASSIGNEES_LIST.innerHTML = assignedTo
+  const MAX_VISIBLE = 4;
+  const visible = assignedTo.slice(0, MAX_VISIBLE);
+  const remaining = assignedTo.length - MAX_VISIBLE;
+  ASSIGNEES_LIST.innerHTML = visible
     .map(({ name, color }) => getTaskAssignToTemplet(name, getInitials(name), color))
     .join("");
+  if (remaining > 0) ASSIGNEES_LIST.innerHTML += getAssigneeMoreTemplate(remaining);
 }
 
 /**
