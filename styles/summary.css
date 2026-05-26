@@ -1,5 +1,5 @@
 .summary {
-    padding-left: clamp(8px, calc(-303.652px + 30.435vw), 64px);
+    padding-left: clamp(8px, calc(-303.652px + 30.435vw), 96px);
     padding-right: clamp(8px,
             calc((100% - 1208px) / 2),
             calc((100% - 1208px) / 2));
@@ -16,7 +16,7 @@
     align-items: center;
     gap: 34px;
     margin-bottom: 24px;
-    padding-left: clamp(20px,1vw, 69px);
+   
 }
 
 .summary-headline h1 {
@@ -49,7 +49,6 @@
     align-items: center;
     gap: clamp(12px, calc(-366.435px + 36.957vw), 80px);
     padding-bottom: 50px;
-    padding-left: clamp(20px,1vw, 69px);
 }
 
 
@@ -128,7 +127,7 @@
         transform: scale(0.95);
         pointer-events: none;
 
-         .summary-todo-icon {
+        .summary-todo-icon {
             background-color: var(--primary-color);
         }
 
@@ -437,7 +436,7 @@
     .summary-main {
         gap: 0;
         padding-top: 12px;
-        padding-left: 24px;
+        padding-left: 16px;
     }
 
     .summary {

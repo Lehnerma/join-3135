@@ -7,6 +7,7 @@ checkAuth();
 function initUtilitys() {
   renderHeadInitals();
   showExternalUtilityPages();
+  setBodyAuthClass();
 }
 
 /**
@@ -79,48 +80,51 @@ function renderHeadInitals() {
   } else {
     const USER_NAME = sessionStorage.getItem("activeUserName");
     const USER_INITIALS = document.getElementById("user_menu_button");
-    const SPLITTED_NAME = USER_NAME.split(" ");
+    if (!USER_INITIALS) return;
+    if (USER_NAME === "Guest") {
+      USER_INITIALS.innerText = "G";
+      return;
+    }
+    const SPLITTED_NAME = USER_NAME.trim().split(/\s+/);
     let INITIALS = SPLITTED_NAME[0][0];
     if (SPLITTED_NAME.length > 1) {
       INITIALS += SPLITTED_NAME[SPLITTED_NAME.length - 1][0];
     }
     INITIALS = INITIALS.toUpperCase();
     USER_INITIALS.innerText = INITIALS;
-    if (USER_NAME === "Guest") {
-      USER_INITIALS.innerText = "G";
-    }
   }
 }
 
+
 /**
- * Toggles the visibility of navigation and menu elements depending on 
- * whether a user ID is found in the session storage.
- * (Note: First variation found in the code)
+ * Funktion 1: Kümmert sich NUR um die Sichtbarkeit der Buttons/Elemente
+ * Dieser Name bleibt gleich, wie von dir gewünscht.
  */
 function showExternalUtilityPages() {
   const ID = sessionStorage.getItem("user_id");
-  let view_user = document.getElementById("view-user");
-  let view_external = document.getElementById("view-external");
-  let user_menu_button = document.getElementById("user_menu_button");
+  const view_user = document.getElementById("view-user");
+  const view_external = document.getElementById("view-external");
+  const user_menu_button = document.getElementById("user_menu_button");
+
   if (ID !== null) {
-    view_user.classList.remove("d-none");
-    view_external.classList.add("d-none");
-    user_menu_button.classList.remove("d-none");
+    if (view_user) view_user.classList.remove("d-none");
+    if (view_external) view_external.classList.add("d-none");
+    if (user_menu_button) user_menu_button.classList.remove("d-none");
   } else {
-    view_user.classList.add("d-none");
-    view_external.classList.remove("d-none");
-    user_menu_button.classList.add("d-none");
+    if (view_user) view_user.classList.add("d-none");
+    if (view_external) view_external.classList.remove("d-none");
+    if (user_menu_button) user_menu_button.classList.add("d-none");
   }
 }
 
 /**
- * Toggles specific authentication styling classes on the document body 
- * based on the user's login state.
- * (Note: Second variation found in the code)
+ * Funktion 2: Kümmert sich NUR um die Klassen im Body-Tag
+ * Neu benannt, um Konflikte zu vermeiden.
  */
-function showExternalUtilityPages() {
+function setBodyAuthClass() {
   const ID = sessionStorage.getItem("user_id");
   const BODY = document.body;
+
   if (ID !== null) {
     BODY.classList.add("user-logged-in");
     BODY.classList.remove("user-not-logged-in");

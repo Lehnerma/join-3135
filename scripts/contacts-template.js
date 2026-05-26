@@ -60,17 +60,17 @@ function renderHtmlContactDialogTpl() {
            </div>
         <form id="form_ref" onsubmit="event.preventDefault(); createContact();">
           <section class="dialog-input-container">
-            <div class="dialog-input-section">
-              <input class="dialog-input" id="create_name" type="text" name="name" placeholder="Name" required />
+            <div id="add_name" class="dialog-input-section">
+              <input class="dialog-input" id="create_name" type="text" name="name" placeholder="Name" />
               <img src="../assets/img/icons/input/person.svg" alt="person.svg" class="dialog-input-icon" />
             </div>
-            <div class="dialog-input-section">
-              <input class="dialog-input" id="create_email" type="email" name="email" placeholder="Email" pattern="[a-z0-9._%\\+\\-]+@[a-z0-9.\\-]+\\.[a-z]{2,}$" title="Bitte geben Sie eine gültige E-Mail-Adresse ein (z. B. name@beispiel.de)." required />
+            <div id="add_email" class="dialog-input-section">
+              <input class="dialog-input" id="create_email" type="email" name="email" placeholder="Email" pattern="[a-z0-9._%\\+\\-]+@[a-z0-9.\\-]+\\.[a-z]{2,}$" title="Bitte geben Sie eine gültige E-Mail-Adresse ein (z. B. name@beispiel.de)." />
               <img src="../assets/img/icons/input/mail.svg" alt="mail.svg" class="dialog-input-icon" />
             </div>
-            <div class="dialog-input-section">
+            <div id="add_phone" class="dialog-input-section">
               <input class="dialog-input" id="create_phone" type="tel" name="phone" placeholder="Phone" pattern="[0-9+ ]*"
-                title="Bitte nur Zahlen, Leerzeichen oder ein + eingeben" required />
+                title="Bitte nur Zahlen, Leerzeichen oder ein + eingeben"/>
               <img src="../assets/img/icons/input/phone.svg" alt="phone.svg" class="dialog-input-icon" />
             </div>
           </section>

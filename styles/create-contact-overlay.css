@@ -142,6 +142,7 @@ form {
 }
 
 .dialog-input-container {
+    position: relative;
     width: clamp(300px, 32.8vw, 422px);
     display: flex;
     flex-direction: column;
@@ -152,6 +153,7 @@ form {
 }
 
 .dialog-input-section {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -174,6 +176,10 @@ form {
 
 .dialog-input::placeholder {
     color: var(--input-default-main);
+}
+
+.dialog-input-section.invalid-login {
+    border: var(--faulty-entry-color) solid 1px;
 }
 
 .dialog-input-icon {

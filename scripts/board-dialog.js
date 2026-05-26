@@ -1,6 +1,18 @@
 let current_detail_task = null;
 
 /**
+ * Initializes all event listeners for the board by splitting search and dialog logic.
+ *
+ * @function initBoardTask
+ * @returns {void}
+ */
+function initBoardTask() {
+  initBoardSearch();
+  initBoardDialogs();
+  validetInput();
+}
+
+/**
  * Closes a dialog with a slide-out animation.
  * It waits for the animation to finish before closing the dialog completely.
  *
@@ -43,16 +55,6 @@ function showTaskCreatedToast() {
   }, 1500);
 }
 
-/**
- * Initializes all event listeners for the board by splitting search and dialog logic.
- *
- * @function initBoardTask
- * @returns {void}
- */
-function initBoardTask() {
-  initBoardSearch();
-  initBoardDialogs();
-}
 
 /**
  * Handles the search input and search button event listeners.
@@ -85,7 +87,7 @@ function initBoardDialogs() {
       openAddTaskDialog();
     });
   }
-  
+
   const ADD_TASK_DIALOG = document.getElementById("add_task_dialog");
   if (ADD_TASK_DIALOG) {
     ADD_TASK_DIALOG.addEventListener("click", closeAddTaskDialogOnBackdropClick);
@@ -138,6 +140,10 @@ function openTaskDetailDialog(taskId) {
     TASK_DETAIL_DIALOG.innerHTML = buildTaskDetailDialog(TASK);
     TASK_DETAIL_DIALOG.showModal();
     TASK_DETAIL_DIALOG.querySelector(".detail-task--content").scrollTop = 0;
+    const ASSIGNEES_ELEMENT = document.getElementById("detail_task_assignees");
+    if (ASSIGNEES_ELEMENT) {
+      ASSIGNEES_ELEMENT.scrollTop = 0;
+    }
   }
 }
 
@@ -319,13 +325,17 @@ function setupEditTaskInteractions(task) {
   }
 }
 
+
 /**
  * Closes the edit task dialog instantly (no animation).
  * The detail dialog remains open underneath.
  */
 function closeEditTaskDialog() {
   const DIALOG = document.getElementById("edit_task_dialog");
-  DIALOG.close();
+  if (DIALOG) {
+    DIALOG.close();
+    
+  }
 }
 
 /**
@@ -346,7 +356,7 @@ function closeEditDialogOnBackdropClick(event) {
  *
  * @param {Array<{name: string, color: string}|string>} assignedTo - Users already assigned to the task.
  */
-async function loadUsersForEdit(assignedTo) {  
+async function loadUsersForEdit(assignedTo) {
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
   try {
     const response = await fetch(USER_URL);
@@ -357,7 +367,6 @@ async function loadUsersForEdit(assignedTo) {
     preselectAssignedUsers(assignedTo);
 
     updateAssignedPreview();
-
   } catch (err) {
     console.error("Error in loadUsersForEdit:", err);
   }
@@ -370,8 +379,8 @@ async function loadUsersForEdit(assignedTo) {
  */
 function preselectAssignedUsers(assignedTo) {
   const assignedNames = (assignedTo || []).map((user) => (typeof user === "string" ? user : user.name));
-  const USERS =  document.querySelectorAll(".assignedTo");
- USERS.forEach((label) => {
+  const USERS = document.querySelectorAll(".assignedTo");
+  USERS.forEach((label) => {
     const checkbox = label.querySelector("input[type='checkbox']");
     if (!checkbox) return;
     const isAssigned = assignedNames.includes(checkbox.value);
@@ -467,6 +476,7 @@ function openAddTaskDialog() {
   initDropdownOutsideClick();
   selectedPriority = "medium";
   subtasksList = [];
+  validetInput();
 }
 
 /**
@@ -487,6 +497,9 @@ function closeAddTaskDialog() {
   const dialog = document.getElementById("add_task_dialog");
   if (dialog && dialog.open) {
     dialog.close();
+  }
+  if (dialog) {
+    dialog.innerHTML = "";
   }
   sessionStorage.removeItem("task-status");
 }

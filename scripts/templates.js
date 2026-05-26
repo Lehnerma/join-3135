@@ -76,7 +76,16 @@ function getUserCircleTemplate(name, initials, color) {
  * @returns {string} HTML string for the wrapper div.
  */
 function getAssignedUsersTemplate(circlesHtml) {
-  return `<div class="assigned-wrapper">${circlesHtml}</div>`;
+  return `<ul class="assigned-wrapper">${circlesHtml}</ul>`;
+}
+
+/**
+ * Returns the HTML for a "+N" overflow circle badge.
+ * @param {number} count - Number of hidden users.
+ * @returns {string} HTML string for the overflow circle.
+ */
+function getAssignedUsersMoreTemplate(count) {
+  return `<li class="assigned-circle assigned-circle--more" title="+${count} weitere">+${count}</li>`;
 }
 
 /**
@@ -134,11 +143,23 @@ function getTaskCardTemplet(title, description, category, id, priority) {
     </section>
     <footer class="task--footer">
       <ul class="task--assignees" aria-label="Zugewiesene Personen">
-
+        
       </ul>
       <img src="../assets/img/icons/prio/${priority}.svg" alt="${priority} priority" class="prio-icon">
     </footer>
   </article>
+</li>`;
+}
+
+/**
+ * Returns the HTML for the "+N" overflow badge when more assignees exist than are shown.
+ * @param {number} count - Number of hidden assignees.
+ * @returns {string} HTML string for the overflow list item.
+ */
+function getAssigneeMoreTemplate(count) {
+  return `
+<li class="assignee">
+  <abbr class="assignee--initials assignee--more" title="+${count} weitere">+${count}</abbr>
 </li>`;
 }
 
@@ -362,18 +383,18 @@ function getAddTaskDialogTemplate() {
       <form class="dat-form" id="form_task" novalidate>
         <section class="dat-col">
           <div class="input-section">
-            <label for="title" class="required">Title</label>
-            <input id="title" class="input" type="text" placeholder="Enter a title" required />
-            <span id="title_error" class="field-error dnone">This field is required</span>
+            <label for="title_edit" class="required">Title</label>
+            <input id="title_edit" class="input" type="text" placeholder="Enter a title" required />
+            <span id="title_edit_er" class="field-error dnone">This field is required</span>
           </div>
           <div class="input-section">
             <label for="description">Description</label>
             <textarea id="description" class="input" placeholder="Enter a Description" rows="3"></textarea>
           </div>
           <div class="input-section">
-            <label for="due_date" class="required">Due date</label>
-            <input id="due_date" class="input input-date" type="date" required />
-            <span class="field-error">This field is required</span>
+            <label for="due_date_edit" class="required">Due date</label>
+            <input id="due_date_edit" class="input input-date" type="date" required />
+            <span id="date_edit_er" class="field-error dnone">This field is required</span>
           </div>
         </section>
 
@@ -408,13 +429,13 @@ function getAddTaskDialogTemplate() {
           </div>
 
           <div class="input-section">
-            <label for="category" class="required">Category</label>
-            <select id="category" class="input dropdown form--select" required>
+            <label for="category_edit" class="required">Category</label>
+            <select id="category_edit" class="input dropdown form--select" required>
               <option value="" selected disabled>Select task category</option>
               <option value="Technical Task">Technical Task</option>
               <option value="User Story">User Story</option>
             </select>
-            <span id="category_error" class="field-error dnone">This field is required</span>
+            <span id="category_edit_er" class="field-error dnone">This field is required</span>
           </div>
 
           <div class="input-section">
