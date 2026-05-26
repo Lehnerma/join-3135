@@ -30,8 +30,24 @@ function init() {
 }
 
 /**
+ * Processes a single user from the Firebase response.
+ * @param {Object} person - The raw user object from Firebase.
+ * @param {string} key - The Firebase key of the user.
+ * @returns {Object} The processed user object.
+ */
+function processUser(person, key) {
+  person.firebaseKey = key;
+  if (!person.color) {
+    person.color = contactColors[Math.floor(Math.random() * contactColors.length)];
+    updateFirebaseContact(key, { color: person.color });
+  }
+  person.phone = person.phone || "";
+  return person;
+}
+
+/**
  * Loads users from Firebase, fixes missing colors/phones, and saves them to the USERS array.
- * * @async
+ * @async
  * @function getUsers
  * @returns {Promise}
  */
@@ -41,14 +57,7 @@ async function getUsers() {
     const RESULT = await RESPONSE.json();
     users = [];
     for (let key in RESULT) {
-      const PERSON = RESULT[key];
-      PERSON.firebaseKey = key;
-      if (!PERSON.color) {
-        PERSON.color = contactColors[Math.floor(Math.random() * contactColors.length)];
-        updateFirebaseContact(key, { color: PERSON.color });
-      }
-      PERSON.phone = PERSON.phone || "";
-      users.push(PERSON);
+      users.push(processUser(RESULT[key], key));
     }
     sortUserContactList();
   } catch (error) {
@@ -438,74 +447,4 @@ function closeDialogOutsite(event) {
   event.stopPropagation();
 }
 
-function getContactFormElements() {
-  return {
-    nameContainer: document.getElementById('add_name'),
-    emailContainer: document.getElementById('add_email'),
-    phoneContainer: document.getElementById('add_phone'),
-    nameInput: document.getElementById('create_name'),
-    emailInput: document.getElementById('create_email'),
-  };
-}
-
-function clearAllContactErrors() {
-  const els = getContactFormElements();
-  [els.nameContainer, els.emailContainer].forEach(el => el?.classList.remove('invalid-login'));
-  els.phoneContainer?.classList.remove('invalid-contact-form');
-}
-
-function initContactFormValidation() {
-  const els = getContactFormElements();
-  const inputs = [els.nameInput, els.emailInput];
-  inputs.forEach(input => {
-    if (!input) return;
-    input.addEventListener('input', clearAllContactErrors);
-  });
-  if (els.emailInput) {
-    els.emailInput.addEventListener('blur', validateContactEmailOnBlur);
-    els.emailInput.addEventListener('focus', clearContactEmailError);
-  }
-}
-
-function validateContactEmailOnBlur() {
-  const els = getContactFormElements();
-  const value = els.emailInput?.value.trim();
-  if (value.length > 0 && !els.emailInput.checkValidity()) {
-    els.emailContainer?.classList.add('invalid-login');
-    els.phoneContainer?.classList.add('invalid-contact-form');
-  }
-}
-
-function clearContactEmailError() {
-  const els = getContactFormElements();
-  els.emailContainer?.classList.remove('invalid-login');
-  els.phoneContainer?.classList.remove('invalid-contact-form');
-}
-
-function addContactCheckInputValue() {
-  clearAllContactErrors();
-  const els = getContactFormElements();
-  const nameVal = els.nameInput?.value.trim();
-  const emailVal = els.emailInput?.value.trim();
-  let hasError = false;
-
-  if (!nameVal) {
-    els.nameContainer?.classList.add('invalid-login');
-    hasError = true;
-  }
-
-  if (!emailVal) {
-    els.emailContainer?.classList.add('invalid-login');
-    hasError = true;
-  } else if (!els.emailInput.checkValidity()) {
-    els.emailContainer?.classList.add('invalid-login');
-    hasError = true;
-  }
-
-  if (hasError) {
-    els.phoneContainer?.classList.add('invalid-contact-form');
-  }
-
-  return !hasError;
-}
 
