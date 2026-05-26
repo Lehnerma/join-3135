@@ -325,6 +325,7 @@ function setupEditTaskInteractions(task) {
   }
 }
 
+
 /**
  * Closes the edit task dialog instantly (no animation).
  * The detail dialog remains open underneath.
@@ -333,7 +334,7 @@ function closeEditTaskDialog() {
   const DIALOG = document.getElementById("edit_task_dialog");
   if (DIALOG) {
     DIALOG.close();
-    DIALOG.innerHTML = "";
+    
   }
 }
 
