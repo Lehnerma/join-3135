@@ -229,7 +229,7 @@
   width: 24px;
   height: 24px;
   cursor: pointer;
-  /* appearance: none; */
+  appearance: none;
   background-repeat: no-repeat;
   background-position: center;
   object-fit: contain;
