@@ -51,7 +51,6 @@
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-
 .dialog-wrapper {
   overflow-y: auto;
 }
@@ -196,7 +195,7 @@
   .detail-task--assignees-list {
     list-style: none;
     height: 100%;
-    max-height: 200px;
+    max-height: 16vh;
     overflow-y: auto;
 
     li {
@@ -214,6 +213,11 @@
 .assignee--name {
   font-family: "Open Sans", sans-serif;
   font-size: 19px;
+}
+.detail-task--subtasks-list{
+  overflow-y: auto;
+  max-height: 10vh;
+  height: 100%;
 }
 
 .detail-task--subtask-item {
@@ -337,9 +341,9 @@
 /* ── Task Created Toast ───────────────────────────────── */
 
 .taskCreatedToast {
-  display: none; 
-   position: fixed;
-   top: 50%;
+  display: none;
+  position: fixed;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   justify-content: center;
@@ -395,12 +399,7 @@
   }
 }
 
-
-
-
 @media (min-width: 900px) and (max-height: 800px) {
-
-
   .detail-task--content {
     max-height: 40vh;
     height: auto;
