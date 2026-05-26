@@ -323,17 +323,12 @@ main {
 }
 
 .toast {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #2ecc71;
-  color: white;
-  padding: 14px 20px;
-  border-radius: 10px;
-  font-size: 14px;
-  opacity: 0;
-  pointer-events: none;
+display: flex;
+justify-content: center;
+align-items: center;
+justify-content: center;
+flex-direction: row;
+gap: 12px;
   transition:
     opacity 0.3s ease,
     transform 0.3s ease;
@@ -342,6 +337,48 @@ main {
 .toast.show {
   opacity: 1;
   transform: translateX(-50%) translateY(-10px);
+}
+
+.success-message {
+  background-color: var(--primary-color);
+  height: 74px;
+  width: 280px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  left: 50%;
+  bottom: -150px;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: bottom 0.2s ease-in, transform 0.2s ease-in;
+}
+
+.success-message span {
+  color: var(--third-text-color);
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.show-animation {
+  animation: slideUpAndStay 0.3s ease-out 0s forwards;
+}
+
+@keyframes slideUpAndStay {
+  0% {
+    bottom: -150px;
+  }
+
+  100% {
+    bottom: 45%;
+    transform: translate(-50%, 50%);
+  }
 }
 
 @media (min-width: 1024px) {

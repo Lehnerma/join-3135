@@ -331,7 +331,10 @@ function setupEditTaskInteractions(task) {
  */
 function closeEditTaskDialog() {
   const DIALOG = document.getElementById("edit_task_dialog");
-  DIALOG.close();
+  if (DIALOG) {
+    DIALOG.close();
+    DIALOG.innerHTML = "";
+  }
 }
 
 /**
@@ -493,6 +496,9 @@ function closeAddTaskDialog() {
   const dialog = document.getElementById("add_task_dialog");
   if (dialog && dialog.open) {
     dialog.close();
+  }
+  if (dialog) {
+    dialog.innerHTML = "";
   }
   sessionStorage.removeItem("task-status");
 }

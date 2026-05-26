@@ -391,7 +391,7 @@ async function sendTaskRequest(task, btn) {
         await showBoardToast();
         loadTasksFromFirebase();
       } else {
-        document.getElementById("toast")?.classList.add("show");
+        document.getElementById("toast")?.classList.add("show-animation");
         setTimeout(() => { window.location.href = "board.html"; }, 1000);
       }
     } else if (btn) {
