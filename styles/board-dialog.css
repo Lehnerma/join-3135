@@ -404,7 +404,7 @@
   .detail-task--content {
     max-height: 40vh;
     height: auto;
-
+    overflow-x: auto;
   }
 
   .detail-task--title {
