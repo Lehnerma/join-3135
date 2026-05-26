@@ -433,7 +433,7 @@ function clearForm() {
   document.getElementById("due_date").value = "";
   selectPriority("medium");
   document.getElementById("assigned_preview").innerHTML = "";
-  fillUserDropdown(remoteUsers);
+  fillUserDropdown(sortUsersWithActiveFirst(remoteUsers));
   subtasksList = [];
   document.getElementById("subtask_list").innerHTML = "";
   clearSubtaskInput(new Event("reset"));
