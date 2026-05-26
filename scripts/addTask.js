@@ -55,15 +55,27 @@ function registerClearFormListener(clearBtn) {
  */
 function initDateInput() {
   const DUE_DATE_INPUT = document.getElementById("due_date");
-  if (!DUE_DATE_INPUT) return;
+  const DUE_DATE_EDIT_INPUT = document.getElementById("due_date_edit");
   const NOW = new Date();
   const TODAY = NOW.toISOString().split("T")[0];
-  DUE_DATE_INPUT.min = TODAY;
-  DUE_DATE_INPUT.addEventListener("focus", () => {
-    if (!DUE_DATE_INPUT.value) {
-      DUE_DATE_INPUT.value = TODAY;
-    }
-  });
+
+  if (DUE_DATE_INPUT) {
+    DUE_DATE_INPUT.min = TODAY;
+    DUE_DATE_INPUT.addEventListener("focus", () => {
+      if (!DUE_DATE_INPUT.value) {
+        DUE_DATE_INPUT.value = TODAY;
+      }
+    });
+  }
+
+  if (DUE_DATE_EDIT_INPUT) {
+    DUE_DATE_EDIT_INPUT.min = TODAY;
+    DUE_DATE_EDIT_INPUT.addEventListener("focus", () => {
+      if (!DUE_DATE_EDIT_INPUT.value) {
+        DUE_DATE_EDIT_INPUT.value = TODAY;
+      }
+    });
+  }
 }
 
 /**
