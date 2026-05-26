@@ -26,11 +26,13 @@
        
         left: 28%;
         transform: translateX(-50%) translateY(-100px) ;
+        opacity: 1;
     }
 
     .hide-overlay {
        
         transform: translateX(-50%) translateY(200px);
+        opacity:0;
     }
 }
 
@@ -38,12 +40,14 @@
     .contact-success-overlay {
        
         left: 50%;
-        transform: translateX(-50%) translateY(-100px) ;
+        transform: translateX(-50%) translateY(-65px);
+        opacity: 1;
     }
 
     .hide-overlay {
        
         transform: translateX(-50%) translateY(200px);
+         opacity:0;
     }
 }
 
