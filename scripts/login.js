@@ -28,12 +28,15 @@ function btnInit() {
   const FORM_LOGIN = document.getElementById("login");
   const FORM_SIGNUP = document.getElementById("signup");
   const GUEST_LOGIN = document.getElementById("guest_login");
+  const EMAIL_INPUT = document.getElementById("email_input_login");
   SIGNUP_BACK.addEventListener("click", (event) => toggleForms(event));
   SIGNUP.addEventListener("click", (event) => toggleForms(event));
   SIGNUP_PHONE.addEventListener("click", (event) => toggleForms(event));
   GUEST_LOGIN.addEventListener("click", guestLogin);
   FORM_LOGIN.addEventListener("submit", (event) => loginUser(event));
   FORM_SIGNUP.addEventListener("submit", (event) => creatUser(event));
+  EMAIL_INPUT.addEventListener("blur", validateEmailOnBlur);
+  EMAIL_INPUT.addEventListener("focus", clearEmailErrorOnInput);
 }
 
 
@@ -403,4 +406,41 @@ function successMessage() {
     BANNER.classList.remove('show-animation');
     DIM.classList.add('dnone');
   }, 1200);
+}
+
+
+/**
+ * Checks whether a value looks like a valid email address.
+ * @param {string} value
+ * @returns {boolean}
+ */
+function isValidEmail(value) {
+  if (!value) return true;
+  return /^[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$/i.test(value.trim());
+}
+
+
+/**
+ * Validates the email input on blur (when leaving the field).
+ */
+function validateEmailOnBlur() {
+  const MAIL = document.getElementById("email_input_login");
+  const PASSWORD_CONTAINER = document.getElementById("pw_container_login");
+  if (MAIL.value.trim().length > 0 && !isValidEmail(MAIL.value)) {
+    MAIL.classList.add("invalid-login");
+    PASSWORD_CONTAINER.classList.add("invalid-login-pw");
+  }
+}
+
+
+/**
+ * Removes error styling from the email field and the error message
+ * under the password field as soon as the user starts typing again.
+ * The next blur event will re-validate and re-add the error if still invalid.
+ */
+function clearEmailErrorOnInput() {
+  const MAIL = document.getElementById("email_input_login");
+  const PASSWORD_CONTAINER = document.getElementById("pw_container_login");
+  MAIL.classList.remove("invalid-login");
+  PASSWORD_CONTAINER.classList.remove("invalid-login-pw");
 }

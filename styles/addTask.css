@@ -13,7 +13,7 @@ main {
     font-weight: 700;
     padding-top: 110px;
     padding-bottom: 32px;
-     white-space: nowrap;
+    white-space: nowrap;
   }
 }
 
@@ -153,26 +153,10 @@ main {
   background: white;
 }
 
-/* .dropdown {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  margin-top: 5px;
-  max-height: 150px;
-  overflow-y: auto;
-  background: white;
-  display: flex;
-  flex-direction: column;
-} */
-
-/* .hidden {
-  display: none;
-} */
-
 .assignedTo {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
 }
 
 .logoNameField {
@@ -219,7 +203,6 @@ main {
   display: flex;
   gap: 4px;
   padding-top: 10px;
-
 }
 
 .assigned-circle {
@@ -251,10 +234,11 @@ main {
   background: #f0f0f0;
 }
 
-#description {
-  min-width: 100%;
-  /* width: 100%; */
-  min-height: 50px;
+.description-input {
+  max-width: 463px;
+  width: 100%;
+  min-height: auto;
+  max-height: 270px;
 }
 
 .input {
@@ -363,13 +347,12 @@ main {
 @media (min-width: 1024px) {
   .task-container {
     margin-left: clamp(16px, 7vw, 96px);
-  padding-right: 16px;
-  }   
+    padding-right: 16px;
+  }
 
-  h1{
-   font-weight: 47px;
-   white-space: nowrap;
-
+  h1 {
+    font-size: 47px;
+    white-space: nowrap;
   }
 
   .form-task {
@@ -421,8 +404,7 @@ main {
   }
 }
 
-@media (max-width: 1000px) {
-
+@media (max-width: 1024px) {
   .input--title,
   .form-footer {
     position: sticky;
@@ -442,9 +424,8 @@ main {
     padding-bottom: 32px;
   }
 
-  #description {
-    /* min-width: 90%; */
-    max-width: 90%;
+  .description-input {
+    max-width: calc(100vw - 32px);
   }
 
   .priority-group {
@@ -452,8 +433,7 @@ main {
   }
 }
 
-@media(max-width: 380px) {
-
+@media (max-width: 380px) {
   .btn--primary,
   .btn--secondary {
     font-size: 16px;
@@ -480,7 +460,6 @@ main {
 /* ============================================================
    CUSTOM DROPDOWN – Assigned To (Suche + Initialen + Checkbox)
    ============================================================ */
-
 
 .custom-dropdown {
   position: relative;
@@ -609,7 +588,9 @@ main {
   cursor: pointer;
   position: relative;
   background-color: white;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .custom-dropdown__checkbox:checked {
