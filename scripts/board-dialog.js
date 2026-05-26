@@ -85,7 +85,7 @@ function initBoardDialogs() {
       openAddTaskDialog();
     });
   }
-  
+
   const ADD_TASK_DIALOG = document.getElementById("add_task_dialog");
   if (ADD_TASK_DIALOG) {
     ADD_TASK_DIALOG.addEventListener("click", closeAddTaskDialogOnBackdropClick);
@@ -138,6 +138,10 @@ function openTaskDetailDialog(taskId) {
     TASK_DETAIL_DIALOG.innerHTML = buildTaskDetailDialog(TASK);
     TASK_DETAIL_DIALOG.showModal();
     TASK_DETAIL_DIALOG.querySelector(".detail-task--content").scrollTop = 0;
+    const ASSIGNEES_ELEMENT = document.getElementById("detail_task_assignees");
+    if (ASSIGNEES_ELEMENT) {
+      ASSIGNEES_ELEMENT.scrollTop = 0;
+    }
   }
 }
 
@@ -346,7 +350,7 @@ function closeEditDialogOnBackdropClick(event) {
  *
  * @param {Array<{name: string, color: string}|string>} assignedTo - Users already assigned to the task.
  */
-async function loadUsersForEdit(assignedTo) {  
+async function loadUsersForEdit(assignedTo) {
   const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
   try {
     const response = await fetch(USER_URL);
@@ -357,7 +361,6 @@ async function loadUsersForEdit(assignedTo) {
     preselectAssignedUsers(assignedTo);
 
     updateAssignedPreview();
-
   } catch (err) {
     console.error("Error in loadUsersForEdit:", err);
   }
@@ -370,8 +373,8 @@ async function loadUsersForEdit(assignedTo) {
  */
 function preselectAssignedUsers(assignedTo) {
   const assignedNames = (assignedTo || []).map((user) => (typeof user === "string" ? user : user.name));
-  const USERS =  document.querySelectorAll(".assignedTo");
- USERS.forEach((label) => {
+  const USERS = document.querySelectorAll(".assignedTo");
+  USERS.forEach((label) => {
     const checkbox = label.querySelector("input[type='checkbox']");
     if (!checkbox) return;
     const isAssigned = assignedNames.includes(checkbox.value);

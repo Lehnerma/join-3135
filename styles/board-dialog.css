@@ -194,6 +194,9 @@
 
   .detail-task--assignees-list {
     list-style: none;
+    height: 100%;
+    max-height: 200px;
+    overflow-y: auto;
 
     li {
       gap: 24px;
