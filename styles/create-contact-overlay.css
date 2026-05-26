@@ -16,8 +16,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 1212px;
-    aspect-ratio: 1212 / 594;
-    max-height: 95vh;
+    height:auto;
     background-color: var(--input-text-color);
     z-index: 80;
     overflow: hidden;
