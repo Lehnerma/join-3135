@@ -8,12 +8,15 @@ main {
   padding-right: 16px;
 
   h1 {
-    font-size: clamp(46px, calc(41.429px + 1.429vw), 62px);
+    font-size: clamp(47px 10vw, 61px);
     font-family: "Inter", sans-serif;
     font-weight: 700;
-    padding-top: clamp(20px, calc(-5.714px + 8.036vw), 110px);
+    padding-top: clamp(32px, 10vw, 110px);
     padding-bottom: 32px;
     white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
   }
 }
 
@@ -38,13 +41,18 @@ main {
   flex-direction: column;
   gap: 8px;
   padding: 8px 4px;
+  position: relative;
 }
 
 .input-invalid {
   border: 1px solid red;
 }
 
-.field-error {
+.input-section:has(.input-invalid)::after {
+  content: "This field is required";
+  position: absolute;
+  bottom: -12px;
+  left: 4px;
   color: #ff3d00;
   font-size: 12px;
   margin-top: 4px;
@@ -58,10 +66,12 @@ main {
   opacity: 1;
 }
 
-/* .input:user-invalid~.field-error,
-.form--select:user-invalid~.field-error {
-  display: block; 
-} */
+.form--select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 48px;
+}
 
 .column {
   display: flex;
@@ -337,6 +347,12 @@ main {
   justify-content: center;
   flex-direction: row;
   gap: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 12px;
   transition:
     opacity 0.3s ease,
     transform 0.3s ease;
@@ -362,7 +378,9 @@ main {
   justify-content: center;
   align-items: center;
   gap: 8px;
-  transition: bottom 0.2s ease-in, transform 0.2s ease-in;
+  transition:
+    bottom 0.2s ease-in,
+    transform 0.2s ease-in;
 }
 
 .success-message span {
@@ -480,6 +498,10 @@ main {
   .priority-group {
     justify-content: flex-start;
   }
+  .right{
+    margin-top: 42px;
+
+  }
 }
 
 @media (max-width: 380px) {
@@ -571,6 +593,7 @@ main {
   padding: 8px;
   max-height: 220px;
   overflow-y: auto;
+  height: 100px;
 }
 
 /* Liste sichtbar wenn .open auf .custom-dropdown (per JS) */

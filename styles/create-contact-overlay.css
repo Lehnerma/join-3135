@@ -16,8 +16,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 1212px;
-    aspect-ratio: 1212 / 594;
-    max-height: 95vh;
+    height: 100%;
+    max-height: 592px;
     background-color: var(--input-text-color);
     z-index: 80;
     overflow: hidden;
@@ -60,7 +60,8 @@
 
 .dialog-container {
     width: 100%;
-    height: 100vh;
+    height: 100%;
+    max-height: 592px;
     display: flex;
 }
 
@@ -71,6 +72,7 @@
     background-color: var(--primary-color);
     color: var(--input-text-color);
     padding: 66px 48px;
+    
     flex-shrink: 0;
 }
 
@@ -114,6 +116,9 @@
 .dialog-main {
     width: 100%;
     height: 100%;
+    max-height: 592px;
+
+
     display: flex;
 }
 
@@ -195,7 +200,7 @@ form {
     align-items: center;
     height: 56px;
     gap: clamp(12px, 1.2vw, 24px);
-    margin-top: clamp(10px, 3.3vw, 49px);
+    margin-top: 49px;
 }
 
 .btn--primary {
@@ -242,7 +247,7 @@ form {
         width: 650px;
         min-height: clamp(70vh, 95%, 800px);
     }
-    
+
     @keyframes slideIn {
         from {
             transform: translate(-50%, 100vh);
@@ -359,11 +364,14 @@ form {
     .btn-cancel {
         display: none;
     }
+   
+
 }
 
 @media (max-width: 427px) {
     .dialog-content {
-        min-width: 315px;
+        min-width: 317px;
+        max-height: 600px;
     }
 
     .aside-h2 {
@@ -387,12 +395,17 @@ form {
 
     .dialog-main {
         min-width: 315px;
+
     }
+    .dialog-login-buttons {
+   
+    margin-top: 40px;
+}
 
     .dialog-input-container {
         width: 100%;
         min-height: 153px;
-        gap: 25px;
+        gap: 18px;
     }
 
     .dialog-input-section {

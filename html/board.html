@@ -173,7 +173,6 @@
         <section class="input-section">
           <label for="title" class="">Title</label>
           <input id="title" class="input" type="text" placeholder="Enter a title" required />
-          <span id="title_er" class="field-error dnone">This field is required</span>
         </section>
 
         <section class="input-section">
@@ -184,7 +183,6 @@
         <section class="input-section">
           <label for="due_date" class="">Due date</label>
           <input id="due_date" class="input input-date" type="date" required />
-          <span id="due_date_er" class="field-error dnone">This field is required</span>
         </section>
 
         <section class="input-section">
@@ -217,13 +215,20 @@
         </section>
 
         <section class="input-section">
-          <label for="category" class="">Category</label>
-          <select id="category" class="input dropdown form--select" required>
-            <option value="" selected disabled>Select task category</option>
-            <option value="Technical Task">Technical Task</option>
-            <option value="User Story">User Story</option>
-          </select>
-          <span id="category_er" class="field-error dnone">This field is required</span>
+          <label class="">Category</label>
+          <div class="custom-dropdown" id="category_dropdown_edit">
+            <div class="custom-dropdown__trigger">
+              <input type="text" id="category" class="input custom-dropdown__input" readonly
+                onclick="toggleDropdown(event)" placeholder="Select task category" autocomplete="off" />
+              <button type="button" class="custom-dropdown__toggle" aria-label="Toggle category dropdown">
+                <span class="custom-dropdown__arrow"></span>
+              </button>
+            </div>
+            <ul class="custom-dropdown__list" id="category_list_edit">
+              <li class="custom-dropdown__item" onclick="selectCategoryEdit('Technical Task')">Technical Task</li>
+              <li class="custom-dropdown__item" onclick="selectCategoryEdit('User Story')">User Story</li>
+            </ul>
+          </div>
         </section>
 
         <section class="input-section">
