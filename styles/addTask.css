@@ -40,7 +40,6 @@ main {
   color: black;
 }
 
-#category::placeholder,
 #category_edit::placeholder {
   color: black;
 }
@@ -674,7 +673,6 @@ main {
   padding: 8px;
   max-height: 220px;
   overflow-y: auto;
-  height: 100px;
 }
 
 /* Liste sichtbar wenn .open auf .custom-dropdown (per JS) */
