@@ -58,6 +58,13 @@ main {
   display: block; 
 } */
 
+.form--select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 48px;
+}
+
 .column {
   display: flex;
   flex-direction: column;
