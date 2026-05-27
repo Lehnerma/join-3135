@@ -36,6 +36,14 @@ main {
   font-weight: 300;
 }
 
+#assigned_to_search::placeholder {
+  color: black;
+}
+
+#category_edit::placeholder {
+  color: black;
+}
+
 .input-section {
   display: flex;
   flex-direction: column;
@@ -46,33 +54,47 @@ main {
 
 .input-invalid {
   border: 1px solid red;
+  color: red;
 }
-/* 
-.input-section:has(.input-invalid)::after {
+
+.input-invalid-past {
+  border: 1px solid red;
+  color: red;
+}
+
+.input-invalid-format {
+  border: 1px solid red;
+  color: red;
+}
+
+.input-section:has(.input-invalid):not(:has(.input-invalid-past)):not(:has(.input-invalid-format))::after {
   content: "This field is required";
   position: absolute;
   bottom: -12px;
   left: 4px;
   color: #ff3d00;
   font-size: 12px;
-  margin-top: 4px;
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.15s ease-in-out;
-} */
-
-.field-error {
-  color: #ff3d00;
-  font-size: 12px;
-  margin-top: 4px;
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.15s ease-in-out; 
+  white-space: nowrap;
 }
 
-.field-error.visible {
-  visibility: visible;
-  opacity: 1;
+.input-section:has(.input-invalid-past)::after {
+  content: "Date can not be in the past";
+  position: absolute;
+  bottom: -12px;
+  left: 4px;
+  color: #ff3d00;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.input-section:has(.input-invalid-format)::after {
+  content: "Invalid date format";
+  position: absolute;
+  bottom: -12px;
+  left: 4px;
+  color: #ff3d00;
+  font-size: 12px;
+  white-space: nowrap;
 }
 
 .form--select {
@@ -267,18 +289,59 @@ main {
   min-height: auto;
   max-height: 270px;
 }
-input[type="date"]{
- color: var(--fourth-text-color);
-}
-
-input[type="date"]:focus{
- color: black;
-}
-
 
 .input {
   width: 100%;
   background-color: rgba(255, 255, 255, 1);
+}
+
+/* Date wrapper with calendar icon inside input on the left */
+.date-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.date-wrapper .input-date {
+  padding-right: 40px;
+}
+
+.date-picker-hidden {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.date-icon-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.date-icon-btn--left {
+  left: 8px;
+}
+
+.date-icon-btn--right {
+  right: 8px;
+}
+
+.date-icon-img {
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
 }
 
 .input--section {
@@ -364,12 +427,6 @@ input[type="date"]:focus{
   justify-content: center;
   flex-direction: row;
   gap: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  gap: 12px;
   transition:
     opacity 0.3s ease,
     transform 0.3s ease;
@@ -424,7 +481,16 @@ input[type="date"]:focus{
   }
 }
 
+/* Equal width for Assigned-to, Category, Subtasks in add-task dialog */
+.dat-col .custom-dropdown,
+.dat-col .input--section {
+  max-width: 100%;
+  width: 100%;
+}
 
+.dat-col #assigned_to_dropdown {
+  max-width: 100%;
+}
 
 @media (min-width: 1024px) {
   .task-container {
@@ -481,14 +547,12 @@ input[type="date"]:focus{
   .low-active {
     font-size: 21px;
   }
-
   #assigned_to_dropdown {
     max-width: 464px;
   }
 }
 
 @media (max-width: 1024px) {
-
   .input--title,
   .form-footer {
     position: sticky;
@@ -522,7 +586,6 @@ input[type="date"]:focus{
 }
 
 @media (max-width: 380px) {
-
   .btn--primary,
   .btn--secondary {
     font-size: 16px;
@@ -610,7 +673,6 @@ input[type="date"]:focus{
   padding: 8px;
   max-height: 220px;
   overflow-y: auto;
-  height: 100px;
 }
 
 /* Liste sichtbar wenn .open auf .custom-dropdown (per JS) */

@@ -22,7 +22,8 @@
   grid-template-columns: 1fr auto auto;
   grid-template-areas: "head-title head-search head-add";
   align-items: center;
-  padding: 8px clamp(10px, 7vw, 64px);
+  padding: 24px clamp(10px, 7vw, 64px);
+  padding-top: 8px;
   gap: 32px;
   width: 100%;
   max-width: 1056px;
@@ -86,7 +87,7 @@
       content: "No Tasks found!";
       position: absolute;
       bottom: -20px;
-      left: 0;
+      left: 16px;
       color: var(--faulty-entry-color);
       font-size: 16px;
     }

@@ -216,7 +216,7 @@ function getDetailTaskTemplate(task) {
       <section class="detail-task--infos f-col">
         <div class="detail-task--date f-row">
           <h4 class="detail-task--subheading">Due date:</h4>
-          <p class="detail-task--text">${task.dueDate}</p>
+          <p class="detail-task--text">${toDisplayDate(task.dueDate)}</p>
         </div>
 
         <div class="detail-task--prio f-row">
@@ -299,7 +299,8 @@ function getEditTaskDialogTemplate() {
 
         <div class="input-section">
           <label for="due_date" class="required">Due date</label>
-          <input id="due_date" class="input input-date" type="date" required />
+          <input id="due_date" class="input input-date" type="text" placeholder="dd/mm/yyyy"
+            pattern="\d{1,2}/\d{1,2}/\d{4}" autocomplete="off">
         </div>
 
         <div class="input-section">
@@ -395,10 +396,12 @@ function getAddTaskDialogTemplate() {
             <label for="description">Description</label>
             <textarea id="description" class="input" placeholder="Enter a Description" rows="3"></textarea>
           </div>
-          <div class="input-section">
-            <label for="due_date_edit" class="required">Due date</label>
-            <input id="due_date_edit" class="input input-date" type="date" required />
-          </div>
+           <div class="input-section">
+             <label for="due_date_edit" class="required">Due date</label>
+             <div class="date-wrapper">
+               <input id="due_date_edit" class="input input-date" type="date" autocomplete="off">
+             </div>
+           </div>
         </section>
 
         <section class="dat-col">
