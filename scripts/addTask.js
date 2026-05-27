@@ -60,7 +60,7 @@ function toStorageDate(ddmmyyyy) {
  */
 function initDateInput() {
   setupSingleDateInput("due_date");
-  initDatePicker();
+  setupSingleDateInput("due_date_edit");
 }
 
 /**
@@ -76,51 +76,6 @@ function setupSingleDateInput(id) {
   input.addEventListener("change", () => resetDateIfInvalid(input));
   input.addEventListener("input", () => {
     if (!input.value) { clearError(input); setError(input); } else clearError(input);
-  });
-}
-
-/**
- * Wires calendar icon buttons to open native date pickers.
- * Handles both the main add-task page and the board dialog variants.
- * When a date is chosen, it updates the text input with dd/mm/yyyy format.
- */
-function initDatePicker() {
-  wireDatePicker("due_date_picker", "due_date", "date_icon_btn");
-  wireDatePicker("due_date_picker_edit", "due_date_edit", "date_icon_btn_edit");
-}
-
-/**
- * Wires a single date picker to its icon button and text input.
- * @param {string} pickerId - ID of the hidden native date input.
- * @param {string} textInputId - ID of the visible text input.
- * @param {string} iconBtnId - ID of the calendar icon button.
- */
-function wireDatePicker(pickerId, textInputId, iconBtnId) {
-  const picker = document.getElementById(pickerId);
-  const textInput = document.getElementById(textInputId);
-  const iconBtn = document.getElementById(iconBtnId);
-  if (!picker || !textInput || !iconBtn) return;
-
-  iconBtn.addEventListener("click", () => {
-    if ("showPicker" in picker) {
-      picker.showPicker();
-    } else {
-      picker.click();
-    }
-  });
-
-  picker.addEventListener("change", () => {
-    if (picker.value) {
-      textInput.value = toDisplayDate(picker.value);
-      const val = textInput.value.trim();
-      if (!val) {
-        clearError(textInput);
-        setError(textInput);
-      } else if (isDateInPast(val)) {
-        clearError(textInput);
-        setErrorPast(textInput);
-      } else clearError(textInput);
-    }
   });
 }
 
