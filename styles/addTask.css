@@ -8,10 +8,10 @@ main {
   padding-right: 16px;
 
   h1 {
-    font-size: 61px;
+    font-size: clamp(47px 10vw, 61px);
     font-family: "Inter", sans-serif;
     font-weight: 700;
-    padding-top: 110px;
+    padding-top: clamp(32px, 10vw, 110px);
     padding-bottom: 32px;
     white-space: nowrap;
   }
