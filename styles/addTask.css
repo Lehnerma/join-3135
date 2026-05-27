@@ -11,9 +11,12 @@ main {
     font-size: 61px;
     font-family: "Inter", sans-serif;
     font-weight: 700;
-    padding-top: 110px;
+    padding-top: clamp(32px, 10vw, 110px);
     padding-bottom: 32px;
     white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
   }
 }
 
@@ -323,12 +326,12 @@ main {
 }
 
 .toast {
-display: flex;
-justify-content: center;
-align-items: center;
-justify-content: center;
-flex-direction: row;
-gap: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 12px;
   transition:
     opacity 0.3s ease,
     transform 0.3s ease;
@@ -354,7 +357,9 @@ gap: 12px;
   justify-content: center;
   align-items: center;
   gap: 8px;
-  transition: bottom 0.2s ease-in, transform 0.2s ease-in;
+  transition:
+    bottom 0.2s ease-in,
+    transform 0.2s ease-in;
 }
 
 .success-message span {
@@ -436,7 +441,7 @@ gap: 12px;
   .low-active {
     font-size: 21px;
   }
-  #assigned_to_dropdown{
+  #assigned_to_dropdown {
     max-width: 464px;
   }
 }
