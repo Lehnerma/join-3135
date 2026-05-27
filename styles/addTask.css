@@ -55,13 +55,20 @@ main {
 
 .input-invalid {
   border: 1px solid red;
+  color: red;
 }
 
 .input-invalid-past {
   border: 1px solid red;
+  color: red;
 }
 
-.input-section:has(.input-invalid):not(:has(.input-invalid-past))::after {
+.input-invalid-format {
+  border: 1px solid red;
+  color: red;
+}
+
+.input-section:has(.input-invalid):not(:has(.input-invalid-past)):not(:has(.input-invalid-format))::after {
   content: "This field is required";
   position: absolute;
   bottom: -12px;
@@ -73,6 +80,16 @@ main {
 
 .input-section:has(.input-invalid-past)::after {
   content: "Date can not be in the past";
+  position: absolute;
+  bottom: -12px;
+  left: 4px;
+  color: #ff3d00;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.input-section:has(.input-invalid-format)::after {
+  content: "Invalid date format";
   position: absolute;
   bottom: -12px;
   left: 4px;

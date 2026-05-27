@@ -135,6 +135,16 @@ function isDateInPast(ddmmyyyy) {
 }
 
 /**
+ * Checks whether a value uses only `/` as separator (no `.` or `-`).
+ * Partial entries are allowed; only rejects explicit wrong separators.
+ * @param {string} val - The date string to check.
+ * @returns {boolean} True if the format is acceptable.
+ */
+function isValidDateFormat(val) {
+  return !/[.\-]/.test(val);
+}
+
+/**
  * Highlights the selected priority button and stores the choice globally.
  * @param {string} priority - "urgent", "medium" or "low".
  */
@@ -468,12 +478,19 @@ function setError(input) { input.classList.add("input-invalid"); }
 function setErrorPast(input) { input.classList.add("input-invalid-past"); }
 
 /**
+ * Adds a red error border for an invalid date format (e.g. contains `.` or `-`).
+ * @param {HTMLElement} input - The date input element to mark.
+ */
+function setErrorFormat(input) { input.classList.add("input-invalid-format"); }
+
+/**
  * Removes all error classes from an input element.
  * @param {HTMLElement} input - The element to clear.
  */
 function clearError(input) {
   input.classList.remove("input-invalid");
   input.classList.remove("input-invalid-past");
+  input.classList.remove("input-invalid-format");
 }
 
 /**
@@ -482,10 +499,10 @@ function clearError(input) {
 function validetInput() {
   const fields = [
     { id: "title", event: "input" },
-    { id: "due_date", event: "click" },
+    { id: "due_date", event: "input" },
     { id: "category", event: "input" },
     { id: "title_edit", event: "input" },
-    { id: "due_date_edit", event: "click" },
+    { id: "due_date_edit", event: "input" },
     { id: "category_edit", event: "input" },
   ];
   fields.forEach(({ id, event }) => bindFieldValidation(id, event));
@@ -500,16 +517,19 @@ function bindFieldValidation(id, eventType) {
   const el = document.getElementById(id);
   if (!el) return;
   const isDateField = id.startsWith("due_date");
+
   el.addEventListener(eventType, () => {
     const val = el.value.trim();
     if (!val) { clearError(el); setError(el); }
     else if (isDateField && isDateInPast(val)) { clearError(el); setErrorPast(el); }
+    else if (isDateField && !isValidDateFormat(val)) { clearError(el); setErrorFormat(el); }
     else clearError(el);
   });
   el.addEventListener("blur", () => {
     const val = el.value.trim();
     if (!val) { clearError(el); setError(el); }
     else if (isDateField && isDateInPast(val)) { clearError(el); setErrorPast(el); }
+    else if (isDateField && !isValidDateFormat(val)) { clearError(el); setErrorFormat(el); }
   });
 }
 
