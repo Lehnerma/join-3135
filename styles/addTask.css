@@ -577,6 +577,12 @@ main {
   height: 100px;
 }
 
+/* Assigned-to dropdown list – double height */
+#assigned_to_list {
+  max-height: 440px;
+  height: 200px;
+}
+
 /* Liste sichtbar wenn .open auf .custom-dropdown (per JS) */
 .custom-dropdown.open .custom-dropdown__list {
   display: block;
@@ -672,4 +678,15 @@ main {
 /* Gefilterte Items verstecken (JS fügt .hidden hinzu bei Suche) */
 .custom-dropdown__item.hidden {
   display: none;
+}
+
+/* Equal width for Assigned-to, Category, Subtasks in add-task dialog */
+.dat-col .custom-dropdown,
+.dat-col .input--section {
+  max-width: 100%;
+  width: 100%;
+}
+
+.dat-col #assigned_to_dropdown {
+  max-width: 100%;
 }
