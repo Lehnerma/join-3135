@@ -14,7 +14,7 @@ function init() {
   loadUsers();
   initDropdownOutsideClick();
   initAssignedPreviewResize();
-  validetInput();
+  validateInput();
 }
 
 /**
@@ -298,35 +298,39 @@ function buildTaskObj(status = "todo") {
 
 /**
  * Checks all three required fields and shows/hides error messages.
+ * Now also prevents dates in the past.
  * @param {HTMLElement} title - The title input.
  * @param {HTMLElement} dueDate - The due-date input.
  * @param {HTMLElement} category - The category select.
  * @returns {boolean} True when all three fields are valid.
  */
 function validateTaskForm(title, dueDate, category) {
-  const HAS_TITLE = !!title.value.trim();
-  const HAS_DATE = !!dueDate.value;
-  const HAS_CATEGORY = !!category.value;
+  const IS_TITLE_VALID = isInputValid(title);
+  const IS_DATE_VALID = isInputValid(dueDate);
+  const IS_CATEGORY_VALID = isInputValid(category);
 
-  HAS_TITLE ? clearError(title, "title_er") : setError(title, "title_er");
-  HAS_DATE ? clearError(dueDate, "date_er") : setError(dueDate, "date_er");
-  HAS_CATEGORY ? clearError(category, "category_er") : setError(category, "category_er");
+  IS_TITLE_VALID ? clearError(title, "title_er") : setError(title, "title_er");
+  IS_DATE_VALID ? clearError(dueDate, "date_er") : setError(dueDate, "date_er");
+  IS_CATEGORY_VALID ? clearError(category, "category_er") : setError(category, "category_er");
 
-  return HAS_TITLE && HAS_DATE && HAS_CATEGORY;
+  return IS_TITLE_VALID && IS_DATE_VALID && IS_CATEGORY_VALID;
 }
 
 /**
- * Adds the red error border to an input and shows the error message.
+ * Adds the red error border to an input and shows the error message using visibility.
  * @param {HTMLElement} input - The input element to mark invalid.
  * @param {string} errorId - The ID of the error message span.
  */
 function setError(input, errorId) {
   input.classList.add("input-invalid");
-  document.getElementById(errorId)?.classList.remove("dnone");
+  const ERROR_EL = document.getElementById(errorId);
+  if (ERROR_EL) {
+    ERROR_EL.classList.add("visible"); 
+  }
 }
 
 /**
- * Removes the red error border from an input and hides the error message.
+ * Removes the red error border from an input and hides the error message using visibility.
  * @param {HTMLElement} input - The input element to clear.
  * @param {string} errorId - The ID of the error message span.
  */
@@ -334,34 +338,89 @@ function clearError(input, errorId) {
   input.classList.remove("input-invalid");
   const ERROR_EL = document.getElementById(errorId);
   if (ERROR_EL) {
-    ERROR_EL.classList.add("dnone");
+    ERROR_EL.classList.remove("visible"); // Macht den Text wieder unsichtbar, behält den Platz bei
   }
 }
+
+
+function isInputValid(element) {
+  const value = element.value.trim();
+  if (!value) return false;
+
+  if (element.type === "date") {
+    const selectedDate = new Date(value);
+    const today = new Date();
+    
+    today.setHours(0, 0, 0, 0);
+    selectedDate.setHours(0, 0, 0, 0);
+
+    if (selectedDate < today) return false;
+  }
+
+  return true;
+}
+
+function toggleErrorState(element, errorId) {
+  const errorElement = document.getElementById(errorId);
+  if (isInputValid(element)) {
+    clearError(element, errorId);
+    return;
+  }
+  if (errorElement) {
+    const value = element.value.trim();
+
+    if (!value) {
+      errorElement.innerText = "This field is required";
+    } else if (element.type === "date") {
+      errorElement.innerText = "Date can not be in the past";
+    }
+  }
+  setError(element, errorId);
+}
+
+function validateInput() {
+  const fields = [
+    { id: "title", errorId: "title_er", event: "input" },
+    { id: "due_date", errorId: "date_er", event: "change" }, 
+    { id: "category", errorId: "category_er", event: "change" },
+    { id: "title_edit", errorId: "title_edit_er", event: "input" },
+    { id: "due_date_edit", errorId: "due_date_edit_er", event: "change" }, 
+    { id: "category_edit", errorId: "category_edit_er", event: "change" },
+  ];
+
+  fields.forEach(({ id, errorId, event }) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener(event, () => toggleErrorState(el, errorId));
+    el.addEventListener("blur", () => toggleErrorState(el, errorId));
+  });
+}
+
 
 /**
  * Attaches input/change/blur listeners to required fields.
  * Clears error when a value is entered; shows error when field is left empty.
  */
-function validetInput() {
-  const fields = [
-    { id: "title", errorId: "title_er", event: "input" },
-    { id: "due_date", errorId: "date_er", event: "click" },
-    { id: "category", errorId: "category_er", event: "change" },
-    { id: "title_edit", errorId: "title_edit_er", event: "input" },
-    { id: "due_date_edit", errorId: "due_date_edit_er", event: "click" },
-    { id: "category_edit", errorId: "category_edit_er", event: "change" },
-  ];
-  fields.forEach(({ id, errorId, event }) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.addEventListener(event, () => {
-      el.value.trim() ? clearError(el, errorId) : setError(el, errorId);
-    });
-    el.addEventListener("blur", () => {
-      if (!el.value.trim()) setError(el, errorId);
-    });
-  });
-}
+// function validetInput() {
+//   const fields = [
+//     { id: "title", errorId: "title_er", event: "input" },
+//     { id: "due_date", errorId: "date_er", event: "change" },
+//     { id: "category", errorId: "category_er", event: "change" },
+//     { id: "title_edit", errorId: "title_edit_er", event: "input" },
+//     { id: "due_date_edit", errorId: "due_date_edit_er", event: "change" },
+//     { id: "category_edit", errorId: "category_edit_er", event: "change" },
+//   ];
+//   fields.forEach(({ id, errorId, event }) => {
+//     const el = document.getElementById(id);
+//     if (!el) return;
+//     el.addEventListener(event, () => {
+//       el.value.trim() ? clearError(el, errorId) : setError(el, errorId);
+//     });
+//     el.addEventListener("blur", () => {
+//       if (!el.value.trim()) setError(el, errorId);
+//     });
+//   });
+// }
 
 /**
  * POSTs the task object to Firebase and handles success/failure UI.
@@ -398,6 +457,7 @@ async function sendTaskRequest(task, btn) {
 
 /**
  * Validates the form and, if valid, sends the task to the backend.
+ * Checks for missing values and past dates, updating error messages dynamically.
  */
 async function createTask() {
   const isDialog = !!document.getElementById("title_edit");
@@ -407,25 +467,20 @@ async function createTask() {
   const CATEGORY = document.getElementById("category" + sfx);
   const BTN = document.getElementById("btnCreateTask");
   if (BTN) BTN.disabled = true;
+  const IS_TITLE_VALID = isInputValid(TITLE);
+  const IS_DATE_VALID = isInputValid(DUE_DATE);
+  const IS_CATEGORY_VALID = isInputValid(CATEGORY);
+  const errorSfx = isDialog ? "_edit_er" : "_er";
 
-  const HAS_TITLE = !!TITLE?.value.trim();
-  const HAS_DATE = !!DUE_DATE?.value;
-  const HAS_CATEGORY = !!CATEGORY?.value;
+  toggleErrorState(TITLE, "title" + errorSfx);
+  toggleErrorState(DUE_DATE, "date" + errorSfx);
+  toggleErrorState(CATEGORY, "category" + errorSfx);
 
-  if (isDialog) {
-    HAS_TITLE ? clearError(TITLE, "title_edit_er") : setError(TITLE, "title_edit_er");
-    HAS_DATE ? clearError(DUE_DATE, "date_edit_er") : setError(DUE_DATE, "date_edit_er");
-    HAS_CATEGORY ? clearError(CATEGORY, "category_edit_er") : setError(CATEGORY, "category_edit_er");
-  } else {
-    HAS_TITLE ? clearError(TITLE, "title_er") : setError(TITLE, "title_er");
-    HAS_DATE ? clearError(DUE_DATE, "date_er") : setError(DUE_DATE, "date_er");
-    HAS_CATEGORY ? clearError(CATEGORY, "category_er") : setError(CATEGORY, "category_er");
-  }
-
-  if (!HAS_TITLE || !HAS_DATE || !HAS_CATEGORY) {
-    if (BTN) BTN.disabled = false;
+  if (!IS_TITLE_VALID || !IS_DATE_VALID || !IS_CATEGORY_VALID) {
+    if (BTN) BTN.disabled = false; // Button wieder freigeben
     return;
   }
+
   const status = sessionStorage.getItem("task-status") ?? "todo";
   await sendTaskRequest(buildTaskObj(status), BTN);
 }

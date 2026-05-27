@@ -9,7 +9,7 @@ let current_detail_task = null;
 function initBoardTask() {
   initBoardSearch();
   initBoardDialogs();
-  validetInput();
+  validateInput();
 }
 
 /**
@@ -476,7 +476,7 @@ function openAddTaskDialog() {
   initDropdownOutsideClick();
   selectedPriority = "medium";
   subtasksList = [];
-  validetInput();
+  validateInput();
 }
 
 /**

@@ -48,6 +48,14 @@ main {
   color: #ff3d00;
   font-size: 12px;
   margin-top: 4px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.field-error.visible {
+  visibility: visible;
+  opacity: 1;
 }
 
 /* .input:user-invalid~.field-error,
@@ -323,12 +331,12 @@ main {
 }
 
 .toast {
-display: flex;
-justify-content: center;
-align-items: center;
-justify-content: center;
-flex-direction: row;
-gap: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 12px;
   transition:
     opacity 0.3s ease,
     transform 0.3s ease;
@@ -380,6 +388,8 @@ gap: 12px;
     transform: translate(-50%, 50%);
   }
 }
+
+
 
 @media (min-width: 1024px) {
   .task-container {
@@ -436,12 +446,14 @@ gap: 12px;
   .low-active {
     font-size: 21px;
   }
-  #assigned_to_dropdown{
+
+  #assigned_to_dropdown {
     max-width: 464px;
   }
 }
 
 @media (max-width: 1024px) {
+
   .input--title,
   .form-footer {
     position: sticky;
@@ -471,6 +483,7 @@ gap: 12px;
 }
 
 @media (max-width: 380px) {
+
   .btn--primary,
   .btn--secondary {
     font-size: 16px;
