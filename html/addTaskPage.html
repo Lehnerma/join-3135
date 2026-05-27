@@ -140,17 +140,19 @@
           </div>
 
           <div class="input-section">
-            <label for="category" class="required">Category</label>
-            <div class="custom-dropdown__trigger">
-              <select id="category" class="input dropdown form--select" required>
-                <option value="" selected>Select task category</option>
-                <option value="Technical Task">Technical Task</option>
-                <option value="User Story">User Story</option>
-              </select>
-
-              <button type="button" class="custom-dropdown__toggle">
-                <span class="custom-dropdown__arrow"></span>
-              </button>
+            <label class="required">Category</label>
+            <div class="custom-dropdown" id="category_dropdown">
+              <div class="custom-dropdown__trigger">
+                <input type="text" id="category" class="input custom-dropdown__input" readonly
+                  onclick="toggleDropdown(event)" placeholder="Select task category" autocomplete="off" />
+                <button type="button" class="custom-dropdown__toggle" aria-label="Toggle category dropdown">
+                  <span class="custom-dropdown__arrow"></span>
+                </button>
+              </div>
+              <ul class="custom-dropdown__list" id="category_list">
+                <li class="custom-dropdown__item" onclick="selectCategory('Technical Task')">Technical Task</li>
+                <li class="custom-dropdown__item" onclick="selectCategory('User Story')">User Story</li>
+              </ul>
             </div>
           </div>
 

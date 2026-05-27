@@ -293,7 +293,11 @@ function fillEditFormFields(task) {
   if (FORM) FORM.scrollTop = 0;
   document.getElementById("title").value = task.title || "";
   document.getElementById("description").value = task.description || "";
-  document.getElementById("category").value = task.category || "";
+  if (task.category) {
+    setCategoryValue("category", "category_dropdown_edit", task.category);
+  } else {
+    document.getElementById("category").value = "";
+  }
   const dueDateInput = document.getElementById("due_date");
   dueDateInput.min = new Date().toISOString().split("T")[0];
   dueDateInput.value = task.dueDate || "";

@@ -1,12 +1,14 @@
-const ADDTASK_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks" + ".json";
+const ADDTASK_URL =
+  "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks.json";
+
 let selectedPriority = "medium";
 let remoteUsers = [];
 sessionStorage.removeItem("task-status");
 
-/**
- * Main entry point called on page load.
- * Initializes all modules and UI components.
- */
+// ###########################################################
+//  INITIALISIERUNG
+// ###########################################################
+
 function init() {
   btnInit();
   subtaskInit();
@@ -17,96 +19,49 @@ function init() {
   validetInput();
 }
 
-/**
- * Attaches submit and clear listeners to the main form and clear button.
- */
 function btnInit() {
-  const FORM = document.getElementById("form_task");
-  const CLEAR_FORM = document.getElementById("form_clear");
-  registerFormSubmitListener(FORM);
-  registerClearFormListener(CLEAR_FORM);
+  const form = document.getElementById("form_task");
+  const clearBtn = document.getElementById("form_clear");
+  if (form) form.addEventListener("submit", (e) => { e.preventDefault(); createTask(); });
+  if (clearBtn) clearBtn.addEventListener("click", clearForm);
 }
 
-/**
- * Registers the submit event listener on the task form.
- * Prevents the default submission and triggers task creation.
- * @param {HTMLFormElement|null} form - The task form element.
- */
-function registerFormSubmitListener(form) {
-  if (!form) return;
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    createTask();
-  });
+// ###########################################################
+//  DATUM
+// ###########################################################
+
+function initDateInput() {
+  setupSingleDateInput("due_date");
+  setupSingleDateInput("due_date_edit");
 }
 
-/**
- * Registers the click event listener on the clear-form button.
- * @param {HTMLElement|null} clearBtn - The clear button element.
- */
-function registerClearFormListener(clearBtn) {
-  if (!clearBtn) return;
-  clearBtn.addEventListener("click", () => clearForm());
-}
-
-/**
- * Configures a single date input: sets today as min date and fills it on first focus.
- * @param {string} id - The HTML id of the date input element.
- */
-function setupDateInput(id) {
+function setupSingleDateInput(id) {
   const input = document.getElementById(id);
   if (!input) return;
-  const today = new Date().toISOString().split("T")[0];
-  input.min = today;
-  input.addEventListener("focus", () => {
-    if (!input.value) input.value = today;
-  });
+  input.min = new Date().toISOString().split("T")[0];
+  input.addEventListener("focus", () => { if (!input.value) input.value = input.min; });
 }
 
-/**
- * Sets the date input to today's date on first focus and prevents past dates.
- */
-function initDateInput() {
-  setupDateInput("due_date");
-  setupDateInput("due_date_edit");
-}
+// ###########################################################
+//  PRIORITÄT
+// ###########################################################
 
-/**
- * Highlights the selected priority button and stores the choice.
- * @param {string} priority - One of 'urgent', 'medium', or 'low'.
- */
 function selectPriority(priority) {
-  const PRIORITIES = ["urgent", "medium", "low"];
-  PRIORITIES.forEach((prio) => {
-    document.getElementById(`btn_${prio}`).classList.remove(`${prio}-active`);
+  ["urgent", "medium", "low"].forEach((p) => {
+    document.getElementById("btn_" + p).classList.remove(p + "-active");
   });
-  document.getElementById(`btn_${priority}`).classList.add(`${priority}-active`);
+  document.getElementById("btn_" + priority).classList.add(priority + "-active");
   selectedPriority = priority;
 }
 
-/**
- * Moves the active user to the front of the list, then sorts the rest alphabetically.
- * @param {Array<Object>} users - Array of user objects with a `name` property.
- * @returns {Array<Object>} Sorted array with the active user at position 0.
- */
-function sortUsersWithActiveFirst(users) {
-  const ACTIV_USER = sessionStorage.getItem("activeUserName");
-  const SORTED = users.toSorted((a, b) => a.name.localeCompare(b.name));
-  if (ACTIV_USER) {
-    const ACTIVE_USER_INDEX = SORTED.findIndex((user) => user.name == ACTIV_USER);
-    const ACTIVE_USER = SORTED.splice(ACTIVE_USER_INDEX, 1)[0];
-    SORTED.unshift(ACTIVE_USER);
-  }
-  return SORTED;
-}
+// ###########################################################
+//  BENUTER LADEN & DROPDOWN FÜLLEN
+// ###########################################################
 
-/**
- * Fetches users from Firebase and fills the assignment dropdown.
- */
 async function loadUsers() {
-  const USER_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+  const url = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
   try {
-    const response = await fetch(USER_URL);
+    const response = await fetch(url);
     const data = await response.json();
     remoteUsers = Object.values(data);
     fillUserDropdown(sortUsersWithActiveFirst(remoteUsers));
@@ -115,233 +70,242 @@ async function loadUsers() {
   }
 }
 
-/**
- * Renders users into the assignment dropdown list.
- * @param {Object} users - Object or array of user data.
- */
+function sortUsersWithActiveFirst(users) {
+  const activeName = sessionStorage.getItem("activeUserName");
+  const sorted = users.toSorted((a, b) => a.name.localeCompare(b.name));
+  if (activeName) {
+    const idx = sorted.findIndex((u) => u.name === activeName);
+    if (idx > -1) {
+      const activeUser = sorted.splice(idx, 1)[0];
+      sorted.unshift(activeUser);
+    }
+  }
+  return sorted;
+}
+
 function fillUserDropdown(users) {
-  const CONTAINER = document.getElementById("assigned_to_list");
-  if (!CONTAINER) {
-    console.error("assignedToList Element nicht gefunden!");
-    return;
+  const list = document.getElementById("assigned_to_list");
+  if (!list) return;
+  list.innerHTML = "";
+  for (const key in users) {
+    const user = users[key];
+    if (!user?.name) continue;
+    list.innerHTML += getFillUserDropown(user.color || "#ccc", user.name[0], user);
   }
-  let html = "";
-  for (const USER_ID in users) {
-    const USER = users[USER_ID];
-    if (!USER || !USER.name) continue;
-    const COLOR = USER.color || "#ccc";
-    const INITIALS = USER.name.charAt(0);
-    html += getFillUserDropown(COLOR, INITIALS, USER);
-  }
-  CONTAINER.innerHTML = html;
 }
 
-/**
- * Filters the displayed user list by the search input value.
- */
 function filterUsers() {
-  const SEARCH = document.getElementById("assigned_to_search").value.toLowerCase();
-  const FILTERED_USERS = remoteUsers.filter((user) => user.name.toLowerCase().includes(SEARCH));
-  fillUserDropdown(sortUsersWithActiveFirst(FILTERED_USERS));
+  const search = document.getElementById("assigned_to_search").value.toLowerCase();
+  const filtered = remoteUsers.filter((u) => u.name.toLowerCase().includes(search));
+  fillUserDropdown(sortUsersWithActiveFirst(filtered));
 }
 
-/**
- * Toggles a user's checkbox selection and updates the preview badges.
- * @param {HTMLElement} el - The clicked user element in the dropdown.
- */
+// ###########################################################
+//  CUSTOM DROPDOWNS (Assigned To & Category)
+// ###########################################################
+
+function toggleDropdown(event) {
+  event.stopPropagation();
+  const dropdown = event.target.closest(".custom-dropdown");
+  if (!dropdown) return;
+
+  // Alle anderen Dropdowns schließen
+  document.querySelectorAll(".custom-dropdown").forEach((d) => {
+    if (d !== dropdown) d.classList.remove("open");
+  });
+
+  dropdown.classList.toggle("open");
+  dropdown.querySelector(".custom-dropdown__list")?.scrollTo({ top: 0 });
+}
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") document.querySelectorAll(".custom-dropdown.open").forEach((d) => d.classList.remove("open"));
+});
+
+function initDropdownOutsideClick() {
+  document.addEventListener("click", (e) => {
+    document.querySelectorAll(".custom-dropdown").forEach((d) => {
+      if (!d.contains(e.target)) d.classList.remove("open");
+    });
+  });
+}
+
+// ------------------- Category -------------------
+
+function selectCategory(category) {
+  setCategoryValue("category", "category_dropdown", category);
+}
+
+function selectCategoryEdit(category) {
+  const sfx = getInputSuffix();
+  setCategoryValue("category" + sfx, "category_dropdown_edit", category);
+}
+
+function setCategoryValue(inputId, dropdownId, category) {
+  const input = document.getElementById(inputId);
+  const dropdown = document.getElementById(dropdownId);
+  if (!input || !dropdown) return;
+
+  input.value = category;
+  input.dispatchEvent(new Event("input", { bubbles: true }));
+
+  dropdown.querySelectorAll(".custom-dropdown__item").forEach((item) => {
+    item.classList.toggle("selected", item.textContent.trim() === category);
+  });
+  dropdown.classList.remove("open");
+}
+
+// ------------------- Assigned To -------------------
+
 function toggleUser(el) {
-  const CHECKBOX = el.querySelector("input");
-  CHECKBOX.checked = !CHECKBOX.checked;
-  if (CHECKBOX.checked) {
-    el.classList.add("selected");
-  } else {
-    el.classList.remove("selected");
-  }
+  const cb = el.querySelector("input");
+  cb.checked = !cb.checked;
+  el.classList.toggle("selected", cb.checked);
   updateAssignedPreview();
 }
 
-/**
- * Collects all checked users from the assignment dropdown.
- * @returns {Array<{name: string, color: string}>} Selected users.
- */
 function getAssignedUsers() {
-  const checkboxes = document.querySelectorAll("#assigned_to_list input[type='checkbox']:checked");
-  return Array.from(checkboxes).map((cb) => ({ name: cb.value, color: cb.dataset.color }));
+  const checked = document.querySelectorAll("#assigned_to_list input[type='checkbox']:checked");
+  return Array.from(checked).map((cb) => ({ name: cb.value, color: cb.dataset.color }));
 }
 
-/**
- * Opens or closes the user assignment dropdown.
- * @param {Event} e - The click event on the dropdown trigger.
- */
-function toggleDropdown(e) {
-  e.stopPropagation();
-  const dropdown = document.getElementById("assigned_to_dropdown");
-  const assigneeList = document.getElementById("assigned_to_list");
-  if (dropdown) {
-    dropdown.classList.toggle("open");
-    assigneeList?.scrollTo({ top: 0 });
-  }
-}
-
-/**
- * Closes the assignment dropdown when the Escape key is pressed.
- */
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    document.getElementById("assigned_to_dropdown")?.classList.remove("open");
-  }
-});
-
-/**
- * Closes the assignment dropdown when clicking outside of it.
- */
-function initDropdownOutsideClick() {
-  document.addEventListener("click", (e) => {
-    const DROPDOWN = document.getElementById("assigned_to_dropdown");
-    if (!DROPDOWN) return;
-    const CLICKED_INSIDE = DROPDOWN.contains(e.target);
-    if (!CLICKED_INSIDE) {
-      DROPDOWN.classList.remove("open");
-    }
-  });
-}
-
-/**
- * Refreshes the assigned-user preview section below the dropdown.
- */
 function updateAssignedPreview() {
-  const container = document.getElementById("assigned_preview");
-  const selected = getAssignedUsers();
-  container.innerHTML = renderAssignedUsers(selected);
+  document.getElementById("assigned_preview").innerHTML = renderAssignedUsers(getAssignedUsers());
 }
 
-/**
- * Re-renders the assigned preview on window resize using debounce.
- */
+// ###########################################################
+//  ASSIGNED PREVIEW BADGES
+// ###########################################################
+
 function initAssignedPreviewResize() {
-  let debounceTimer;
+  let timer;
   window.addEventListener("resize", () => {
-    clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(updateAssignedPreview, 150);
+    clearTimeout(timer);
+    timer = setTimeout(updateAssignedPreview, 150);
   });
 }
 
-/**
- * Returns how many badge slots fit inside the #assigned_to_dropdown width.
- * @returns {number} Number of visible badge slots (minimum 1).
- */
 function getAssignedDropdownCapacity() {
-  const dropdown = document.getElementById("assigned_to_dropdown");
-  const width = dropdown?.offsetWidth ?? 0;
+  const width = document.getElementById("assigned_to_dropdown")?.offsetWidth ?? 0;
   return Math.max(1, Math.floor(width / 34));
 }
 
-/**
- * Extracts initials from a full name.
- * @param {string} name - The user's full name.
- * @returns {string} One or two uppercase letters.
- */
 function getUserInitials(name) {
   const parts = name.trim().split(" ");
-  return parts.length > 1 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : parts[0].slice(0, 2).toUpperCase();
+  return parts.length > 1
+    ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+    : parts[0].slice(0, 2).toUpperCase();
 }
 
-/**
- * Creates the colored circles with initials for assigned users.
- * Shows up to a calculated number of circles; if more exist, appends a "+N" overflow badge.
- * @param {Array<{name: string, color: string}>} users - List of user objects.
- * @returns {string} HTML string with user badges.
- */
 function renderAssignedUsers(users = []) {
-  if (!Array.isArray(users) || users.length === 0) return "";
-  const MAX_VISIBLE = Math.max(2, getAssignedDropdownCapacity());
-  const valid = users.filter(({ name }) => name);
-  const visible = valid.slice(0, MAX_VISIBLE);
-  const remaining = valid.length - MAX_VISIBLE;
-  const circles = visible.map(({ name, color }) => getUserCircleTemplate(name, getUserInitials(name), color)).join("");
-  const more = remaining > 0 ? getAssignedUsersMoreTemplate(remaining) : "";
-  return getAssignedUsersTemplate(circles + more);
+  if (!users.length) return "";
+  const max = Math.max(2, getAssignedDropdownCapacity());
+  const visible = users.slice(0, max);
+  const remaining = users.length - max;
+
+  let html = visible
+    .map((u) => getUserCircleTemplate(u.name, getUserInitials(u.name), u.color))
+    .join("");
+  if (remaining > 0) html += getAssignedUsersMoreTemplate(remaining);
+
+  return getAssignedUsersTemplate(html);
 }
 
-/**
- * Gathers all form values and builds a task object ready for the API.
- * @param {string} [status="todo"] - The initial board status.
- * @returns {Object} The task object.
- */
+// ###########################################################
+//  TASK OBJEKT BAUEN & API
+// ###########################################################
+
 function buildTaskObj(status = "todo") {
-  const val = (id) => document.getElementById(id)?.value ?? "";
-  const isDialog = !!document.getElementById("title_edit");
-  const sfx = isDialog ? "_edit" : "";
+  const read = (id) => document.getElementById(id)?.value ?? "";
+  const sfx = document.getElementById("title_edit") ? "_edit" : "";
   return {
-    title: val("title" + sfx),
-    description: val("description"),
-    dueDate: val("due_date" + sfx),
-    category: val("category" + sfx),
-    assignedTo: getAssignedUsers() || [],
+    title: read("title" + sfx),
+    description: read("description"),
+    dueDate: read("due_date" + sfx),
+    category: read("category" + sfx),
+    assignedTo: getAssignedUsers(),
     priority: selectedPriority,
     status: status,
     subtasks: subtasksList,
   };
 }
 
-// ###### Validate Tasks ########
-
-/**
- * Checks all three required fields and shows/hides error messages.
- * @param {HTMLElement} title - The title input.
- * @param {HTMLElement} dueDate - The due-date input.
- * @param {HTMLElement} category - The category select.
- * @returns {boolean} True when all three fields are valid.
- */
-function validateTaskForm(title, dueDate, category) {
-  const HAS_TITLE = !!title.value.trim();
-  const HAS_DATE = !!dueDate.value;
-  const HAS_CATEGORY = !!category.value;
-
-  HAS_TITLE ? clearError(title) : setError(title);
-  HAS_DATE ? clearError(dueDate) : setError(dueDate);
-  HAS_CATEGORY ? clearError(category) : setError(category);
-
-  return HAS_TITLE && HAS_DATE && HAS_CATEGORY;
+async function sendTaskRequest(task, btn) {
+  try {
+    const res = await fetch(ADDTASK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(task),
+    });
+    if (res.ok) handleTaskCreated();
+    else if (btn) btn.disabled = false;
+  } catch (err) {
+    console.error(err);
+    if (btn) btn.disabled = false;
+  }
 }
 
-/**
- * Adds the red error border to an input.
- * @param {HTMLElement} input - The input element to mark invalid.
- */
-function setError(input) {
-  input.classList.add("input-invalid");
+function handleTaskCreated() {
+  if (document.getElementById("task_created_toast")) {
+    closeAddTaskDialog();
+    showBoardToast().then(() => loadTasksFromFirebase());
+  } else {
+    document.getElementById("toast")?.classList.add("show-animation");
+    setTimeout(() => window.location.href = "board.html", 1000);
+  }
 }
 
-/**
- * Removes the red error border from an input.
- * @param {HTMLElement} input - The input element to clear.
- */
-function clearError(input) {
-  input.classList.remove("input-invalid");
+// ###########################################################
+//  VALIDIERUNG
+// ###########################################################
+
+function getInputSuffix() {
+  return document.getElementById("title_edit") ? "_edit" : "";
 }
 
-/**
- * Returns the field configuration array for validation listeners.
- * @returns {Array<{id: string, event: string}>} Field config objects.
- */
-function getValidationFields() {
-  return [
+function validateRequiredFields(title, dueDate, category) {
+  const ok = (el) => { clearError(el); return true; };
+  const fail = (el) => { setError(el); return false; };
+  const t = title?.value.trim() ? ok(title) : fail(title);
+  const d = dueDate?.value ? ok(dueDate) : fail(dueDate);
+  const c = category?.value ? ok(category) : fail(category);
+  return t && d && c;
+}
+
+async function createTask() {
+  const sfx = getInputSuffix();
+  const title = document.getElementById("title" + sfx);
+  const dueDate = document.getElementById("due_date" + sfx);
+  const category = document.getElementById("category" + sfx);
+  const btn = document.getElementById("btnCreateTask");
+  if (btn) btn.disabled = true;
+
+  if (!validateRequiredFields(title, dueDate, category)) {
+    if (btn) btn.disabled = false;
+    return;
+  }
+  await sendTaskRequest(buildTaskObj(sessionStorage.getItem("task-status") ?? "todo"), btn);
+}
+
+// ###########################################################
+//  VALIDIERUNG LIVE (ROTE RÄNDER BEIM AUSFÜLLEN)
+// ###########################################################
+
+function setError(input) { input.classList.add("input-invalid"); }
+function clearError(input) { input.classList.remove("input-invalid"); }
+
+function validetInput() {
+  const fields = [
     { id: "title", event: "input" },
     { id: "due_date", event: "click" },
-    { id: "category", event: "change" },
+    { id: "category", event: "input" },
     { id: "title_edit", event: "input" },
     { id: "due_date_edit", event: "click" },
-    { id: "category_edit", event: "change" },
+    { id: "category_edit", event: "input" },
   ];
+  fields.forEach(({ id, event }) => bindFieldValidation(id, event));
 }
 
-/**
- * Attaches a validation listener to a single field.
- * Clears error when a value is entered; shows error when field is left empty.
- * @param {string} id - The HTML id of the input element.
- * @param {string} eventType - The event name to listen for.
- */
 function bindFieldValidation(id, eventType) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -353,115 +317,40 @@ function bindFieldValidation(id, eventType) {
   });
 }
 
-/**
- * Attaches input/change/blur listeners to all required fields.
- */
-function validetInput() {
-  getValidationFields().forEach(({ id, event }) => bindFieldValidation(id, event));
-}
+// ###########################################################
+//  FORMULAR ZURÜCKSETZEN
+// ###########################################################
 
-/**
- * Handles the UI after a task was successfully created.
- * Shows the toast on the add-task page or closes the board dialog and refreshes.
- */
-function handleTaskCreated() {
-  const onBoard = !!document.getElementById("task_created_toast");
-  if (onBoard) {
-    closeAddTaskDialog();
-    showBoardToast().then(() => loadTasksFromFirebase());
-  } else {
-    document.getElementById("toast")?.classList.add("show-animation");
-    setTimeout(() => {
-      window.location.href = "board.html";
-    }, 1000);
-  }
-}
-
-/**
- * POSTs the task object to Firebase and handles success/failure UI.
- * @param {Object} task - The complete task object to send.
- * @param {HTMLElement|null} btn - The submit button (for re-enabling).
- */
-async function sendTaskRequest(task, btn) {
-  try {
-    const RESPONSE = await fetch(ADDTASK_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(task),
-    });
-    if (RESPONSE.ok) {
-      handleTaskCreated();
-    } else if (btn) {
-      btn.disabled = false;
-    }
-  } catch (error) {
-    console.error(error);
-    if (btn) btn.disabled = false;
-  }
-}
-
-/**
- * Returns the suffix (_edit or empty) depending on whether the dialog is open.
- * @returns {string} "_edit" when the add-task dialog is active, else "".
- */
-function getInputSuffix() {
-  return document.getElementById("title_edit") ? "_edit" : "";
-}
-
-/**
- * Validates all three required form inputs by toggling error styles.
- * @param {HTMLElement} title - The title input.
- * @param {HTMLElement} dueDate - The due-date input.
- * @param {HTMLElement} category - The category select.
- * @returns {boolean} True when all three fields have a value.
- */
-function validateRequiredFields(title, dueDate, category) {
-  const hasTitle = !!title?.value.trim();
-  const hasDate = !!dueDate?.value;
-  const hasCategory = !!category?.value;
-
-  hasTitle ? clearError(title) : setError(title);
-  hasDate ? clearError(dueDate) : setError(dueDate);
-  hasCategory ? clearError(category) : setError(category);
-
-  return hasTitle && hasDate && hasCategory;
-}
-
-/**
- * Validates the form and, if valid, sends the task to the backend.
- */
-async function createTask() {
-  const sfx = getInputSuffix();
-  const TITLE = document.getElementById("title" + sfx);
-  const DUE_DATE = document.getElementById("due_date" + sfx);
-  const CATEGORY = document.getElementById("category" + sfx);
-  const BTN = document.getElementById("btnCreateTask");
-  if (BTN) BTN.disabled = true;
-
-  if (!validateRequiredFields(TITLE, DUE_DATE, CATEGORY)) {
-    if (BTN) BTN.disabled = false;
-    return;
-  }
-  const status = sessionStorage.getItem("task-status") ?? "todo";
-  await sendTaskRequest(buildTaskObj(status), BTN);
-}
-
-/**
- * Resets all form fields and UI state to their defaults.
- * Works for both the add-task page and the board dialog.
- */
 function clearForm() {
   const sfx = getInputSuffix();
+  resetFormData(sfx);
+  resetDropdowns();
+  clearAllErrors(sfx);
+}
+
+function resetFormData(sfx) {
   document.getElementById("form_task").reset();
   const dueDate = document.getElementById("due_date" + sfx);
   if (dueDate) dueDate.value = "";
   selectPriority("medium");
-  document.getElementById("assigned_preview").innerHTML = "";
-  fillUserDropdown(sortUsersWithActiveFirst(remoteUsers));
   subtasksList = [];
   document.getElementById("subtask_list").innerHTML = "";
   clearSubtaskInput(new Event("reset"));
+}
 
+function resetDropdowns() {
+  document.getElementById("assigned_preview").innerHTML = "";
+  fillUserDropdown(sortUsersWithActiveFirst(remoteUsers));
+
+  const sfx = getInputSuffix();
+  const catInput = document.getElementById("category" + sfx);
+  if (catInput) catInput.value = "";
+
+  const catDropdown = document.getElementById(sfx ? "category_dropdown_edit" : "category_dropdown");
+  catDropdown?.querySelectorAll(".custom-dropdown__item").forEach((i) => i.classList.remove("selected"));
+}
+
+function clearAllErrors(sfx) {
   clearError(document.getElementById("title" + sfx));
   clearError(document.getElementById("due_date" + sfx));
   clearError(document.getElementById("category" + sfx));

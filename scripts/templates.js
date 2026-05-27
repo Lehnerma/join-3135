@@ -332,12 +332,20 @@ function getEditTaskDialogTemplate() {
         </div>
 
         <div class="input-section">
-          <label for="category" class="required">Category</label>
-          <select id="category" class="input dropdown form--select" required>
-            <option value="" selected disabled>Select task category</option>
-            <option value="Technical Task">Technical Task</option>
-            <option value="User Story">User Story</option>
-          </select>
+          <label class="required">Category</label>
+          <div class="custom-dropdown" id="category_dropdown_edit">
+            <div class="custom-dropdown__trigger">
+              <input type="text" id="category" class="input custom-dropdown__input" readonly
+                onclick="toggleDropdown(event)" placeholder="Select task category" autocomplete="off" />
+              <button type="button" class="custom-dropdown__toggle" aria-label="Toggle category dropdown">
+                <span class="custom-dropdown__arrow"></span>
+              </button>
+            </div>
+            <ul class="custom-dropdown__list" id="category_list_edit">
+              <li class="custom-dropdown__item" onclick="selectCategoryEdit('Technical Task')">Technical Task</li>
+              <li class="custom-dropdown__item" onclick="selectCategoryEdit('User Story')">User Story</li>
+            </ul>
+          </div>
         </div>
 
         <div class="input-section">
@@ -424,12 +432,20 @@ function getAddTaskDialogTemplate() {
           </div>
 
           <div class="input-section">
-            <label for="category_edit" class="required">Category</label>
-            <select id="category_edit" class="input dropdown form--select" required>
-              <option value="" selected disabled>Select task category</option>
-              <option value="Technical Task">Technical Task</option>
-              <option value="User Story">User Story</option>
-            </select>
+            <label class="required">Category</label>
+            <div class="custom-dropdown" id="category_dropdown_edit">
+              <div class="custom-dropdown__trigger">
+                <input type="text" id="category_edit" class="input custom-dropdown__input" readonly
+                  onclick="toggleDropdown(event)" placeholder="Select task category" autocomplete="off" />
+                <button type="button" class="custom-dropdown__toggle" aria-label="Toggle category dropdown">
+                  <span class="custom-dropdown__arrow"></span>
+                </button>
+              </div>
+              <ul class="custom-dropdown__list" id="category_list_edit">
+                <li class="custom-dropdown__item" onclick="selectCategoryEdit('Technical Task')">Technical Task</li>
+                <li class="custom-dropdown__item" onclick="selectCategoryEdit('User Story')">User Story</li>
+              </ul>
+            </div>
           </div>
 
           <div class="input-section">
