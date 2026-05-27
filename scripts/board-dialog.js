@@ -299,8 +299,7 @@ function fillEditFormFields(task) {
     document.getElementById("category").value = "";
   }
   const dueDateInput = document.getElementById("due_date");
-  dueDateInput.min = new Date().toISOString().split("T")[0];
-  dueDateInput.value = task.dueDate || "";
+  dueDateInput.value = toDisplayDate(task.dueDate) || "";
   selectPriority(task.priority || "medium");
 }
 

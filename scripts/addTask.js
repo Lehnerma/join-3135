@@ -30,6 +30,18 @@ function btnInit() {
 //  DATUM
 // ###########################################################
 
+function toDisplayDate(yyyymmdd) {
+  if (!yyyymmdd) return "";
+  const parts = yyyymmdd.split("-");
+  return parts[2] + "/" + parts[1] + "/" + parts[0];
+}
+
+function toStorageDate(ddmmyyyy) {
+  const match = ddmmyyyy.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (!match) return "";
+  return match[3] + "-" + match[2].padStart(2, "0") + "-" + match[1].padStart(2, "0");
+}
+
 function initDateInput() {
   setupSingleDateInput("due_date");
   setupSingleDateInput("due_date_edit");
@@ -38,8 +50,10 @@ function initDateInput() {
 function setupSingleDateInput(id) {
   const input = document.getElementById(id);
   if (!input) return;
-  input.min = new Date().toISOString().split("T")[0];
-  input.addEventListener("focus", () => { if (!input.value) input.value = input.min; });
+  const today = toDisplayDate(new Date().toISOString().split("T")[0]);
+  input.addEventListener("focus", () => {
+    if (!input.value) input.value = today;
+  });
 }
 
 // ###########################################################
@@ -221,7 +235,7 @@ function buildTaskObj(status = "todo") {
   return {
     title: read("title" + sfx),
     description: read("description"),
-    dueDate: read("due_date" + sfx),
+    dueDate: toStorageDate(read("due_date" + sfx)),
     category: read("category" + sfx),
     assignedTo: getAssignedUsers(),
     priority: selectedPriority,
