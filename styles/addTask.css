@@ -47,7 +47,7 @@ main {
 .input-invalid {
   border: 1px solid red;
 }
-
+/* 
 .input-section:has(.input-invalid)::after {
   content: "This field is required";
   position: absolute;
@@ -59,6 +59,15 @@ main {
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.15s ease-in-out;
+} */
+
+.field-error {
+  color: #ff3d00;
+  font-size: 12px;
+  margin-top: 4px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out; 
 }
 
 .field-error.visible {
