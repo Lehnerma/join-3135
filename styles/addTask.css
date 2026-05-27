@@ -36,6 +36,15 @@ main {
   font-weight: 300;
 }
 
+#assigned_to_search::placeholder {
+  color: black;
+}
+
+#category::placeholder,
+#category_edit::placeholder {
+  color: black;
+}
+
 .input-section {
   display: flex;
   flex-direction: column;
@@ -48,8 +57,22 @@ main {
   border: 1px solid red;
 }
 
-.input-section:has(.input-invalid)::after {
+.input-invalid-past {
+  border: 1px solid red;
+}
+
+.input-section:has(.input-invalid):not(:has(.input-invalid-past))::after {
   content: "This field is required";
+  position: absolute;
+  bottom: -12px;
+  left: 4px;
+  color: #ff3d00;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.input-section:has(.input-invalid-past)::after {
+  content: "Date can not be in the past";
   position: absolute;
   bottom: -12px;
   left: 4px;
@@ -256,6 +279,55 @@ main {
   background-color: rgba(255, 255, 255, 1);
 }
 
+/* Date wrapper with calendar icon inside input on the left */
+.date-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.date-wrapper .input-date {
+  padding-right: 40px;
+}
+
+.date-picker-hidden {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.date-icon-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.date-icon-btn--left {
+  left: 8px;
+}
+
+.date-icon-btn--right {
+  right: 8px;
+}
+
+.date-icon-img {
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
 .input--section {
   position: relative;
   display: flex;
@@ -391,6 +463,17 @@ main {
     bottom: 45%;
     transform: translate(-50%, 50%);
   }
+}
+
+/* Equal width for Assigned-to, Category, Subtasks in add-task dialog */
+.dat-col .custom-dropdown,
+.dat-col .input--section {
+  max-width: 100%;
+  width: 100%;
+}
+
+.dat-col #assigned_to_dropdown {
+  max-width: 100%;
 }
 
 @media (min-width: 1024px) {

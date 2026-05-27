@@ -396,11 +396,17 @@ function getAddTaskDialogTemplate() {
             <label for="description">Description</label>
             <textarea id="description" class="input" placeholder="Enter a Description" rows="3"></textarea>
           </div>
-          <div class="input-section">
-            <label for="due_date_edit" class="required">Due date</label>
-            <input id="due_date_edit" class="input input-date" type="text" placeholder="dd/mm/yyyy"
-              pattern="\d{1,2}/\d{1,2}/\d{4}" autocomplete="off">
-          </div>
+           <div class="input-section">
+             <label for="due_date_edit" class="required">Due date</label>
+             <div class="date-wrapper">
+               <input id="due_date_edit" class="input input-date" type="text" placeholder="dd/mm/yyyy"
+                 pattern="\d{1,2}/\d{1,2}/\d{4}" autocomplete="off">
+               <button type="button" class="date-icon-btn date-icon-btn--right" id="date_icon_btn_edit" aria-label="Pick date">
+                 <img src="../assets/img/icons/input/event.svg" alt="calendar" class="date-icon-img">
+               </button>
+               <input type="date" id="due_date_picker_edit" class="date-picker-hidden">
+             </div>
+           </div>
         </section>
 
         <section class="dat-col">
