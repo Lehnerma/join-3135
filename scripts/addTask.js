@@ -1,5 +1,4 @@
-const ADDTASK_URL =
-  "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks.json";
+const ADDTASK_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks.json";
 
 let selectedPriority = "medium";
 let remoteUsers = [];
@@ -25,7 +24,11 @@ function init() {
 function btnInit() {
   const form = document.getElementById("form_task");
   const clearBtn = document.getElementById("form_clear");
-  if (form) form.addEventListener("submit", (e) => { e.preventDefault(); createTask(); });
+  if (form)
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      createTask();
+    });
   if (clearBtn) clearBtn.addEventListener("click", clearForm);
 }
 
@@ -37,7 +40,7 @@ function btnInit() {
 function toDisplayDate(yyyymmdd) {
   if (!yyyymmdd) return "";
   const parts = yyyymmdd.split("-");
-  return parts[2] + "/" + parts[1] + "/" + parts[0];
+  return parts[2] + "." + parts[1] + "." + parts[0];
 }
 
 /**
@@ -57,7 +60,6 @@ function toStorageDate(ddmmyyyy) {
  */
 function initDateInput() {
   setupSingleDateInput("due_date");
-  setupSingleDateInput("due_date_edit");
   initDatePicker();
 }
 
@@ -71,8 +73,11 @@ function setupSingleDateInput(id) {
   if (!input) return;
   const todayIso = new Date().toISOString().split("T")[0];
   const today = toDisplayDate(todayIso);
-  const picker = document.getElementById(id + "_picker");
-  if (picker) picker.min = todayIso;
+  const picker = document.getElementById(id);
+  if (picker) {
+    picker.min = todayIso;
+    picker.value = todayIso;
+  }
   input.addEventListener("focus", () => {
     if (!input.value) input.value = today;
   });
@@ -112,9 +117,13 @@ function wireDatePicker(pickerId, textInputId, iconBtnId) {
     if (picker.value) {
       textInput.value = toDisplayDate(picker.value);
       const val = textInput.value.trim();
-      if (!val) { clearError(textInput); setError(textInput); }
-      else if (isDateInPast(val)) { clearError(textInput); setErrorPast(textInput); }
-      else clearError(textInput);
+      if (!val) {
+        clearError(textInput);
+        setError(textInput);
+      } else if (isDateInPast(val)) {
+        clearError(textInput);
+        setErrorPast(textInput);
+      } else clearError(textInput);
     }
   });
 }
@@ -343,9 +352,7 @@ function getAssignedDropdownCapacity() {
  */
 function getUserInitials(name) {
   const parts = name.trim().split(" ");
-  return parts.length > 1
-    ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
-    : parts[0].slice(0, 2).toUpperCase();
+  return parts.length > 1 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : parts[0].slice(0, 2).toUpperCase();
 }
 
 /**
@@ -360,9 +367,7 @@ function renderAssignedUsers(users = []) {
   const visible = users.slice(0, max);
   const remaining = users.length - max;
 
-  let html = visible
-    .map((u) => getUserCircleTemplate(u.name, getUserInitials(u.name), u.color))
-    .join("");
+  let html = visible.map((u) => getUserCircleTemplate(u.name, getUserInitials(u.name), u.color)).join("");
   if (remaining > 0) html += getAssignedUsersMoreTemplate(remaining);
 
   return getAssignedUsersTemplate(html);
@@ -418,7 +423,7 @@ function handleTaskCreated() {
     showBoardToast().then(() => loadTasksFromFirebase());
   } else {
     document.getElementById("toast")?.classList.add("show-animation");
-    setTimeout(() => window.location.href = "board.html", 1000);
+    setTimeout(() => (window.location.href = "board.html"), 1000);
   }
 }
 
@@ -438,9 +443,19 @@ function getInputSuffix() {
  * @returns {boolean} True when all three fields have a value.
  */
 function validateRequiredFields(title, dueDate, category) {
-  const ok = (el) => { clearError(el); return true; };
-  const fail = (el) => { setError(el); return false; };
-  const failPast = (el) => { clearError(el); setErrorPast(el); return false; };
+  const ok = (el) => {
+    clearError(el);
+    return true;
+  };
+  const fail = (el) => {
+    setError(el);
+    return false;
+  };
+  const failPast = (el) => {
+    clearError(el);
+    setErrorPast(el);
+    return false;
+  };
   const t = title?.value.trim() ? ok(title) : fail(title);
   const d = dueDate?.value ? (isDateInPast(dueDate.value) ? failPast(dueDate) : ok(dueDate)) : fail(dueDate);
   const c = category?.value ? ok(category) : fail(category);
@@ -469,19 +484,25 @@ async function createTask() {
  * Adds a red error border to an input element (required / empty).
  * @param {HTMLElement} input - The element to mark.
  */
-function setError(input) { input.classList.add("input-invalid"); }
+function setError(input) {
+  input.classList.add("input-invalid");
+}
 
 /**
  * Adds a red error border specifically for a date that lies in the past.
  * @param {HTMLElement} input - The date input element to mark.
  */
-function setErrorPast(input) { input.classList.add("input-invalid-past"); }
+function setErrorPast(input) {
+  input.classList.add("input-invalid-past");
+}
 
 /**
  * Adds a red error border for an invalid date format (e.g. contains `.` or `-`).
  * @param {HTMLElement} input - The date input element to mark.
  */
-function setErrorFormat(input) { input.classList.add("input-invalid-format"); }
+function setErrorFormat(input) {
+  input.classList.add("input-invalid-format");
+}
 
 /**
  * Removes all error classes from an input element.
@@ -520,16 +541,29 @@ function bindFieldValidation(id, eventType) {
 
   el.addEventListener(eventType, () => {
     const val = el.value.trim();
-    if (!val) { clearError(el); setError(el); }
-    else if (isDateField && isDateInPast(val)) { clearError(el); setErrorPast(el); }
-    else if (isDateField && !isValidDateFormat(val)) { clearError(el); setErrorFormat(el); }
-    else clearError(el);
+    if (!val) {
+      clearError(el);
+      setError(el);
+    } else if (isDateField && isDateInPast(val)) {
+      clearError(el);
+      setErrorPast(el);
+    } else if (isDateField && !isValidDateFormat(val)) {
+      clearError(el);
+      setErrorFormat(el);
+    } else clearError(el);
   });
   el.addEventListener("blur", () => {
     const val = el.value.trim();
-    if (!val) { clearError(el); setError(el); }
-    else if (isDateField && isDateInPast(val)) { clearError(el); setErrorPast(el); }
-    else if (isDateField && !isValidDateFormat(val)) { clearError(el); setErrorFormat(el); }
+    if (!val) {
+      clearError(el);
+      setError(el);
+    } else if (isDateField && isDateInPast(val)) {
+      clearError(el);
+      setErrorPast(el);
+    } else if (isDateField && !isValidDateFormat(val)) {
+      clearError(el);
+      setErrorFormat(el);
+    }
   });
 }
 
