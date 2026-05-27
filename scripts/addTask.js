@@ -30,28 +30,6 @@ function btnInit() {
 }
 
 /**
- * Converts a yyyy-mm-dd date from storage to dd/mm/yyyy for display.
- * @param {string} yyyymmdd - Date string in storage format (e.g. "2025-12-24").
- * @returns {string} Date in display format (e.g. "24/12/2025").
- */
-function toDisplayDate(yyyymmdd) {
-  if (!yyyymmdd) return "";
-  const parts = yyyymmdd.split("-");
-  return parts[2] + "/" + parts[1] + "/" + parts[0];
-}
-
-/**
- * Converts a dd/mm/yyyy date from the input field to yyyy-mm-dd for storing.
- * @param {string} ddmmyyyy - Date string like "24/12/2025".
- * @returns {string} Storage-format date (e.g. "2025-12-24"), or empty if invalid.
- */
-function toStorageDate(ddmmyyyy) {
-  const match = ddmmyyyy.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-  if (!match) return "";
-  return match[3] + "-" + match[2].padStart(2, "0") + "-" + match[1].padStart(2, "0");
-}
-
-/**
  * Initialises both due-date inputs (page + dialog).
  * Sets today as minimum and prefills on first focus.
  */
@@ -61,13 +39,14 @@ function initDateInput() {
 }
 
 /**
- * Configures a single date text input.
+ * Configures a single date input: sets today as min and fills on first focus.
  * @param {string} id - The element ID of the date input.
  */
 function setupSingleDateInput(id) {
   const input = document.getElementById(id);
   if (!input) return;
-  const today = toDisplayDate(new Date().toISOString().split("T")[0]);
+  const today = new Date().toISOString().split("T")[0];
+  input.min = today;
   input.addEventListener("focus", () => {
     if (!input.value) input.value = today;
   });
@@ -308,7 +287,7 @@ function buildTaskObj(status = "todo") {
   return {
     title: read("title" + sfx),
     description: read("description"),
-    dueDate: toStorageDate(read("due_date" + sfx)),
+    dueDate: read("due_date" + sfx),
     category: read("category" + sfx),
     assignedTo: getAssignedUsers(),
     priority: selectedPriority,
