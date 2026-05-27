@@ -41,22 +41,22 @@ main {
   flex-direction: column;
   gap: 8px;
   padding: 8px 4px;
+  position: relative;
 }
 
 .input-invalid {
   border: 1px solid red;
 }
 
-.field-error {
+.input-section:has(.input-invalid)::after {
+  content: "This field is required";
+  position: absolute;
+  bottom: -12px;
+  left: 4px;
   color: #ff3d00;
   font-size: 12px;
-  margin-top: 4px;
+  white-space: nowrap;
 }
-
-/* .input:user-invalid~.field-error,
-.form--select:user-invalid~.field-error {
-  display: block; 
-} */
 
 .form--select {
   appearance: none;
@@ -479,6 +479,10 @@ main {
 
   .priority-group {
     justify-content: flex-start;
+  }
+  .right{
+    margin-top: 42px;
+
   }
 }
 

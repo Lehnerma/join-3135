@@ -50,31 +50,25 @@ function registerClearFormListener(clearBtn) {
 }
 
 /**
+ * Configures a single date input: sets today as min date and fills it on first focus.
+ * @param {string} id - The HTML id of the date input element.
+ */
+function setupDateInput(id) {
+  const input = document.getElementById(id);
+  if (!input) return;
+  const today = new Date().toISOString().split("T")[0];
+  input.min = today;
+  input.addEventListener("focus", () => {
+    if (!input.value) input.value = today;
+  });
+}
+
+/**
  * Sets the date input to today's date on first focus and prevents past dates.
  */
 function initDateInput() {
-  const DUE_DATE_INPUT = document.getElementById("due_date");
-  const DUE_DATE_EDIT_INPUT = document.getElementById("due_date_edit");
-  const NOW = new Date();
-  const TODAY = NOW.toISOString().split("T")[0];
-
-  if (DUE_DATE_INPUT) {
-    DUE_DATE_INPUT.min = TODAY;
-    DUE_DATE_INPUT.addEventListener("focus", () => {
-      if (!DUE_DATE_INPUT.value) {
-        DUE_DATE_INPUT.value = TODAY;
-      }
-    });
-  }
-
-  if (DUE_DATE_EDIT_INPUT) {
-    DUE_DATE_EDIT_INPUT.min = TODAY;
-    DUE_DATE_EDIT_INPUT.addEventListener("focus", () => {
-      if (!DUE_DATE_EDIT_INPUT.value) {
-        DUE_DATE_EDIT_INPUT.value = TODAY;
-      }
-    });
-  }
+  setupDateInput("due_date");
+  setupDateInput("due_date_edit");
 }
 
 /**
@@ -98,13 +92,11 @@ function selectPriority(priority) {
 function sortUsersWithActiveFirst(users) {
   const ACTIV_USER = sessionStorage.getItem("activeUserName");
   const SORTED = users.toSorted((a, b) => a.name.localeCompare(b.name));
-
   if (ACTIV_USER) {
     const ACTIVE_USER_INDEX = SORTED.findIndex((user) => user.name == ACTIV_USER);
     const ACTIVE_USER = SORTED.splice(ACTIVE_USER_INDEX, 1)[0];
     SORTED.unshift(ACTIVE_USER);
   }
-
   return SORTED;
 }
 
@@ -117,8 +109,7 @@ async function loadUsers() {
     const response = await fetch(USER_URL);
     const data = await response.json();
     remoteUsers = Object.values(data);
-    const SORTED_USERS = sortUsersWithActiveFirst(remoteUsers);
-    fillUserDropdown(SORTED_USERS);
+    fillUserDropdown(sortUsersWithActiveFirst(remoteUsers));
   } catch (error) {
     console.error("Fehler beim Laden der Benutzer:", error);
   }
@@ -138,7 +129,6 @@ function fillUserDropdown(users) {
   for (const USER_ID in users) {
     const USER = users[USER_ID];
     if (!USER || !USER.name) continue;
-
     const COLOR = USER.color || "#ccc";
     const INITIALS = USER.name.charAt(0);
     html += getFillUserDropown(COLOR, INITIALS, USER);
@@ -237,7 +227,7 @@ function initAssignedPreviewResize() {
 }
 
 /**
- * Returns how many 36px slots fit inside the #assigned_to_dropdown width.
+ * Returns how many badge slots fit inside the #assigned_to_dropdown width.
  * @returns {number} Number of visible badge slots (minimum 1).
  */
 function getAssignedDropdownCapacity() {
@@ -258,7 +248,7 @@ function getUserInitials(name) {
 
 /**
  * Creates the colored circles with initials for assigned users.
- * Shows up to 10 circles; if more exist, appends a "+N" overflow badge.
+ * Shows up to a calculated number of circles; if more exist, appends a "+N" overflow badge.
  * @param {Array<{name: string, color: string}>} users - List of user objects.
  * @returns {string} HTML string with user badges.
  */
@@ -308,59 +298,83 @@ function validateTaskForm(title, dueDate, category) {
   const HAS_DATE = !!dueDate.value;
   const HAS_CATEGORY = !!category.value;
 
-  HAS_TITLE ? clearError(title, "title_er") : setError(title, "title_er");
-  HAS_DATE ? clearError(dueDate, "date_er") : setError(dueDate, "date_er");
-  HAS_CATEGORY ? clearError(category, "category_er") : setError(category, "category_er");
+  HAS_TITLE ? clearError(title) : setError(title);
+  HAS_DATE ? clearError(dueDate) : setError(dueDate);
+  HAS_CATEGORY ? clearError(category) : setError(category);
 
   return HAS_TITLE && HAS_DATE && HAS_CATEGORY;
 }
 
 /**
- * Adds the red error border to an input and shows the error message.
+ * Adds the red error border to an input.
  * @param {HTMLElement} input - The input element to mark invalid.
- * @param {string} errorId - The ID of the error message span.
  */
-function setError(input, errorId) {
+function setError(input) {
   input.classList.add("input-invalid");
-  document.getElementById(errorId)?.classList.remove("dnone");
 }
 
 /**
- * Removes the red error border from an input and hides the error message.
+ * Removes the red error border from an input.
  * @param {HTMLElement} input - The input element to clear.
- * @param {string} errorId - The ID of the error message span.
  */
-function clearError(input, errorId) {
+function clearError(input) {
   input.classList.remove("input-invalid");
-  const ERROR_EL = document.getElementById(errorId);
-  if (ERROR_EL) {
-    ERROR_EL.classList.add("dnone");
-  }
 }
 
 /**
- * Attaches input/change/blur listeners to required fields.
+ * Returns the field configuration array for validation listeners.
+ * @returns {Array<{id: string, event: string}>} Field config objects.
+ */
+function getValidationFields() {
+  return [
+    { id: "title", event: "input" },
+    { id: "due_date", event: "click" },
+    { id: "category", event: "change" },
+    { id: "title_edit", event: "input" },
+    { id: "due_date_edit", event: "click" },
+    { id: "category_edit", event: "change" },
+  ];
+}
+
+/**
+ * Attaches a validation listener to a single field.
  * Clears error when a value is entered; shows error when field is left empty.
+ * @param {string} id - The HTML id of the input element.
+ * @param {string} eventType - The event name to listen for.
+ */
+function bindFieldValidation(id, eventType) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener(eventType, () => {
+    el.value.trim() ? clearError(el) : setError(el);
+  });
+  el.addEventListener("blur", () => {
+    if (!el.value.trim()) setError(el);
+  });
+}
+
+/**
+ * Attaches input/change/blur listeners to all required fields.
  */
 function validetInput() {
-  const fields = [
-    { id: "title", errorId: "title_er", event: "input" },
-    { id: "due_date", errorId: "date_er", event: "click" },
-    { id: "category", errorId: "category_er", event: "change" },
-    { id: "title_edit", errorId: "title_edit_er", event: "input" },
-    { id: "due_date_edit", errorId: "due_date_edit_er", event: "click" },
-    { id: "category_edit", errorId: "category_edit_er", event: "change" },
-  ];
-  fields.forEach(({ id, errorId, event }) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.addEventListener(event, () => {
-      el.value.trim() ? clearError(el, errorId) : setError(el, errorId);
-    });
-    el.addEventListener("blur", () => {
-      if (!el.value.trim()) setError(el, errorId);
-    });
-  });
+  getValidationFields().forEach(({ id, event }) => bindFieldValidation(id, event));
+}
+
+/**
+ * Handles the UI after a task was successfully created.
+ * Shows the toast on the add-task page or closes the board dialog and refreshes.
+ */
+function handleTaskCreated() {
+  const onBoard = !!document.getElementById("task_created_toast");
+  if (onBoard) {
+    closeAddTaskDialog();
+    showBoardToast().then(() => loadTasksFromFirebase());
+  } else {
+    document.getElementById("toast")?.classList.add("show-animation");
+    setTimeout(() => {
+      window.location.href = "board.html";
+    }, 1000);
+  }
 }
 
 /**
@@ -376,17 +390,7 @@ async function sendTaskRequest(task, btn) {
       body: JSON.stringify(task),
     });
     if (RESPONSE.ok) {
-      const onBoard = !!document.getElementById("task_created_toast");
-      if (onBoard) {
-        closeAddTaskDialog();
-        await showBoardToast();
-        loadTasksFromFirebase();
-      } else {
-        document.getElementById("toast")?.classList.add("show-animation");
-        setTimeout(() => {
-          window.location.href = "board.html";
-        }, 1000);
-      }
+      handleTaskCreated();
     } else if (btn) {
       btn.disabled = false;
     }
@@ -397,32 +401,44 @@ async function sendTaskRequest(task, btn) {
 }
 
 /**
+ * Returns the suffix (_edit or empty) depending on whether the dialog is open.
+ * @returns {string} "_edit" when the add-task dialog is active, else "".
+ */
+function getInputSuffix() {
+  return document.getElementById("title_edit") ? "_edit" : "";
+}
+
+/**
+ * Validates all three required form inputs by toggling error styles.
+ * @param {HTMLElement} title - The title input.
+ * @param {HTMLElement} dueDate - The due-date input.
+ * @param {HTMLElement} category - The category select.
+ * @returns {boolean} True when all three fields have a value.
+ */
+function validateRequiredFields(title, dueDate, category) {
+  const hasTitle = !!title?.value.trim();
+  const hasDate = !!dueDate?.value;
+  const hasCategory = !!category?.value;
+
+  hasTitle ? clearError(title) : setError(title);
+  hasDate ? clearError(dueDate) : setError(dueDate);
+  hasCategory ? clearError(category) : setError(category);
+
+  return hasTitle && hasDate && hasCategory;
+}
+
+/**
  * Validates the form and, if valid, sends the task to the backend.
  */
 async function createTask() {
-  const isDialog = !!document.getElementById("title_edit");
-  const sfx = isDialog ? "_edit" : "";
+  const sfx = getInputSuffix();
   const TITLE = document.getElementById("title" + sfx);
   const DUE_DATE = document.getElementById("due_date" + sfx);
   const CATEGORY = document.getElementById("category" + sfx);
   const BTN = document.getElementById("btnCreateTask");
   if (BTN) BTN.disabled = true;
 
-  const HAS_TITLE = !!TITLE?.value.trim();
-  const HAS_DATE = !!DUE_DATE?.value;
-  const HAS_CATEGORY = !!CATEGORY?.value;
-
-  if (isDialog) {
-    HAS_TITLE ? clearError(TITLE, "title_edit_er") : setError(TITLE, "title_edit_er");
-    HAS_DATE ? clearError(DUE_DATE, "date_edit_er") : setError(DUE_DATE, "date_edit_er");
-    HAS_CATEGORY ? clearError(CATEGORY, "category_edit_er") : setError(CATEGORY, "category_edit_er");
-  } else {
-    HAS_TITLE ? clearError(TITLE, "title_er") : setError(TITLE, "title_er");
-    HAS_DATE ? clearError(DUE_DATE, "date_er") : setError(DUE_DATE, "date_er");
-    HAS_CATEGORY ? clearError(CATEGORY, "category_er") : setError(CATEGORY, "category_er");
-  }
-
-  if (!HAS_TITLE || !HAS_DATE || !HAS_CATEGORY) {
+  if (!validateRequiredFields(TITLE, DUE_DATE, CATEGORY)) {
     if (BTN) BTN.disabled = false;
     return;
   }
@@ -432,10 +448,13 @@ async function createTask() {
 
 /**
  * Resets all form fields and UI state to their defaults.
+ * Works for both the add-task page and the board dialog.
  */
 function clearForm() {
+  const sfx = getInputSuffix();
   document.getElementById("form_task").reset();
-  document.getElementById("due_date").value = "";
+  const dueDate = document.getElementById("due_date" + sfx);
+  if (dueDate) dueDate.value = "";
   selectPriority("medium");
   document.getElementById("assigned_preview").innerHTML = "";
   fillUserDropdown(sortUsersWithActiveFirst(remoteUsers));
@@ -443,8 +462,7 @@ function clearForm() {
   document.getElementById("subtask_list").innerHTML = "";
   clearSubtaskInput(new Event("reset"));
 
-  /* Reset all validation errors */
-  clearError(document.getElementById("title"), "title_er");
-  clearError(document.getElementById("due_date"), "date_er");
-  clearError(document.getElementById("category"), "category_er");
+  clearError(document.getElementById("title" + sfx));
+  clearError(document.getElementById("due_date" + sfx));
+  clearError(document.getElementById("category" + sfx));
 }

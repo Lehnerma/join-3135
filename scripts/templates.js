@@ -290,7 +290,6 @@ function getEditTaskDialogTemplate() {
         <div class="input-section">
           <label for="title" class="required">Title</label>
           <input id="title" class="input" type="text" placeholder="Enter a title" required />
-          <span class="field-error dnone">This field is required</span>
         </div>
 
         <div class="input-section">
@@ -301,7 +300,6 @@ function getEditTaskDialogTemplate() {
         <div class="input-section">
           <label for="due_date" class="required">Due date</label>
           <input id="due_date" class="input input-date" type="date" required />
-          <span class="field-error dnone">This field is required</span>
         </div>
 
         <div class="input-section">
@@ -340,7 +338,6 @@ function getEditTaskDialogTemplate() {
             <option value="Technical Task">Technical Task</option>
             <option value="User Story">User Story</option>
           </select>
-          <span class="field-error">This field is required</span>
         </div>
 
         <div class="input-section">
@@ -385,7 +382,6 @@ function getAddTaskDialogTemplate() {
           <div class="input-section">
             <label for="title_edit" class="required">Title</label>
             <input id="title_edit" class="input" type="text" placeholder="Enter a title" required />
-            <span id="title_edit_er" class="field-error dnone">This field is required</span>
           </div>
           <div class="input-section">
             <label for="description">Description</label>
@@ -394,7 +390,6 @@ function getAddTaskDialogTemplate() {
           <div class="input-section">
             <label for="due_date_edit" class="required">Due date</label>
             <input id="due_date_edit" class="input input-date" type="date" required />
-            <span id="due_date_edit_er" class="field-error dnone">This field is required</span>
           </div>
         </section>
 
@@ -435,7 +430,6 @@ function getAddTaskDialogTemplate() {
               <option value="Technical Task">Technical Task</option>
               <option value="User Story">User Story</option>
             </select>
-            <span id="category_edit_er" class="field-error dnone">This field is required</span>
           </div>
 
           <div class="input-section">
