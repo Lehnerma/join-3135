@@ -267,6 +267,14 @@ main {
   min-height: auto;
   max-height: 270px;
 }
+input[type="date"]{
+ color: var(--fourth-text-color);
+}
+
+input[type="date"]:focus{
+ color: black;
+}
+
 
 .input {
   width: 100%;
