@@ -64,22 +64,18 @@ function initDateInput() {
 }
 
 /**
- * Configures a single date text input.
- * Sets today as the minimum selectable date on the associated hidden picker.
- * @param {string} id - The element ID of the date input.
+ * Configures a native date input: sets today as minimum and default value,
+ * and resets invalid or past values back to today on change.
+ * @param {string} id - The element ID of the native date input.
  */
 function setupSingleDateInput(id) {
   const input = document.getElementById(id);
   if (!input) return;
-  const todayIso = new Date().toISOString().split("T")[0];
-  const today = toDisplayDate(todayIso);
-  const picker = document.getElementById(id);
-  if (picker) {
-    picker.min = todayIso;
-    picker.value = todayIso;
-  }
-  input.addEventListener("focus", () => {
-    if (!input.value) input.value = today;
+  input.min = getTodayISO();
+  input.value = getTodayISO();
+  input.addEventListener("change", () => resetDateIfInvalid(input));
+  input.addEventListener("input", () => {
+    if (!input.value) { clearError(input); setError(input); } else clearError(input);
   });
 }
 
@@ -151,6 +147,44 @@ function isDateInPast(ddmmyyyy) {
  */
 function isValidDateFormat(val) {
   return !/[.\-]/.test(val);
+}
+
+/**
+ * Returns today's date as a yyyy-mm-dd string.
+ * @returns {string} ISO date string for today.
+ */
+function getTodayISO() {
+  return new Date().toISOString().split("T")[0];
+}
+
+/**
+ * Checks whether a yyyy-mm-dd date lies before today.
+ * @param {string} isoDate - Date string like "2025-12-24".
+ * @returns {boolean} True if the date is valid and in the past.
+ */
+function isDateInPastISO(isoDate) {
+  if (!isoDate) return false;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const inputDate = new Date(isoDate + "T00:00:00");
+  return inputDate < today;
+}
+
+/**
+ * Resets a native date input to today if its value is empty or in the past.
+ * Shows the required-error when the field ends up empty.
+ * @param {HTMLInputElement} input - The native date input element.
+ */
+function resetDateIfInvalid(input) {
+  if (!input.value) {
+    clearError(input);
+    setError(input);
+  } else if (isDateInPastISO(input.value)) {
+    input.value = getTodayISO();
+    clearError(input);
+  } else {
+    clearError(input);
+  }
 }
 
 /**
@@ -381,10 +415,14 @@ function renderAssignedUsers(users = []) {
 function buildTaskObj(status = "todo") {
   const read = (id) => document.getElementById(id)?.value ?? "";
   const sfx = document.getElementById("title_edit") ? "_edit" : "";
+  const dueDateEl = document.getElementById("due_date" + sfx);
+  const dueDateVal = dueDateEl?.type === "date"
+    ? (dueDateEl?.value ?? "")
+    : toStorageDate(dueDateEl?.value ?? "");
   return {
     title: read("title" + sfx),
     description: read("description"),
-    dueDate: toStorageDate(read("due_date" + sfx)),
+    dueDate: dueDateVal,
     category: read("category" + sfx),
     assignedTo: getAssignedUsers(),
     priority: selectedPriority,
@@ -443,21 +481,13 @@ function getInputSuffix() {
  * @returns {boolean} True when all three fields have a value.
  */
 function validateRequiredFields(title, dueDate, category) {
-  const ok = (el) => {
-    clearError(el);
-    return true;
-  };
-  const fail = (el) => {
-    setError(el);
-    return false;
-  };
-  const failPast = (el) => {
-    clearError(el);
-    setErrorPast(el);
-    return false;
-  };
+  const ok = (el) => { clearError(el); return true; };
+  const fail = (el) => { setError(el); return false; };
+  const failPast = (el) => { clearError(el); setErrorPast(el); return false; };
   const t = title?.value.trim() ? ok(title) : fail(title);
-  const d = dueDate?.value ? (isDateInPast(dueDate.value) ? failPast(dueDate) : ok(dueDate)) : fail(dueDate);
+  const isNativeDate = dueDate?.type === "date";
+  const inPast = isNativeDate ? isDateInPastISO(dueDate?.value) : isDateInPast(dueDate?.value);
+  const d = dueDate?.value ? (inPast ? failPast(dueDate) : ok(dueDate)) : fail(dueDate);
   const c = category?.value ? ok(category) : fail(category);
   return t && d && c;
 }
@@ -531,40 +561,34 @@ function validetInput() {
 
 /**
  * Adds on-input and on-blur validation to a single field.
+ * For native date inputs uses ISO format checks; text date inputs use display format.
  * @param {string} id - The element ID.
  * @param {string} eventType - The event name (e.g. "input", "click").
  */
 function bindFieldValidation(id, eventType) {
   const el = document.getElementById(id);
   if (!el) return;
-  const isDateField = id.startsWith("due_date");
+  const validate = () => applyFieldValidation(el, id.startsWith("due_date"));
+  el.addEventListener(eventType, validate);
+  el.addEventListener("blur", validate);
+}
 
-  el.addEventListener(eventType, () => {
-    const val = el.value.trim();
-    if (!val) {
-      clearError(el);
-      setError(el);
-    } else if (isDateField && isDateInPast(val)) {
-      clearError(el);
-      setErrorPast(el);
-    } else if (isDateField && !isValidDateFormat(val)) {
-      clearError(el);
-      setErrorFormat(el);
-    } else clearError(el);
-  });
-  el.addEventListener("blur", () => {
-    const val = el.value.trim();
-    if (!val) {
-      clearError(el);
-      setError(el);
-    } else if (isDateField && isDateInPast(val)) {
-      clearError(el);
-      setErrorPast(el);
-    } else if (isDateField && !isValidDateFormat(val)) {
-      clearError(el);
-      setErrorFormat(el);
-    }
-  });
+/**
+ * Evaluates a field's current value and applies or removes error classes.
+ * @param {HTMLElement} el - The input element to validate.
+ * @param {boolean} isDateField - True when the field holds a date value.
+ */
+function applyFieldValidation(el, isDateField) {
+  const val = el.value.trim();
+  const isNativeDate = el.type === "date";
+  if (!val) { clearError(el); setError(el); return; }
+  if (isDateField && (isNativeDate ? isDateInPastISO(val) : isDateInPast(val))) {
+    clearError(el); setErrorPast(el); return;
+  }
+  if (isDateField && !isNativeDate && !isValidDateFormat(val)) {
+    clearError(el); setErrorFormat(el); return;
+  }
+  clearError(el);
 }
 
 /**
@@ -579,12 +603,13 @@ function clearForm() {
 
 /**
  * Clears text fields, date, priority and subtask list.
+ * Resets native date inputs to today; text date inputs are cleared.
  * @param {string} sfx - The element ID suffix ("_edit" or "").
  */
 function resetFormData(sfx) {
   document.getElementById("form_task").reset();
   const dueDate = document.getElementById("due_date" + sfx);
-  if (dueDate) dueDate.value = "";
+  if (dueDate) dueDate.value = dueDate.type === "date" ? getTodayISO() : "";
   selectPriority("medium");
   subtasksList = [];
   document.getElementById("subtask_list").innerHTML = "";
