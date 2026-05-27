@@ -29,7 +29,7 @@
 
   h1 {
     grid-area: head-title;
-    font-size: 61px;
+    font-size: clamp(46px, calc(41.429px + 1.429vw), 62px);
   }
 
   .search-container {
@@ -104,7 +104,7 @@
     width: auto;
   }
 
-  
+
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr auto;
@@ -113,9 +113,7 @@
       "head-title head-add"
       "head-search head-search";
 
-    h1 {
-      font-size: 47px;
-    }
+
 
     .search-container {
       max-width: 100%;
