@@ -64,16 +64,15 @@ function initDateInput() {
 }
 
 /**
- * Configures a native date input: sets today as minimum and default value,
- * and resets invalid or past values back to today on change.
+ * Configures a native date input: prefills today and resets past values on blur.
+ * No min is set so the user can freely pick or type any date first.
  * @param {string} id - The element ID of the native date input.
  */
 function setupSingleDateInput(id) {
   const input = document.getElementById(id);
   if (!input) return;
-  input.min = getTodayISO();
   input.value = getTodayISO();
-  input.addEventListener("change", () => resetDateIfInvalid(input));
+  input.addEventListener("blur", () => resetDateIfInvalid(input));
   input.addEventListener("input", () => {
     if (!input.value) { clearError(input); setError(input); } else clearError(input);
   });
@@ -126,8 +125,9 @@ function isDateInPastISO(isoDate) {
 }
 
 /**
- * Resets a native date input to today if its value is empty or in the past.
- * Shows the required-error when the field ends up empty.
+ * On blur: resets a native date input to today if empty or in the past.
+ * Empty shows the required error; past dates reset the value to today
+ * and clear all error classes.
  * @param {HTMLInputElement} input - The native date input element.
  */
 function resetDateIfInvalid(input) {
