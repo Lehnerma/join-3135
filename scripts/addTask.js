@@ -150,6 +150,16 @@ function initDatePicker() {
 }
 
 /**
+ * Initialisiert nur den Date-Picker für den Edit-Task-Dialog.
+ * Ruft die relevanten Setup-Funktionen aus addTask.js auf.
+ */
+function initEditDatePicker() {
+  setupSingleDateInput("due_date");
+  wireDatePicker("due_date_picker", "due_date", "date_icon_btn");
+  initAutoFormatDate("due_date");
+}
+
+/**
  * Wires a single date picker to its icon button and text input.
  * @param {string} pickerId - ID of the hidden native date input.
  * @param {string} textInputId - ID of the visible text input.

@@ -181,8 +181,15 @@
         </section>
 
         <section class="input-section">
-          <label for="due_date" class="">Due date</label>
-          <input id="due_date" class="input input-date" type="date" required />
+          <label for="due_date" class="required">Due date</label>
+          <div class="date-wrapper">
+            <input id="due_date" class="input input-date" type="text" placeholder="tt.mm.jjjj"
+              pattern="\d{1,2}\.\d{1,2}\.\d{4}" autocomplete="off">
+            <button type="button" class="date-icon-btn date-icon-btn--right" id="date_icon_btn" aria-label="Pick date">
+              <img src="../assets/img/icons/input/event.svg" alt="calendar" class="date-icon-img">
+            </button>
+            <input type="date" id="due_date_picker" class="date-picker-hidden">
+          </div>
         </section>
 
         <section class="input-section">
