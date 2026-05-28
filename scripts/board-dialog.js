@@ -9,7 +9,7 @@ let current_detail_task = null;
 function initBoardTask() {
   initBoardSearch();
   initBoardDialogs();
-  validetInput();
+  validateInput();
 }
 
 /**
@@ -299,7 +299,8 @@ function fillEditFormFields(task) {
     document.getElementById("category").value = "";
   }
   const dueDateInput = document.getElementById("due_date");
-  dueDateInput.value = toDisplayDate(task.dueDate) || "";
+  dueDateInput.min = new Date().toISOString().split("T")[0];
+  dueDateInput.value = task.dueDate || "";
   selectPriority(task.priority || "medium");
 }
 
@@ -476,7 +477,7 @@ function openAddTaskDialog() {
   initDropdownOutsideClick();
   selectedPriority = "medium";
   subtasksList = [];
-  validetInput();
+  validateInput();
 }
 
 /**
