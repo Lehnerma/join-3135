@@ -216,7 +216,7 @@ function getDetailTaskTemplate(task) {
       <section class="detail-task--infos f-col">
         <div class="detail-task--date f-row">
           <h4 class="detail-task--subheading">Due date:</h4>
-          <p class="detail-task--text">${task.dueDate}</p>
+          <p class="detail-task--text">${toDisplayDate(task.dueDate)}</p>
         </div>
 
         <div class="detail-task--prio f-row">
@@ -299,7 +299,8 @@ function getEditTaskDialogTemplate() {
 
         <div class="input-section">
           <label for="due_date" class="required">Due date</label>
-          <input id="due_date" class="input input-date" type="date" required />
+          <input id="due_date" class="input input-date" type="text" placeholder="tt.mm.jjjj"
+            pattern="\d{1,2}\.\d{1,2}\.\d{4}" autocomplete="off">
         </div>
 
         <div class="input-section">
@@ -337,7 +338,7 @@ function getEditTaskDialogTemplate() {
             <div class="custom-dropdown__trigger">
               <input type="text" id="category" class="input custom-dropdown__input" readonly
                 onclick="toggleDropdown(event)" placeholder="Select task category" autocomplete="off" />
-              <button type="button" class="custom-dropdown__toggle" aria-label="Toggle category dropdown">
+              <button type="button" class="custom-dropdown__toggle" onclick="toggleDropdown(event)" aria-label="Toggle category dropdown">
                 <span class="custom-dropdown__arrow"></span>
               </button>
             </div>
@@ -395,10 +396,17 @@ function getAddTaskDialogTemplate() {
             <label for="description">Description</label>
             <textarea id="description" class="input" placeholder="Enter a Description" rows="3"></textarea>
           </div>
-          <div class="input-section">
-            <label for="due_date_edit" class="required">Due date</label>
-            <input id="due_date_edit" class="input input-date" type="date" required />
-          </div>
+           <div class="input-section">
+             <label for="due_date_edit" class="required">Due date</label>
+             <div class="date-wrapper">
+               <input id="due_date_edit" class="input input-date" type="text" placeholder="tt.mm.jjjj"
+                 pattern="\d{1,2}\.\d{1,2}\.\d{4}" autocomplete="off">
+               <button type="button" class="date-icon-btn date-icon-btn--right" id="date_icon_btn_edit" aria-label="Pick date">
+                 <img src="../assets/img/icons/input/event.svg" alt="calendar" class="date-icon-img">
+               </button>
+               <input type="date" id="due_date_picker_edit" class="date-picker-hidden">
+             </div>
+           </div>
         </section>
 
         <section class="dat-col">
@@ -437,7 +445,7 @@ function getAddTaskDialogTemplate() {
               <div class="custom-dropdown__trigger">
                 <input type="text" id="category_edit" class="input custom-dropdown__input" readonly
                   onclick="toggleDropdown(event)" placeholder="Select task category" autocomplete="off" />
-                <button type="button" class="custom-dropdown__toggle" aria-label="Toggle category dropdown">
+                <button type="button" class="custom-dropdown__toggle" onclick="toggleDropdown(event)" aria-label="Toggle category dropdown">
                   <span class="custom-dropdown__arrow"></span>
                 </button>
               </div>
