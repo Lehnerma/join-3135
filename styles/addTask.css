@@ -53,12 +53,15 @@ main {
   position: relative;
 }
 
-.input-invalid {
-  border: 1px solid red;
+.input.input-invalid {
+  border: var(--faulty-entry-color) solid 1px;
+  outline-color: var(--faulty-entry-color);
 }
 
-.input-invalid-past {
-  border: 1px solid red;
+.input.input-invalid-past {
+  border: var(--faulty-entry-color) solid 1px;
+  color: var(--faulty-entry-color);
+  outline-color: var(--faulty-entry-color);
 }
 
 .input-section:has(.input-invalid):not(:has(.input-invalid-past))::after {
@@ -66,7 +69,7 @@ main {
   position: absolute;
   bottom: -12px;
   left: 4px;
-  color: #ff3d00;
+  color: var(--faulty-entry-color);
   font-size: 12px;
   white-space: nowrap;
 }
@@ -76,7 +79,7 @@ main {
   position: absolute;
   bottom: -12px;
   left: 4px;
-  color: #ff3d00;
+  color: var(--faulty-entry-color);
   font-size: 12px;
   white-space: nowrap;
 }
@@ -655,9 +658,9 @@ main {
   list-style: none;
   margin: 0;
   padding: 8px;
-  max-height: 220px;
+  max-height: 550px;
   overflow-y: auto;
-  height: 100px;
+  height: 250px;
 }
 
 /* Liste sichtbar wenn .open auf .custom-dropdown (per JS) */
@@ -755,4 +758,11 @@ main {
 /* Gefilterte Items verstecken (JS fügt .hidden hinzu bei Suche) */
 .custom-dropdown__item.hidden {
   display: none;
+}
+
+/* Category-Dropdown behält originale Größe */
+#category_dropdown .custom-dropdown__list,
+#category_dropdown_edit .custom-dropdown__list {
+  max-height: 220px;
+  height: 100px;
 }

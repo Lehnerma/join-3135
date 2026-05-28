@@ -37,7 +37,7 @@ function btnInit() {
 function toDisplayDate(yyyymmdd) {
   if (!yyyymmdd) return "";
   const parts = yyyymmdd.split("-");
-  return parts[2] + "/" + parts[1] + "/" + parts[0];
+  return parts[2] + "." + parts[1] + "." + parts[0];
 }
 
 /**
@@ -46,7 +46,7 @@ function toDisplayDate(yyyymmdd) {
  * @returns {string} Storage-format date (e.g. "2025-12-24"), or empty if invalid.
  */
 function toStorageDate(ddmmyyyy) {
-  const match = ddmmyyyy.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  const match = ddmmyyyy.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
   if (!match) return "";
   return match[3] + "-" + match[2].padStart(2, "0") + "-" + match[1].padStart(2, "0");
 }
@@ -59,6 +59,67 @@ function initDateInput() {
   setupSingleDateInput("due_date");
   setupSingleDateInput("due_date_edit");
   initDatePicker();
+  initAutoFormatDate("due_date");
+  initAutoFormatDate("due_date_edit");
+}
+
+/**
+ * Automatically inserts dots (.) while the user types a date.
+ * Example: "28122025" → "28.12.2025"
+ * @param {string} id - The element ID of the date input.
+ */
+function initAutoFormatDate(id) {
+  const input = document.getElementById(id);
+  if (!input) return;
+  let formatting = false;
+
+  input.addEventListener("input", () => {
+    if (formatting) return;
+    formatting = true;
+
+    const cursorPos = input.selectionStart;
+    const rawBefore = input.value.slice(0, cursorPos);
+    const digitsBefore = rawBefore.replace(/[^0-9]/g, "").length;
+
+    let val = input.value.replace(/[^0-9]/g, "");
+    if (val.length > 8) val = val.slice(0, 8);
+
+    let day = val.slice(0, 2);
+    let month = val.slice(2, 4);
+    let year = val.slice(4, 8);
+
+    // Validate day when user starts typing month (3+ digits)
+    if (val.length >= 3) {
+      const dayNum = parseInt(day);
+      if (dayNum > 31) day = "31";
+      else if (dayNum === 0 && day.length === 2) day = "01";
+    }
+
+    // Validate month when user starts typing year (5+ digits)
+    if (val.length >= 5) {
+      const monthNum = parseInt(month);
+      if (monthNum > 12) month = "12";
+      else if (monthNum === 0 && month.length === 2) month = "01";
+    }
+
+    // Build formatted string
+    let formatted = day;
+    if (val.length > 2) formatted += "." + month;
+    if (val.length > 4) formatted += "." + year;
+
+    input.value = formatted;
+
+    // Restore cursor position
+    let newPos = digitsBefore;
+    if (digitsBefore > 2) newPos++;
+    if (digitsBefore > 4) newPos++;
+    input.setSelectionRange(newPos, newPos);
+
+    formatting = false;
+
+    // Trigger validation after formatting
+    input.dispatchEvent(new Event("validate", { bubbles: false }));
+  });
 }
 
 /**
@@ -125,13 +186,22 @@ function wireDatePicker(pickerId, textInputId, iconBtnId) {
  * @returns {boolean} True if the date is valid and in the past.
  */
 function isDateInPast(ddmmyyyy) {
-  const match = ddmmyyyy.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  const match = ddmmyyyy.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
   if (!match) return false;
   const inputDate = new Date(+match[3], +match[2] - 1, +match[1]);
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   inputDate.setHours(0, 0, 0, 0);
   return inputDate < today;
+}
+
+/**
+ * Checks whether a date string matches the dd.mm.yyyy format.
+ * @param {string} val - Date string to check.
+ * @returns {boolean} True if the format is valid.
+ */
+function isValidDateFormat(val) {
+  return /^(\d{1,2})\.(\d{1,2})\.(\d{4})$/.test(val);
 }
 
 /**
@@ -482,10 +552,10 @@ function clearError(input) {
 function validetInput() {
   const fields = [
     { id: "title", event: "input" },
-    { id: "due_date", event: "click" },
+    { id: "due_date", event: "input" },
     { id: "category", event: "input" },
     { id: "title_edit", event: "input" },
-    { id: "due_date_edit", event: "click" },
+    { id: "due_date_edit", event: "input" },
     { id: "category_edit", event: "input" },
   ];
   fields.forEach(({ id, event }) => bindFieldValidation(id, event));
@@ -500,17 +570,23 @@ function bindFieldValidation(id, eventType) {
   const el = document.getElementById(id);
   if (!el) return;
   const isDateField = id.startsWith("due_date");
-  el.addEventListener(eventType, () => {
+
+  function validate(el) {
     const val = el.value.trim();
     if (!val) { clearError(el); setError(el); }
+    else if (isDateField && !isValidDateFormat(val)) { clearError(el); setError(el); }
     else if (isDateField && isDateInPast(val)) { clearError(el); setErrorPast(el); }
     else clearError(el);
-  });
-  el.addEventListener("blur", () => {
-    const val = el.value.trim();
-    if (!val) { clearError(el); setError(el); }
-    else if (isDateField && isDateInPast(val)) { clearError(el); setErrorPast(el); }
-  });
+  }
+
+  if (isDateField) {
+    // Validation only via custom "validate" event (fired after auto-format) + blur
+    el.addEventListener("validate", () => validate(el));
+    el.addEventListener("blur", () => validate(el));
+  } else {
+    el.addEventListener(eventType, () => validate(el));
+    el.addEventListener("blur", () => validate(el));
+  }
 }
 
 /**
