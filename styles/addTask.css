@@ -36,6 +36,15 @@ main {
   font-weight: 300;
 }
 
+#assigned_to_search::placeholder {
+  color: black;
+}
+
+#category::placeholder,
+#category_edit::placeholder {
+  color: black;
+}
+
 .input-section {
   display: flex;
   flex-direction: column;
@@ -44,16 +53,33 @@ main {
   position: relative;
 }
 
-.input-invalid {
-  border: 1px solid red;
+.input.input-invalid {
+  border: var(--faulty-entry-color) solid 1px;
+  outline-color: var(--faulty-entry-color);
 }
 
-.input-section:has(.input-invalid)::after {
+.input.input-invalid-past {
+  border: var(--faulty-entry-color) solid 1px;
+  color: var(--faulty-entry-color);
+  outline-color: var(--faulty-entry-color);
+}
+
+.input-section:has(.input-invalid):not(:has(.input-invalid-past))::after {
   content: "This field is required";
   position: absolute;
   bottom: -12px;
   left: 4px;
-  color: #ff3d00;
+  color: var(--faulty-entry-color);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.input-section:has(.input-invalid-past)::after {
+  content: "Date can not be in the past";
+  position: absolute;
+  bottom: -12px;
+  left: 4px;
+  color: var(--faulty-entry-color);
   font-size: 12px;
   white-space: nowrap;
 }
@@ -256,6 +282,55 @@ main {
   background-color: rgba(255, 255, 255, 1);
 }
 
+/* Date wrapper with calendar icon inside input on the left */
+.date-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.date-wrapper .input-date {
+  padding-right: 40px;
+}
+
+.date-picker-hidden {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.date-icon-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.date-icon-btn--left {
+  left: 8px;
+}
+
+.date-icon-btn--right {
+  right: 8px;
+}
+
+.date-icon-img {
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
 .input--section {
   position: relative;
   display: flex;
@@ -391,6 +466,17 @@ main {
     bottom: 45%;
     transform: translate(-50%, 50%);
   }
+}
+
+/* Equal width for Assigned-to, Category, Subtasks in add-task dialog */
+.dat-col .custom-dropdown,
+.dat-col .input--section {
+  max-width: 100%;
+  width: 100%;
+}
+
+.dat-col #assigned_to_dropdown {
+  max-width: 100%;
 }
 
 @media (min-width: 1024px) {
@@ -572,15 +658,9 @@ main {
   list-style: none;
   margin: 0;
   padding: 8px;
-  max-height: 220px;
+  max-height: 550px;
   overflow-y: auto;
-  height: 100px;
-}
-
-/* Assigned-to dropdown list – double height */
-#assigned_to_list {
-  max-height: 440px;
-  height: 200px;
+  height: 250px;
 }
 
 /* Liste sichtbar wenn .open auf .custom-dropdown (per JS) */
@@ -680,13 +760,9 @@ main {
   display: none;
 }
 
-/* Equal width for Assigned-to, Category, Subtasks in add-task dialog */
-.dat-col .custom-dropdown,
-.dat-col .input--section {
-  max-width: 100%;
-  width: 100%;
-}
-
-.dat-col #assigned_to_dropdown {
-  max-width: 100%;
+/* Category-Dropdown behält originale Größe */
+#category_dropdown .custom-dropdown__list,
+#category_dropdown_edit .custom-dropdown__list {
+  max-height: 220px;
+  height: 100px;
 }
