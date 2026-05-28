@@ -272,13 +272,12 @@ function openEditTaskDialog(taskId) {
   const task = ALL_TASKS.find((t) => t.id === taskId);
   if (!task) return;
   const dialog = document.getElementById("edit_task_dialog");
+  dialog.innerHTML = getEditTaskDialogTemplate();
   dialog.addEventListener("click", closeEditDialogOnBackdropClick);
   dialog.showModal();
-  const previewContainer = document.getElementById("assigned_preview");
-  if (previewContainer) {
-    previewContainer.innerHTML = "";
-  }
 
+  initDateInput();
+  validetInput();
   fillEditFormFields(task);
   setupEditTaskInteractions(task);
 }
@@ -299,7 +298,7 @@ function fillEditFormFields(task) {
     document.getElementById("category").value = "";
   }
   const dueDateInput = document.getElementById("due_date");
-  dueDateInput.value = toDisplayDate(task.dueDate) || "";
+  dueDateInput.value = task.dueDate || "";
   selectPriority(task.priority || "medium");
 }
 
@@ -335,6 +334,7 @@ function closeEditTaskDialog() {
   const DIALOG = document.getElementById("edit_task_dialog");
   if (DIALOG) {
     DIALOG.close();
+    DIALOG.innerHTML = "";
   }
 }
 
@@ -394,6 +394,10 @@ function preselectAssignedUsers(assignedTo) {
  * Coordinates data building, saving, and UI updates.
  */
 async function saveEditedTask(task) {
+  const title = document.getElementById("title");
+  const dueDate = document.getElementById("due_date");
+  const category = document.getElementById("category");
+  if (!validateRequiredFields(title, dueDate, category)) return;
   const UPDATED = buildTaskObj();
   UPDATED.id = task.id;
   UPDATED.status = task.status;
