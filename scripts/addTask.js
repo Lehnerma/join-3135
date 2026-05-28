@@ -16,7 +16,7 @@ function init() {
   loadUsers();
   initDropdownOutsideClick();
   initAssignedPreviewResize();
-  validetInput();
+  validateInput();
 }
 
 /**
@@ -549,7 +549,7 @@ function clearError(input) {
 /**
  * Attaches live validation (input/click/blur) to all required fields.
  */
-function validetInput() {
+function validateInput() {
   const fields = [
     { id: "title", event: "input" },
     { id: "due_date", event: "input" },
