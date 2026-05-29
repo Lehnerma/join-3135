@@ -78,54 +78,59 @@ function initAutoFormatDate(id) {
     formatting = true;
 
     const cursorPos = input.selectionStart;
-    const rawBefore = input.value.slice(0, cursorPos);
-    const digitsBefore = rawBefore.replace(/[^0-9]/g, "").length;
-
-    let val = input.value.replace(/[^0-9]/g, "");
-    if (val.length > 8) val = val.slice(0, 8);
-
-    let day = val.slice(0, 2);
-    let month = val.slice(2, 4);
-    let year = val.slice(4, 8);
-
-    // Validate day when user starts typing month (3+ digits)
-    if (val.length >= 3) {
-      const dayNum = parseInt(day);
-      if (dayNum > 31) day = "31";
-      else if (dayNum === 0 && day.length === 2) day = "01";
-    }
-
-    // Validate month when user starts typing year (5+ digits)
-    if (val.length >= 5) {
-      const monthNum = parseInt(month);
-      if (monthNum > 12) month = "12";
-      else if (monthNum === 0 && month.length === 2) month = "01";
-    }
-
-    // Build formatted string
-    let formatted = day;
-    if (val.length > 2) formatted += "." + month;
-    if (val.length > 4) formatted += "." + year;
+    const digitsBefore = input.value.slice(0, cursorPos).replace(/[^0-9]/g, "").length;
+    const formatted = formatDateInput(input.value);
 
     input.value = formatted;
-
-    // Restore cursor position
-    let newPos = digitsBefore;
-    if (digitsBefore > 2) newPos++;
-    if (digitsBefore > 4) newPos++;
-    input.setSelectionRange(newPos, newPos);
-
+    restoreCursorAfterFormat(input, digitsBefore);
     formatting = false;
-
-    // Trigger validation after formatting
     input.dispatchEvent(new Event("validate", { bubbles: false }));
   });
 }
 
 /**
- * Configures a native date input: sets today as minimum and default value,
- * and resets invalid or past values back to today on change.
- * @param {string} id - The element ID of the native date input.
+ * Extracts up to 8 digits from a raw date string, validates day/month,
+ * and builds a dd.mm.yyyy formatted string.
+ * @param {string} rawValue - The raw input value (may contain dots).
+ * @returns {string} The formatted date string (e.g. "28.12.2025").
+ */
+function formatDateInput(rawValue) {
+  let val = rawValue.replace(/[^0-9]/g, "").slice(0, 8);
+  let day = val.slice(0, 2), month = val.slice(2, 4), year = val.slice(4, 8);
+
+  if (val.length >= 3) {
+    const d = parseInt(day);
+    if (d > 31) day = "31";
+    else if (d === 0 && day.length === 2) day = "01";
+  }
+  if (val.length >= 5) {
+    const m = parseInt(month);
+    if (m > 12) month = "12";
+    else if (m === 0 && month.length === 2) month = "01";
+  }
+  let formatted = day;
+  if (val.length > 2) formatted += "." + month;
+  if (val.length > 4) formatted += "." + year;
+  return formatted;
+}
+
+/**
+ * Restores the cursor position after auto-formatting, skipping over
+ * the inserted dots.
+ * @param {HTMLInputElement} input - The date input element.
+ * @param {number} digitsBefore - Number of digits before the cursor.
+ */
+function restoreCursorAfterFormat(input, digitsBefore) {
+  let newPos = digitsBefore;
+  if (digitsBefore > 2) newPos++;
+  if (digitsBefore > 4) newPos++;
+  input.setSelectionRange(newPos, newPos);
+}
+
+/**
+ * Configures a single date text input.
+ * Sets today as the minimum selectable date on the associated hidden picker.
+ * @param {string} id - The element ID of the date input.
  */
 function setupSingleDateInput(id) {
   const input = document.getElementById(id);
