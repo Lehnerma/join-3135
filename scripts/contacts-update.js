@@ -1,6 +1,6 @@
 /**
  * Gets references to the contact form input containers and inputs.
- * @returns {{nameContainer: HTMLElement|null, emailContainer: HTMLElement|null, phoneContainer: HTMLElement|null, nameInput: HTMLElement|null, emailInput: HTMLElement|null}}
+ * @returns {{nameContainer: HTMLElement|null, emailContainer: HTMLElement|null, phoneContainer: HTMLElement|null, nameInput: HTMLElement|null, emailInput: HTMLElement|null, phoneInput: HTMLElement|null}}
  */
 function getContactFormElements() {
   return {
@@ -9,6 +9,7 @@ function getContactFormElements() {
     phoneContainer: document.getElementById('add_phone'),
     nameInput: document.getElementById('create_name'),
     emailInput: document.getElementById('create_email'),
+    phoneInput: document.getElementById('create_phone'),
   };
 }
 
@@ -20,10 +21,10 @@ function clearAllContactErrors() {
   const emailContainer = document.getElementById('add_email');
   const phoneContainer = document.getElementById('add_phone');
   if (nameContainer) {
-    nameContainer.classList.remove('invalid-login');
+    nameContainer.classList.remove('invalid-contact-form');
   }
   if (emailContainer) {
-    emailContainer.classList.remove('invalid-login');
+    emailContainer.classList.remove('invalid-contact-form');
   }
   if (phoneContainer) {
     phoneContainer.classList.remove('invalid-contact-form');
@@ -37,7 +38,7 @@ function clearAllContactErrors() {
  */
 function initContactFormValidation() {
   const els = getContactFormElements();
-  const inputs = [els.nameInput, els.emailInput];
+  const inputs = [els.nameInput, els.emailInput, els.phoneInput];
   inputs.forEach(input => {
     if (!input) return;
     input.addEventListener('input', clearAllContactErrors);
@@ -56,8 +57,7 @@ function validateContactEmailOnBlur() {
   const els = getContactFormElements();
   const value = els.emailInput?.value.trim();
   if (value.length > 0 && !els.emailInput.checkValidity()) {
-    els.emailContainer?.classList.add('invalid-login');
-    els.phoneContainer?.classList.add('invalid-contact-form');
+    els.emailContainer?.classList.add('invalid-contact-form');
   }
 }
 
@@ -66,8 +66,7 @@ function validateContactEmailOnBlur() {
  */
 function clearContactEmailError() {
   const els = getContactFormElements();
-  els.emailContainer?.classList.remove('invalid-login');
-  els.phoneContainer?.classList.remove('invalid-contact-form');
+  els.emailContainer?.classList.remove('invalid-contact-form');
 }
 
 /**
@@ -78,7 +77,7 @@ function clearContactEmailError() {
  */
 function validateContactName(els, nameVal) {
   if (!nameVal) {
-    els.nameContainer?.classList.add('invalid-login');
+    els.nameContainer?.classList.add('invalid-contact-form');
     return true;
   }
   return false;
@@ -92,11 +91,11 @@ function validateContactName(els, nameVal) {
  */
 function validateContactEmail(els, emailVal) {
   if (!emailVal) {
-    els.emailContainer?.classList.add('invalid-login');
+    els.emailContainer?.classList.add('invalid-contact-form');
     return true;
   }
   if (!els.emailInput.checkValidity()) {
-    els.emailContainer?.classList.add('invalid-login');
+    els.emailContainer?.classList.add('invalid-contact-form');
     return true;
   }
   return false;
@@ -104,19 +103,31 @@ function validateContactEmail(els, emailVal) {
 
 /**
  * Validates the contact form before saving.
- * Name and email are required. Shows red borders and an error message if invalid.
+ * Name, email and phone are required. Shows red borders and an error message if invalid.
+ * Only the fields that are actually missing get marked red. Correctly filled fields stay untouched.
  * @returns {boolean} True if the form is valid, false otherwise.
  */
 function addContactCheckInputValue() {
   clearAllContactErrors();
   const els = getContactFormElements();
-  const nameVal = els.nameInput?.value.trim();
-  const emailVal = els.emailInput?.value.trim();
-  const nameInvalid = validateContactName(els, nameVal);
-  const emailInvalid = validateContactEmail(els, emailVal);
-  if (nameInvalid || emailInvalid) {
-    els.phoneContainer?.classList.add('invalid-contact-form');
-    return false;
+  const nameVal = (els.nameInput?.value || '').trim();
+  const emailVal = (els.emailInput?.value || '').trim();
+  const phoneVal = (els.phoneInput?.value || '').trim();
+  let hasError = false;
+  if (!nameVal) {
+    els.nameContainer?.classList.add('invalid-contact-form');
+    hasError = true;
   }
-  return true;
+  if (!emailVal) {
+    els.emailContainer?.classList.add('invalid-contact-form');
+    hasError = true;
+  } else if (!els.emailInput.checkValidity()) {
+    els.emailContainer?.classList.add('invalid-contact-form');
+    hasError = true;
+  }
+  if (!phoneVal) {
+    els.phoneContainer?.classList.add('invalid-contact-form');
+    hasError = true;
+  }
+  return !hasError;
 }

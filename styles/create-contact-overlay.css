@@ -187,6 +187,10 @@ form {
     border: var(--faulty-entry-color) solid 1px;
 }
 
+.dialog-input-section.invalid-contact-form {
+    border: var(--faulty-entry-color) solid 1px;
+}
+
 .dialog-input-icon {
     width: 24px;
     height: 24px;
@@ -346,7 +350,7 @@ form {
     .dialog-input-container {
         width: clamp(315px, 60vw, 550px);
         min-height: 153px;
-        gap: clamp(15px, 2vw, 25px);
+        gap:25px;
     }
 
     .dialog-input-section {
@@ -357,7 +361,6 @@ form {
     .dialog-input {
         font-size: clamp(16px, 5vw, 21px);
     }
-
 }
 
 @media (max-width: 768px) {
