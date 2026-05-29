@@ -579,14 +579,14 @@ function bindFieldValidation(id, eventType) {
     else clearError(el);
   }
 
-  if (isDateField) {
-    // Validation only via custom "validate" event (fired after auto-format) + blur
-    el.addEventListener("validate", () => validate(el));
-    el.addEventListener("blur", () => validate(el));
-  } else {
-    el.addEventListener(eventType, () => validate(el));
-    el.addEventListener("blur", () => validate(el));
-  }
+  // if (isDateField) {
+  //   // Validation only via custom "validate" event (fired after auto-format) + blur
+  //   el.addEventListener("validate", () => validate(el));
+  //   el.addEventListener("blur", () => validate(el));
+  // } else {
+  //   el.addEventListener(eventType, () => validate(el));
+  //   el.addEventListener("blur", () => validate(el));
+  // }
 }
 
 /**

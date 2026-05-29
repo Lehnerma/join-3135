@@ -143,6 +143,19 @@ function openTaskDetailDialog(taskId) {
     if (ASSIGNEES_ELEMENT) {
       ASSIGNEES_ELEMENT.scrollTop = 0;
     }
+
+    // GEZIELTER FIX FÜR DEN DIALOG:
+    // Wir überwachen den Dialog. Sobald das Datumsfeld im Edit-Modus erscheint,
+    // nehmen wir das required-Attribut weg, damit beim Wegklicken kein Fehler kommt.
+    const dialogObserver = new MutationObserver(() => {
+      const dateInput = document.getElementById("due_date");
+      if (dateInput && dateInput.hasAttribute("required")) {
+        dateInput.removeAttribute("required");
+        dateInput.classList.remove("input-invalid", "border-red");
+        dialogObserver.disconnect(); // Schutz ist aktiv, Observer stoppen
+      }
+    });
+    dialogObserver.observe(TASK_DETAIL_DIALOG, { childList: true, subtree: true });
   }
 }
 
