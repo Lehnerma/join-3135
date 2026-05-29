@@ -304,6 +304,11 @@ main {
 
 .date-wrapper .input-date {
   padding-right: 40px;
+  color: var(--input-default-main);
+}
+
+.date-wrapper .input-date.has-value {
+  color: black;
 }
 
 .date-picker-hidden {
@@ -579,9 +584,8 @@ main {
   .priority-group {
     justify-content: flex-start;
   }
-  .right{
+  .right {
     margin-top: 42px;
-
   }
 }
 

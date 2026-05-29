@@ -299,6 +299,7 @@ function fillEditFormFields(task) {
   }
   const dueDateInput = document.getElementById("due_date");
   dueDateInput.value = task.dueDate || "";
+  dueDateInput.classList.toggle("has-value", !!dueDateInput.value);
   selectPriority(task.priority || "medium");
 }
 

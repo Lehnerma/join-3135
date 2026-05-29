@@ -71,9 +71,9 @@ function initDateInput() {
 function setupSingleDateInput(id) {
   const input = document.getElementById(id);
   if (!input) return;
-  input.value = getTodayISO();
   input.addEventListener("blur", () => resetDateIfInvalid(input));
   input.addEventListener("input", () => {
+    input.classList.toggle("has-value", !!input.value);
     if (!input.value) { clearError(input); setError(input); } else clearError(input);
   });
 }
@@ -564,7 +564,8 @@ function clearForm() {
 function resetFormData(sfx) {
   document.getElementById("form_task").reset();
   const dueDate = document.getElementById("due_date" + sfx);
-  if (dueDate) dueDate.value = dueDate.type === "date" ? getTodayISO() : "";
+  if (dueDate) dueDate.classList.remove("has-value");
+  // if (dueDate) dueDate.value = dueDate.type === "date" ? getTodayISO() : ""; setzt das heutige datum
   selectPriority("medium");
   subtasksList = [];
   document.getElementById("subtask_list").innerHTML = "";
