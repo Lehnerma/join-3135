@@ -337,7 +337,13 @@ async function addNewContact(newContactData) {
  * @param {number} index - The user's index.
  */
 function scrollToUser(index) {
-  document.getElementById(index)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  const target = document.getElementById(index);
+  const container = document.getElementById('left_content');
+  if (!target || !container) return;
+  const containerRect = container.getBoundingClientRect();
+  const targetRect = target.getBoundingClientRect();
+  const offset = targetRect.top - containerRect.top + container.scrollTop - containerRect.height / 2 + targetRect.height / 2;
+  container.scrollTo({ top: offset, behavior: 'smooth' });
 }
 
 /**
@@ -419,6 +425,13 @@ async function saveNewContactData(index) {
   const response = await updateFirebaseContact(firebaseKey, getUpdatedContactData(users[index].color));
   if (response.ok) {
     await getUsers();
+    const newIndex = users.findIndex(u => u.firebaseKey === firebaseKey);
+    if (newIndex !== -1) {
+      editUserIndex = newIndex;
+      user = users[newIndex];
+      showDetails();
+      setTimeout(() => scrollToUser(newIndex), 100);
+    }
     closeContactDialog();
   }
 }
