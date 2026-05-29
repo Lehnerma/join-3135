@@ -45,10 +45,19 @@ function toDisplayDate(yyyymmdd) {
  * @param {string} ddmmyyyy - Date string like "24/12/2025".
  * @returns {string} Storage-format date (e.g. "2025-12-24"), or empty if invalid.
  */
-function toStorageDate(ddmmyyyy) {
-  const match = ddmmyyyy.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+function toStorageDate(dateString) {
+  if (!dateString) return "";
+
+  // Format: yyyy-mm-dd
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+    return dateString;
+  }
+
+  // Format: dd.mm.yyyy
+  const match = dateString.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
   if (!match) return "";
-  return match[3] + "-" + match[2].padStart(2, "0") + "-" + match[1].padStart(2, "0");
+
+  return `${match[3]}-${match[2].padStart(2, "0")}-${match[1].padStart(2, "0")}`;
 }
 
 /**
@@ -436,6 +445,12 @@ function renderAssignedUsers(users = []) {
 function buildTaskObj(status = "todo") {
   const read = (id) => document.getElementById(id)?.value ?? "";
   const sfx = document.getElementById("title_edit") ? "_edit" : "";
+
+  console.log("Suffix:", sfx);
+  console.log("Date field:", "due_date" + sfx);
+  console.log("Raw date input:", read("due_date" + sfx));
+  console.log("Converted date:", toStorageDate(read("due_date" + sfx)));
+
   return {
     title: read("title" + sfx),
     description: read("description"),
@@ -511,6 +526,14 @@ function validateRequiredFields(title, dueDate, category) {
  * Validates the form and, if everything is filled in, sends the task.
  */
 async function createTask() {
+
+  const dialog = document.getElementById("task_detail_dialog");
+  if (dialog && dialog.open && typeof closeTaskDetailDialog === "function") {
+    // Ruft eure Board-Speicherfunktion auf, die wir vorhin repariert haben
+    await closeTaskDetailDialog();
+    return; // Stoppt createTask(), damit keine neue Karte erstellt wird!
+  }
+
   const sfx = getInputSuffix();
   const title = document.getElementById("title" + sfx);
   const dueDate = document.getElementById("due_date" + sfx);
