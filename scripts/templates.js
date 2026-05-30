@@ -397,6 +397,9 @@ function getAddTaskDialogTemplate() {
              <label for="due_date_edit" class="required">Due date</label>
              <div class="date-wrapper">
                <input id="due_date_edit" class="input input-date" type="date" autocomplete="off">
+               <button type="button" class="date-icon-btn date-icon-btn--right" onclick="openDatePicker('due_date_edit')" tabindex="-1">
+                 <img class="date-icon-img" src="../assets/img/icons/input/event.svg" alt="calendar">
+               </button>
              </div>
            </div>
         </section>

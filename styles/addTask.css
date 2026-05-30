@@ -313,22 +313,20 @@ main {
 }
 
 .date-wrapper .input-date {
-  padding-right: 40px;
   color: var(--input-default-main);
 }
 
+.date-wrapper .input-date:focus,
 .date-wrapper .input-date.has-value {
   color: black;
 }
 
-.date-picker-hidden {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  opacity: 0;
-  pointer-events: none;
+.input-date::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.is-firefox .date-icon-btn {
+  display: none;
 }
 
 .date-icon-btn {
@@ -343,10 +341,6 @@ main {
   align-items: center;
   justify-content: center;
   z-index: 1;
-}
-
-.date-icon-btn--left {
-  left: 8px;
 }
 
 .date-icon-btn--right {

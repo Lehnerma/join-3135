@@ -286,10 +286,9 @@ function openEditTaskDialog(taskId) {
   dialog.showModal();
 
   initDateInput();
-  validetInput();
+  validateInput();
   fillEditFormFields(task);
   setupEditTaskInteractions(task);
-  initEditDatePicker();
 }
 
 

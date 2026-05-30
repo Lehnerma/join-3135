@@ -8,6 +8,18 @@ function initUtilitys() {
   renderHeadInitals();
   showExternalUtilityPages();
   setBodyAuthClass();
+  initDateIconVisibility();
+}
+
+/**
+ * Detects Firefox and hides the custom calendar icon button,
+ * since Firefox cannot suppress its native date picker icon via CSS.
+ * In all other browsers the custom icon button remains visible.
+ */
+function initDateIconVisibility() {
+  if (navigator.userAgent.includes("Firefox")) {
+    document.body.classList.add("is-firefox");
+  }
 }
 
 /**

@@ -55,6 +55,15 @@ function toStorageDate(ddmmyyyy) {
 }
 
 /**
+ * Opens the native date picker for the given input ID.
+ * @param {string} id - The element ID of the date input.
+ */
+function openDatePicker(id) {
+  const input = document.getElementById(id);
+  input?.showPicker?.();
+}
+
+/**
  * Initialises both due-date inputs (page + dialog).
  * Sets today as minimum and prefills on first focus.
  */
