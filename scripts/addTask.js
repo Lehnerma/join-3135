@@ -81,7 +81,14 @@ function setupSingleDateInput(id) {
   const input = document.getElementById(id);
   if (!input) return;
   input.addEventListener("blur", () => resetDateIfInvalid(input));
-  input.min = getTodayISO()
+  input.min = getTodayISO();
+  input.addEventListener("focus", () => {
+    if (!input.value) {
+      input.value = getTodayISO();
+      input.classList.add("has-value");
+      clearError(input);
+    }
+  });
   input.addEventListener("input", () => {
     input.classList.toggle("has-value", !!input.value);
     if (!input.value) { clearError(input); setError(input); } else clearError(input);

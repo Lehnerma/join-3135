@@ -217,7 +217,6 @@ function getDetailTaskTemplate(task) {
         <div class="detail-task--date f-row">
           <h4 class="detail-task--subheading">Due date:</h4>
           <p class="detail-task--text">${toDisplayDate(task.dueDate)}</p>
-          <p class="detail-task--text">${toDisplayDate(task.dueDate)}</p>
         </div>
 
         <div class="detail-task--prio f-row">
