@@ -64,134 +64,18 @@ function initDateInput() {
 }
 
 /**
- * Automatically inserts dots (.) while the user types a date.
- * Example: "28122025" → "28.12.2025"
- * @param {string} id - The element ID of the date input.
- */
-function initAutoFormatDate(id) {
-  const input = document.getElementById(id);
-  if (!input) return;
-  let formatting = false;
-
-  input.addEventListener("input", () => {
-    if (formatting) return;
-    formatting = true;
-
-    const cursorPos = input.selectionStart;
-    const digitsBefore = input.value.slice(0, cursorPos).replace(/[^0-9]/g, "").length;
-    const formatted = formatDateInput(input.value);
-
-    input.value = formatted;
-    restoreCursorAfterFormat(input, digitsBefore);
-    formatting = false;
-    input.dispatchEvent(new Event("validate", { bubbles: false }));
-  });
-}
-
-/**
- * Extracts up to 8 digits from a raw date string, validates day/month,
- * and builds a dd.mm.yyyy formatted string.
- * @param {string} rawValue - The raw input value (may contain dots).
- * @returns {string} The formatted date string (e.g. "28.12.2025").
- */
-function formatDateInput(rawValue) {
-  let val = rawValue.replace(/[^0-9]/g, "").slice(0, 8);
-  let day = val.slice(0, 2), month = val.slice(2, 4), year = val.slice(4, 8);
-
-  if (val.length >= 3) {
-    const d = parseInt(day);
-    if (d > 31) day = "31";
-    else if (d === 0 && day.length === 2) day = "01";
-  }
-  if (val.length >= 5) {
-    const m = parseInt(month);
-    if (m > 12) month = "12";
-    else if (m === 0 && month.length === 2) month = "01";
-  }
-  let formatted = day;
-  if (val.length > 2) formatted += "." + month;
-  if (val.length > 4) formatted += "." + year;
-  return formatted;
-}
-
-/**
- * Restores the cursor position after auto-formatting, skipping over
- * the inserted dots.
- * @param {HTMLInputElement} input - The date input element.
- * @param {number} digitsBefore - Number of digits before the cursor.
- */
-function restoreCursorAfterFormat(input, digitsBefore) {
-  let newPos = digitsBefore;
-  if (digitsBefore > 2) newPos++;
-  if (digitsBefore > 4) newPos++;
-  input.setSelectionRange(newPos, newPos);
-}
-
-/**
- * Configures a single date text input.
- * Sets today as the minimum selectable date on the associated hidden picker.
- * @param {string} id - The element ID of the date input.
+ * Configures a native date input: prefills today and resets past values on blur.
+ * No min is set so the user can freely pick or type any date first.
+ * @param {string} id - The element ID of the native date input.
  */
 function setupSingleDateInput(id) {
   const input = document.getElementById(id);
   if (!input) return;
-  const todayIso = new Date().toISOString().split("T")[0];
-  const today = toDisplayDate(todayIso);
-  const picker = document.getElementById(id + "_picker");
-  if (picker) picker.min = todayIso;
-  input.addEventListener("focus", () => {
-    if (!input.value) input.value = today;
-  });
-}
-
-/**
- * Wires calendar icon buttons to open native date pickers.
- * Handles both the main add-task page and the board dialog variants.
- * When a date is chosen, it updates the text input with dd/mm/yyyy format.
- */
-function initDatePicker() {
-  wireDatePicker("due_date_picker", "due_date", "date_icon_btn");
-  wireDatePicker("due_date_picker_edit", "due_date_edit", "date_icon_btn_edit");
-}
-
-/**
- * Initialisiert nur den Date-Picker für den Edit-Task-Dialog.
- * Ruft die relevanten Setup-Funktionen aus addTask.js auf.
- */
-function initEditDatePicker() {
-  setupSingleDateInput("due_date");
-  wireDatePicker("due_date_picker", "due_date", "date_icon_btn");
-  initAutoFormatDate("due_date");
-}
-
-/**
- * Wires a single date picker to its icon button and text input.
- * @param {string} pickerId - ID of the hidden native date input.
- * @param {string} textInputId - ID of the visible text input.
- * @param {string} iconBtnId - ID of the calendar icon button.
- */
-function wireDatePicker(pickerId, textInputId, iconBtnId) {
-  const picker = document.getElementById(pickerId);
-  const textInput = document.getElementById(textInputId);
-  const iconBtn = document.getElementById(iconBtnId);
-  if (!picker || !textInput || !iconBtn) return;
-
-  iconBtn.addEventListener("click", () => {
-    if ("showPicker" in picker) {
-      picker.showPicker();
-    } else {
-      picker.click();
-    }
-  });
-
-  picker.addEventListener("change", () => {
-    if (picker.value) {
-      textInput.value = toDisplayDate(picker.value);
-      const val = textInput.value.trim();
-      if (!val) { clearError(textInput); setError(textInput); }
-      else if (isDateInPast(val)) { clearError(textInput); setErrorPast(textInput); }
-      else clearError(textInput);
-    }
+  input.addEventListener("blur", () => resetDateIfInvalid(input));
+  input.min = getTodayISO()
+  input.addEventListener("input", () => {
+    input.classList.toggle("has-value", !!input.value);
+    if (!input.value) { clearError(input); setError(input); } else clearError(input);
   });
 }
 
@@ -216,7 +100,46 @@ function isDateInPast(ddmmyyyy) {
  * @returns {boolean} True if the format is valid.
  */
 function isValidDateFormat(val) {
-  return /^(\d{1,2})\.(\d{1,2})\.(\d{4})$/.test(val);
+  return !/[.\-]/.test(val);
+}
+
+/**
+ * Returns today's date as a yyyy-mm-dd string.
+ * @returns {string} ISO date string for today.
+ */
+function getTodayISO() {
+  return new Date().toISOString().split("T")[0];
+}
+
+/**
+ * Checks whether a yyyy-mm-dd date lies before today.
+ * @param {string} isoDate - Date string like "2025-12-24".
+ * @returns {boolean} True if the date is valid and in the past.
+ */
+function isDateInPastISO(isoDate) {
+  if (!isoDate) return false;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const inputDate = new Date(isoDate + "T00:00:00");
+  return inputDate < today;
+}
+
+/**
+ * On blur: resets a native date input to today if empty or in the past.
+ * Empty shows the required error; past dates reset the value to today
+ * and clear all error classes.
+ * @param {HTMLInputElement} input - The native date input element.
+ */
+function resetDateIfInvalid(input) {
+  if (!input.value) {
+    clearError(input);
+    setError(input);
+  } else if (isDateInPastISO(input.value)) {
+    input.value = getTodayISO();
+    clearError(input);
+  } else {
+    clearError(input);
+  }
 }
 
 /**
@@ -637,7 +560,8 @@ function clearForm() {
 function resetFormData(sfx) {
   document.getElementById("form_task").reset();
   const dueDate = document.getElementById("due_date" + sfx);
-  if (dueDate) dueDate.value = "";
+  if (dueDate) dueDate.classList.remove("has-value");
+  // if (dueDate) dueDate.value = dueDate.type === "date" ? getTodayISO() : ""; setzt das heutige datum
   selectPriority("medium");
   subtasksList = [];
   document.getElementById("subtask_list").innerHTML = "";
