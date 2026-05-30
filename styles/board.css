@@ -22,16 +22,16 @@
   grid-template-columns: 1fr auto auto;
   grid-template-areas: "head-title head-search head-add";
   align-items: center;
-  padding: 8px clamp(16px, 3vw, 40px) 8px clamp(10px, 7vw, 64px)  ; 
+  padding: 8px clamp(16px, 3vw, 40px) 8px 24px;
   gap: 32px;
   width: 100%;
-  max-width: 1056px;
+  max-width: 1208px;
 
   h1 {
     grid-area: head-title;
     font-size: clamp(46px, calc(41.429px + 1.429vw), 62px);
   }
-}
+
 
   .search-container {
     grid-area: head-search;
@@ -106,11 +106,11 @@
   }
 
 
-@media(max-width:1024px){
-  .header-section {
-    padding: 8px clamp(0px, 1vw, 16px) 8px clamp(10px, 7vw, 64px)  ; 
+  @media(max-width: 1024px) {
+    .header-section {
+      padding: 8px clamp(0px, 1vw, 16px) 8px clamp(10px, 7vw, 64px);
+    }
   }
-
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr auto;
@@ -154,12 +154,13 @@
 
 .kanban-columns {
   display: grid;
-  grid-template-columns: repeat(4, minmax(252px, 300px));
+  grid-template-columns: repeat(4, minmax(252px, 279px));
   /* evtl max wert anpassen */
-  gap: 24px;
-  padding: 0 16px;
+  gap: 8px;
+  padding: 0 12px;
   /* clamp(10px, 7vw, 64px) */
   overflow-x: auto;
+  max-width: 1208px;
 
   .kanban-column {
     /* overflow: auto; deactive for full scroll */
@@ -206,6 +207,8 @@
   }
 
   @media (max-width: 900px) {
+    gap: 16px;
+    padding-top: 24px;
     grid-template-columns: 1fr;
     overflow-x: visible;
     padding-bottom: 64px;
@@ -217,6 +220,7 @@
 
     .column-title h2 {
       font-size: 27px;
+      padding-left: 12px;
       color: var(--primary-color);
     }
   }
@@ -283,7 +287,7 @@
 .task {
   background: white;
   border-radius: 24px;
-  padding: 24px;
+  padding: 20px;
   box-shadow: 0px 0px 10px 3px #00000014;
   cursor: pointer;
   list-style: none;
@@ -363,7 +367,7 @@
 
   .subtask--progressbar {
     height: 8px;
-    width: 50%;
+    width: 40%;
     appearance: none;
     border: none;
     border-radius: 4px;

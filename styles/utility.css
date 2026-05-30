@@ -40,7 +40,7 @@
 
 .utility-content {
   width: 100%;
-  max-width: 1440px;
+  max-width: 1208px;
   padding-top: clamp(32px, 10vw, 110px);
   padding-left: clamp(16px, 5vw, 96px);
   padding-right: clamp(16px, 5vw, 96px);
