@@ -1,4 +1,5 @@
-const ADDTASK_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks.json";
+const ADDTASK_URL =
+  "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks.json";
 
 let selectedPriority = "medium";
 let remoteUsers = [];
@@ -15,7 +16,7 @@ function init() {
   loadUsers();
   initDropdownOutsideClick();
   initAssignedPreviewResize();
-  validetInput();
+  validateInput();
 }
 
 /**
@@ -24,11 +25,7 @@ function init() {
 function btnInit() {
   const form = document.getElementById("form_task");
   const clearBtn = document.getElementById("form_clear");
-  if (form)
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      createTask();
-    });
+  if (form) form.addEventListener("submit", (e) => { e.preventDefault(); createTask(); });
   if (clearBtn) clearBtn.addEventListener("click", clearForm);
 }
 
@@ -49,7 +46,7 @@ function toDisplayDate(yyyymmdd) {
  * @returns {string} Storage-format date (e.g. "2025-12-24"), or empty if invalid.
  */
 function toStorageDate(ddmmyyyy) {
-  const match = ddmmyyyy.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  const match = ddmmyyyy.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
   if (!match) return "";
   return match[3] + "-" + match[2].padStart(2, "0") + "-" + match[1].padStart(2, "0");
 }
@@ -61,6 +58,9 @@ function toStorageDate(ddmmyyyy) {
 function initDateInput() {
   setupSingleDateInput("due_date");
   setupSingleDateInput("due_date_edit");
+  initDatePicker();
+  initAutoFormatDate("due_date");
+  initAutoFormatDate("due_date_edit");
 }
 
 /**
@@ -85,7 +85,7 @@ function setupSingleDateInput(id) {
  * @returns {boolean} True if the date is valid and in the past.
  */
 function isDateInPast(ddmmyyyy) {
-  const match = ddmmyyyy.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  const match = ddmmyyyy.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
   if (!match) return false;
   const inputDate = new Date(+match[3], +match[2] - 1, +match[1]);
   const today = new Date();
@@ -95,10 +95,9 @@ function isDateInPast(ddmmyyyy) {
 }
 
 /**
- * Checks whether a value uses only `/` as separator (no `.` or `-`).
- * Partial entries are allowed; only rejects explicit wrong separators.
- * @param {string} val - The date string to check.
- * @returns {boolean} True if the format is acceptable.
+ * Checks whether a date string matches the dd.mm.yyyy format.
+ * @param {string} val - Date string to check.
+ * @returns {boolean} True if the format is valid.
  */
 function isValidDateFormat(val) {
   return !/[.\-]/.test(val);
@@ -342,7 +341,9 @@ function getAssignedDropdownCapacity() {
  */
 function getUserInitials(name) {
   const parts = name.trim().split(" ");
-  return parts.length > 1 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : parts[0].slice(0, 2).toUpperCase();
+  return parts.length > 1
+    ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+    : parts[0].slice(0, 2).toUpperCase();
 }
 
 /**
@@ -357,7 +358,9 @@ function renderAssignedUsers(users = []) {
   const visible = users.slice(0, max);
   const remaining = users.length - max;
 
-  let html = visible.map((u) => getUserCircleTemplate(u.name, getUserInitials(u.name), u.color)).join("");
+  let html = visible
+    .map((u) => getUserCircleTemplate(u.name, getUserInitials(u.name), u.color))
+    .join("");
   if (remaining > 0) html += getAssignedUsersMoreTemplate(remaining);
 
   return getAssignedUsersTemplate(html);
@@ -371,14 +374,10 @@ function renderAssignedUsers(users = []) {
 function buildTaskObj(status = "todo") {
   const read = (id) => document.getElementById(id)?.value ?? "";
   const sfx = document.getElementById("title_edit") ? "_edit" : "";
-  const dueDateEl = document.getElementById("due_date" + sfx);
-  const dueDateVal = dueDateEl?.type === "date"
-    ? (dueDateEl?.value ?? "")
-    : toStorageDate(dueDateEl?.value ?? "");
   return {
     title: read("title" + sfx),
     description: read("description"),
-    dueDate: dueDateVal,
+    dueDate: toStorageDate(read("due_date" + sfx)),
     category: read("category" + sfx),
     assignedTo: getAssignedUsers(),
     priority: selectedPriority,
@@ -503,7 +502,7 @@ function clearError(input) {
 /**
  * Attaches live validation (input/click/blur) to all required fields.
  */
-function validetInput() {
+function validateInput() {
   const fields = [
     { id: "title", event: "input" },
     { id: "due_date", event: "input" },
@@ -524,27 +523,24 @@ function validetInput() {
 function bindFieldValidation(id, eventType) {
   const el = document.getElementById(id);
   if (!el) return;
-  const validate = () => applyFieldValidation(el, id.startsWith("due_date"));
-  el.addEventListener(eventType, validate);
-  el.addEventListener("blur", validate);
-}
+  const isDateField = id.startsWith("due_date");
 
-/**
- * Evaluates a field's current value and applies or removes error classes.
- * @param {HTMLElement} el - The input element to validate.
- * @param {boolean} isDateField - True when the field holds a date value.
- */
-function applyFieldValidation(el, isDateField) {
-  const val = el.value.trim();
-  const isNativeDate = el.type === "date";
-  if (!val) { clearError(el); setError(el); return; }
-  if (isDateField && (isNativeDate ? isDateInPastISO(val) : isDateInPast(val))) {
-    clearError(el); setErrorPast(el); return;
+  function validate(el) {
+    const val = el.value.trim();
+    if (!val) { clearError(el); setError(el); }
+    else if (isDateField && !isValidDateFormat(val)) { clearError(el); setError(el); }
+    else if (isDateField && isDateInPast(val)) { clearError(el); setErrorPast(el); }
+    else clearError(el);
   }
-  if (isDateField && !isNativeDate && !isValidDateFormat(val)) {
-    clearError(el); setErrorFormat(el); return;
+
+  if (isDateField) {
+    // Validation only via custom "validate" event (fired after auto-format) + blur
+    el.addEventListener("validate", () => validate(el));
+    el.addEventListener("blur", () => validate(el));
+  } else {
+    el.addEventListener(eventType, () => validate(el));
+    el.addEventListener("blur", () => validate(el));
   }
-  clearError(el);
 }
 
 /**
@@ -559,7 +555,6 @@ function clearForm() {
 
 /**
  * Clears text fields, date, priority and subtask list.
- * Resets native date inputs to today; text date inputs are cleared.
  * @param {string} sfx - The element ID suffix ("_edit" or "").
  */
 function resetFormData(sfx) {

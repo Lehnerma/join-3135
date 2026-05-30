@@ -22,16 +22,16 @@
   grid-template-columns: 1fr auto auto;
   grid-template-areas: "head-title head-search head-add";
   align-items: center;
-  padding: 24px clamp(10px, 7vw, 64px);
-  padding-top: 8px;
+  padding: 8px clamp(16px, 3vw, 40px) 8px clamp(10px, 7vw, 64px)  ; 
   gap: 32px;
   width: 100%;
   max-width: 1056px;
 
   h1 {
     grid-area: head-title;
-    font-size: 61px;
+    font-size: clamp(46px, calc(41.429px + 1.429vw), 62px);
   }
+}
 
   .search-container {
     grid-area: head-search;
@@ -105,7 +105,12 @@
     width: auto;
   }
 
-  
+
+@media(max-width:1024px){
+  .header-section {
+    padding: 8px clamp(0px, 1vw, 16px) 8px clamp(10px, 7vw, 64px)  ; 
+  }
+
 
   @media (max-width: 900px) {
     grid-template-columns: 1fr auto;

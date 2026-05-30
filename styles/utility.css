@@ -1,5 +1,4 @@
 .utility-h1 {
-  padding-bottom: 32px;
   font-weight: 700;
   font-size: clamp(36px, calc(28.571px + 2.321vw), 62px);
 }
@@ -88,7 +87,7 @@ ol li::before {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-
+  padding-bottom: 32px;
 }
 
 .btn-return {
