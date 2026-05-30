@@ -40,7 +40,6 @@ main {
   color: black;
 }
 
-#category::placeholder,
 #category_edit::placeholder {
   color: black;
 }
@@ -53,18 +52,22 @@ main {
   position: relative;
 }
 
-.input.input-invalid {
-  border: var(--faulty-entry-color) solid 1px;
-  outline-color: var(--faulty-entry-color);
+.input-invalid {
+  border: 1px solid red;
+  color: red;
 }
 
-.input.input-invalid-past {
-  border: var(--faulty-entry-color) solid 1px;
-  color: var(--faulty-entry-color);
-  outline-color: var(--faulty-entry-color);
+.input-invalid-past {
+  border: 1px solid red;
+  color: red;
 }
 
-.input-section:has(.input-invalid):not(:has(.input-invalid-past))::after {
+.input-invalid-format {
+  border: 1px solid red;
+  color: red;
+}
+
+.input-section:has(.input-invalid):not(:has(.input-invalid-past)):not(:has(.input-invalid-format))::after {
   content: "This field is required";
   position: absolute;
   bottom: -12px;
@@ -80,6 +83,26 @@ main {
   bottom: -12px;
   left: 4px;
   color: var(--faulty-entry-color);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.input-section:has(.input-invalid-format)::after {
+  content: "Invalid date format";
+  position: absolute;
+  bottom: -12px;
+  left: 4px;
+  color: var(--faulty-entry-color);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.input-section:has(.input-invalid-format)::after {
+  content: "Invalid date format";
+  position: absolute;
+  bottom: -12px;
+  left: 4px;
+  color: #ff3d00;
   font-size: 12px;
   white-space: nowrap;
 }
@@ -291,6 +314,11 @@ main {
 
 .date-wrapper .input-date {
   padding-right: 40px;
+  color: var(--input-default-main);
+}
+
+.date-wrapper .input-date.has-value {
+  color: black;
 }
 
 .date-picker-hidden {
@@ -566,9 +594,8 @@ main {
   .priority-group {
     justify-content: flex-start;
   }
-  .right{
+  .right {
     margin-top: 42px;
-
   }
 }
 
@@ -660,7 +687,6 @@ main {
   padding: 8px;
   max-height: 550px;
   overflow-y: auto;
-  height: 250px;
 }
 
 /* Liste sichtbar wenn .open auf .custom-dropdown (per JS) */

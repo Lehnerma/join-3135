@@ -217,6 +217,7 @@ function getDetailTaskTemplate(task) {
         <div class="detail-task--date f-row">
           <h4 class="detail-task--subheading">Due date:</h4>
           <p class="detail-task--text">${toDisplayDate(task.dueDate)}</p>
+          <p class="detail-task--text">${toDisplayDate(task.dueDate)}</p>
         </div>
 
         <div class="detail-task--prio f-row">
@@ -278,97 +279,93 @@ function getDetailSubtaskTemplate(title, checked = false, taskId, subtaskIndex) 
  */
 function getEditTaskDialogTemplate() {
   return /*html*/ `
-    <div class="edit-task-dialog">
-      <header class="edit-task-dialog__header">
-        <h2>Edit Task</h2>
-        <button class="close-dialog-btn edit-task-dialog__close" onclick="closeEditTaskDialog()">
-          <img src="../assets/img/icons/subtask/close.svg" alt="X">
-        </button>
-      </header>
+    <header class="edit-task--header">
+      <button class="btn btn--close" onclick="closeEditTaskDialog()">
+        <img src="../assets/img/icons/subtask/close.svg" alt="X" />
+      </button>
+    </header>
 
-      <form class="form-task" id="form_edit_task">
-        <div class="input-section">
-          <label for="title" class="required">Title</label>
-          <input id="title" class="input" type="text" placeholder="Enter a title" required />
-        </div>
+    <form class="edit-task--form" id="form_edit_task">
+      <section class="input-section">
+        <label for="title" class="required">Title</label>
+        <input id="title" class="input" type="text" placeholder="Enter a title" required />
+      </section>
 
-        <div class="input-section">
-          <label for="description">Description</label>
-          <textarea id="description" class="input" placeholder="Enter a Description" rows="3"></textarea>
-        </div>
+      <section class="input-section">
+        <label for="description">Description</label>
+        <textarea id="description" class="input" placeholder="Enter a Description" rows="3"></textarea>
+      </section>
 
-        <div class="input-section">
-          <label for="due_date" class="required">Due date</label>
-          <input id="due_date" class="input input-date" type="text" placeholder="tt.mm.jjjj"
-            pattern="\d{1,2}\.\d{1,2}\.\d{4}" autocomplete="off">
-        </div>
+      <section class="input-section">
+        <label for="due_date" class="required">Due date</label>
+        <input id="due_date" class="input input-date" type="date" autocomplete="off">
+      </section>
 
-        <div class="input-section">
-          <label class="label--bold">Priority</label>
+      <section class="input-section">
+        <label class="label--bold">Priority
           <div class="priority-group">
-            <button type="button" id="btn_urgent" class="btn btn--prio" onclick="selectPriority('urgent')">
-              Urgent <img class="img-prio urgent" src="../assets/img/icons/prio/urgent.svg">
-            </button>
-            <button type="button" id="btn_medium" class="btn btn--prio" onclick="selectPriority('medium')">
-              Medium <img class="img-prio medium" src="../assets/img/icons/prio/medium.svg">
-            </button>
-            <button type="button" id="btn_low" class="btn btn--prio" onclick="selectPriority('low')">
-              Low <img class="img-prio low" src="../assets/img/icons/prio/low.svg">
-            </button>
+            <button type="button" id="btn_urgent" class="btn btn--prio" onclick="selectPriority('urgent')">Urgent <img
+                class="img-prio urgent" src="../assets/img/icons/prio/urgent.svg" /></button>
+            <button type="button" id="btn_medium" class="btn btn--prio" onclick="selectPriority('medium')">Medium <img
+                class="img-prio medium" src="../assets/img/icons/prio/medium.svg" /></button>
+            <button type="button" id="btn_low" class="btn btn--prio" onclick="selectPriority('low')">Low <img
+                class="img-prio low" src="../assets/img/icons/prio/low.svg" /></button>
           </div>
-        </div>
+        </label>
+      </section>
 
-        <div class="input-section">
-          <label for="assigned_to_search">Assigned to</label>
-          <div class="custom-dropdown" id="assigned_to_dropdown">
-            <div class="custom-dropdown__trigger">
-              <input type="text" id="assigned_to_search" onkeyup="filterUsers()" class="input custom-dropdown__input" onclick="toggleDropdown(event)" placeholder="Select contacts to assign" autocomplete="off" />
-              <button type="button" class="custom-dropdown__toggle" onclick="toggleDropdown(event)">
-                <span class="custom-dropdown__arrow"></span>
-              </button>
-            </div>
-            <ul class="custom-dropdown__list" id="assigned_to_list"></ul>
+      <section class="input-section">
+        <label for="assigned_to_search">Assigned to</label>
+        <div class="custom-dropdown" id="assigned_to_dropdown">
+          <div class="custom-dropdown__trigger">
+            <input type="text" id="assigned_to_search" onkeyup="filterUsers()" class="input custom-dropdown__input"
+              onclick="toggleDropdown(event)" placeholder="Select contacts to assign" autocomplete="off" />
+            <button type="button" class="custom-dropdown__toggle" onclick="toggleDropdown(event)">
+              <span class="custom-dropdown__arrow"></span>
+            </button>
           </div>
           <div id="assigned_preview"></div>
+          <ul class="custom-dropdown__list" id="assigned_to_list"></ul>
         </div>
+      </section>
 
-        <div class="input-section">
-          <label class="required">Category</label>
-          <div class="custom-dropdown" id="category_dropdown_edit">
-            <div class="custom-dropdown__trigger">
-              <input type="text" id="category" class="input custom-dropdown__input" readonly
-                onclick="toggleDropdown(event)" placeholder="Select task category" autocomplete="off" />
-              <button type="button" class="custom-dropdown__toggle" onclick="toggleDropdown(event)" aria-label="Toggle category dropdown">
-                <span class="custom-dropdown__arrow"></span>
-              </button>
-            </div>
-            <ul class="custom-dropdown__list" id="category_list_edit">
-              <li class="custom-dropdown__item" onclick="selectCategoryEdit('Technical Task')">Technical Task</li>
-              <li class="custom-dropdown__item" onclick="selectCategoryEdit('User Story')">User Story</li>
-            </ul>
+      <section class="input-section">
+        <label class="">Category</label>
+        <div class="custom-dropdown" id="category_dropdown_edit">
+          <div class="custom-dropdown__trigger">
+            <input type="text" id="category" class="input custom-dropdown__input" readonly
+              onclick="toggleDropdown(event)" placeholder="Select task category" autocomplete="off" />
+            <button type="button" class="custom-dropdown__toggle" aria-label="Toggle category dropdown">
+              <span class="custom-dropdown__arrow"></span>
+            </button>
+          </div>
+          <ul class="custom-dropdown__list" id="category_list_edit">
+            <li class="custom-dropdown__item" onclick="selectCategoryEdit('Technical Task')">Technical Task</li>
+            <li class="custom-dropdown__item" onclick="selectCategoryEdit('User Story')">User Story</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="input-section">
+        <label for="subtask_input">Subtasks</label>
+        <div class="input--section">
+          <input id="subtask_input" class="input" type="text" placeholder="Add subtask" />
+          <div class="subtask--btns">
+            <button type="button" id="subtask_close" class="btn--subtask close"
+              onclick="clearSubtaskInput(event)"><img src="../assets/img/icons/subtask/close.svg" /></button>
+            <span class="div-vert"></span>
+            <button type="button" id="subtask_save" class="btn--subtask check" onclick="addSubtask(event)"><img
+                src="../assets/img/icons/subtask/check.svg" /></button>
           </div>
         </div>
+        <ul id="subtask_list" class="subtask-list"></ul>
+      </section>
+    </form>
 
-        <div class="input-section">
-          <label for="subtask_input">Subtasks</label>
-          <div class="input--section">
-            <input id="subtask_input" class="input" type="text" placeholder="Add subtask" />
-            <div class="subtask--btns">
-              <button type="button" id="subtask_close" class="btn--subtask close" onclick="clearSubtaskInput(event)"><img src="../assets/img/icons/subtask/close.svg"></button>
-              <span class="div-vert"></span>
-              <button type="button" id="subtask_save" class="btn--subtask check" onclick="addSubtask(event)"><img src="../assets/img/icons/subtask/check.svg"></button>
-            </div>
-          </div>
-          <ul id="subtask_list" class="subtask-list"></ul>
-        </div>
-      </form>
-
-      <footer class="edit-task-dialog__footer">
-        <button id="btn_edit_task_ok" type="submit" form="form_edit_task" class="btn btn--ok">
-          Ok <img src="../assets/img/icons/subtask/check.svg" alt="✓">
-        </button>
-      </footer>
-    </div>
+    <footer class="edit-task--footer">
+      <button type="submit" form="form_edit_task" class="btn btn--add">Ok <img
+          src="../assets/img/icons/subtask/check.svg" alt="✓" /></button>
+    </footer>
   `;
 }
 
@@ -399,12 +396,7 @@ function getAddTaskDialogTemplate() {
            <div class="input-section">
              <label for="due_date_edit" class="required">Due date</label>
              <div class="date-wrapper">
-               <input id="due_date_edit" class="input input-date" type="text" placeholder="tt.mm.jjjj"
-                 pattern="\d{1,2}\.\d{1,2}\.\d{4}" autocomplete="off">
-               <button type="button" class="date-icon-btn date-icon-btn--right" id="date_icon_btn_edit" aria-label="Pick date">
-                 <img src="../assets/img/icons/input/event.svg" alt="calendar" class="date-icon-img">
-               </button>
-               <input type="date" id="due_date_picker_edit" class="date-picker-hidden">
+               <input id="due_date_edit" class="input input-date" type="date" autocomplete="off">
              </div>
            </div>
         </section>

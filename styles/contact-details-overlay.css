@@ -52,6 +52,7 @@
 .initials-large {
   width: clamp(90px, 8vw, 120px);
   height: clamp(90px, 8vw, 120px);
+  aspect-ratio: 1/1;
   border-radius: 70%;
   display: flex;
   justify-content: center;
