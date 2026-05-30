@@ -421,9 +421,11 @@ function getUpdatedContactData(color) {
  * @param {number} index - The user's index in the global array.
  */
 async function saveNewContactData(index) {
-  const firebaseKey = users[index].firebaseKey;
-  const response = await updateFirebaseContact(firebaseKey, getUpdatedContactData(users[index].color));
-  if (response.ok) {
+  if (!validateEditContactForm()) return;
+  try {
+    const firebaseKey = users[index].firebaseKey;
+    const response = await updateFirebaseContact(firebaseKey, getUpdatedContactData(users[index].color));
+    if (!response.ok) throw new Error(response.status);
     await getUsers();
     const newIndex = users.findIndex(u => u.firebaseKey === firebaseKey);
     if (newIndex !== -1) {
@@ -433,6 +435,8 @@ async function saveNewContactData(index) {
       setTimeout(() => scrollToUser(newIndex), 100);
     }
     closeContactDialog();
+  } catch (error) {
+    console.error("Failed to save contact:", error);
   }
 }
 

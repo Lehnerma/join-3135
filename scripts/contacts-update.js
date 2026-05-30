@@ -131,3 +131,23 @@ function addContactCheckInputValue() {
   }
   return !hasError;
 }
+
+/**
+ * Validates the edit contact form before saving.
+ * Marks invalid fields red using invalid-contact-form class.
+ * @returns {boolean} True if all fields are valid.
+ */
+function validateEditContactForm() {
+  const nameInput = document.getElementById('edit_name');
+  const emailInput = document.getElementById('edit_email');
+  const phoneInput = document.getElementById('edit_phone');
+  const nameContainer = document.getElementById('edit_name_container');
+  const emailContainer = document.getElementById('edit_email_container');
+  const phoneContainer = document.getElementById('edit_phone_container');
+  [nameContainer, emailContainer, phoneContainer].forEach(el => el?.classList.remove('invalid-contact-form'));
+  let hasError = false;
+  if (!nameInput?.value.trim()) { nameContainer?.classList.add('invalid-contact-form'); hasError = true; }
+  if (!emailInput?.value.trim() || !emailInput.checkValidity()) { emailContainer?.classList.add('invalid-contact-form'); hasError = true; }
+  if (!phoneInput?.value.trim()) { phoneContainer?.classList.add('invalid-contact-form'); hasError = true; }
+  return !hasError;
+}

@@ -119,17 +119,17 @@ function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
 
     <form>
       <section class="dialog-input-container">
-        <div class="dialog-input-section">
+        <div id="edit_name_container" class="dialog-input-section">
           <input class="dialog-input" id="edit_name" type="text" name="name" placeholder="Name" required />
           <img src="../assets/img/icons/input/person.svg" alt="person.svg" class="dialog-input-icon" />
         </div>
-        <div class="dialog-input-section">
+        <div id="edit_email_container" class="dialog-input-section">
           <input class="dialog-input" id="edit_email" type="email" name="email" placeholder="Email"
             pattern="[a-z0-9._%\\+\\-]+@[a-z0-9.\\-]+\\.[a-z]{2,}$"
             title="Bitte geben Sie eine gültige E-Mail-Adresse ein (z. B. name@beispiel.de)." required />
           <img src="../assets/img/icons/input/mail.svg" alt="mail.svg" class="dialog-input-icon" />
         </div>
-        <div class="dialog-input-section">
+        <div id="edit_phone_container" class="dialog-input-section">
           <input class="dialog-input" id="edit_phone" type="tel" name="phone" placeholder="Phone" required />
           <img src="../assets/img/icons/input/phone.svg" alt="phone.svg" class="dialog-input-icon" />
         </div>
@@ -139,7 +139,7 @@ function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
         <button type="button" class="btn btn--secondary btn--login" onclick="deleteContact(${editUserIndex})">
           Delete
         </button>
-        <button  id="btn_edit_save" type="submit" class="btn btn--primary btn--login btn--check"
+        <button  id="btn_edit_save" type="button" class="btn btn--primary btn--login btn--check"
           onclick="saveNewContactData(${editUserIndex})">
           Save
         </button>
