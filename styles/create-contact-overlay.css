@@ -279,11 +279,11 @@ form {
     .aside-content {
         position: relative;
         min-width: clamp(319px, 100%, 396px);
-        height: clamp(40vh, 37vw, 39.7dvh);
+        min-height: clamp(35vh, 50vw, 39.7dvh);
         align-items: flex-start;
         justify-content: center;
         padding: 24px;
-    }
+     }
 
     .close-btn-overlay {
         &::after {
