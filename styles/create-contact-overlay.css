@@ -187,8 +187,37 @@ form {
     border: var(--faulty-entry-color) solid 1px;
 }
 
-.dialog-input-section.invalid-contact-form {
+.dialog-input.contact-invalid {
+    color: var(--faulty-entry-color);
+}
+
+.dialog-input.contact-invalid-email {
+    color: var(--faulty-entry-color);
+}
+
+.dialog-input-section:has(.contact-invalid),
+.dialog-input-section:has(.contact-invalid-email) {
     border: var(--faulty-entry-color) solid 1px;
+}
+
+.dialog-input-section:has(.contact-invalid):not(:has(.contact-invalid-email))::after {
+    content: "This field is required";
+    position: absolute;
+    bottom: -18px;
+    left: 4px;
+    color: var(--faulty-entry-color);
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.dialog-input-section:has(.contact-invalid-email)::after {
+    content: "Invalid email address";
+    position: absolute;
+    bottom: -18px;
+    left: 4px;
+    color: var(--faulty-entry-color);
+    font-size: 12px;
+    white-space: nowrap;
 }
 
 .dialog-input-icon {
