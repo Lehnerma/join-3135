@@ -139,7 +139,7 @@ function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
         <button type="button" class="btn btn--secondary btn--login" onclick="deleteContact(${editUserIndex})">
           Delete
         </button>
-        <button  id="btn_edit_save" type="submit" class="btn btn--primary btn--login btn--check"
+        <button  id="btn_edit_save" type="button" class="btn btn--primary btn--login btn--check"
           onclick="saveNewContactData(${editUserIndex})">
           Save
         </button>
