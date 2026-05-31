@@ -39,8 +39,8 @@ function renderSingleUserHtmlTpl(user, i, initials, color) {
  * @returns {string} The HTML template for the contact dialog.
  */
 function renderHtmlContactDialogTpl() {
-  return /*html*/ `
-  <div class="dialog-container" onclick="closeDialogOutsite(event)">
+  return /*html*/ `  
+  <div class="dialog-container"   onclick="closeDialogOutsite(event)">
       <aside class="aside-content">
              <section class="aside-text-wrapper">
            <img class="aside-logo" src="../assets/img/icons/contacts/Capa.svg" alt="logo-join" />
@@ -60,15 +60,15 @@ function renderHtmlContactDialogTpl() {
            </div>
         <form id="form_ref" onsubmit="event.preventDefault(); createContact();">
           <section class="dialog-input-container">
-            <div id="add_name" class="dialog-input-section">
+            <div id="add_name" class="dialog-input-section contact-input-name">
               <input class="dialog-input" id="create_name" type="text" name="name" placeholder="Name" />
               <img src="../assets/img/icons/input/person.svg" alt="person.svg" class="dialog-input-icon" />
             </div>
-            <div id="add_email" class="dialog-input-section">
+            <div id="add_email" class="dialog-input-section contact-input-email">
               <input class="dialog-input" id="create_email" type="email" name="email" placeholder="Email" pattern="[a-z0-9._%\\+\\-]+@[a-z0-9.\\-]+\\.[a-z]{2,}$" title="Bitte geben Sie eine gültige E-Mail-Adresse ein (z. B. name@beispiel.de)." />
               <img src="../assets/img/icons/input/mail.svg" alt="mail.svg" class="dialog-input-icon" />
             </div>
-            <div id="add_phone" class="dialog-input-section">
+            <div id="add_phone" class="dialog-input-section contact-input-phone">
               <input class="dialog-input" id="create_phone" type="tel" name="phone" placeholder="Phone" pattern="[0-9+ ]*"
                 title="Bitte nur Zahlen, Leerzeichen oder ein + eingeben"/>
               <img src="../assets/img/icons/input/phone.svg" alt="phone.svg" class="dialog-input-icon" />
@@ -117,20 +117,20 @@ function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
       <div class="initials-large-edit-dialog" style="background-color: ${color}">${initials}</div>
     </div>
 
-    <form>
+    <form onsubmit="event.preventDefault(); saveNewContactData(${editUserIndex});">
       <section class="dialog-input-container">
-        <div class="dialog-input-section">
-          <input class="dialog-input" id="edit_name" type="text" name="name" placeholder="Name" required />
+        <div id="edit_name" class="dialog-input-section contact-input-name">
+          <input class="dialog-input" id="edit_name_input" type="text" name="name" placeholder="Name" />
           <img src="../assets/img/icons/input/person.svg" alt="person.svg" class="dialog-input-icon" />
         </div>
-        <div class="dialog-input-section">
-          <input class="dialog-input" id="edit_email" type="email" name="email" placeholder="Email"
+        <div id="edit_email" class="dialog-input-section contact-input-email">
+          <input class="dialog-input" id="edit_email_input" type="email" name="email" placeholder="Email"
             pattern="[a-z0-9._%\\+\\-]+@[a-z0-9.\\-]+\\.[a-z]{2,}$"
-            title="Bitte geben Sie eine gültige E-Mail-Adresse ein (z. B. name@beispiel.de)." required />
+            title="Bitte geben Sie eine gültige E-Mail-Adresse ein (z. B. name@beispiel.de)." />
           <img src="../assets/img/icons/input/mail.svg" alt="mail.svg" class="dialog-input-icon" />
         </div>
-        <div class="dialog-input-section">
-          <input class="dialog-input" id="edit_phone" type="tel" name="phone" placeholder="Phone" required />
+        <div id="edit_phone" class="dialog-input-section contact-input-phone">
+          <input class="dialog-input" id="edit_phone_input" type="tel" name="phone" placeholder="Phone" />
           <img src="../assets/img/icons/input/phone.svg" alt="phone.svg" class="dialog-input-icon" />
         </div>
       </section>
@@ -139,8 +139,7 @@ function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
         <button type="button" class="btn btn--secondary btn--login" onclick="deleteContact(${editUserIndex})">
           Delete
         </button>
-        <button  id="btn_edit_save" type="button" class="btn btn--primary btn--login btn--check"
-          onclick="saveNewContactData(${editUserIndex})">
+        <button id="btn_edit_save" type="submit" class="btn btn--primary btn--login btn--check">
           Save
         </button>
       </section>

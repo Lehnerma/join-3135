@@ -1,15 +1,19 @@
 /**
  * Gets references to the contact form input containers and inputs.
+ * Works for both the create and edit dialog.
  * @returns {{nameContainer: HTMLElement|null, emailContainer: HTMLElement|null, phoneContainer: HTMLElement|null, nameInput: HTMLElement|null, emailInput: HTMLElement|null, phoneInput: HTMLElement|null}}
  */
 function getContactFormElements() {
+  const nameInput = document.getElementById('create_name') || document.getElementById('edit_name_input');
+  const emailInput = document.getElementById('create_email') || document.getElementById('edit_email_input');
+  const phoneInput = document.getElementById('create_phone') || document.getElementById('edit_phone_input');
   return {
-    nameContainer: document.getElementById('add_name'),
-    emailContainer: document.getElementById('add_email'),
-    phoneContainer: document.getElementById('add_phone'),
-    nameInput: document.getElementById('create_name'),
-    emailInput: document.getElementById('create_email'),
-    phoneInput: document.getElementById('create_phone'),
+    nameContainer: document.getElementById('add_name') || document.getElementById('edit_name'),
+    emailContainer: document.getElementById('add_email') || document.getElementById('edit_email'),
+    phoneContainer: document.getElementById('add_phone') || document.getElementById('edit_phone'),
+    nameInput,
+    emailInput,
+    phoneInput,
   };
 }
 
@@ -17,18 +21,19 @@ function getContactFormElements() {
  * Removes all error classes from the contact form.
  */
 function clearAllContactErrors() {
-  const nameContainer = document.getElementById('add_name');
-  const emailContainer = document.getElementById('add_email');
-  const phoneContainer = document.getElementById('add_phone');
-  if (nameContainer) {
-    nameContainer.classList.remove('invalid-contact-form');
-  }
-  if (emailContainer) {
-    emailContainer.classList.remove('invalid-contact-form');
-  }
-  if (phoneContainer) {
-    phoneContainer.classList.remove('invalid-contact-form');
-  }
+  const containers = [
+    document.getElementById('add_name'),
+    document.getElementById('edit_name'),
+    document.getElementById('add_email'),
+    document.getElementById('edit_email'),
+    document.getElementById('add_phone'),
+    document.getElementById('edit_phone'),
+  ];
+  containers.forEach(container => {
+    if (container) {
+      container.classList.remove('invalid-contact-form');
+    }
+  });
 }
 
 /**
@@ -105,6 +110,7 @@ function validateContactEmail(els, emailVal) {
  * Validates the contact form before saving.
  * Name, email and phone are required. Shows red borders and an error message if invalid.
  * Only the fields that are actually missing get marked red. Correctly filled fields stay untouched.
+ * Works for both the create and edit dialog.
  * @returns {boolean} True if the form is valid, false otherwise.
  */
 function addContactCheckInputValue() {

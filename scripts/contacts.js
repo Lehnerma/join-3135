@@ -147,9 +147,10 @@ function openEditDialog(index, initials, color) {
   dialogRef.classList.remove('hide');
   dialogRef.innerHTML = renderHtmlEditContactDialogTpl(index, initials, color);
   dialogRef.showModal();
-  document.getElementById('edit_name').value = users[index].name;
-  document.getElementById('edit_email').value = users[index].email;
-  document.getElementById('edit_phone').value = users[index].phone;
+  document.getElementById('edit_name_input').value = users[index].name;
+  document.getElementById('edit_email_input').value = users[index].email;
+  document.getElementById('edit_phone_input').value = users[index].phone;
+  initContactFormValidation();
 }
 
 /**
@@ -409,9 +410,9 @@ function showSuccessBanner() {
  */
 function getUpdatedContactData(color) {
   return {
-    name: document.getElementById('edit_name').value,
-    email: document.getElementById('edit_email').value,
-    phone: document.getElementById('edit_phone').value,
+    name: document.getElementById('edit_name_input').value,
+    email: document.getElementById('edit_email_input').value,
+    phone: document.getElementById('edit_phone_input').value,
     color
   };
 }
@@ -421,6 +422,7 @@ function getUpdatedContactData(color) {
  * @param {number} index - The user's index in the global array.
  */
 async function saveNewContactData(index) {
+  if (!addContactCheckInputValue()) return;
   const firebaseKey = users[index].firebaseKey;
   const response = await updateFirebaseContact(firebaseKey, getUpdatedContactData(users[index].color));
   if (response.ok) {

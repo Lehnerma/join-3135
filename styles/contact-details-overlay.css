@@ -22,7 +22,6 @@
   top: clamp(80px, 17.5vw, 250px);
   left: clamp(8px, 2.5vw, 55px);
   background-color: transparent;
-  z-index: 30;
   animation: slideInDetailBox 0.3s ease-out forwards;
 }
 
@@ -66,10 +65,10 @@
   flex-shrink: 0;
 }
 
-.name-and-buttons{
+.name-and-buttons {
   overflow-wrap: break-word;
-   width: 320px;
-   height: auto;
+  width: 320px;
+  height: auto;
 }
 
 .main-contact-details {
@@ -105,7 +104,7 @@
   font-size: clamp(27px, 3vw, 47px);
   font-weight: 500;
   margin-bottom: clamp(4px, 0.7vw, 8px);
-  
+
 }
 
 .edit-delete-container {
@@ -114,7 +113,7 @@
   justify-content: flex-start;
   align-items: center;
   gap: 16px;
-  z-index: 30;
+  z-index: 50;
 }
 
 .edit-button {
@@ -222,7 +221,7 @@ li {
     gap: 20px;
   }
 
-  .contact-information,
+  .edit .contact-information,
   .main-contact-details,
   .email-and-phone {
     padding: 0;
@@ -250,6 +249,7 @@ li {
     background-color: var(--input-text-color);
     transform: translateX(150%);
     transition: transform 0.3s ease-out;
+    z-index: 50;
   }
 
   .edit-delete-container.show {
@@ -298,6 +298,7 @@ li {
     z-index: 20;
     width: 56px;
     height: 56px;
+    z-index: 30;
   }
 
   .edit-menu {

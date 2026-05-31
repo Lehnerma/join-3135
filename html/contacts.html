@@ -42,7 +42,7 @@
     </div>
   </header>
 
-  <dialog id="user-menu-dialog" onclick="closeDialog()">
+  <dialog id="user-menu-dialog" onclick="closeDialog(event)">
     <div class="user-menu" onclick="preventCloseDialogOnDialog(event)">
       <a href="../html/help.html" class="user-menu-help user-menu-link">Help</a>
       <a href="../html/legalNotice.html" class="user-menu-link">Legal Notice</a>
@@ -120,7 +120,7 @@
 
   </main>
 
-  <dialog class="dialog-content" id="open_new_dialog" onclick="closeContactDialog()">
+  <dialog class="dialog-content" id="open_new_dialog"  onclick="closeContactDialog()">
   </dialog>
 
 </body>
