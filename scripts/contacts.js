@@ -26,6 +26,7 @@ const USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.
  * Initializes the application by loading the user.
  */
 function init() {
+  initCloseMenuOnOutsideClick();
   getUsers();
 }
 
@@ -133,8 +134,7 @@ function openContactDialog() {
   dialogRef.classList.remove('hide');
   dialogRef.innerHTML = renderHtmlContactDialogTpl();
   dialogRef.showModal();
-  initContactFormValidation();
-}
+ }
 
 /**
  * Opens the dialog box for editing an existing contact.
@@ -147,10 +147,10 @@ function openEditDialog(index, initials, color) {
   dialogRef.classList.remove('hide');
   dialogRef.innerHTML = renderHtmlEditContactDialogTpl(index, initials, color);
   dialogRef.showModal();
-  document.getElementById('edit_name_input').value = users[index].name;
-  document.getElementById('edit_email_input').value = users[index].email;
-  document.getElementById('edit_phone_input').value = users[index].phone;
-  initContactFormValidation();
+  document.getElementById('edit_name').value = users[index].name;
+  document.getElementById('edit_email').value = users[index].email;
+  document.getElementById('edit_phone').value = users[index].phone;
+  initContactValidation('edit_name', 'edit_email', 'edit_phone');
 }
 
 /**
@@ -410,9 +410,9 @@ function showSuccessBanner() {
  */
 function getUpdatedContactData(color) {
   return {
-    name: document.getElementById('edit_name_input').value,
-    email: document.getElementById('edit_email_input').value,
-    phone: document.getElementById('edit_phone_input').value,
+    name: document.getElementById('edit_name').value,
+    email: document.getElementById('edit_email').value,
+    phone: document.getElementById('edit_phone').value,
     color
   };
 }
@@ -422,10 +422,11 @@ function getUpdatedContactData(color) {
  * @param {number} index - The user's index in the global array.
  */
 async function saveNewContactData(index) {
-  if (!addContactCheckInputValue()) return;
-  const firebaseKey = users[index].firebaseKey;
-  const response = await updateFirebaseContact(firebaseKey, getUpdatedContactData(users[index].color));
-  if (response.ok) {
+  if (!validateEditContactForm()) return;
+  try {
+    const firebaseKey = users[index].firebaseKey;
+    const response = await updateFirebaseContact(firebaseKey, getUpdatedContactData(users[index].color));
+    if (!response.ok) throw new Error(response.status);
     await getUsers();
     const newIndex = users.findIndex(u => u.firebaseKey === firebaseKey);
     if (newIndex !== -1) {
@@ -435,6 +436,8 @@ async function saveNewContactData(index) {
       setTimeout(() => scrollToUser(newIndex), 100);
     }
     closeContactDialog();
+  } catch (error) {
+    console.error("Failed to save contact:", error);
   }
 }
 
@@ -470,4 +473,19 @@ function closeDialogOutsite(event) {
   event.stopPropagation();
 }
 
+/**
+ * Closes the edit menu when clicking outside of it.
+ */
+function initCloseMenuOnOutsideClick() {
+  document.addEventListener('click', function(event) {
+    const container = document.querySelector('.edit-delete-container');
+    const menuButton = document.getElementById('edit_menu_button');
+
+    if (container && container.classList.contains('show')) {
+      if (!container.contains(event.target) && (!menuButton || !menuButton.contains(event.target))) {
+        container.classList.remove('show');
+      }
+    }
+  });
+}
 
