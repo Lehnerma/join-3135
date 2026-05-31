@@ -26,6 +26,7 @@ const USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.
  * Initializes the application by loading the user.
  */
 function init() {
+  initCloseMenuOnOutsideClick();
   getUsers();
 }
 
@@ -473,4 +474,19 @@ function closeDialogOutsite(event) {
   event.stopPropagation();
 }
 
+/**
+ * Closes the edit menu when clicking outside of it.
+ */
+function initCloseMenuOnOutsideClick() {
+  document.addEventListener('click', function(event) {
+    const container = document.querySelector('.edit-delete-container');
+    const menuButton = document.getElementById('edit_menu_button');
+
+    if (container && container.classList.contains('show')) {
+      if (!container.contains(event.target) && (!menuButton || !menuButton.contains(event.target))) {
+        container.classList.remove('show');
+      }
+    }
+  });
+}
 
