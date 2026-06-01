@@ -109,8 +109,10 @@ function renderHeadInitals() {
 
 
 /**
- * Funktion 1: Kümmert sich NUR um die Sichtbarkeit der Buttons/Elemente
- * Dieser Name bleibt gleich, wie von dir gewünscht.
+ * Toggles the visibility of external utility pages and user-specific navigation elements
+ * based on the user's authentication status in session storage.
+ * @function showExternalUtilityPages
+ * @returns {void}
  */
 function showExternalUtilityPages() {
   const ID = sessionStorage.getItem("user_id");
@@ -130,8 +132,10 @@ function showExternalUtilityPages() {
 }
 
 /**
- * Funktion 2: Kümmert sich NUR um die Klassen im Body-Tag
- * Neu benannt, um Konflikte zu vermeiden.
+ * Updates the CSS classes on the document body element to reflect 
+ * whether a user is currently logged in or not.
+ * @function setBodyAuthClass
+ * @returns {void}
  */
 function setBodyAuthClass() {
   const ID = sessionStorage.getItem("user_id");

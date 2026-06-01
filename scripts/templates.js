@@ -297,7 +297,12 @@ function getEditTaskDialogTemplate() {
 
       <section class="input-section">
         <label for="due_date" class="required">Due date</label>
+        <div class="date-wrapper">
         <input id="due_date" class="input input-date" type="date" autocomplete="off">
+        <button type="button" class="date-icon-btn date-icon-btn--right" onclick="openDatePicker('due_date')" tabindex="-1">
+          <img class="date-icon-img" src="../assets/img/icons/input/event.svg" alt="calendar">
+        </button>
+        </div>
       </section>
 
       <section class="input-section">
