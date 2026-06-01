@@ -92,7 +92,8 @@ function addAlphabetTable() {
  */
 function userContectList() {
   users.forEach((user, i) => {
-    const firstLetter = user.name.trim().charAt(0).toUpperCase();
+    const firstLetter = user.name?.trim().charAt(0).toUpperCase();
+    if (!firstLetter) return;
     const targetContainer = document.getElementById(firstLetter);
     if (targetContainer) {
       targetContainer.innerHTML += getSingleUser(user, i);

@@ -309,7 +309,7 @@ form {
     .aside-content {
         position: relative;
         min-width: clamp(319px, 100%, 396px);
-        min-height: clamp(35vh, 50vw, 39.7dvh);
+        min-height: clamp(24vh, 32vw, 351px);
         align-items: flex-start;
         justify-content: center;
         padding: 24px;
@@ -412,9 +412,9 @@ form {
         margin: 0;
     }
 
-    .aside-content {
+    /* .aside-content {
         height: clamp(40vh, 80vw, 39.7dvh);
-    }
+    } */
 
     .aside-p {
         font-weight: 400;
