@@ -1,5 +1,4 @@
-const ADDTASK_URL =
-  "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks.json";
+const ADDTASK_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/tasks.json";
 
 let selectedPriority = "medium";
 let remoteUsers = [];
@@ -25,7 +24,11 @@ function init() {
 function btnInit() {
   const form = document.getElementById("form_task");
   const clearBtn = document.getElementById("form_clear");
-  if (form) form.addEventListener("submit", (e) => { e.preventDefault(); createTask(); });
+  if (form)
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      createTask();
+    });
   if (clearBtn) clearBtn.addEventListener("click", clearForm);
 }
 
@@ -45,19 +48,19 @@ function toDisplayDate(yyyymmdd) {
  * @param {string} ddmmyyyy - Date string like "24/12/2025".
  * @returns {string} Storage-format date (e.g. "2025-12-24"), or empty if invalid.
  */
-function toStorageDate(dateString) {
-  if (!dateString) return "";
-
-  // Format: yyyy-mm-dd
-  if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
-    return dateString;
-  }
-
-  // Format: dd.mm.yyyy
-  const match = dateString.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+function toStorageDate(ddmmyyyy) {
+  const match = ddmmyyyy.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
   if (!match) return "";
+  return match[3] + "-" + match[2].padStart(2, "0") + "-" + match[1].padStart(2, "0");
+}
 
-  return `${match[3]}-${match[2].padStart(2, "0")}-${match[1].padStart(2, "0")}`;
+/**
+ * Opens the native date picker for the given input ID.
+ * @param {string} id - The element ID of the date input.
+ */
+function openDatePicker(id) {
+  const input = document.getElementById(id);
+  input?.showPicker?.();
 }
 
 /**
@@ -67,125 +70,28 @@ function toStorageDate(dateString) {
 function initDateInput() {
   setupSingleDateInput("due_date");
   setupSingleDateInput("due_date_edit");
-  initDatePicker();
-  initAutoFormatDate("due_date");
-  initAutoFormatDate("due_date_edit");
 }
 
 /**
- * Automatically inserts dots (.) while the user types a date.
- * Example: "28122025" → "28.12.2025"
- * @param {string} id - The element ID of the date input.
- */
-function initAutoFormatDate(id) {
-  const input = document.getElementById(id);
-  if (!input) return;
-  let formatting = false;
-
-  input.addEventListener("input", () => {
-    if (formatting) return;
-    formatting = true;
-
-    const cursorPos = input.selectionStart;
-    const rawBefore = input.value.slice(0, cursorPos);
-    const digitsBefore = rawBefore.replace(/[^0-9]/g, "").length;
-
-    let val = input.value.replace(/[^0-9]/g, "");
-    if (val.length > 8) val = val.slice(0, 8);
-
-    let day = val.slice(0, 2);
-    let month = val.slice(2, 4);
-    let year = val.slice(4, 8);
-
-    // Validate day when user starts typing month (3+ digits)
-    if (val.length >= 3) {
-      const dayNum = parseInt(day);
-      if (dayNum > 31) day = "31";
-      else if (dayNum === 0 && day.length === 2) day = "01";
-    }
-
-    // Validate month when user starts typing year (5+ digits)
-    if (val.length >= 5) {
-      const monthNum = parseInt(month);
-      if (monthNum > 12) month = "12";
-      else if (monthNum === 0 && month.length === 2) month = "01";
-    }
-
-    // Build formatted string
-    let formatted = day;
-    if (val.length > 2) formatted += "." + month;
-    if (val.length > 4) formatted += "." + year;
-
-    input.value = formatted;
-
-    // Restore cursor position
-    let newPos = digitsBefore;
-    if (digitsBefore > 2) newPos++;
-    if (digitsBefore > 4) newPos++;
-    input.setSelectionRange(newPos, newPos);
-
-    formatting = false;
-
-    // Trigger validation after formatting
-    input.dispatchEvent(new Event("validate", { bubbles: false }));
-  });
-}
-
-/**
- * Configures a single date text input.
- * Sets today as the minimum selectable date on the associated hidden picker.
- * @param {string} id - The element ID of the date input.
+ * Configures a native date input: prefills today and resets past values on blur.
+ * No min is set so the user can freely pick or type any date first.
+ * @param {string} id - The element ID of the native date input.
  */
 function setupSingleDateInput(id) {
   const input = document.getElementById(id);
   if (!input) return;
-  const todayIso = new Date().toISOString().split("T")[0];
-  const today = toDisplayDate(todayIso);
-  const picker = document.getElementById(id + "_picker");
-  if (picker) picker.min = todayIso;
+  input.addEventListener("blur", () => resetDateIfInvalid(input));
+  input.min = getTodayISO();
   input.addEventListener("focus", () => {
-    if (!input.value) input.value = today;
-  });
-}
-
-/**
- * Wires calendar icon buttons to open native date pickers.
- * Handles both the main add-task page and the board dialog variants.
- * When a date is chosen, it updates the text input with dd/mm/yyyy format.
- */
-function initDatePicker() {
-  wireDatePicker("due_date_picker", "due_date", "date_icon_btn");
-  wireDatePicker("due_date_picker_edit", "due_date_edit", "date_icon_btn_edit");
-}
-
-/**
- * Wires a single date picker to its icon button and text input.
- * @param {string} pickerId - ID of the hidden native date input.
- * @param {string} textInputId - ID of the visible text input.
- * @param {string} iconBtnId - ID of the calendar icon button.
- */
-function wireDatePicker(pickerId, textInputId, iconBtnId) {
-  const picker = document.getElementById(pickerId);
-  const textInput = document.getElementById(textInputId);
-  const iconBtn = document.getElementById(iconBtnId);
-  if (!picker || !textInput || !iconBtn) return;
-
-  iconBtn.addEventListener("click", () => {
-    if ("showPicker" in picker) {
-      picker.showPicker();
-    } else {
-      picker.click();
+    if (!input.value) {
+      input.value = getTodayISO();
+      input.classList.add("has-value");
+      clearError(input);
     }
   });
-
-  picker.addEventListener("change", () => {
-    if (picker.value) {
-      textInput.value = toDisplayDate(picker.value);
-      const val = textInput.value.trim();
-      if (!val) { clearError(textInput); setError(textInput); }
-      else if (isDateInPast(val)) { clearError(textInput); setErrorPast(textInput); }
-      else clearError(textInput);
-    }
+  input.addEventListener("input", () => {
+    input.classList.toggle("has-value", !!input.value);
+    if (!input.value) { clearError(input); setError(input); } else clearError(input);
   });
 }
 
@@ -205,12 +111,52 @@ function isDateInPast(ddmmyyyy) {
 }
 
 /**
- * Checks whether a date string matches the dd.mm.yyyy format.
- * @param {string} val - Date string to check.
- * @returns {boolean} True if the format is valid.
+ * Checks whether a value uses only `/` as separator (no `.` or `-`).
+ * Partial entries are allowed; only rejects explicit wrong separators.
+ * @param {string} val - The date string to check.
+ * @returns {boolean} True if the format is acceptable.
  */
 function isValidDateFormat(val) {
-  return /^(\d{1,2})\.(\d{1,2})\.(\d{4})$/.test(val);
+  return !/[.\-]/.test(val);
+}
+
+/**
+ * Returns today's date as a yyyy-mm-dd string.
+ * @returns {string} ISO date string for today.
+ */
+function getTodayISO() {
+  return new Date().toISOString().split("T")[0];
+}
+
+/**
+ * Checks whether a yyyy-mm-dd date lies before today.
+ * @param {string} isoDate - Date string like "2025-12-24".
+ * @returns {boolean} True if the date is valid and in the past.
+ */
+function isDateInPastISO(isoDate) {
+  if (!isoDate) return false;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const inputDate = new Date(isoDate + "T00:00:00");
+  return inputDate < today;
+}
+
+/**
+ * On blur: resets a native date input to today if empty or in the past.
+ * Empty shows the required error; past dates reset the value to today
+ * and clear all error classes.
+ * @param {HTMLInputElement} input - The native date input element.
+ */
+function resetDateIfInvalid(input) {
+  if (!input.value) {
+    clearError(input);
+    setError(input);
+  } else if (isDateInPastISO(input.value)) {
+    input.value = getTodayISO();
+    clearError(input);
+  } else {
+    clearError(input);
+  }
 }
 
 /**
@@ -429,9 +375,7 @@ function renderAssignedUsers(users = []) {
   const visible = users.slice(0, max);
   const remaining = users.length - max;
 
-  let html = visible
-    .map((u) => getUserCircleTemplate(u.name, getUserInitials(u.name), u.color))
-    .join("");
+  let html = visible.map((u) => getUserCircleTemplate(u.name, getUserInitials(u.name), u.color)).join("");
   if (remaining > 0) html += getAssignedUsersMoreTemplate(remaining);
 
   return getAssignedUsersTemplate(html);
@@ -445,16 +389,14 @@ function renderAssignedUsers(users = []) {
 function buildTaskObj(status = "todo") {
   const read = (id) => document.getElementById(id)?.value ?? "";
   const sfx = document.getElementById("title_edit") ? "_edit" : "";
-
-  console.log("Suffix:", sfx);
-  console.log("Date field:", "due_date" + sfx);
-  console.log("Raw date input:", read("due_date" + sfx));
-  console.log("Converted date:", toStorageDate(read("due_date" + sfx)));
-
+  const dueDateEl = document.getElementById("due_date" + sfx);
+  const dueDateVal = dueDateEl?.type === "date"
+    ? (dueDateEl?.value ?? "")
+    : toStorageDate(dueDateEl?.value ?? "");
   return {
     title: read("title" + sfx),
     description: read("description"),
-    dueDate: toStorageDate(read("due_date" + sfx)),
+    dueDate: dueDateVal,
     category: read("category" + sfx),
     assignedTo: getAssignedUsers(),
     priority: selectedPriority,
@@ -493,7 +435,7 @@ function handleTaskCreated() {
     showBoardToast().then(() => loadTasksFromFirebase());
   } else {
     document.getElementById("toast")?.classList.add("show-animation");
-    setTimeout(() => window.location.href = "board.html", 1000);
+    setTimeout(() => (window.location.href = "board.html"), 1000);
   }
 }
 
@@ -517,7 +459,9 @@ function validateRequiredFields(title, dueDate, category) {
   const fail = (el) => { setError(el); return false; };
   const failPast = (el) => { clearError(el); setErrorPast(el); return false; };
   const t = title?.value.trim() ? ok(title) : fail(title);
-  const d = dueDate?.value ? (isDateInPast(dueDate.value) ? failPast(dueDate) : ok(dueDate)) : fail(dueDate);
+  const isNativeDate = dueDate?.type === "date";
+  const inPast = isNativeDate ? isDateInPastISO(dueDate?.value) : isDateInPast(dueDate?.value);
+  const d = dueDate?.value ? (inPast ? failPast(dueDate) : ok(dueDate)) : fail(dueDate);
   const c = category?.value ? ok(category) : fail(category);
   return t && d && c;
 }
@@ -526,14 +470,6 @@ function validateRequiredFields(title, dueDate, category) {
  * Validates the form and, if everything is filled in, sends the task.
  */
 async function createTask() {
-
-  const dialog = document.getElementById("task_detail_dialog");
-  if (dialog && dialog.open && typeof closeTaskDetailDialog === "function") {
-    // Ruft eure Board-Speicherfunktion auf, die wir vorhin repariert haben
-    await closeTaskDetailDialog();
-    return; // Stoppt createTask(), damit keine neue Karte erstellt wird!
-  }
-
   const sfx = getInputSuffix();
   const title = document.getElementById("title" + sfx);
   const dueDate = document.getElementById("due_date" + sfx);
@@ -552,13 +488,25 @@ async function createTask() {
  * Adds a red error border to an input element (required / empty).
  * @param {HTMLElement} input - The element to mark.
  */
-function setError(input) { input.classList.add("input-invalid"); }
+function setError(input) {
+  input.classList.add("input-invalid");
+}
 
 /**
  * Adds a red error border specifically for a date that lies in the past.
  * @param {HTMLElement} input - The date input element to mark.
  */
-function setErrorPast(input) { input.classList.add("input-invalid-past"); }
+function setErrorPast(input) {
+  input.classList.add("input-invalid-past");
+}
+
+/**
+ * Adds a red error border for an invalid date format (e.g. contains `.` or `-`).
+ * @param {HTMLElement} input - The date input element to mark.
+ */
+function setErrorFormat(input) {
+  input.classList.add("input-invalid-format");
+}
 
 /**
  * Removes all error classes from an input element.
@@ -567,6 +515,7 @@ function setErrorPast(input) { input.classList.add("input-invalid-past"); }
 function clearError(input) {
   input.classList.remove("input-invalid");
   input.classList.remove("input-invalid-past");
+  input.classList.remove("input-invalid-format");
 }
 
 /**
@@ -586,30 +535,34 @@ function validateInput() {
 
 /**
  * Adds on-input and on-blur validation to a single field.
+ * For native date inputs uses ISO format checks; text date inputs use display format.
  * @param {string} id - The element ID.
  * @param {string} eventType - The event name (e.g. "input", "click").
  */
 function bindFieldValidation(id, eventType) {
   const el = document.getElementById(id);
   if (!el) return;
-  const isDateField = id.startsWith("due_date");
+  const validate = () => applyFieldValidation(el, id.startsWith("due_date"));
+  el.addEventListener(eventType, validate);
+  el.addEventListener("blur", validate);
+}
 
-  function validate(el) {
-    const val = el.value.trim();
-    if (!val) { clearError(el); setError(el); }
-    else if (isDateField && !isValidDateFormat(val)) { clearError(el); setError(el); }
-    else if (isDateField && isDateInPast(val)) { clearError(el); setErrorPast(el); }
-    else clearError(el);
+/**
+ * Evaluates a field's current value and applies or removes error classes.
+ * @param {HTMLElement} el - The input element to validate.
+ * @param {boolean} isDateField - True when the field holds a date value.
+ */
+function applyFieldValidation(el, isDateField) {
+  const val = el.value.trim();
+  const isNativeDate = el.type === "date";
+  if (!val) { clearError(el); setError(el); return; }
+  if (isDateField && (isNativeDate ? isDateInPastISO(val) : isDateInPast(val))) {
+    clearError(el); setErrorPast(el); return;
   }
-
-  // if (isDateField) {
-  //   // Validation only via custom "validate" event (fired after auto-format) + blur
-  //   el.addEventListener("validate", () => validate(el));
-  //   el.addEventListener("blur", () => validate(el));
-  // } else {
-  //   el.addEventListener(eventType, () => validate(el));
-  //   el.addEventListener("blur", () => validate(el));
-  // }
+  if (isDateField && !isNativeDate && !isValidDateFormat(val)) {
+    clearError(el); setErrorFormat(el); return;
+  }
+  clearError(el);
 }
 
 /**
@@ -624,12 +577,14 @@ function clearForm() {
 
 /**
  * Clears text fields, date, priority and subtask list.
+ * Resets native date inputs to today; text date inputs are cleared.
  * @param {string} sfx - The element ID suffix ("_edit" or "").
  */
 function resetFormData(sfx) {
   document.getElementById("form_task").reset();
   const dueDate = document.getElementById("due_date" + sfx);
-  if (dueDate) dueDate.value = "";
+  if (dueDate) dueDate.classList.remove("has-value");
+  // if (dueDate) dueDate.value = dueDate.type === "date" ? getTodayISO() : ""; setzt das heutige datum
   selectPriority("medium");
   subtasksList = [];
   document.getElementById("subtask_list").innerHTML = "";

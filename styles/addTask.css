@@ -53,18 +53,22 @@ main {
   position: relative;
 }
 
-.input.input-invalid {
-  border: var(--faulty-entry-color) solid 1px;
-  outline-color: var(--faulty-entry-color);
+.input-invalid {
+  border: 1px solid red;
+  color: red;
 }
 
-.input.input-invalid-past {
-  border: var(--faulty-entry-color) solid 1px;
-  color: var(--faulty-entry-color);
-  outline-color: var(--faulty-entry-color);
+.input-invalid-past {
+  border: 1px solid red;
+  color: red;
 }
 
-.input-section:has(.input-invalid):not(:has(.input-invalid-past))::after {
+.input-invalid-format {
+  border: 1px solid red;
+  color: red;
+}
+
+.input-section:has(.input-invalid):not(:has(.input-invalid-past)):not(:has(.input-invalid-format))::after {
   content: "This field is required";
   position: absolute;
   bottom: -12px;
@@ -80,6 +84,26 @@ main {
   bottom: -12px;
   left: 4px;
   color: var(--faulty-entry-color);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.input-section:has(.input-invalid-format)::after {
+  content: "Invalid date format";
+  position: absolute;
+  bottom: -12px;
+  left: 4px;
+  color: var(--faulty-entry-color);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.input-section:has(.input-invalid-format)::after {
+  content: "Invalid date format";
+  position: absolute;
+  bottom: -12px;
+  left: 4px;
+  color: #ff3d00;
   font-size: 12px;
   white-space: nowrap;
 }
@@ -290,17 +314,20 @@ main {
 }
 
 .date-wrapper .input-date {
-  padding-right: 40px;
+  color: var(--input-default-main);
 }
 
-.date-picker-hidden {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  opacity: 0;
-  pointer-events: none;
+.date-wrapper .input-date:focus,
+.date-wrapper .input-date.has-value {
+  color: black;
+}
+
+.input-date::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.is-firefox .date-icon-btn {
+  display: none;
 }
 
 .date-icon-btn {
@@ -315,10 +342,6 @@ main {
   align-items: center;
   justify-content: center;
   z-index: 1;
-}
-
-.date-icon-btn--left {
-  left: 8px;
 }
 
 .date-icon-btn--right {
@@ -566,9 +589,8 @@ main {
   .priority-group {
     justify-content: flex-start;
   }
-  .right{
+  .right {
     margin-top: 42px;
-
   }
 }
 
