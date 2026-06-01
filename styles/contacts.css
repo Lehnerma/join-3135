@@ -273,6 +273,7 @@
     width: 649px;
     flex-shrink: 0;
     background-color: var(--main-bg);
+    overflow-y: auto;
   }
 
   .contacts-title {
