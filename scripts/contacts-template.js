@@ -4,7 +4,7 @@
  * @returns {string} The HTML template as a string.
  */
 function renderAlphabetTableTpl(alphabet) {
-  return /*html*/ `
+  return `
         <div id="${alphabet}">
         <p class="first-letter">${alphabet}</p>
         <div class="letter-divider"></div> 
@@ -21,7 +21,7 @@ function renderAlphabetTableTpl(alphabet) {
  * @returns {string} The HTML template as a string.
  */
 function renderSingleUserHtmlTpl(user, i, initials, color) {
-  return /*html*/`
+  return `
     <div id="${i}" class="user-Selection" onclick="getUserDetails(${i})">
       <div class="initials" style="background-color: ${color}">
         ${initials}
@@ -39,7 +39,7 @@ function renderSingleUserHtmlTpl(user, i, initials, color) {
  * @returns {string} The HTML template for the contact dialog.
  */
 function renderHtmlContactDialogTpl() {
-  return /*html*/ `
+  return `
   <div class="dialog-container" onclick="closeDialogOutsite(event)">
       <aside class="aside-content">
              <section class="aside-text-wrapper">
@@ -93,7 +93,7 @@ function renderHtmlContactDialogTpl() {
  * @returns {string} The HTML dialog template for editing the contact.
  */
 function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
-  return /*html*/ `
+  return `
   <div class="dialog-container" onclick="closeDialogOutsite(event)">
 
   <aside class="aside-content">
@@ -159,7 +159,7 @@ function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
  * @returns {string} The HTML template for the contact details.
  */
 function renderShowDetailsTpl(user, i, initials, color) {
-  return /*html*/ `
+  return `
     <div class="contact-details-box" >
     
       <header class="header-contect-details" >

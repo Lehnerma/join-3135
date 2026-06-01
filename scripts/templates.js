@@ -277,7 +277,7 @@ function getDetailSubtaskTemplate(title, checked = false, taskId, subtaskIndex) 
  * @returns {string} HTML string for the edit task form dialog.
  */
 function getEditTaskDialogTemplate() {
-  return /*html*/ `
+  return `
     <header class="edit-task--header">
       <button class="btn btn--close" onclick="closeEditTaskDialog()">
         <img src="../assets/img/icons/subtask/close.svg" alt="X" />
@@ -378,7 +378,7 @@ function getEditTaskDialogTemplate() {
  * @returns {string} HTML string for the add task form dialog.
  */
 function getAddTaskDialogTemplate() {
-  return /*html*/ `
+  return `
     <div class="dat-container">
       <div class="dat-headline">
         <button class="btn btn--close" onclick="closeAddTaskDialog()">

@@ -134,7 +134,6 @@ function renderAmountOfTasks() {
  * @returns {number} Amount of tasks matching the status.
  */
 function showAmountOfTasks(data, status) {
-  // const TASKS = JSON.parse('tasksData');
   const AMOUNT_STATUS = Object.values(data).filter(task => task.status === status).length;
   return AMOUNT_STATUS;
 }

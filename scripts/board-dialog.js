@@ -377,7 +377,7 @@ async function loadUsersForEdit(assignedTo) {
     const response = await fetch(USER_URL);
     const data = await response.json();
     remoteUsers = Object.values(data);
-    fillUserDropdown(sortUsersWithActiveFirst(remoteUsers)); // fülln des dropdown
+    fillUserDropdown(sortUsersWithActiveFirst(remoteUsers));
 
     preselectAssignedUsers(assignedTo);
 
