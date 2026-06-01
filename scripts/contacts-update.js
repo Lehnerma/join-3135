@@ -1,122 +1,82 @@
 /**
- * Gets references to the contact form input containers and inputs.
- * @returns {{nameContainer: HTMLElement|null, emailContainer: HTMLElement|null, phoneContainer: HTMLElement|null, nameInput: HTMLElement|null, emailInput: HTMLElement|null}}
+ * Adds an invalid class to a contact input field.
+ * @param {HTMLElement} input
  */
-function getContactFormElements() {
-  return {
-    nameContainer: document.getElementById('add_name'),
-    emailContainer: document.getElementById('add_email'),
-    phoneContainer: document.getElementById('add_phone'),
-    nameInput: document.getElementById('create_name'),
-    emailInput: document.getElementById('create_email'),
-  };
+function setContactError(input) {
+  input?.classList.add('contact-invalid');
 }
 
 /**
- * Removes all error classes from the contact form.
+ * Adds an invalid-email class to a contact input field.
+ * @param {HTMLElement} input
  */
-function clearAllContactErrors() {
-  const nameContainer = document.getElementById('add_name');
-  const emailContainer = document.getElementById('add_email');
-  const phoneContainer = document.getElementById('add_phone');
-  if (nameContainer) {
-    nameContainer.classList.remove('invalid-login');
-  }
-  if (emailContainer) {
-    emailContainer.classList.remove('invalid-login');
-  }
-  if (phoneContainer) {
-    phoneContainer.classList.remove('invalid-contact-form');
-  }
+function setContactEmailError(input) {
+  input?.classList.add('contact-invalid-email');
 }
 
 /**
- * Sets up live validation events for the contact form.
- * - Removes all errors while the user types in name or email.
- * - Validates the email format when the email field loses focus.
+ * Removes all error classes from a contact input field.
+ * @param {HTMLElement} input
  */
-function initContactFormValidation() {
-  const els = getContactFormElements();
-  const inputs = [els.nameInput, els.emailInput];
-  inputs.forEach(input => {
-    if (!input) return;
-    input.addEventListener('input', clearAllContactErrors);
+function clearContactError(input) {
+  input?.classList.remove('contact-invalid', 'contact-invalid-email');
+}
+
+/**
+ * Validates three contact input fields (name, email, phone) by their IDs.
+ * Marks invalid inputs with error classes and shows inline error messages via CSS ::after.
+ * Used by both create and edit contact dialogs.
+ * @param {string} nameId
+ * @param {string} emailId
+ * @param {string} phoneId
+ * @returns {boolean} True if all fields are valid.
+ */
+function validateContactFields(nameId, emailId, phoneId) {
+  const nameInput = document.getElementById(nameId);
+  const emailInput = document.getElementById(emailId);
+  const phoneInput = document.getElementById(phoneId);
+  [nameInput, emailInput, phoneInput].forEach(clearContactError);
+  let valid = true;
+  if (!nameInput?.value.trim()) { setContactError(nameInput); valid = false; }
+  if (!emailInput?.value.trim()) { setContactError(emailInput); valid = false; }
+  else if (!emailInput.checkValidity()) { setContactEmailError(emailInput); valid = false; }
+  if (!phoneInput?.value.trim()) { setContactError(phoneInput); valid = false; }
+  return valid;
+}
+
+/**
+ * Sets up live validation for a contact dialog's input fields.
+ * Clears errors on input, re-validates email format on blur.
+ * @param {string} nameId
+ * @param {string} emailId
+ * @param {string} phoneId
+ */
+function initContactValidation(nameId, emailId, phoneId) {
+  const nameInput = document.getElementById(nameId);
+  const emailInput = document.getElementById(emailId);
+  const phoneInput = document.getElementById(phoneId);
+  [nameInput, emailInput, phoneInput].forEach(input => {
+    input?.addEventListener('input', () => clearContactError(input));
   });
-  if (els.emailInput) {
-    els.emailInput.addEventListener('blur', validateContactEmailOnBlur);
-    els.emailInput.addEventListener('focus', clearContactEmailError);
-  }
+  emailInput?.addEventListener('blur', () => {
+    if (emailInput.value.trim() && !emailInput.checkValidity()) {
+      setContactEmailError(emailInput);
+    }
+  });
 }
 
 /**
- * Checks the email format when the email field loses focus.
- * Shows an error if the email is not empty but has an invalid format.
- */
-function validateContactEmailOnBlur() {
-  const els = getContactFormElements();
-  const value = els.emailInput?.value.trim();
-  if (value.length > 0 && !els.emailInput.checkValidity()) {
-    els.emailContainer?.classList.add('invalid-login');
-    els.phoneContainer?.classList.add('invalid-contact-form');
-  }
-}
-
-/**
- * Removes the email error classes when the email field gets focus.
- */
-function clearContactEmailError() {
-  const els = getContactFormElements();
-  els.emailContainer?.classList.remove('invalid-login');
-  els.phoneContainer?.classList.remove('invalid-contact-form');
-}
-
-/**
- * Validates the name field. Returns true if there is an error.
- * @param {Object} els - The form elements from getContactFormElements().
- * @param {string} nameVal - The trimmed name value.
- * @returns {boolean} True if the name is invalid.
- */
-function validateContactName(els, nameVal) {
-  if (!nameVal) {
-    els.nameContainer?.classList.add('invalid-login');
-    return true;
-  }
-  return false;
-}
-
-/**
- * Validates the email field. Returns true if there is an error.
- * @param {Object} els - The form elements from getContactFormElements().
- * @param {string} emailVal - The trimmed email value.
- * @returns {boolean} True if the email is invalid.
- */
-function validateContactEmail(els, emailVal) {
-  if (!emailVal) {
-    els.emailContainer?.classList.add('invalid-login');
-    return true;
-  }
-  if (!els.emailInput.checkValidity()) {
-    els.emailContainer?.classList.add('invalid-login');
-    return true;
-  }
-  return false;
-}
-
-/**
- * Validates the contact form before saving.
- * Name and email are required. Shows red borders and an error message if invalid.
- * @returns {boolean} True if the form is valid, false otherwise.
+ * Validates the create contact form. Called before saving a new contact.
+ * @returns {boolean}
  */
 function addContactCheckInputValue() {
-  clearAllContactErrors();
-  const els = getContactFormElements();
-  const nameVal = els.nameInput?.value.trim();
-  const emailVal = els.emailInput?.value.trim();
-  const nameInvalid = validateContactName(els, nameVal);
-  const emailInvalid = validateContactEmail(els, emailVal);
-  if (nameInvalid || emailInvalid) {
-    els.phoneContainer?.classList.add('invalid-contact-form');
-    return false;
-  }
-  return true;
+  return validateContactFields('create_name', 'create_email', 'create_phone');
+}
+
+/**
+ * Validates the edit contact form. Called before saving an edited contact.
+ * @returns {boolean}
+ */
+function validateEditContactForm() {
+  return validateContactFields('edit_name', 'edit_email', 'edit_phone');
 }

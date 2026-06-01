@@ -123,13 +123,15 @@
 
 .user-Selection {
   width: clamp(280px, 24.4vw, 352px);
-  height: clamp(50px, 5.4vw, 78px);
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: clamp(15px, 2.4vw, 35px);
   padding: clamp(8px, 1vw, 15px) clamp(12px, 1.6vw, 24px);
   flex-shrink: 0;
+  overflow-wrap: break-word;
+
 }
 
 
@@ -166,11 +168,17 @@
 
 .contact-info-text {
   gap: clamp(2px, 0.3vw, 5px);
+  width: clamp(280px, 24.4vw, 352px);
+  overflow-wrap: break-word;
+  width: 100%;
+  height: auto;
 }
 
 .name {
   font-weight: 400;
   font-size: clamp(16px, 1.3vw, 20px);
+  overflow-wrap: break-word;
+  width: 190px;
 }
 
 .email {
@@ -179,7 +187,7 @@
   text-decoration: none;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  width: 190px;
 }
 
 .right-content {
@@ -245,7 +253,8 @@
 
   .user-Selection {
     width: clamp(260px, 35vw, 352px);
-    height: clamp(50px, 7vw, 78px);
+    height: auto;
+    overflow-wrap: break-word;
   }
 
   .initials {
@@ -264,6 +273,7 @@
     width: 649px;
     flex-shrink: 0;
     background-color: var(--main-bg);
+    overflow-y: auto;
   }
 
   .contacts-title {
@@ -313,7 +323,6 @@
 
   .user-Selection {
     width: clamp(300px, 90vw, 550px);
-    height: clamp(50px, 20vw, 78px);
     gap: 35px;
     padding: clamp(8px, 15vw, 15px) clamp(12px, 20vw, 24px);
     font-size: 21px;
@@ -335,14 +344,20 @@
     align-items: center;
   }
 
-.contact-info-text {
-  gap: clamp(2px, 0.3vw, 5px);
-  min-width: 0;
-  overflow: hidden;
-}
+  .contact-info-text {
+    gap: clamp(2px, 0.3vw, 5px);
+    min-width: 0;
+    overflow: hidden;
+  }
 
   .name {
     font-size: clamp(16px, 5vw, 20px);
+    max-width: 352px;
+    height: auto;
+  }
+
+  .email {
+    max-width: 352px;
   }
 
   .add-button-container {
@@ -352,6 +367,7 @@
     z-index: 20;
     width: 56px;
     height: 56px;
+    border-radius: 50%;
   }
 
   .contact-list {

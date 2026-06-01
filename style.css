@@ -226,13 +226,31 @@ input:focus {
   font-size: 16px;
 }
 
-.invalid-contact-form::after {
-  content: "Check your name and email.";
+#add_name.invalid-contact-form::after {
+  content: "Check your name";
   position: absolute;
-  bottom: -24px;
+  bottom: -18px;
   left: 0;
   color: var(--faulty-entry-color);
-  font-size: 16px;
+  font-size: 14px;
+}
+
+#add_email.invalid-contact-form::after {
+  content: "Check your email";
+  position: absolute;
+  bottom: -18px;
+  left: 0;
+  color: var(--faulty-entry-color);
+  font-size: 14px;
+}
+
+#add_phone.invalid-contact-form::after {
+  content: "Check your phone";
+  position: absolute;
+  bottom: -18px;
+  left: 0;
+  color: var(--faulty-entry-color);
+  font-size: 14px;
 }
 
 @media (max-width:600px) {
