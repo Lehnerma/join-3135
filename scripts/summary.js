@@ -90,6 +90,7 @@ function showMobileWithGreeting() {
   }, 2500);
   sessionStorage.setItem('justLoggedIn', 'false');
 }
+
 /**
  * Forces instant visibility of the summary content on mobile devices
  * bypassing the animated greeting sequence.
