@@ -267,7 +267,7 @@ function getDetailSubtaskTemplate(title, checkedAttr, taskId, subtaskIndex) {
   return `
     <li class="detail-task--subtask-item f-row">
       <input type="checkbox" id="sub_check_${taskId}_${subtaskIndex}" class="detail-task--subtask-checkbox"${checkedAttr} onchange="toggleSubtaskDone(${taskId}, ${subtaskIndex})" />
-      <label for="sub_check_${taskId}_${subtaskIndex}" class="detail-task--subtask-text"><span class="subtask-dot">•</span>${title}</label>
+      <label for="sub_check_${taskId}_${subtaskIndex}" class="detail-task--subtask-text">${title}</label>
     </li>`;
 }
 

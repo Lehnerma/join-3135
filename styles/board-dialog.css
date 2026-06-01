@@ -226,11 +226,6 @@
   padding: 8px 16px;
 }
 
-.subtask-dot {
-  font-weight: bold;
-  font-size: 20px;
-  margin-right: 10px;
-} 
 
 .detail-task--header,
 .detail-task--content,
