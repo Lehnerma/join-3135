@@ -182,8 +182,8 @@ li {
 
 @media(max-width:1024px) {
   .initials-large-edit-dialog {
-    width: 120px;
-    height: 120px;
+    width: clamp(100px, calc(90.909px + 2.841vw), 120px);
+    height: clamp(100px, calc(90.909px + 2.841vw), 120px);
     font-size: 47px;
   }
 }
@@ -351,6 +351,6 @@ li {
   }
 
   .right-content {
-    overflow-y: auto;
+    overflow-x: auto;
   }
 }
