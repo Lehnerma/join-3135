@@ -248,7 +248,8 @@ function addAssigneesToDetail(wrapper, assignedTo) {
 function addSubtasksToDetail(wrapper, subtasks, taskID) {
   const SUBTASK_LIST = wrapper.querySelector("#detail_subtask_list");
   (subtasks || []).forEach((subtask, index) => {
-    SUBTASK_LIST.innerHTML += getDetailSubtaskTemplate(subtask.title, subtask.done, taskID, index);
+    const checkedAttr = subtask.done === true || subtask.done === "true" ? " checked" : "";
+    SUBTASK_LIST.innerHTML += getDetailSubtaskTemplate(subtask.title, checkedAttr, taskID, index);
   });
 }
 

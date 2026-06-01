@@ -146,8 +146,13 @@ function buildTaskCard(task) {
  */
 function addSubtaskProgress(wrapper, subtasks) {
   const SUBTASKS = Array.isArray(subtasks) ? subtasks : [];
+  const PROGRESS_CONTAINER = wrapper.querySelector(".subtask--progress-container");
+  if (!PROGRESS_CONTAINER || SUBTASKS.length === 0) {
+    if (PROGRESS_CONTAINER) PROGRESS_CONTAINER.innerHTML = "";
+    return;
+  }
   const SUB_DONE = SUBTASKS.filter((s) => s.done === true).length;
-  wrapper.querySelector(".subtask--progress-container").innerHTML = getSubtaskProgressTemplate(SUB_DONE, SUBTASKS.length);
+  PROGRESS_CONTAINER.innerHTML = getSubtaskProgressTemplate(SUB_DONE, SUBTASKS.length);
 }
 
 /**
@@ -176,8 +181,10 @@ function openTaskDialog(id) {
   const TASK = tasks.find((t) => t.id === id);
   if (!TASK) return;
   const DIALOG = document.getElementById("taskDialog");
+  const assignedNames = TASK.assignedTo ? TASK.assignedTo.join(", ") : "None";
+  const subtaskNames = TASK.subtasks ? TASK.subtasks.map((s) => s.title).join(", ") : "None";
   DIALOG.classList.remove("d-none");
-  DIALOG.innerHTML = getTaskDialogTemplate(TASK);
+  DIALOG.innerHTML = getTaskDialogTemplate(TASK, assignedNames, subtaskNames);
 }
 
 /**

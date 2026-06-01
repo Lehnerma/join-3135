@@ -54,11 +54,26 @@ function openMoveTaskDialog(event, taskId, btn) {
  * @returns {HTMLElement} The constructed dropdown element.
  */
 function buildMoveDropdown(taskId, targets) {
+  const BUTTONS_HTML = buildMoveButtonsHtml(taskId, targets);
   const ELEMENT = document.createElement("div");
   ELEMENT.id = "move_task_dropdown";
   ELEMENT.className = "moveTaskDropdown";
-  ELEMENT.innerHTML = getMoveDropdownTemplate(taskId, targets);
+  ELEMENT.innerHTML = getMoveDropdownTemplate(BUTTONS_HTML);
   return ELEMENT;
+}
+
+/**
+ * Builds the HTML for all move-target buttons.
+ * @param {number} taskId - The id of the task.
+ * @param {Array<Object>} targets - List of move targets with status and direction.
+ * @returns {string} Concatenated list item HTML.
+ */
+function buildMoveButtonsHtml(taskId, targets) {
+  return targets.map((target) => {
+    const icon = target.direction === "up" ? "arrow_upward" : "arrow_downward";
+    const label = STATUS_LABELS[target.status];
+    return getMoveButtonTemplate(taskId, target.status, target.direction, icon, label);
+  }).join("");
 }
 
 /**
