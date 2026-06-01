@@ -273,6 +273,7 @@
     width: 649px;
     flex-shrink: 0;
     background-color: var(--main-bg);
+    overflow-y: auto;
   }
 
   .contacts-title {
@@ -343,18 +344,19 @@
     align-items: center;
   }
 
-.contact-info-text {
-  gap: clamp(2px, 0.3vw, 5px);
-  min-width: 0;
-  overflow: hidden;
-}
+  .contact-info-text {
+    gap: clamp(2px, 0.3vw, 5px);
+    min-width: 0;
+    overflow: hidden;
+  }
 
   .name {
     font-size: clamp(16px, 5vw, 20px);
     max-width: 352px;
     height: auto;
   }
-  .email{
+
+  .email {
     max-width: 352px;
   }
 
@@ -365,6 +367,7 @@
     z-index: 20;
     width: 56px;
     height: 56px;
+    border-radius: 50%;
   }
 
   .contact-list {

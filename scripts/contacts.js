@@ -26,6 +26,7 @@ const USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.
  * Initializes the application by loading the user.
  */
 function init() {
+  initCloseMenuOnOutsideClick();
   getUsers();
 }
 
@@ -91,7 +92,8 @@ function addAlphabetTable() {
  */
 function userContectList() {
   users.forEach((user, i) => {
-    const firstLetter = user.name.trim().charAt(0).toUpperCase();
+    const firstLetter = user.name?.trim().charAt(0).toUpperCase();
+    if (!firstLetter) return;
     const targetContainer = document.getElementById(firstLetter);
     if (targetContainer) {
       targetContainer.innerHTML += getSingleUser(user, i);
@@ -133,7 +135,6 @@ function openContactDialog() {
   dialogRef.classList.remove('hide');
   dialogRef.innerHTML = renderHtmlContactDialogTpl();
   dialogRef.showModal();
-  initContactFormValidation();
 }
 
 /**
@@ -150,6 +151,7 @@ function openEditDialog(index, initials, color) {
   document.getElementById('edit_name').value = users[index].name;
   document.getElementById('edit_email').value = users[index].email;
   document.getElementById('edit_phone').value = users[index].phone;
+
 }
 
 /**
@@ -472,4 +474,19 @@ function closeDialogOutsite(event) {
   event.stopPropagation();
 }
 
+/**
+ * Closes the edit menu when clicking outside of it.
+ */
+function initCloseMenuOnOutsideClick() {
+  document.addEventListener('click', function (event) {
+    const container = document.querySelector('.edit-delete-container');
+    const menuButton = document.getElementById('edit_menu_button');
+
+    if (container && container.classList.contains('show')) {
+      if (!container.contains(event.target) && (!menuButton || !menuButton.contains(event.target))) {
+        container.classList.remove('show');
+      }
+    }
+  });
+}
 
