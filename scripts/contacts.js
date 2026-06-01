@@ -135,7 +135,6 @@ function openContactDialog() {
   dialogRef.classList.remove('hide');
   dialogRef.innerHTML = renderHtmlContactDialogTpl();
   dialogRef.showModal();
-  initContactValidation('create_name', 'create_email', 'create_phone');
 }
 
 /**
@@ -152,7 +151,7 @@ function openEditDialog(index, initials, color) {
   document.getElementById('edit_name').value = users[index].name;
   document.getElementById('edit_email').value = users[index].email;
   document.getElementById('edit_phone').value = users[index].phone;
-  initContactValidation('edit_name', 'edit_email', 'edit_phone');
+
 }
 
 /**
@@ -479,7 +478,7 @@ function closeDialogOutsite(event) {
  * Closes the edit menu when clicking outside of it.
  */
 function initCloseMenuOnOutsideClick() {
-  document.addEventListener('click', function(event) {
+  document.addEventListener('click', function (event) {
     const container = document.querySelector('.edit-delete-container');
     const menuButton = document.getElementById('edit_menu_button');
 
