@@ -89,13 +89,12 @@ function getAssignedUsersMoreTemplate(count) {
 }
 
 /**
- * Returns the HTML for the subtask progress bar, or an empty string if there are no subtasks.
+ * Returns the HTML for the subtask progress bar.
  * @param {number} done - Number of completed subtasks.
  * @param {number} total - Total number of subtasks.
- * @returns {string} HTML string, or "" if total is 0.
+ * @returns {string} HTML string for the progress component.
  */
 function getSubtaskProgressTemplate(done, total) {
-  if (total === 0) return "";
   return `
     <div class="subtask--progress">
       <progress class="subtask--progressbar" max="${total}" value="${done}"></progress>
@@ -259,16 +258,16 @@ function getDetailTaskTemplate(task) {
 /**
  * Returns the HTML for a single subtask row in the detail view.
  * @param {string} title - The subtask title.
- * @param {boolean} [checked=false] - Whether the subtask is done.
- * @param {number} id - The parent task's id (used for the checkbox id).
+ * @param {string} checkedAttr - Checkbox checked attribute string ("" or " checked").
+ * @param {number|string} taskId - The parent task id (used for the checkbox id).
+ * @param {number} subtaskIndex - Index of the subtask within its task.
  * @returns {string} HTML string for a subtask list item.
  */
-function getDetailSubtaskTemplate(title, checked = false, taskId, subtaskIndex) {
-  const IS_CHECKED = checked === true || checked === "true";
+function getDetailSubtaskTemplate(title, checkedAttr, taskId, subtaskIndex) {
   return `
     <li class="detail-task--subtask-item f-row">
-      <input type="checkbox" id="sub_check_${taskId}_${subtaskIndex}" class="detail-task--subtask-checkbox"${IS_CHECKED ? " checked" : ""} onchange="toggleSubtaskDone(${taskId}, ${subtaskIndex})" />
-      <label for="sub_check_${taskId}_${subtaskIndex}" class="detail-task--subtask-text"><span class="subtask-dot">•</span>${title}</label>
+      <input type="checkbox" id="sub_check_${taskId}_${subtaskIndex}" class="detail-task--subtask-checkbox"${checkedAttr} onchange="toggleSubtaskDone(${taskId}, ${subtaskIndex})" />
+      <label for="sub_check_${taskId}_${subtaskIndex}" class="detail-task--subtask-text">${title}</label>
     </li>`;
 }
 
@@ -277,7 +276,7 @@ function getDetailSubtaskTemplate(title, checked = false, taskId, subtaskIndex) 
  * @returns {string} HTML string for the edit task form dialog.
  */
 function getEditTaskDialogTemplate() {
-  return /*html*/ `
+  return `
     <header class="edit-task--header">
       <button class="btn btn--close" onclick="closeEditTaskDialog()">
         <img src="../assets/img/icons/subtask/close.svg" alt="X" />
@@ -297,7 +296,12 @@ function getEditTaskDialogTemplate() {
 
       <section class="input-section">
         <label for="due_date" class="required">Due date</label>
+        <div class="date-wrapper">
         <input id="due_date" class="input input-date" type="date" autocomplete="off">
+        <button type="button" class="date-icon-btn date-icon-btn--right" onclick="openDatePicker('due_date')" tabindex="-1">
+          <img class="date-icon-img" src="../assets/img/icons/input/event.svg" alt="calendar">
+        </button>
+        </div>
       </section>
 
       <section class="input-section">
@@ -373,7 +377,7 @@ function getEditTaskDialogTemplate() {
  * @returns {string} HTML string for the add task form dialog.
  */
 function getAddTaskDialogTemplate() {
-  return /*html*/ `
+  return `
     <div class="dat-container">
       <div class="dat-headline">
         <button class="btn btn--close" onclick="closeAddTaskDialog()">
@@ -477,33 +481,31 @@ function getAddTaskDialogTemplate() {
 
 /**
  * Returns the inner HTML for the move-task dropdown.
- * @param {number} taskId - The id of the task.
- * @param {Array<Object>} targets - List of move targets with status and direction.
+ * @param {string} buttonsHtml - Pre-rendered button list items.
  * @returns {string} HTML string for the dropdown content.
  */
-function getMoveDropdownTemplate(taskId, targets) {
-  const BTNS = targets.map((t) => getMoveButtonTemplate(taskId, t)).join("");
+function getMoveDropdownTemplate(buttonsHtml) {
   return `
     <p class="moveTaskDropdown--label">Move to</p>
-    <ul class="moveTaskDropdown--list">${BTNS}</ul>
+    <ul class="moveTaskDropdown--list">${buttonsHtml}</ul>
   `;
 }
 
 /**
  * Returns the HTML for a single move button in the move-task dropdown.
  * @param {number} taskId - The id of the task.
- * @param {Object} target - Move target with status and direction.
- * @param {string} target.status - The target status key.
- * @param {string} target.direction - "up" or "down".
+ * @param {string} status - The target status key.
+ * @param {string} direction - "up" or "down".
+ * @param {string} icon - Icon filename without extension.
+ * @param {string} label - Visible status label.
  * @returns {string} HTML string for one list item button.
  */
-function getMoveButtonTemplate(taskId, { status, direction }) {
-  const ICON = direction === "up" ? "arrow_upward" : "arrow_downward";
+function getMoveButtonTemplate(taskId, status, direction, icon, label) {
   return `
     <li>
       <button type="button" class="btn--moveTaskDropdown" onclick="moveTaskToStatus(${taskId}, '${status}')">
-        <img src="../assets/img/icons/general/${ICON}.svg" alt="${direction}" class="moveTaskDropdown--arrow">
-        <span>${STATUS_LABELS[status]}</span>
+        <img src="../assets/img/icons/general/${icon}.svg" alt="${direction}" class="moveTaskDropdown--arrow">
+        <span>${label}</span>
       </button>
     </li>
   `;
@@ -512,19 +514,19 @@ function getMoveButtonTemplate(taskId, { status, direction }) {
 /**
  * Returns the HTML for the legacy task detail/action dialog.
  * @param {Object} task - Task object with id, title, description, category, dueDate, priority, assignedTo, subtasks, and firebaseKey.
+ * @param {string} assignedNames - Comma-separated assigned contact names.
+ * @param {string} subtaskNames - Comma-separated subtask titles.
  * @returns {string} HTML string for the dialog.
  */
-function getTaskDialogTemplate(task) {
-  const ASSIGNED_NAMES = task.assignedTo ? task.assignedTo.join(", ") : "None";
-  const SUBTASK_NAMES = task.subtasks ? task.subtasks.map(s => s.title).join(", ") : "None";
+function getTaskDialogTemplate(task, assignedNames, subtaskNames) {
   return `
     <p>Category: ${escapeHtml(task.category)}</p>
     <h2>${escapeHtml(task.title)}</h2>
     <p>${escapeHtml(task.description)}</p>
     <p>Due Date: ${escapeHtml(task.dueDate)}</p>
     <p>Priority: ${escapeHtml(task.priority)}</p>
-    <p>Assigned To: ${escapeHtml(ASSIGNED_NAMES)}</p>
-    <p>Subtasks: ${escapeHtml(SUBTASK_NAMES)}</p>
+    <p>Assigned To: ${escapeHtml(assignedNames)}</p>
+    <p>Subtasks: ${escapeHtml(subtaskNames)}</p>
     
     <button onclick="closeTaskDialog()">X</button>
     <button onclick="deleteTask('${task.firebaseKey}')">Delete</button>

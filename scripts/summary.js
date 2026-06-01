@@ -90,6 +90,7 @@ function showMobileWithGreeting() {
   }, 2500);
   sessionStorage.setItem('justLoggedIn', 'false');
 }
+
 /**
  * Forces instant visibility of the summary content on mobile devices
  * bypassing the animated greeting sequence.
@@ -134,7 +135,6 @@ function renderAmountOfTasks() {
  * @returns {number} Amount of tasks matching the status.
  */
 function showAmountOfTasks(data, status) {
-  // const TASKS = JSON.parse('tasksData');
   const AMOUNT_STATUS = Object.values(data).filter(task => task.status === status).length;
   return AMOUNT_STATUS;
 }

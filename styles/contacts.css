@@ -197,6 +197,7 @@
   width: 100%;
   height: 100dvh;
   background-color: var(--main-bg);
+  overflow-y: auto;
 }
 
 .headline {

@@ -584,7 +584,6 @@ function resetFormData(sfx) {
   document.getElementById("form_task").reset();
   const dueDate = document.getElementById("due_date" + sfx);
   if (dueDate) dueDate.classList.remove("has-value");
-  // if (dueDate) dueDate.value = dueDate.type === "date" ? getTodayISO() : ""; setzt das heutige datum
   selectPriority("medium");
   subtasksList = [];
   document.getElementById("subtask_list").innerHTML = "";
