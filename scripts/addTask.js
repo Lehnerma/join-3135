@@ -38,7 +38,7 @@ function toDisplayDate(yyyymmdd) {
   if (!yyyymmdd) return "";
   const parts = yyyymmdd.split("-");
   return parts[2] + "." + parts[1] + "." + parts[0];
-}
+} 
 
 /**
  * Converts a dd/mm/yyyy date from the input field to yyyy-mm-dd for storing.
