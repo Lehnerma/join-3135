@@ -1,6 +1,6 @@
 .DS_Store
 up.sh
 CLAUDE.md
-# .github
+.github
 node_modules/
 .vscode
