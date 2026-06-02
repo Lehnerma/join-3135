@@ -44,7 +44,6 @@ async function loadTasksFromFirebase() {
   }
 }
 
-
 /**
  * Converts the Firebase result object into an array with id and firebaseKey added.
  * @param {Object} result - Raw Firebase response object.
@@ -52,7 +51,7 @@ async function loadTasksFromFirebase() {
  */
 function getArryFromResult(result) {
   if (!result) return [];
-  
+
   return Object.entries(result).map(([key, values], index) => ({
     id: index,
     firebaseKey: key,
@@ -125,14 +124,13 @@ function renderColumn(status, tasks) {
   tasks.forEach((task) => (LIST.innerHTML += buildTaskCard(task)));
 }
 
-
 /**
  * Builds the HTML string for a single task card, including subtask progress and assignees.
  * @param {Object} task - The task object.
  * @returns {string} HTML string for the task card.
  */
 function buildTaskCard(task) {
-  const WRAPPER = document.createElement("div");  
+  const WRAPPER = document.createElement("div");
   WRAPPER.innerHTML = getTaskCardTemplet(task.title, task.description, task.category, task.id, getPriority(task.priority));
   addSubtaskProgress(WRAPPER, task.subtasks);
   addAssignees(WRAPPER, task.assignedTo);
@@ -167,9 +165,7 @@ function addAssignees(wrapper, assignedTo) {
   const MAX_VISIBLE = 4;
   const visible = assignedTo.slice(0, MAX_VISIBLE);
   const remaining = assignedTo.length - MAX_VISIBLE;
-  ASSIGNEES_LIST.innerHTML = visible
-    .map(({ name, color }) => getTaskAssignToTemplet(name, getInitials(name), color))
-    .join("");
+  ASSIGNEES_LIST.innerHTML = visible.map(({ name, color }) => getTaskAssignToTemplet(name, getInitials(name), color)).join("");
   if (remaining > 0) ASSIGNEES_LIST.innerHTML += getAssigneeMoreTemplate(remaining);
 }
 

@@ -11,7 +11,6 @@ function renderAlphabetTableTpl(alphabet) {
         </div>`;
 }
 
-
 /**
  * Creates the HTML template for a single user in the contact list.
  * @param {Object} user - The user object containing the contact details.
@@ -32,7 +31,6 @@ function renderSingleUserHtmlTpl(user, i, initials, color) {
       </div>
     </div>`;
 }
-
 
 /**
  * Creates the HTML template for the dialog box for creating a new contact.
@@ -83,7 +81,6 @@ function renderHtmlContactDialogTpl() {
       </main>
     </div>`;
 }
-
 
 /**
  * Creates the HTML template for the dialog box used to edit a contact.
@@ -148,7 +145,6 @@ function renderHtmlEditContactDialogTpl(editUserIndex, initials, color) {
   </main>
 </div>`;
 }
-
 
 /**
  * Creates the HTML template for the detail view of a selected contact.

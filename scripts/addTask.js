@@ -41,7 +41,7 @@ function toDisplayDate(yyyymmdd) {
   if (!yyyymmdd) return "";
   const parts = yyyymmdd.split("-");
   return parts[2] + "." + parts[1] + "." + parts[0];
-} 
+}
 
 /**
  * Converts a dd/mm/yyyy date from the input field to yyyy-mm-dd for storing.
@@ -91,7 +91,10 @@ function setupSingleDateInput(id) {
   });
   input.addEventListener("input", () => {
     input.classList.toggle("has-value", !!input.value);
-    if (!input.value) { clearError(input); setError(input); } else clearError(input);
+    if (!input.value) {
+      clearError(input);
+      setError(input);
+    } else clearError(input);
   });
 }
 
@@ -358,9 +361,7 @@ function getAssignedDropdownCapacity() {
  */
 function getUserInitials(name) {
   const parts = name.trim().split(" ");
-  return parts.length > 1
-    ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
-    : parts[0].slice(0, 2).toUpperCase();
+  return parts.length > 1 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : parts[0].slice(0, 2).toUpperCase();
 }
 
 /**
@@ -390,9 +391,7 @@ function buildTaskObj(status = "todo") {
   const read = (id) => document.getElementById(id)?.value ?? "";
   const sfx = document.getElementById("title_edit") ? "_edit" : "";
   const dueDateEl = document.getElementById("due_date" + sfx);
-  const dueDateVal = dueDateEl?.type === "date"
-    ? (dueDateEl?.value ?? "")
-    : toStorageDate(dueDateEl?.value ?? "");
+  const dueDateVal = dueDateEl?.type === "date" ? (dueDateEl?.value ?? "") : toStorageDate(dueDateEl?.value ?? "");
   return {
     title: read("title" + sfx),
     description: read("description"),
@@ -455,9 +454,19 @@ function getInputSuffix() {
  * @returns {boolean} True when all three fields have a value.
  */
 function validateRequiredFields(title, dueDate, category) {
-  const ok = (el) => { clearError(el); return true; };
-  const fail = (el) => { setError(el); return false; };
-  const failPast = (el) => { clearError(el); setErrorPast(el); return false; };
+  const ok = (el) => {
+    clearError(el);
+    return true;
+  };
+  const fail = (el) => {
+    setError(el);
+    return false;
+  };
+  const failPast = (el) => {
+    clearError(el);
+    setErrorPast(el);
+    return false;
+  };
   const t = title?.value.trim() ? ok(title) : fail(title);
   const isNativeDate = dueDate?.type === "date";
   const inPast = isNativeDate ? isDateInPastISO(dueDate?.value) : isDateInPast(dueDate?.value);
@@ -555,12 +564,20 @@ function bindFieldValidation(id, eventType) {
 function applyFieldValidation(el, isDateField) {
   const val = el.value.trim();
   const isNativeDate = el.type === "date";
-  if (!val) { clearError(el); setError(el); return; }
+  if (!val) {
+    clearError(el);
+    setError(el);
+    return;
+  }
   if (isDateField && (isNativeDate ? isDateInPastISO(val) : isDateInPast(val))) {
-    clearError(el); setErrorPast(el); return;
+    clearError(el);
+    setErrorPast(el);
+    return;
   }
   if (isDateField && !isNativeDate && !isValidDateFormat(val)) {
-    clearError(el); setErrorFormat(el); return;
+    clearError(el);
+    setErrorFormat(el);
+    return;
   }
   clearError(el);
 }

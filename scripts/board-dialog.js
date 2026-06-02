@@ -11,7 +11,6 @@ function initBoardTask() {
   initBoardDialogs();
 }
 
-
 /**
  * Closes a dialog with a slide-out animation.
  * It waits for the animation to finish before closing the dialog completely.
@@ -34,7 +33,6 @@ function slideOutDialog(dialog) {
   });
 }
 
-
 /**
  * Shows a temporary success message (toast) when a task is created.
  * The message fades in, stays for 1.5 seconds, and then fades out.
@@ -56,7 +54,6 @@ function showTaskCreatedToast() {
   }, 1500);
 }
 
-
 /**
  * Handles the search input and search button event listeners.
  *
@@ -73,7 +70,6 @@ function initBoardSearch() {
     SEARCH_INPUT.addEventListener("input", searchTasks);
   }
 }
-
 
 /**
  * Handles the add-task button and task-detail dialog event listeners.
@@ -101,7 +97,6 @@ function initBoardDialogs() {
   }
 }
 
-
 /**
  * Filters the tasks on the board based on the user's search input.
  * It searches through titles and descriptions and updates the view.
@@ -122,7 +117,6 @@ function searchTasks() {
   SEARCH_CONTAINER.classList.toggle("nothing-found", SEARCH_VALUE.length === 0);
   renderBoard(SEARCH_VALUE);
 }
-
 
 /**
  * Opens the detailed view of a task.
@@ -147,7 +141,6 @@ function openTaskDetailDialog(taskId) {
   }
 }
 
-
 /**
  * Closes the task detail dialog when the user clicks the background.
  *
@@ -160,7 +153,6 @@ function closeTaskDetailDialogOnBackdropClick(event) {
   }
 }
 
-
 /**
  * Handles the native `cancel` event (Escape key) on the task detail dialog.
  * Prevents the browser from closing the dialog directly so that subtask
@@ -172,7 +164,6 @@ function handleTaskDetailDialogEscape(event) {
   event.preventDefault();
   closeTaskDetailDialog();
 }
-
 
 /**
  * Toggles the done state of a subtask in SessionStorage immediately.
@@ -189,7 +180,6 @@ function toggleSubtaskDone(taskId, subtaskIndex) {
   sessionStorage.tasks = JSON.stringify(ALL_TASKS);
   current_detail_task = TASK;
 }
-
 
 /**
  * Closes the task detail dialog using the slide-out animation.
@@ -220,7 +210,6 @@ async function closeTaskDetailDialog() {
   return slideOutDialog(TASK_DETAIL_DIALOG);
 }
 
-
 /**
  * Adds assigned users to the task detail dialog.
  *
@@ -237,7 +226,6 @@ function addAssigneesToDetail(wrapper, assignedTo) {
     });
 }
 
-
 /**
  * Adds subtasks to the task detail dialog.
  *
@@ -252,7 +240,6 @@ function addSubtasksToDetail(wrapper, subtasks, taskID) {
     SUBTASK_LIST.innerHTML += getDetailSubtaskTemplate(subtask.title, checkedAttr, taskID, index);
   });
 }
-
 
 /**
  * Creates the HTML content for the task detail window.
@@ -269,7 +256,6 @@ function buildTaskDetailDialog(task) {
   addSubtasksToDetail(WRAPPER, task.subtasks, task.id);
   return WRAPPER.innerHTML;
 }
-
 
 /**
  * Starts the edit process.
@@ -292,7 +278,6 @@ function openEditTaskDialog(taskId) {
   setupEditTaskInteractions(task);
 }
 
-
 /**
  * Fills the basic text fields and priority in the edit form.
  *
@@ -313,7 +298,6 @@ function fillEditFormFields(task) {
   dueDateInput.classList.toggle("has-value", !!dueDateInput.value);
   selectPriority(task.priority || "medium");
 }
-
 
 /**
  * Prepares the subtasks, users, and the save button for the edit form.
@@ -339,7 +323,6 @@ function setupEditTaskInteractions(task) {
   }
 }
 
-
 /**
  * Closes the edit task dialog instantly (no animation).
  * The detail dialog remains open underneath.
@@ -352,7 +335,6 @@ function closeEditTaskDialog() {
   }
 }
 
-
 /**
  * Closes the edit window when the user clicks on the dark background (backdrop).
  * It checks if the click was on the background and not on the content inside.
@@ -364,7 +346,6 @@ function closeEditDialogOnBackdropClick(event) {
     closeEditTaskDialog();
   }
 }
-
 
 /**
  * Loads all users, fills the dropdown, pre-selects already-assigned users,
@@ -388,7 +369,6 @@ async function loadUsersForEdit(assignedTo) {
   }
 }
 
-
 /**
  * Marks the checkboxes of already-assigned users as checked in the dropdown.
  *
@@ -405,7 +385,6 @@ function preselectAssignedUsers(assignedTo) {
     label.classList.toggle("selected", isAssigned);
   });
 }
-
 
 /**
  * Main function to handle the edit process.
@@ -427,7 +406,6 @@ async function saveEditedTask(task) {
   refreshTaskDetailDialog(UPDATED.id);
 }
 
-
 /**
  * Refreshes the detail dialog content in-place without reopening it.
  *
@@ -443,7 +421,6 @@ function refreshTaskDetailDialog(taskId) {
     TASK_DETAIL_DIALOG.querySelector(".detail-task--content").scrollTop = 0;
   }
 }
-
 
 /**
  * Handles saving the task to SessionStorage and Firebase.
@@ -474,7 +451,6 @@ async function updateTaskData(updatedTask) {
   }
 }
 
-
 /**
  * We set the status into the session storage and redirect to addtask.html. Important for the add tasks function from a addTask status column.
  *
@@ -484,7 +460,6 @@ function addStatusTask(status) {
   sessionStorage.setItem("task-status", status);
   openAddTaskDialog();
 }
-
 
 /**
  * Opens the add task dialog centered on the board page.
@@ -505,7 +480,6 @@ function openAddTaskDialog() {
   validateInput();
 }
 
-
 /**
  * Closes the add task dialog when the user clicks the backdrop.
  * @param {Event} event - The click event.
@@ -516,7 +490,6 @@ function closeAddTaskDialogOnBackdropClick(event) {
     closeAddTaskDialog();
   }
 }
-
 
 /**
  * Closes the add task dialog immediately.
@@ -531,7 +504,6 @@ function closeAddTaskDialog() {
   }
   sessionStorage.removeItem("task-status");
 }
-
 
 /**
  * Shows the board toast centered on screen for 1.5s using an opacity fade.
@@ -551,7 +523,6 @@ function showBoardToast() {
     }, 1500);
   });
 }
-
 
 /**
  * Deletes a task from the board and the database.

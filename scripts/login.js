@@ -1,14 +1,12 @@
 let show_signup = false;
 let users = [];
 
-
 /**
  * Builds the Firebase REST API URL for a specific user.
  * @param {string} [id=""] - Optional user id. Omit to target the entire users collection.
  * @returns {string} The full Firebase URL.
  */
 const USERS_URL = (id = "") => "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/" + id + ".json";
-
 
 /**
  * Initialises the login page: attaches all button listeners and starts the intro animations.
@@ -18,7 +16,6 @@ function init() {
   btnInit();
 }
 
-
 /**
  * Main function to initialize login event listeners and the signup toggle button.
  */
@@ -26,7 +23,6 @@ function btnInit() {
   initLoginEvents();
   initSignupNavigation();
 }
-
 
 /**
  * Initializes all event listeners for the login form and email validation.
@@ -40,7 +36,6 @@ function initLoginEvents() {
   EMAIL_INPUT.addEventListener("blur", validateEmailOnBlur);
   EMAIL_INPUT.addEventListener("focus", clearEmailErrorOnInput);
 }
-
 
 /**
  * Binds a one‑time click listener to both signup toggle buttons (nav & mobile).
@@ -58,7 +53,6 @@ function initSignupNavigation() {
   SIGNUP.addEventListener("click", handleFirst, { once: true });
   SIGNUP_PHONE.addEventListener("click", handleFirst, { once: true });
 }
-
 
 /**
  * Triggers intro animations for the logo, form container, nav, and footer.
@@ -78,7 +72,6 @@ function triggerAnimations() {
   FOOTER_LOGIN.classList.add("fade-in");
 }
 
-
 /**
  * Removes the fade-in class from a container so it stays visible after the animation.
  * @param {HTMLElement} container - The element to un-fade.
@@ -88,20 +81,18 @@ function removeFade(container) {
   container.style.opacity = "1";
 }
 
-
 /**
  * Switches between the login and signup forms.
  * @param {Event} event - The click event.
  */
 function toggleForms(event) {
-  if (event && typeof event.preventDefault === 'function') {
+  if (event && typeof event.preventDefault === "function") {
     event.preventDefault();
   }
   clearAndResetForms();
   show_signup = !show_signup;
   updateToggleUI();
 }
-
 
 /**
  * Shows or hides the login and signup forms and updates related nav elements.
@@ -123,7 +114,6 @@ function updateToggleUI() {
   if (NAV_LOGIN) removeFade(NAV_LOGIN);
 }
 
-
 /**
  * Redirects the guest user to the summary page and stores guest session data.
  */
@@ -134,7 +124,6 @@ function guestLogin() {
   sessionStorage.setItem("justLoggedIn", "true");
 }
 
-
 /**
  * Validates the user credentials against the loaded users list.
  * @param {FormData} formData - The login form data.
@@ -143,7 +132,6 @@ function guestLogin() {
 function findActiveUser(formData) {
   return users.find((u) => u.email === formData.get("email"));
 }
-
 
 /**
  * Handles user login, checks credentials, and blocks double clicks.
@@ -168,7 +156,6 @@ async function loginUser(ev) {
   }
 }
 
-
 /**
  * Saves session data and redirects to summary page.
  * @param {Object} user - The authenticated user.
@@ -178,7 +165,6 @@ function handleLoginSuccess(user) {
   window.location.href = "./html/summary.html";
 }
 
-
 /**
  * Shows login error styling and re-enables the submit button.
  * @param {HTMLElement|null} btn - The submit button to re-enable.
@@ -187,7 +173,6 @@ function handleLoginFail(btn) {
   showFailEntriesLogin();
   if (btn) btn.disabled = false;
 }
-
 
 /**
  * Shows error styles if login fails.
@@ -199,16 +184,15 @@ function showFailEntriesLogin() {
   MAIL.classList.add("invalid-login");
   PASSWORD.classList.add("invalid-login");
   PASSWORD_CONTAINER.classList.add("invalid-login-pw");
-  changeLockToEye('pw_input_login', 'lock_login');
+  changeLockToEye("pw_input_login", "lock_login");
   const removeErrors = function () {
-    MAIL.classList.remove('invalid-login');
-    PASSWORD.classList.remove('invalid-login');
-    PASSWORD_CONTAINER.classList.remove('invalid-login-pw');
+    MAIL.classList.remove("invalid-login");
+    PASSWORD.classList.remove("invalid-login");
+    PASSWORD_CONTAINER.classList.remove("invalid-login-pw");
   };
-  MAIL.addEventListener('input', removeErrors);
-  PASSWORD.addEventListener('input', removeErrors);
+  MAIL.addEventListener("input", removeErrors);
+  PASSWORD.addEventListener("input", removeErrors);
 }
-
 
 /**
  * Fetches all users from Firebase and stores them in the module-level users array.
@@ -220,7 +204,6 @@ async function getUsers() {
   users = Object.values(RESULT);
 }
 
-
 /**
  * Saves user info to session storage.
  * @param {Object} user - The active user.
@@ -230,7 +213,6 @@ function saveSession(user) {
   sessionStorage.setItem("activeUserName", user.name);
   sessionStorage.setItem("justLoggedIn", "true");
 }
-
 
 /**
  * Changes the icon from lock to eye when typing.
@@ -252,7 +234,6 @@ function changeLockToEye(pwInputID, iconID) {
   }
 }
 
-
 /**
  * Toggles between showing and hiding the password text.
  * @param {string} inputID - ID of the input field.
@@ -272,7 +253,6 @@ function showPasswordInput(inputID, icon) {
   }
 }
 
-
 /**
  * Clears all text from both the login and signup forms
  * and resets all password icons and error styles.
@@ -284,11 +264,10 @@ function clearAndResetForms() {
   SIGNUP_FORM.reset();
   clearLoginFormErrors();
   clearSignupFormErrors();
-  resetPasswordVisibility('pw_input_login', 'lock_login');
-  resetPasswordVisibility('pw_input', 'lock');
-  resetPasswordVisibility('pw_input_confirm', 'lock_confirm');
+  resetPasswordVisibility("pw_input_login", "lock_login");
+  resetPasswordVisibility("pw_input", "lock");
+  resetPasswordVisibility("pw_input_confirm", "lock_confirm");
 }
-
 
 /**
  * Removes all error classes from the login form fields.
@@ -302,29 +281,27 @@ function clearLoginFormErrors() {
   PASSWORD_CONTAINER.classList.remove("invalid-login-pw");
 }
 
-
 /**
  * Resets the password field to hidden and shows the lock icon.
  * @param {string} pwInputID - ID of the input field.
  * @param {string} iconID - ID of the icon image.
  */
 function resetPasswordVisibility(pwInputID, iconID) {
-  const PW_CONFIRM_CONTAINER = document.getElementById('pw_confirm_signup');
+  const PW_CONFIRM_CONTAINER = document.getElementById("pw_confirm_signup");
   const INPUT = document.getElementById(pwInputID);
   const ICON = document.getElementById(iconID);
   if (!INPUT || !ICON) return;
-  INPUT.type = 'password';
+  INPUT.type = "password";
   if (INPUT.value.length === 0) {
     ICON.src = "../assets/img/icons/input/lock.svg";
     if (PW_CONFIRM_CONTAINER) {
-      PW_CONFIRM_CONTAINER.classList.remove('invalid-signup-pw');
-      PW_CONFIRM_CONTAINER.classList.remove('success-signup-pw');
+      PW_CONFIRM_CONTAINER.classList.remove("invalid-signup-pw");
+      PW_CONFIRM_CONTAINER.classList.remove("success-signup-pw");
     }
   } else {
     ICON.src = "../assets/img/icons/input/visibility_off.svg";
   }
 }
-
 
 /**
  * Checks whether a value looks like a valid email address.
@@ -335,7 +312,6 @@ function isValidEmail(value) {
   if (!value) return true;
   return /^[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$/i.test(value.trim());
 }
-
 
 /**
  * Validates the email input on blur (when leaving the field).
@@ -348,7 +324,6 @@ function validateEmailOnBlur() {
     PASSWORD_CONTAINER.classList.add("invalid-login-pw");
   }
 }
-
 
 /**
  * Removes error styling from the email field as soon as the user starts typing.

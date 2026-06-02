@@ -1,7 +1,7 @@
 checkAuth();
 
 /**
- * Initializes general utility configurations by rendering user initials 
+ * Initializes general utility configurations by rendering user initials
  * and setting up the responsive layout for external or logged-in pages.
  */
 function initUtilitys() {
@@ -24,7 +24,7 @@ function initDateIconVisibility() {
 
 /**
  * Checks if the current visitor is authorized to view the page.
- * Redirects unauthorized users to the landing page, while allowing access 
+ * Redirects unauthorized users to the landing page, while allowing access
  * for valid users, guests, and public legal/privacy pages.
  * @returns {Promise<void>}
  */
@@ -107,7 +107,6 @@ function renderHeadInitals() {
   }
 }
 
-
 /**
  * Toggles the visibility of external utility pages and user-specific navigation elements
  * based on the user's authentication status in session storage.
@@ -132,7 +131,7 @@ function showExternalUtilityPages() {
 }
 
 /**
- * Updates the CSS classes on the document body element to reflect 
+ * Updates the CSS classes on the document body element to reflect
  * whether a user is currently logged in or not.
  * @function setBodyAuthClass
  * @returns {void}
@@ -167,7 +166,7 @@ function closeDialog() {
 }
 
 /**
- * Prevents click events from bubbling up, stopping a dialog container 
+ * Prevents click events from bubbling up, stopping a dialog container
  * from closing automatically when clicking inside its content zone.
  * @param {Event} event - The triggered interaction or click event.
  */
@@ -183,7 +182,7 @@ function goBack() {
 }
 
 /**
- * Logs out the current user by clearing the session storage 
+ * Logs out the current user by clearing the session storage
  * and redirecting the browser to the index landing page.
  */
 function logOut() {

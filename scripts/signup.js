@@ -17,7 +17,6 @@ function initSignupEvents() {
   initSignupInputEvents();
 }
 
-
 /**
  * Registers blur / focus validators for the signup name and email fields.
  */
@@ -30,20 +29,19 @@ function initSignupInputEvents() {
   SIGNUP_EMAIL.addEventListener("focus", clearSignupEmailErrorOnFocus);
 }
 
-
 /**
  * Checks if all signup form fields are filled.
  * Only the actually empty fields receive error styling.
  * @returns {boolean} true if the form is valid, false otherwise.
  */
 function checkFormInputSignUp() {
-  const SIGNUP_NAME = document.getElementById('signup_name');
-  const SIGNUP_EMAIL = document.getElementById('signup_email');
-  const PASSWORD = document.getElementById('pw_input');
-  const PASSWORD_CONFIRM = document.getElementById('pw_input_confirm');
-  const CONTAINER = document.getElementById('pw_confirm_signup');
-  const PRIVACY_CHECKBOX = document.getElementById('privacy');
-  const PRIVACY_CONTAINER = document.querySelector('.privacy-content');
+  const SIGNUP_NAME = document.getElementById("signup_name");
+  const SIGNUP_EMAIL = document.getElementById("signup_email");
+  const PASSWORD = document.getElementById("pw_input");
+  const PASSWORD_CONFIRM = document.getElementById("pw_input_confirm");
+  const CONTAINER = document.getElementById("pw_confirm_signup");
+  const PRIVACY_CHECKBOX = document.getElementById("privacy");
+  const PRIVACY_CONTAINER = document.querySelector(".privacy-content");
   let hasError = false;
   if (validateSignupNameField(SIGNUP_NAME)) hasError = true;
   if (validateSignupEmailField(SIGNUP_EMAIL)) hasError = true;
@@ -52,22 +50,15 @@ function checkFormInputSignUp() {
   return !hasError;
 }
 
-
 /**
  * Checks whether at least one signup text field contains a value.
  * Used to decide whether the privacy error should be shown.
  * @returns {boolean}
  */
 function hasAnySignupFieldFilled() {
-  const fields = [
-    document.getElementById('signup_name'),
-    document.getElementById('signup_email'),
-    document.getElementById('pw_input'),
-    document.getElementById('pw_input_confirm')
-  ];
-  return fields.some(f => f && f.value.trim().length > 0);
+  const fields = [document.getElementById("signup_name"), document.getElementById("signup_email"), document.getElementById("pw_input"), document.getElementById("pw_input_confirm")];
+  return fields.some((f) => f && f.value.trim().length > 0);
 }
-
 
 /**
  * Marks the name field as invalid when empty.
@@ -83,7 +74,6 @@ function validateSignupNameField(el) {
   return false;
 }
 
-
 /**
  * Marks the email field as invalid when empty.
  * @param {HTMLElement} el
@@ -97,7 +87,6 @@ function validateSignupEmailField(el) {
   }
   return false;
 }
-
 
 /**
  * Marks password and/or confirm fields as invalid when empty.
@@ -123,7 +112,6 @@ function validateSignupPasswordFields(pwEl, confirmEl, container) {
   return err;
 }
 
-
 /**
  * Marks the privacy checkbox area as invalid when not checked.
  * @param {HTMLElement} checkbox
@@ -132,16 +120,15 @@ function validateSignupPasswordFields(pwEl, confirmEl, container) {
  */
 function validateSignupPrivacyField(checkbox, container) {
   if (!checkbox.checked) {
-    container.classList.add('invalid-privacy');
-    checkbox.addEventListener('change', function clearOnCheck() {
-      container.classList.remove('invalid-privacy');
-      checkbox.removeEventListener('change', clearOnCheck);
+    container.classList.add("invalid-privacy");
+    checkbox.addEventListener("change", function clearOnCheck() {
+      container.classList.remove("invalid-privacy");
+      checkbox.removeEventListener("change", clearOnCheck);
     });
     return true;
   }
   return false;
 }
-
 
 /**
  * Adds an input listener to one or more elements that removes given CSS classes
@@ -153,15 +140,14 @@ function validateSignupPrivacyField(checkbox, container) {
  */
 function setClearOnInput(el, elClasses, el2, el2Classes) {
   const handler = function () {
-    elClasses.forEach(c => el.classList.remove(c));
+    elClasses.forEach((c) => el.classList.remove(c));
     if (el2 && el2Classes) {
-      el2Classes.forEach(c => el2.classList.remove(c));
+      el2Classes.forEach((c) => el2.classList.remove(c));
     }
     el.removeEventListener("input", handler);
   };
   el.addEventListener("input", handler);
 }
-
 
 /**
  * Gathers input data from the signup form and creates a user object.
@@ -175,7 +161,6 @@ function buildUserData(formElement) {
   return NEW_USER;
 }
 
-
 /**
  * Resets the signup form and reactivates the submit button.
  * @param {HTMLFormElement} form - The signup form.
@@ -186,7 +171,6 @@ function finalizeSignup(form, btn) {
   form.reset();
   if (btn) btn.disabled = false;
 }
-
 
 /**
  * Handles the signup form submission and prevents double submits.
@@ -208,7 +192,6 @@ async function creatUser(ev) {
   }
 }
 
-
 /**
  * Verifies that the password and confirm password fields match.
  * @returns {boolean} - true if passwords match, false otherwise
@@ -218,7 +201,6 @@ function verifyPassword() {
   const CONFIRM_PASSWORD = document.getElementById("pw_input_confirm");
   return PASSWORD.value === CONFIRM_PASSWORD.value;
 }
-
 
 /**
  * Validates that both password input fields match and updates the UI accordingly.
@@ -244,7 +226,6 @@ function confirmPassword() {
   }
 }
 
-
 /**
  * Generates a short unique id from the current timestamp and a random value.
  * @returns {string} A 6-character alphanumeric id.
@@ -252,7 +233,6 @@ function confirmPassword() {
 function generateId() {
   return (Date.now().toString(36) + Math.random().toString(36)).substring(0, 6);
 }
-
 
 /**
  * Sends user data to the database.
@@ -272,22 +252,20 @@ async function pushUser(user) {
   }
 }
 
-
 /**
  * Shows a success message banner and a dark background shadow.
  * Both elements disappear automatically after 1.2 seconds.
  */
 function successMessage() {
-  const BANNER = document.getElementById('success_message');
-  const DIM = document.getElementById('dim');
-  BANNER.classList.add('show-animation');
-  DIM.classList.remove('dnone');
+  const BANNER = document.getElementById("success_message");
+  const DIM = document.getElementById("dim");
+  BANNER.classList.add("show-animation");
+  DIM.classList.remove("dnone");
   setTimeout(() => {
-    BANNER.classList.remove('show-animation');
-    DIM.classList.add('dnone');
+    BANNER.classList.remove("show-animation");
+    DIM.classList.add("dnone");
   }, 1200);
 }
-
 
 /**
  * Validates the signup name input on blur.
@@ -303,7 +281,6 @@ function validateSignupNameOnBlur() {
   }
 }
 
-
 /**
  * Removes error styling from the signup name field as soon as the user focuses it.
  */
@@ -313,7 +290,6 @@ function clearSignupNameErrorOnFocus() {
   NAME.classList.remove("invalid-login");
   CONTAINER.classList.remove("invalid-signup-all");
 }
-
 
 /**
  * Validates the signup email input on blur.
@@ -328,7 +304,6 @@ function validateSignupEmailOnBlur() {
   }
 }
 
-
 /**
  * Removes error styling from the signup email field as soon as the user focuses it.
  */
@@ -338,7 +313,6 @@ function clearSignupEmailErrorOnFocus() {
   MAIL.classList.remove("invalid-login");
   CONTAINER.classList.remove("invalid-signup-all");
 }
-
 
 /**
  * Removes all error classes from the signup form fields.

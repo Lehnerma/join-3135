@@ -69,11 +69,13 @@ function buildMoveDropdown(taskId, targets) {
  * @returns {string} Concatenated list item HTML.
  */
 function buildMoveButtonsHtml(taskId, targets) {
-  return targets.map((target) => {
-    const icon = target.direction === "up" ? "arrow_upward" : "arrow_downward";
-    const label = STATUS_LABELS[target.status];
-    return getMoveButtonTemplate(taskId, target.status, target.direction, icon, label);
-  }).join("");
+  return targets
+    .map((target) => {
+      const icon = target.direction === "up" ? "arrow_upward" : "arrow_downward";
+      const label = STATUS_LABELS[target.status];
+      return getMoveButtonTemplate(taskId, target.status, target.direction, icon, label);
+    })
+    .join("");
 }
 
 /**

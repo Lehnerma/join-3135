@@ -1,25 +1,39 @@
 const contactColors = [
-  'rgba(255, 122, 0, 1)', 'rgba(147, 39, 255, 1)', 'rgba(110, 82, 255, 1)',
-  'rgba(252, 113, 255, 1)', 'rgba(255, 187, 43, 1)', 'rgba(31, 215, 193, 1)',
-  'rgba(70, 47, 138, 1)', 'rgba(255, 70, 70, 1)', 'rgba(0, 190, 232, 1)',
-  'rgba(42, 61, 89, 1)', 'rgba(255, 94, 179, 1)', 'rgba(255, 116, 94, 1)',
-  'rgba(255, 163, 94, 1)', 'rgba(255, 199, 1, 1)', 'rgba(0, 56, 255, 1)',
-  'rgba(195, 255, 43, 1)', 'rgba(255, 230, 43, 1)'
+  "rgba(255, 122, 0, 1)",
+  "rgba(147, 39, 255, 1)",
+  "rgba(110, 82, 255, 1)",
+  "rgba(252, 113, 255, 1)",
+  "rgba(255, 187, 43, 1)",
+  "rgba(31, 215, 193, 1)",
+  "rgba(70, 47, 138, 1)",
+  "rgba(255, 70, 70, 1)",
+  "rgba(0, 190, 232, 1)",
+  "rgba(42, 61, 89, 1)",
+  "rgba(255, 94, 179, 1)",
+  "rgba(255, 116, 94, 1)",
+  "rgba(255, 163, 94, 1)",
+  "rgba(255, 199, 1, 1)",
+  "rgba(0, 56, 255, 1)",
+  "rgba(195, 255, 43, 1)",
+  "rgba(255, 230, 43, 1)",
 ];
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 let users = [];
-let editName = '', editEmail = '', editPhone = '', editUserIndex = '';
+let editName = "",
+  editEmail = "",
+  editPhone = "",
+  editUserIndex = "";
 let user = {};
 let colorIsAlreadyActive;
 let detailAnimation = false;
 
-const LEFT_CONTENT = document.getElementById('left_content');
-const BACK_ARROW_BUTTON = document.getElementById('back_arrow_button');
-const EDIT_MENU_BUTTON = document.getElementById('edit_menu_button');
-const EDIT_MENU_ICON = document.getElementById('edit_menu_icon');
-const BACK_ARROW_ICON = document.getElementById('back_arrow_icon');
+const LEFT_CONTENT = document.getElementById("left_content");
+const BACK_ARROW_BUTTON = document.getElementById("back_arrow_button");
+const EDIT_MENU_BUTTON = document.getElementById("edit_menu_button");
+const EDIT_MENU_ICON = document.getElementById("edit_menu_icon");
+const BACK_ARROW_ICON = document.getElementById("back_arrow_icon");
 const USERS_URL = "https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
 /**
@@ -78,10 +92,10 @@ function sortUserContactList() {
  * Creates the letter containers for the contact list based on the alphabet.
  */
 function addAlphabetTable() {
-  const SINGLE_CONTACTS = document.getElementById('single_contacts');
+  const SINGLE_CONTACTS = document.getElementById("single_contacts");
   if (!SINGLE_CONTACTS) return;
-  SINGLE_CONTACTS.innerHTML = '';
-  ALPHABET.forEach(letter => {
+  SINGLE_CONTACTS.innerHTML = "";
+  ALPHABET.forEach((letter) => {
     SINGLE_CONTACTS.innerHTML += renderAlphabetTableTpl(letter);
   });
   userContectList();
@@ -119,7 +133,7 @@ function getSingleUser(user, i) {
  */
 function getInitials(name) {
   if (!name) return "??";
-  const splitNames = name.trim().split(' ');
+  const splitNames = name.trim().split(" ");
   let initials = splitNames[0].charAt(0).toUpperCase();
   if (splitNames.length > 1) {
     initials += splitNames[splitNames.length - 1].charAt(0).toUpperCase();
@@ -131,8 +145,8 @@ function getInitials(name) {
  * opens the dialog box for creating a new contact.
  */
 function openContactDialog() {
-  const dialogRef = document.getElementById('open_new_dialog');
-  dialogRef.classList.remove('hide');
+  const dialogRef = document.getElementById("open_new_dialog");
+  dialogRef.classList.remove("hide");
   dialogRef.innerHTML = renderHtmlContactDialogTpl();
   dialogRef.showModal();
 }
@@ -144,14 +158,13 @@ function openContactDialog() {
  * @param {string} color - The user's assigned color.
  */
 function openEditDialog(index, initials, color) {
-  const dialogRef = document.getElementById('open_new_dialog');
-  dialogRef.classList.remove('hide');
+  const dialogRef = document.getElementById("open_new_dialog");
+  dialogRef.classList.remove("hide");
   dialogRef.innerHTML = renderHtmlEditContactDialogTpl(index, initials, color);
   dialogRef.showModal();
-  document.getElementById('edit_name').value = users[index].name;
-  document.getElementById('edit_email').value = users[index].email;
-  document.getElementById('edit_phone').value = users[index].phone;
-
+  document.getElementById("edit_name").value = users[index].name;
+  document.getElementById("edit_email").value = users[index].email;
+  document.getElementById("edit_phone").value = users[index].phone;
 }
 
 /**
@@ -175,9 +188,9 @@ function openEditContactDialog() {
  * Closes the contact dialog box and resets the form.
  */
 function closeContactDialog() {
-  const dialogRef = document.getElementById('open_new_dialog');
+  const dialogRef = document.getElementById("open_new_dialog");
   dialogRef.close();
-  dialogRef.classList.add('hide');
+  dialogRef.classList.add("hide");
 }
 
 /**
@@ -189,7 +202,7 @@ function getUserDetails(userIndex) {
   user = users[userIndex];
   if (window.innerWidth >= 651) {
     const userElement = document.getElementById(userIndex);
-    colorIsAlreadyActive = userElement ? userElement.classList.contains('bg-color-active') : false;
+    colorIsAlreadyActive = userElement ? userElement.classList.contains("bg-color-active") : false;
     removeAllBgColors();
   } else {
     mobileDetails();
@@ -212,10 +225,10 @@ function mobileDetails() {
  * Activates the classes for the mobile detail view.
  */
 function activateMobileView() {
-  LEFT_CONTENT?.classList.add('contact-list-off');
-  BACK_ARROW_BUTTON?.classList.add('btn--arrow', 'btn', 'mobile-buttons-on');
-  EDIT_MENU_BUTTON?.classList.add('edit-menu-box', 'btn--addPerson', 'mobile-buttons-on');
-  [EDIT_MENU_ICON, BACK_ARROW_ICON].forEach(el => el?.classList.add('mobile-buttons-on'));
+  LEFT_CONTENT?.classList.add("contact-list-off");
+  BACK_ARROW_BUTTON?.classList.add("btn--arrow", "btn", "mobile-buttons-on");
+  EDIT_MENU_BUTTON?.classList.add("edit-menu-box", "btn--addPerson", "mobile-buttons-on");
+  [EDIT_MENU_ICON, BACK_ARROW_ICON].forEach((el) => el?.classList.add("mobile-buttons-on"));
   removeAllBgColors();
 }
 
@@ -223,10 +236,10 @@ function activateMobileView() {
  * Disables classes for the mobile detail view.
  */
 function deactivateMobileView() {
-  LEFT_CONTENT?.classList.remove('contact-list-off');
-  BACK_ARROW_BUTTON?.classList.remove('btn--arrow', 'btn', 'mobile-buttons-on');
-  EDIT_MENU_BUTTON?.classList.remove('edit-menu-box', 'btn--addPerson', 'mobile-buttons-on');
-  [EDIT_MENU_ICON, BACK_ARROW_ICON].forEach(el => el?.classList.remove('mobile-buttons-on'));
+  LEFT_CONTENT?.classList.remove("contact-list-off");
+  BACK_ARROW_BUTTON?.classList.remove("btn--arrow", "btn", "mobile-buttons-on");
+  EDIT_MENU_BUTTON?.classList.remove("edit-menu-box", "btn--addPerson", "mobile-buttons-on");
+  [EDIT_MENU_ICON, BACK_ARROW_ICON].forEach((el) => el?.classList.remove("mobile-buttons-on"));
 }
 
 /**
@@ -240,7 +253,7 @@ function backToContactlist() {
  * Removes the active background marker from all contacts in the list.
  */
 function removeAllBgColors() {
-  document.querySelectorAll('.user-Selection').forEach(el => el.classList.remove('bg-color-active'));
+  document.querySelectorAll(".user-Selection").forEach((el) => el.classList.remove("bg-color-active"));
   showDetails();
 }
 
@@ -248,14 +261,14 @@ function removeAllBgColors() {
  * Displays the details of the selected user in the details container.
  */
 function showDetails() {
-  const dialogRef = document.getElementById('contact_details_dialog');
+  const dialogRef = document.getElementById("contact_details_dialog");
   if (!dialogRef) return;
   if (window.innerWidth <= 650 || (!colorIsAlreadyActive && window.innerWidth >= 651)) {
     const userElement = document.getElementById(editUserIndex);
-    userElement?.classList.add('bg-color-active');
+    userElement?.classList.add("bg-color-active");
     dialogRef.innerHTML = addShowDetails();
   } else {
-    dialogRef.innerHTML = '';
+    dialogRef.innerHTML = "";
   }
   checkDetailAnimation();
 }
@@ -264,10 +277,10 @@ function showDetails() {
  * Checks and disables the detail box's pop-up animation, if necessary.
  */
 function checkDetailAnimation() {
-  const dialogRef = document.getElementById('contact_details_dialog');
-  const detailBox = dialogRef?.querySelector('.contact-details-box');
+  const dialogRef = document.getElementById("contact_details_dialog");
+  const detailBox = dialogRef?.querySelector(".contact-details-box");
   if (detailAnimation && detailBox) {
-    detailBox.classList.add('no-animation');
+    detailBox.classList.add("no-animation");
     detailAnimation = false;
   }
 }
@@ -286,14 +299,16 @@ function addShowDetails() {
  * @returns {Object|null} The contact object or null if fields are empty.
  */
 function buildContactObject() {
-  const name = document.getElementById('create_name')?.value.trim();
-  const email = document.getElementById('create_email')?.value.trim();
-  const phone = document.getElementById('create_phone')?.value.trim();
+  const name = document.getElementById("create_name")?.value.trim();
+  const email = document.getElementById("create_email")?.value.trim();
+  const phone = document.getElementById("create_phone")?.value.trim();
   if (!name || !email) return null;
   return {
-    name, email, phone,
+    name,
+    email,
+    phone,
     id: Math.floor(1000 + Math.random() * 9000),
-    color: contactColors[Math.floor(Math.random() * contactColors.length)]
+    color: contactColors[Math.floor(Math.random() * contactColors.length)],
   };
 }
 
@@ -304,7 +319,7 @@ async function createContact() {
   if (!addContactCheckInputValue()) return;
   const contactData = buildContactObject();
   if (!contactData) return;
-  const btn = document.getElementById('btn_create_contact');
+  const btn = document.getElementById("btn_create_contact");
   if (btn) btn.disabled = true;
   try {
     await addNewContact(contactData);
@@ -324,7 +339,7 @@ async function addNewContact(newContactData) {
   newContactData.firebaseKey = firebaseKey;
   users.push(newContactData);
   sortUserContactList();
-  const index = users.findIndex(u => u.id === newContactData.id);
+  const index = users.findIndex((u) => u.id === newContactData.id);
   if (index !== -1) {
     detailAnimation = true;
     getUserDetails(index);
@@ -340,23 +355,23 @@ async function addNewContact(newContactData) {
  */
 function scrollToUser(index) {
   const target = document.getElementById(index);
-  const container = document.getElementById('left_content');
+  const container = document.getElementById("left_content");
   if (!target || !container) return;
   const containerRect = container.getBoundingClientRect();
   const targetRect = target.getBoundingClientRect();
   const offset = targetRect.top - containerRect.top + container.scrollTop - containerRect.height / 2 + targetRect.height / 2;
-  container.scrollTo({ top: offset, behavior: 'smooth' });
+  container.scrollTo({ top: offset, behavior: "smooth" });
 }
 
 /**
  * Saves the new contact to the Firebase database via POST.
- * @param {Object} newContact - The contact to be saved. 
+ * @param {Object} newContact - The contact to be saved.
  */
 async function syncNewContact(newContactData) {
   const RESPONSE = await fetch(USERS_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(newContactData)
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newContactData),
   });
   if (!RESPONSE.ok) {
     throw new Error(`Kontakt konnte nicht gespeichert werden (${RESPONSE.status})`);
@@ -373,7 +388,7 @@ async function deleteContact(index) {
   const userKey = users[index].firebaseKey;
   const success = await deleteUserFromDatabase(userKey);
   if (success) {
-    document.getElementById('contact_details_dialog').innerHTML = '';
+    document.getElementById("contact_details_dialog").innerHTML = "";
     await getUsers();
     backToContactlist();
   }
@@ -387,7 +402,7 @@ async function deleteContact(index) {
 async function deleteUserFromDatabase(firebaseKey) {
   const url = `https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/${firebaseKey}.json`;
   try {
-    const response = await fetch(url, { method: 'DELETE' });
+    const response = await fetch(url, { method: "DELETE" });
     return response.ok;
   } catch (error) {
     return false;
@@ -398,10 +413,10 @@ async function deleteUserFromDatabase(firebaseKey) {
  * Displays a success banner for a short time after creating a contact.
  */
 function showSuccessBanner() {
-  const banner = document.getElementById('contact_success_overlay');
+  const banner = document.getElementById("contact_success_overlay");
   if (!banner) return;
-  banner.classList.remove('hide-overlay');
-  setTimeout(() => banner.classList.add('hide-overlay'), 2000);
+  banner.classList.remove("hide-overlay");
+  setTimeout(() => banner.classList.add("hide-overlay"), 2000);
 }
 
 /**
@@ -411,10 +426,10 @@ function showSuccessBanner() {
  */
 function getUpdatedContactData(color) {
   return {
-    name: document.getElementById('edit_name').value,
-    email: document.getElementById('edit_email').value,
-    phone: document.getElementById('edit_phone').value,
-    color
+    name: document.getElementById("edit_name").value,
+    email: document.getElementById("edit_email").value,
+    phone: document.getElementById("edit_phone").value,
+    color,
   };
 }
 
@@ -429,7 +444,7 @@ async function saveNewContactData(index) {
     const response = await updateFirebaseContact(firebaseKey, getUpdatedContactData(users[index].color));
     if (!response.ok) throw new Error(response.status);
     await getUsers();
-    const newIndex = users.findIndex(u => u.firebaseKey === firebaseKey);
+    const newIndex = users.findIndex((u) => u.firebaseKey === firebaseKey);
     if (newIndex !== -1) {
       editUserIndex = newIndex;
       user = users[newIndex];
@@ -450,9 +465,9 @@ async function saveNewContactData(index) {
  */
 async function updateFirebaseContact(key, updatedData) {
   return await fetch(`https://join-3135-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(updatedData)
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatedData),
   });
 }
 
@@ -462,7 +477,7 @@ async function updateFirebaseContact(key, updatedData) {
  */
 function openEditMenu(event) {
   event.stopPropagation();
-  document.querySelector('.edit-delete-container')?.classList.toggle('show');
+  document.querySelector(".edit-delete-container")?.classList.toggle("show");
 }
 
 /**
@@ -478,15 +493,14 @@ function closeDialogOutsite(event) {
  * Closes the edit menu when clicking outside of it.
  */
 function initCloseMenuOnOutsideClick() {
-  document.addEventListener('click', function (event) {
-    const container = document.querySelector('.edit-delete-container');
-    const menuButton = document.getElementById('edit_menu_button');
+  document.addEventListener("click", function (event) {
+    const container = document.querySelector(".edit-delete-container");
+    const menuButton = document.getElementById("edit_menu_button");
 
-    if (container && container.classList.contains('show')) {
+    if (container && container.classList.contains("show")) {
       if (!container.contains(event.target) && (!menuButton || !menuButton.contains(event.target))) {
-        container.classList.remove('show');
+        container.classList.remove("show");
       }
     }
   });
 }
-
