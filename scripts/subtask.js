@@ -163,4 +163,3 @@ function saveSubtask(li) {
   li.classList.remove("editing");
   li.querySelector(".btn--edit img").src = "../assets/img/icons/subtask/edit.svg";
 }
-

@@ -10,6 +10,7 @@ Vanilla HTML, CSS, and JavaScript — no frameworks, no build tools.
 - **`async/await` with `try/catch`** for all fetch calls — never `.then()`.
 - Use **modern JS** (ES2020+): optional chaining `?.`, nullish coalescing `??`, destructuring, template literals, `const`/`let`.
 - Prefer **arrow functions** for callbacks and helpers.
+- Use **named functions** for main logic and event handlers. 
 
 ```js
 // ✅ correct
@@ -18,8 +19,8 @@ async function loadTasks() {
     const response = await fetch(BASE_URL + "/tasks.json");
     const data = await response.json();
     renderTasks(data);
-  } catch (error) {
-    console.error("Failed to load tasks:", error);
+  } catch (er) {
+    console.error("Failed to load tasks:", er);
   }
 }
 
@@ -50,7 +51,7 @@ fetch(BASE_URL + "/tasks.json")
 
 ## Git Commits
 
-After every successful change, create a commit with a conventional prefix:
+After every successful change, ask for a commit with a conventional prefix:
 
 | Prefix | When to use |
 |---|---|
@@ -75,3 +76,4 @@ Never push — the developer pushes manually.
 - Use **CSS custom properties** (`--color-primary`) for theming.
 - Keep selectors shallow (max 3 levels deep).
 - One file per component/page (matches the existing `styles/` structure).
+- Avoid `!important` — refactor CSS to increase specificity instead.
